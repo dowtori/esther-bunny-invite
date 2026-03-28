@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Esther Bunny Atelier - Campaign Dashboard</title>
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Faculty+Glyphic&family=Noto+Serif+KR:wght@300;400;500;700&family=Pretendard:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <style>
+        :root {
+            /* Palette representing soft, plush pastel aesthetic of Esther Bunny Concept */
+            --bg-gradient: linear-gradient(135deg, #fff0f5 0%, #fceff2 50%, #faf8f4 100%);
+            --glass-bg: rgba(255, 255, 255, 0.65);
+            --glass-border: rgba(255, 255, 255, 0.5);
+            --glass-shadow: 0 8px 32px 0 rgba(220, 180, 200, 0.15);
+            /* Typography Colors */
+            --text-heading: #4a3b4e; /* Soft dark eggplant */
+            --text-body: #665c69;
+            --text-accent: #d46f8d; /* Vibrant soft pink */
+            --pink-light: #ffd1dc;
+            --pink-main: #ffb6c1;
+            --cream: #fffdd0;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Pretendard', sans-serif;
+            background: var(--bg-gradient);
+            color: var(--text-body);
+            min-height: 100vh;
+            padding: 2rem;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* Dashboard Container Pattern */
+        .dashboard-container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        /* Header */
+        header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        h1 {
+            font-family: 'Faculty Glyphic', 'Noto Serif KR', serif;
+            font-size: 2.5rem;
+            color: var(--text-heading);
+            letter-spacing: 0.05em;
+            margin-bottom: 0.5rem;
+        }
+
+        p.subtitle {
+            font-size: 1rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--text-accent);
+            font-weight: 500;
+        }
+
+        /* Glassmorphism Utilities */
+        .glass-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-radius: 24px;
+            border: 1px solid var(--glass-border);
+            box-shadow: var(--glass-shadow);
+            padding: 1.5rem;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .glass-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 40px 0 rgba(220, 180, 200, 0.25);
+        }
+
+        /* Grid Layouts */
+        .kpi-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .charts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        /* KPI Card Specifics */
+        .kpi-label {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: #887a8f;
+            text-transform: uppercase;
+            margin-bottom: 0.5rem;
+            letter-spacing: 0.05em;
+        }
+
+        .kpi-value {
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: var(--text-heading);
+            font-family: 'Noto Serif KR', serif;
+        }
+
+        /* Chart Wrappers */
+        .chart-wrapper {
+            position: relative;
+            height: 300px;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .card-header {
+            font-family: 'Noto Serif KR', serif;
+            font-size: 1.2rem;
+            color: var(--text-heading);
+            margin-bottom: 1.5rem;
+            border-bottom: 1px solid rgba(220, 180, 200, 0.3);
+            padding-bottom: 0.5rem;
+        }
+
+        /* Table Design */
+        .table-container {
+            width: 100%;
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+            min-width: 800px;
+        }
+
+        th {
+            font-weight: 600;
+            color: var(--text-heading);
+            padding: 1rem;
+            border-bottom: 2px solid rgba(220, 180, 200, 0.4);
+            font-size: 0.9rem;
+        }
+
+        td {
+            padding: 1rem;
+            border-bottom: 1px solid rgba(220, 180, 200, 0.2);
+            font-size: 0.95rem;
+        }
+
+        tr:hover td {
+            background: rgba(255, 255, 255, 0.5);
+        }
+
+        .handle-link {
+            color: var(--text-accent);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+
+        .handle-link:hover {
+            color: #b24c6b;
+            text-decoration: underline;
+        }
+        
+        .badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 999px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            background: #ffe4e6;
+            color: #be185d;
+        }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: rgba(220, 180, 200, 0.5);
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(220, 180, 200, 0.8);
+        }
+        
+        .nav-btn {
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            margin-bottom: 1rem;
+            text-decoration: none;
+            color: var(--text-accent);
+            border: 1px solid var(--text-accent);
+            border-radius: 20px;
+            font-size: 0.9rem;
+            transition: all 0.3s;
+        }
+        .nav-btn:hover {
+            background: var(--text-accent);
+            color: white;
+        }
+
+    </style>
+</head>
+<body>
+
+<div class="dashboard-container">
+    <a href="/" class="nav-btn">&larr; Back to Home</a>
+    
+    <header>
+        <h1>ESTHER BUNNY ATELIER</h1>
+        <p class="subtitle">Creator Campaign Pre-Flight Dashboard</p>
+    </header>
+
+    <!-- KPI Section -->
+    <section class="kpi-grid">
+        <div class="glass-card">
+            <div class="kpi-label">Total Creators</div>
+            <div class="kpi-value" id="kpi-total">0</div>
+        </div>
+        <div class="glass-card">
+            <div class="kpi-label">Total Followers Reach</div>
+            <div class="kpi-value" id="kpi-reach">0</div>
+        </div>
+        <div class="glass-card">
+            <div class="kpi-label">Average Engagement Rate</div>
+            <div class="kpi-value" id="kpi-er">0%</div>
+        </div>
+        <div class="glass-card">
+            <div class="kpi-label">Avg Feed Likes</div>
+            <div class="kpi-value" id="kpi-likes">0</div>
+        </div>
+    </section>
+
+    <!-- Charts Section (Reverted to Category & Follower Distribution with scaling fixes) -->
+    <section class="charts-grid">
+        <!-- Creator Category Chart -->
+        <div class="glass-card">
+            <h3 class="card-header">Creator Categories</h3>
+            <div class="chart-wrapper">
+                <canvas id="categoryChart"></canvas>
+            </div>
+        </div>
+        <!-- Follower Distribution Chart -->
+        <div class="glass-card">
+            <h3 class="card-header">Follower Distribution</h3>
+            <div class="chart-wrapper">
+                <canvas id="followerChart"></canvas>
+            </div>
+        </div>
+    </section>
+
+    <!-- Roster Table -->
+    <section class="glass-card">
+         <h3 class="card-header">Creator Roster</h3>
+         <div class="table-container">
+             <table id="rosterTable">
+                 <thead>
+                     <tr>
+                         <th>No.</th>
+                         <th>Creator</th>
+                         <th>Category</th>
+                         <th>Followers</th>
+                         <th>Eng. Rate (ER)</th>
+                         <th>Avg Likes</th>
+                         <th>Profile Link</th>
+                     </tr>
+                 </thead>
+                 <tbody>
+                     <!-- Injected dynamically -->
+                 </tbody>
+             </table>
+         </div>
+    </section>
+
+</div>
+
+<script>
+    // Configuration for Beautiful Pastel Charts
+    Chart.defaults.font.family = "'Pretendard', sans-serif";
+    Chart.defaults.color = '#887a8f';
+    
+    const chartColors = [
+        'rgba(255, 182, 193, 0.8)', // pink-main
+        'rgba(255, 209, 220, 0.8)', // pink-light
+        'rgba(250, 218, 221, 0.8)', // pale pink
+        'rgba(230, 200, 215, 0.8)', // muted rose
+        'rgba(240, 218, 230, 0.8)'  // soft lilac
+    ];
+
+    async function initDashboard() {
+        try {
+            const response = await fetch('/src/data/esther_bunny_campaign.json');
+            if (!response.ok) throw new Error("Could not fetch data");
+            const rawData = await response.json();
+            
+            // Clean/filter invalid rows just in case
+            const data = rawData.filter(d => Boolean(d["계정"]) && (typeof d["팔로워 수"] === 'number' || !isNaN(Number(d["팔로워 수"]))));
+
+            // Calculate KPIs
+            const totalCreators = data.length;
+            
+            let totalReach = 0;
+            let totalER = 0;
+            let validERCount = 0;
+            let totalLikes = 0;
+            let validLikesCount = 0;
+
+            const categoryCount = {};
+            const followerTiers = {
+                "~ 3K": 0,
+                "3K ~ 10K": 0,
+                "10K ~ 100K": 0,
+                "100K 이상": 0
+            };
+
+            data.forEach(item => {
+                // Category Mapping (as per user request: 기타 -> 뷰티, 보류 -> 예비)
+                let cat = item["카테고리"] || "기타";
+                if (cat === "기타") cat = "뷰티";
+                if (cat === "보류") cat = "예비";
+                item["카테고리"] = cat;
+
+                categoryCount[cat] = (categoryCount[cat] || 0) + 1;
+
+                // Followers Calculation and Tier Mapping
+                let followers = parseFloat(item["팔로워 수"]) || 0;
+                totalReach += followers;
+
+                if (followers < 3000) followerTiers["~ 3K"]++;
+                else if (followers < 10000) followerTiers["3K ~ 10K"]++;
+                else if (followers < 100000) followerTiers["10K ~ 100K"]++;
+                else followerTiers["100K 이상"]++;
+
+                // ER
+                let er = parseFloat(item["ER"]);
+                if(!isNaN(er) && er > 0 && er < 100) {
+                    totalER += er;
+                    validERCount++;
+                }
+
+                // Likes
+                let likes = parseFloat(item["평균 피드 좋아요 수"]);
+                if(!isNaN(likes) && likes > 0) {
+                    totalLikes += likes;
+                    validLikesCount++;
+                }
+            });
+
+            const avgER = validERCount > 0 ? (totalER / validERCount) : 0;
+            const avgLikes = validLikesCount > 0 ? (totalLikes / validLikesCount) : 0;
+
+            // Render KPIs
+            document.getElementById('kpi-total').textContent = totalCreators.toLocaleString();
+            document.getElementById('kpi-reach').textContent = totalReach.toLocaleString();
+            document.getElementById('kpi-er').textContent = avgER.toFixed(2) + '%';
+            document.getElementById('kpi-likes').textContent = Math.round(avgLikes).toLocaleString();
+
+            // Render Category Doughnut Chart
+            const ctxCat = document.getElementById('categoryChart').getContext('2d');
+            new Chart(ctxCat, {
+                type: 'doughnut',
+                data: {
+                    labels: Object.keys(categoryCount),
+                    datasets: [{
+                        data: Object.values(categoryCount),
+                        backgroundColor: chartColors,
+                        borderWidth: 2,
+                        borderColor: '#fff'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { position: 'right' }
+                    },
+                    cutout: '70%'
+                }
+            });
+
+            // Render Follower Tier Bar Chart (With Sqrt Scale for Visual Exaggeration of missing brackets)
+            const ctxFol = document.getElementById('followerChart').getContext('2d');
+            const folLabels = Object.keys(followerTiers);
+            const folDataReal = Object.values(followerTiers);
+            
+            // MATH.SQRT transformation applied to visually boost the tiny bars!
+            const folDataSqrt = folDataReal.map(val => Math.sqrt(val));
+            
+            new Chart(ctxFol, {
+                type: 'bar',
+                data: {
+                    labels: folLabels,
+                    datasets: [{
+                        label: 'Creators',
+                        data: folDataSqrt,
+                        backgroundColor: chartColors[0],
+                        borderRadius: 8,
+                        barThickness: 40
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: { 
+                            beginAtZero: true, 
+                            grid: { color: 'rgba(220,180,200,0.2)' },
+                            ticks: {
+                                display: false // Hidden because the axis numbers are now squared root values
+                            }
+                        },
+                        x: { grid: { display: false } }
+                    },
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    // Original accurate hover number!
+                                    return ' Creators: ' + folDataReal[context.dataIndex]; 
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+
+            // Render Table (Sort by followers descending)
+            const sortedData = [...data].sort((a, b) => (parseFloat(b["팔로워 수"]) || 0) - (parseFloat(a["팔로워 수"]) || 0));
+            const tbody = document.querySelector("#rosterTable tbody");
+            
+            sortedData.forEach((item, index) => {
+                const tr = document.createElement("tr");
+
+                // Use ONLY "계정(full-name)" as requested, discarding "계정"
+                let name = item["계정(full-name)"];
+                let displayName = "";
+                
+                if (name && name !== "nan") {
+                    displayName = name;
+                } else if (item["URL"]) {
+                    const parts = item["URL"].split('/').filter(Boolean);
+                    if (parts.length > 0) displayName = "@" + parts[parts.length - 1]; // Use handles from URL if completely empty
+                    else displayName = "-";
+                } else {
+                    displayName = "-";
+                }
+                
+                const followers = parseFloat(item["팔로워 수"]) || 0;
+                const er = parseFloat(item["ER"]) || 0;
+                const likes = parseFloat(item["평균 피드 좋아요 수"]) || 0;
+                
+                let handleRef = item["계정"] && item["계정"] !== "nan" ? item["계정"] : "";
+                const url = item["URL"] && item["URL"] !== "nan" ? item["URL"] : `https://instagram.com/${handleRef.replace('@','')}`;
+
+                tr.innerHTML = `
+                    <td>${index + 1}</td>
+                    <td><strong>${displayName}</strong></td>
+                    <td><span class="badge">${item["카테고리"]}</span></td>
+                    <td>${followers.toLocaleString()}</td>
+                    <td>${er > 0 ? er.toFixed(2) + '%' : '-'}</td>
+                    <td>${Math.round(likes).toLocaleString()}</td>
+                    <td><a href="${url}" target="_blank" class="handle-link">View Instagram &nearr;</a></td>
+                `;
+                tbody.appendChild(tr);
+            });
+
+        } catch (err) {
+            console.error(err);
+            document.querySelector('.dashboard-container').innerHTML += `<div style="color:red; margin-top:2rem">Failed to load data. Please make sure the server is running.</div>`;
+        }
+    }
+
+    // Initialize Dashboard
+    initDashboard();
+</script>
+</body>
+</html>
