@@ -1,0 +1,1510 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Esther Bunny Atelier Open 2025 · Creator Invitation</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@300;400;500&family=Pretendard:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    /* ── CSS Variables ── */
+    :root {
+      --pink: #F7A8C4;
+      --bg: #FFF0F5;
+      --accent: #FF85A1;
+      --ink: #3D1A24;
+      --ink60: rgba(61,26,36,.6);
+      --ink40: rgba(61,26,36,.4);
+      --ink20: rgba(61,26,36,.2);
+      --ink10: rgba(61,26,36,.1);
+      --cream: #FEF0F5;
+      --border: #F2C4D4;
+      --card: #FFF8FB;
+      --font-serif: 'Noto Serif KR', serif;
+      --font-sans: 'Pretendard', 'Apple SD Gothic Neo', sans-serif;
+      --radius: 12px;
+      --radius-sm: 8px;
+      --radius-pill: 24px;
+    }
+
+    /* ── Reset ── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--bg);
+      color: var(--ink);
+      font-family: var(--font-sans);
+      font-size: 15px;
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── Reduced Motion ── */
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+
+    /* ── Layout ── */
+    .wrap {
+      max-width: 680px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    /* ── Skip Link ── */
+    .skip-link {
+      position: absolute;
+      top: -48px;
+      left: 0;
+      background: var(--accent);
+      color: #fff;
+      padding: 8px 16px;
+      border-radius: 0 0 var(--radius-sm) 0;
+      font-size: 14px;
+      font-family: var(--font-sans);
+      text-decoration: none;
+      z-index: 10000;
+      transition: top 0.2s ease;
+    }
+    .skip-link:focus { top: 0; }
+
+    /* ── Header ── */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(255,240,245,0.92);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 14px 20px;
+      display: flex;
+      align-items: baseline;
+      gap: 12px;
+    }
+    .h-brand {
+      font-family: var(--font-serif);
+      font-weight: 500;
+      font-size: 16px;
+      color: var(--ink);
+      letter-spacing: 0.02em;
+    }
+    .h-tag {
+      font-size: 11px;
+      font-weight: 400;
+      color: var(--ink40);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    /* ── Hero ── */
+    .hero {
+      position: relative;
+      overflow: hidden;
+      padding: 72px 20px 64px;
+      text-align: center;
+      background: linear-gradient(160deg, #fff8fb 0%, var(--bg) 60%);
+    }
+    .hero-bunny {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      width: 120px;
+      height: 120px;
+      opacity: 0.35;
+      pointer-events: none;
+      aria-hidden: true;
+    }
+    .hero-eyebrow {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 400;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 20px;
+      padding: 5px 14px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-pill);
+      background: var(--cream);
+    }
+    .hero h1 {
+      font-family: var(--font-serif);
+      font-weight: 400;
+      font-size: clamp(26px, 6vw, 38px);
+      line-height: 1.35;
+      color: var(--ink);
+      margin-bottom: 24px;
+      letter-spacing: -0.01em;
+    }
+    .hero h1 em {
+      font-style: italic;
+      color: var(--accent);
+    }
+    .hero-body {
+      font-size: 15px;
+      color: var(--ink60);
+      white-space: pre-line;
+      line-height: 1.85;
+      margin-bottom: 16px;
+      max-width: 400px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .hero-note {
+      font-size: 13px;
+      color: var(--ink40);
+      white-space: pre-line;
+      line-height: 1.8;
+      max-width: 420px;
+      margin: 0 auto;
+      padding: 14px 18px;
+      background: var(--cream);
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--border);
+    }
+
+    /* ── Section ── */
+    section {
+      padding: 48px 0;
+    }
+    .section-label {
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 8px;
+    }
+    .section-title {
+      font-family: var(--font-serif);
+      font-size: 20px;
+      font-weight: 400;
+      color: var(--ink);
+      margin-bottom: 24px;
+      letter-spacing: 0.01em;
+    }
+    .section-divider {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 0;
+    }
+
+    /* ── Info Grid ── */
+    .info-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-bottom: 28px;
+    }
+    @media (max-width: 480px) {
+      .info-grid { grid-template-columns: 1fr; }
+    }
+    .info-cell {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 16px 18px;
+    }
+    .info-cell-label {
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--ink40);
+      margin-bottom: 5px;
+    }
+    .info-cell-value {
+      font-size: 14px;
+      color: var(--ink);
+      line-height: 1.5;
+      font-weight: 400;
+    }
+    .info-cell-sub {
+      font-size: 12px;
+      color: var(--ink40);
+      margin-top: 2px;
+    }
+
+    /* ── Floor Strip ── */
+    .floor-strip {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+    }
+    .floor-item {
+      display: flex;
+      align-items: stretch;
+      background: var(--card);
+      border-bottom: 1px solid var(--border);
+    }
+    .floor-item:last-child { border-bottom: none; }
+    .floor-badge {
+      min-width: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      color: var(--accent);
+      background: var(--cream);
+      border-right: 1px solid var(--border);
+      padding: 12px 10px;
+    }
+    .floor-content {
+      padding: 12px 16px;
+      flex: 1;
+    }
+    .floor-name {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--ink);
+      margin-bottom: 2px;
+    }
+    .floor-desc {
+      font-size: 12px;
+      color: var(--ink60);
+    }
+
+    /* ── Reward Card ── */
+    .reward-card {
+      background: var(--cream);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 24px 24px 20px;
+    }
+    .reward-main {
+      font-family: var(--font-serif);
+      font-size: 18px;
+      font-weight: 400;
+      color: var(--ink);
+      margin-bottom: 8px;
+      line-height: 1.45;
+    }
+    .reward-sub {
+      font-size: 13px;
+      color: var(--ink60);
+      margin-bottom: 16px;
+    }
+    .reward-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+    .rtag {
+      font-size: 12px;
+      color: var(--accent);
+      background: rgba(255,133,161,0.1);
+      border: 1px solid rgba(255,133,161,0.3);
+      border-radius: var(--radius-pill);
+      padding: 4px 12px;
+      font-weight: 400;
+      letter-spacing: 0.02em;
+    }
+
+    /* ── Cond List ── */
+    .cond-list {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+    .cond-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      padding: 14px 16px;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+    }
+    .cond-icon {
+      font-size: 20px;
+      line-height: 1;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+    .cond-body { flex: 1; }
+    .cond-title {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--ink);
+      margin-bottom: 3px;
+    }
+    .cond-desc {
+      font-size: 13px;
+      color: var(--ink60);
+      line-height: 1.6;
+    }
+
+    /* ── Process List ── */
+    .proc-list {
+      display: flex;
+      flex-direction: column;
+    }
+    .proc-item {
+      display: flex;
+      gap: 16px;
+      align-items: flex-start;
+    }
+    .proc-left {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      flex-shrink: 0;
+    }
+    .proc-dot {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      border: 2px solid var(--pink);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--accent);
+      background: var(--card);
+      flex-shrink: 0;
+    }
+    .proc-line {
+      width: 2px;
+      flex: 1;
+      min-height: 24px;
+      background: var(--border);
+      margin-top: 4px;
+    }
+    .proc-item:last-child .proc-line { display: none; }
+    .proc-body {
+      padding-bottom: 24px;
+      flex: 1;
+    }
+    .proc-title {
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--ink);
+      line-height: 1.4;
+      margin-bottom: 4px;
+      padding-top: 4px;
+    }
+    .proc-desc {
+      font-size: 13px;
+      color: var(--ink60);
+      line-height: 1.65;
+    }
+
+    /* ── Caution List ── */
+    .caution-box {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 20px 22px;
+    }
+    .caution-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .caution-list li {
+      font-size: 13px;
+      color: var(--ink60);
+      line-height: 1.65;
+      padding-left: 18px;
+      position: relative;
+    }
+    .caution-list li::before {
+      content: '·';
+      position: absolute;
+      left: 5px;
+      color: var(--accent);
+      font-size: 16px;
+      line-height: 1.45;
+    }
+
+    /* ── Form ── */
+    .form-area {
+      padding: 48px 0 64px;
+    }
+    .form-sub {
+      font-size: 13px;
+      color: var(--ink40);
+      line-height: 1.7;
+      margin-bottom: 28px;
+    }
+
+    /* Steps Indicator */
+    .steps-nav {
+      display: flex;
+      align-items: center;
+      gap: 0;
+      margin-bottom: 32px;
+    }
+    .step-indicator {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex: 1;
+    }
+    .step-indicator:not(:last-child)::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+    .step-num {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      font-weight: 500;
+      flex-shrink: 0;
+      border: 2px solid var(--border);
+      color: var(--ink40);
+      background: var(--card);
+      transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+    }
+    .step-indicator.active .step-num {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: #fff;
+    }
+    .step-indicator.done .step-num {
+      background: var(--pink);
+      border-color: var(--pink);
+      color: #fff;
+    }
+    .step-label {
+      font-size: 12px;
+      color: var(--ink40);
+      font-weight: 400;
+    }
+    .step-indicator.active .step-label { color: var(--accent); font-weight: 500; }
+    .step-indicator.done .step-label { color: var(--pink); }
+
+    /* Step Panels */
+    .step-panel { display: none; }
+    .step-panel.active { display: block; }
+
+    /* Form Fields */
+    .field-group {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+    .field-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+    @media (max-width: 480px) {
+      .field-row { grid-template-columns: 1fr; }
+    }
+    .field {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .field label {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--ink);
+    }
+    .field label .req {
+      color: var(--accent);
+      margin-left: 2px;
+    }
+    .field label .opt {
+      font-size: 11px;
+      color: var(--ink40);
+      margin-left: 4px;
+      font-weight: 400;
+    }
+    .field input,
+    .field select,
+    .field textarea {
+      width: 100%;
+      padding: 11px 14px;
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius-sm);
+      background: #fff;
+      color: var(--ink);
+      font-family: var(--font-sans);
+      font-size: 14px;
+      line-height: 1.5;
+      transition: border-color 0.15s ease, box-shadow 0.15s ease;
+      appearance: none;
+      -webkit-appearance: none;
+    }
+    .field input:focus,
+    .field select:focus,
+    .field textarea:focus {
+      outline: none;
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(255,133,161,0.15);
+    }
+    .field input::placeholder,
+    .field textarea::placeholder { color: var(--ink20); }
+    .field select { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23F7A8C4' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 14px center; padding-right: 36px; cursor: pointer; }
+
+    /* Date Cards */
+    .date-cards {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin-bottom: 16px;
+    }
+    @media (max-width: 400px) {
+      .date-cards { grid-template-columns: 1fr; }
+    }
+    .date-card {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 18px 10px;
+      border: 2px solid var(--border);
+      border-radius: var(--radius);
+      background: var(--card);
+      cursor: pointer;
+      text-align: center;
+      transition: border-color 0.15s ease, background 0.15s ease, box-shadow 0.15s ease;
+      user-select: none;
+      -webkit-user-select: none;
+      min-height: 80px;
+    }
+    .date-card:hover {
+      border-color: var(--pink);
+      background: var(--cream);
+    }
+    .date-card:focus-within {
+      outline: none;
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(255,133,161,0.15);
+    }
+    .date-card.sel {
+      border-color: var(--accent);
+      background: var(--cream);
+      box-shadow: 0 2px 12px rgba(255,133,161,0.18);
+    }
+    .date-card input[type="radio"] {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      opacity: 0;
+      pointer-events: none;
+    }
+    .date-main {
+      font-family: var(--font-serif);
+      font-size: 16px;
+      font-weight: 400;
+      color: var(--ink);
+      margin-bottom: 4px;
+    }
+    .date-sub {
+      font-size: 11px;
+      color: var(--ink40);
+      line-height: 1.4;
+    }
+    .date-notice {
+      font-size: 12px;
+      color: var(--ink40);
+      line-height: 1.65;
+      padding: 12px 14px;
+      background: var(--cream);
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--border);
+    }
+
+    /* Consent Box */
+    .consent-box {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 18px 20px 14px;
+      margin-bottom: 20px;
+    }
+    .consent-title {
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--ink60);
+      margin-bottom: 10px;
+      letter-spacing: 0.04em;
+    }
+    .consent-items {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      margin-bottom: 16px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--border);
+    }
+    .consent-items li {
+      font-size: 13px;
+      color: var(--ink60);
+      padding-left: 16px;
+      position: relative;
+      line-height: 1.6;
+    }
+    .consent-items li::before {
+      content: '·';
+      position: absolute;
+      left: 4px;
+      color: var(--pink);
+      font-size: 16px;
+      line-height: 1.45;
+    }
+    .consent-checks {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .check-label {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      cursor: pointer;
+    }
+    .check-label input[type="checkbox"] {
+      width: 18px;
+      height: 18px;
+      min-width: 18px;
+      border: 1.5px solid var(--border);
+      border-radius: 4px;
+      appearance: none;
+      -webkit-appearance: none;
+      background: #fff;
+      cursor: pointer;
+      margin-top: 1px;
+      transition: background 0.15s ease, border-color 0.15s ease;
+      position: relative;
+    }
+    .check-label input[type="checkbox"]:checked {
+      background: var(--accent);
+      border-color: var(--accent);
+    }
+    .check-label input[type="checkbox"]:checked::after {
+      content: '';
+      position: absolute;
+      top: 3px;
+      left: 5px;
+      width: 6px;
+      height: 9px;
+      border: 2px solid #fff;
+      border-top: none;
+      border-left: none;
+      transform: rotate(45deg);
+    }
+    .check-label input[type="checkbox"]:focus {
+      outline: none;
+      box-shadow: 0 0 0 3px rgba(255,133,161,0.2);
+    }
+    .check-text {
+      font-size: 13px;
+      color: var(--ink);
+      line-height: 1.6;
+    }
+    .check-opt {
+      font-size: 11px;
+      color: var(--ink40);
+      margin-left: 4px;
+    }
+
+    /* Navigation Buttons */
+    .form-nav {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      margin-top: 28px;
+    }
+    .btn-back {
+      padding: 12px 24px;
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius-pill);
+      background: transparent;
+      color: var(--ink60);
+      font-family: var(--font-sans);
+      font-size: 14px;
+      cursor: pointer;
+      transition: border-color 0.15s ease, color 0.15s ease;
+      min-height: 44px;
+    }
+    .btn-back:hover { border-color: var(--pink); color: var(--ink); }
+    .btn-back:focus {
+      outline: none;
+      box-shadow: 0 0 0 3px rgba(247,168,196,0.3);
+    }
+    .btn-next,
+    .btn-submit {
+      flex: 1;
+      padding: 13px 28px;
+      background: var(--accent);
+      color: #fff;
+      border: none;
+      border-radius: var(--radius-pill);
+      font-family: var(--font-sans);
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background 0.15s ease, transform 0.1s ease, box-shadow 0.15s ease;
+      min-height: 44px;
+      letter-spacing: 0.02em;
+    }
+    .btn-next:hover,
+    .btn-submit:hover {
+      background: #f06e8a;
+      box-shadow: 0 4px 16px rgba(255,133,161,0.3);
+    }
+    .btn-next:active,
+    .btn-submit:active { transform: scale(0.98); }
+    .btn-next:focus,
+    .btn-submit:focus {
+      outline: none;
+      box-shadow: 0 0 0 3px rgba(255,133,161,0.35);
+    }
+    .btn-next:disabled,
+    .btn-submit:disabled {
+      opacity: 0.55;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    /* ── Success ── */
+    #success {
+      display: none;
+      min-height: 60vh;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 64px 20px;
+    }
+    .success-inner {
+      text-align: center;
+      max-width: 480px;
+      margin: 0 auto;
+    }
+    .success-icon {
+      width: 72px;
+      height: 72px;
+      border-radius: 50%;
+      background: var(--cream);
+      border: 2px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 24px;
+      font-size: 30px;
+    }
+    .s-title {
+      font-family: var(--font-serif);
+      font-size: 22px;
+      font-weight: 400;
+      color: var(--ink);
+      margin-bottom: 16px;
+      line-height: 1.45;
+    }
+    .s-body {
+      font-size: 14px;
+      color: var(--ink60);
+      white-space: pre-line;
+      line-height: 1.85;
+    }
+
+    /* ── Footer ── */
+    footer {
+      background: var(--card);
+      border-top: 1px solid var(--border);
+      padding: 24px 20px;
+    }
+    footer .wrap {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      align-items: center;
+      text-align: center;
+    }
+    .f-brand {
+      font-family: var(--font-serif);
+      font-size: 14px;
+      color: var(--ink);
+      font-weight: 400;
+    }
+    .f-note {
+      font-size: 11px;
+      color: var(--ink40);
+      line-height: 1.6;
+    }
+
+    /* ── Utilities ── */
+    .visually-hidden {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0,0,0,0);
+      white-space: nowrap;
+      border: 0;
+    }
+    a { color: var(--accent); }
+    a:focus {
+      outline: none;
+      box-shadow: 0 0 0 3px rgba(255,133,161,0.3);
+      border-radius: 2px;
+    }
+  </style>
+</head>
+<body>
+
+  <a href="#form-area" class="skip-link">폼으로 바로 이동</a>
+
+  <!-- Header -->
+  <header role="banner">
+    <span class="h-brand">Esther Bunny</span>
+    <span class="h-tag" id="h-tag">Atelier Open · Creator Invitation</span>
+  </header>
+
+  <!-- Hero -->
+  <section class="hero" aria-labelledby="hero-title">
+    <svg class="hero-bunny" viewBox="0 0 120 140" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" role="img">
+      <!-- 귀 좌 -->
+      <ellipse cx="38" cy="32" rx="11" ry="28" fill="#F7A8C4"/>
+      <!-- 귀 우 -->
+      <ellipse cx="62" cy="32" rx="11" ry="28" fill="#F7A8C4"/>
+      <!-- 머리 -->
+      <ellipse cx="50" cy="70" rx="28" ry="26" fill="#F7A8C4"/>
+      <!-- 몸 -->
+      <ellipse cx="50" cy="108" rx="22" ry="20" fill="#F7A8C4"/>
+      <!-- 리본 -->
+      <path d="M36 78 Q50 72 64 78 Q50 84 36 78Z" fill="#FF85A1"/>
+    </svg>
+    <div class="wrap">
+      <p class="hero-eyebrow">SIRIAI × Esther Bunny</p>
+      <h1 id="hero-title"></h1>
+      <p class="hero-body" id="hero-body"></p>
+      <p class="hero-note" id="hero-note"></p>
+    </div>
+  </section>
+
+  <hr class="section-divider">
+
+  <!-- 공간 소개 -->
+  <section aria-labelledby="space-title">
+    <div class="wrap">
+      <p class="section-label">About the Space</p>
+      <h2 class="section-title" id="space-title">공간 소개</h2>
+      <div class="info-grid" role="list">
+        <div class="info-cell" role="listitem">
+          <p class="info-cell-label">공간</p>
+          <p class="info-cell-value">Esther Bunny's Atelier</p>
+          <p class="info-cell-sub">서울 성수동 아뜰리에길</p>
+        </div>
+        <div class="info-cell" role="listitem">
+          <p class="info-cell-label">오픈</p>
+          <p class="info-cell-value">2025년 5월 1일</p>
+          <p class="info-cell-sub">5월 1~3일 크리에이터 전용</p>
+        </div>
+        <div class="info-cell" role="listitem">
+          <p class="info-cell-label">주관</p>
+          <p class="info-cell-value">에스더버니 공식</p>
+        </div>
+        <div class="info-cell" role="listitem">
+          <p class="info-cell-label">운영</p>
+          <p class="info-cell-value">SIRIAI</p>
+          <p class="info-cell-sub">인플루언서 파트너십</p>
+        </div>
+      </div>
+
+      <nav aria-label="플로어 안내">
+        <div class="floor-strip" role="list">
+          <div class="floor-item" role="listitem">
+            <span class="floor-badge" aria-label="B1층">B1F</span>
+            <div class="floor-content">
+              <p class="floor-name">Sketch Atelier</p>
+              <p class="floor-desc">에스더버니 아트워크 · 포토존 · 한정판 제품</p>
+            </div>
+          </div>
+          <div class="floor-item" role="listitem">
+            <span class="floor-badge" aria-label="1층">1F</span>
+            <div class="floor-content">
+              <p class="floor-name">Esther Bunny's Atelier</p>
+              <p class="floor-desc">플래그십 리테일 · 대표 제품</p>
+            </div>
+          </div>
+          <div class="floor-item" role="listitem">
+            <span class="floor-badge" aria-label="2층">2F</span>
+            <div class="floor-content">
+              <p class="floor-name">Fashion Atelier</p>
+              <p class="floor-desc">패션 협업 의류 · 피팅존</p>
+            </div>
+          </div>
+          <div class="floor-item" role="listitem">
+            <span class="floor-badge" aria-label="3층">3F</span>
+            <div class="floor-content">
+              <p class="floor-name">Wonder Atelier</p>
+              <p class="floor-desc">에스더버니 세계관 몰입 체험</p>
+            </div>
+          </div>
+          <div class="floor-item" role="listitem">
+            <span class="floor-badge" aria-label="루프탑">Roof</span>
+            <div class="floor-content">
+              <p class="floor-name">Rooftop</p>
+              <p class="floor-desc">서울숲 뷰 · 에스더버니 포토존</p>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </div>
+  </section>
+
+  <hr class="section-divider">
+
+  <!-- 협업 조건 -->
+  <section aria-labelledby="reward-title">
+    <div class="wrap">
+      <p class="section-label">Collaboration Reward</p>
+      <h2 class="section-title" id="reward-title">협업 조건</h2>
+      <div class="reward-card" role="region" aria-label="제공 혜택">
+        <p class="reward-main" id="reward-main"></p>
+        <p class="reward-sub" id="reward-sub"></p>
+        <div class="reward-tags" id="reward-tags" aria-label="관련 활동 태그"></div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="section-divider">
+
+  <!-- 콘텐츠 가이드라인 -->
+  <section aria-labelledby="cond-title">
+    <div class="wrap">
+      <p class="section-label">Content Guidelines</p>
+      <h2 class="section-title" id="cond-title">콘텐츠 가이드라인</h2>
+      <div class="cond-list" id="cond-list" role="list" aria-label="콘텐츠 조건 목록"></div>
+    </div>
+  </section>
+
+  <hr class="section-divider">
+
+  <!-- 진행 프로세스 -->
+  <section aria-labelledby="proc-title">
+    <div class="wrap">
+      <p class="section-label">Process</p>
+      <h2 class="section-title" id="proc-title">진행 프로세스</h2>
+      <div class="proc-list" id="proc-list" role="list" aria-label="진행 단계"></div>
+    </div>
+  </section>
+
+  <hr class="section-divider">
+
+  <!-- 주의사항 -->
+  <section aria-labelledby="caution-title">
+    <div class="wrap">
+      <p class="section-label">Cautions</p>
+      <h2 class="section-title" id="caution-title">주의사항</h2>
+      <div class="caution-box">
+        <ul class="caution-list" id="caution-list" aria-label="주의사항 목록"></ul>
+      </div>
+    </div>
+  </section>
+
+  <hr class="section-divider">
+
+  <!-- Form Area -->
+  <main id="form-area" class="form-area">
+    <div class="wrap">
+      <p class="section-label">Application</p>
+      <h2 class="section-title">신청 폼</h2>
+      <p class="form-sub" id="form-sub"></p>
+
+      <!-- Steps Nav -->
+      <nav aria-label="폼 단계" class="steps-nav">
+        <div class="step-indicator active" id="step-nav-1" aria-current="step">
+          <span class="step-num" aria-label="1단계">1</span>
+          <span class="step-label">계정 정보</span>
+        </div>
+        <div class="step-indicator" id="step-nav-2">
+          <span class="step-num" aria-label="2단계">2</span>
+          <span class="step-label">방문 일정</span>
+        </div>
+        <div class="step-indicator" id="step-nav-3">
+          <span class="step-num" aria-label="3단계">3</span>
+          <span class="step-label">동의 및 제출</span>
+        </div>
+      </nav>
+
+      <form id="invite-form" novalidate aria-label="크리에이터 초대 신청">
+
+        <!-- Step 1: 계정 정보 -->
+        <div class="step-panel active" id="step-1" role="tabpanel" aria-labelledby="step-nav-1">
+          <fieldset style="border:none;padding:0">
+            <legend class="visually-hidden">계정 정보</legend>
+            <div class="field-group">
+              <div class="field">
+                <label for="f-name">이름 / 활동명<span class="req" aria-hidden="true">*</span></label>
+                <input type="text" id="f-name" name="name" required aria-required="true" autocomplete="name" placeholder="예) 에스더, @estherbunny">
+              </div>
+              <div class="field-row">
+                <div class="field">
+                  <label for="f-phone">전화번호<span class="req" aria-hidden="true">*</span></label>
+                  <input type="tel" id="f-phone" name="phone" required aria-required="true" autocomplete="tel" inputmode="tel" placeholder="010-0000-0000">
+                </div>
+                <div class="field">
+                  <label for="f-kakao">카카오톡 ID<span class="opt">(선택)</span></label>
+                  <input type="text" id="f-kakao" name="kakao" autocomplete="off" placeholder="kakao_id">
+                </div>
+              </div>
+              <div class="field">
+                <label for="f-ig">인스타그램 URL<span class="req" aria-hidden="true">*</span></label>
+                <input type="url" id="f-ig" name="instagram" required aria-required="true" autocomplete="url" placeholder="https://instagram.com/username" inputmode="url">
+              </div>
+              <div class="field" id="yt-field" style="display:none">
+                <label for="f-yt">유튜브 채널<span class="opt">(선택)</span></label>
+                <input type="url" id="f-yt" name="youtube" autocomplete="url" placeholder="https://youtube.com/@channel" inputmode="url">
+              </div>
+              <div class="field">
+                <label for="f-other">기타 플랫폼<span class="opt">(선택)</span></label>
+                <input type="text" id="f-other" name="other" autocomplete="off" placeholder="틱톡, 블로그 등 채널 URL">
+              </div>
+              <div class="field">
+                <label for="f-region">거주 지역<span class="req" aria-hidden="true">*</span></label>
+                <select id="f-region" name="region" required aria-required="true">
+                  <option value="" disabled selected>지역 선택</option>
+                  <option value="서울">서울</option>
+                  <option value="경기·인천">경기·인천</option>
+                  <option value="부산·경남">부산·경남</option>
+                  <option value="대구·경북">대구·경북</option>
+                  <option value="대전·충청">대전·충청</option>
+                  <option value="광주·전라">광주·전라</option>
+                  <option value="강원">강원</option>
+                  <option value="제주">제주</option>
+                  <option value="해외거주">해외거주</option>
+                </select>
+              </div>
+            </div>
+          </fieldset>
+          <div class="form-nav">
+            <button type="button" class="btn-next" onclick="goStep(2)">다음 단계</button>
+          </div>
+        </div>
+
+        <!-- Step 2: 방문 일정 -->
+        <div class="step-panel" id="step-2" role="tabpanel" aria-labelledby="step-nav-2">
+          <fieldset style="border:none;padding:0">
+            <legend style="font-size:14px;font-weight:500;color:var(--ink);margin-bottom:16px;display:block;">
+              방문 희망 날짜를 선택해주세요<span class="req" aria-hidden="true">*</span>
+            </legend>
+            <div class="date-cards" role="group" aria-label="방문 날짜 선택">
+              <label class="date-card" onclick="selectDate(this)">
+                <input type="radio" name="visit-date" value="5월 1일(목)" required aria-required="true">
+                <div class="date-main" aria-hidden="true">5월 1일</div>
+                <div class="date-sub" aria-hidden="true">목요일 · Opening Day</div>
+              </label>
+              <label class="date-card" onclick="selectDate(this)">
+                <input type="radio" name="visit-date" value="5월 2일(금)">
+                <div class="date-main" aria-hidden="true">5월 2일</div>
+                <div class="date-sub" aria-hidden="true">금요일 · Day 2</div>
+              </label>
+              <label class="date-card" onclick="selectDate(this)">
+                <input type="radio" name="visit-date" value="5월 3일(토)">
+                <div class="date-main" aria-hidden="true">5월 3일</div>
+                <div class="date-sub" aria-hidden="true">토요일 · Day 3</div>
+              </label>
+            </div>
+            <p class="date-notice" role="note">
+              방문 인원이 분산 배정되므로, 선택하신 날짜가 확정되지 않을 수 있습니다. 변경 필요 시 담당자가 사전 안내드립니다.
+            </p>
+          </fieldset>
+          <div class="form-nav">
+            <button type="button" class="btn-back" onclick="goStep(1)">이전</button>
+            <button type="button" class="btn-next" onclick="goStep(3)">다음 단계</button>
+          </div>
+        </div>
+
+        <!-- Step 3: 동의 및 제출 -->
+        <div class="step-panel" id="step-3" role="tabpanel" aria-labelledby="step-nav-3">
+          <section aria-labelledby="consent-heading">
+            <h3 id="consent-heading" class="visually-hidden">동의 항목</h3>
+            <div class="consent-box">
+              <p class="consent-title">캠페인 참여 동의 항목</p>
+              <ul class="consent-items" id="consent-items" aria-label="동의 내용 목록"></ul>
+              <div class="consent-checks">
+                <label class="check-label" for="consent-main">
+                  <input type="checkbox" id="consent-main" name="consent-main" required aria-required="true">
+                  <span class="check-text">위 내용을 확인했으며 캠페인 진행에 동의합니다.</span>
+                </label>
+                <label class="check-label" for="consent-future">
+                  <input type="checkbox" id="consent-future" name="consent-future">
+                  <span class="check-text">향후 SIRIAI 파트너십 브랜드 캠페인 제안을 우선 받겠습니다.<span class="check-opt">(선택)</span></span>
+                </label>
+              </div>
+            </div>
+          </section>
+          <div class="field" style="margin-bottom:24px;">
+            <label for="f-email">이메일<span class="opt">(선택)</span></label>
+            <input type="email" id="f-email" name="email" autocomplete="email" placeholder="example@email.com" inputmode="email">
+          </div>
+          <div class="form-nav">
+            <button type="button" class="btn-back" onclick="goStep(2)">이전</button>
+            <button type="button" class="btn-submit" onclick="submitForm()">신청 완료</button>
+          </div>
+        </div>
+
+      </form>
+    </div>
+  </main>
+
+  <!-- Success -->
+  <section id="success" style="display:none;" aria-live="polite" aria-label="신청 완료 안내">
+    <div class="wrap">
+      <div class="success-inner">
+        <div class="success-icon" aria-hidden="true" role="img">🐰</div>
+        <h2 class="s-title">초대를 수락해주셔서 감사합니다</h2>
+        <p class="s-body" id="success-body"></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer role="contentinfo">
+    <div class="wrap">
+      <span class="f-brand">Esther Bunny's Atelier</span>
+      <span class="f-note">본 페이지는 초대된 크리에이터에게만 공유됩니다. Operated by SIRIAI</span>
+    </div>
+  </footer>
+
+  <script>
+    /* ── Constants ── */
+    const SHEET_ENDPOINT = 'SHEET_ENDPOINT_HERE';
+    const CAMPAIGN = 'Esther Bunny Atelier Open 2025';
+    const T = new URLSearchParams(location.search).get('t') || '4';
+
+    /* ── Tier Data ── */
+    const TIERS = {
+      '1': {
+        id: 'mega1',
+        showYt: true,
+        heroTitle: '에스더버니의 아틀리에가<br><em>문을 엽니다.</em>',
+        heroBody: '그 첫 번째 순간을 함께해주실 분으로\n당신을 초대합니다.',
+        heroNote: '아래 내용을 확인하신 후 하단 폼을 작성해주세요.\n검토 후 협업이 진행되는 분께 담당자가 개별 연락드립니다.',
+        rewardMain: '특별 패키징 제공 + 매거진 인터뷰 연계',
+        rewardSub: '협업 확정 후 세부 조건을 함께 협의합니다.',
+        rewardTags: ['인스타그램', '유튜브', '라이브', '공동작업자', '2차 활용', '매거진 인터뷰'],
+        conds: [
+          { icon: '📱', title: '플랫폼', desc: '인스타그램 + 유튜브' },
+          { icon: '🎬', title: '콘텐츠 형식', desc: '인스타그램 릴스·피드 / 유튜브 영상 — 세부 레퍼런스는 협업 확정 후 안내드립니다.' },
+          { icon: '🔴', title: '라이브', desc: '방문 당일 라이브 진행 — 방식과 시간은 함께 조율합니다.' },
+          { icon: '🤝', title: '공동작업자 세팅', desc: '업로드 후 @estherbunny_official 공동작업자 초대' },
+          { icon: '♻️', title: '2차 활용', desc: '업로드된 콘텐츠를 광고 소재로 활용할 수 있습니다.' },
+          { icon: '#️⃣', title: '협찬 표기', desc: '캡션 내 #광고 또는 #협찬 포함 (광고법 준수)' },
+        ],
+        procs: [
+          { n:'1', title:'폼 작성', desc:'아래 폼을 완성해주세요.' },
+          { n:'2', title:'검토 및 연락', desc:'검토 후 협업이 진행되는 분께 담당자가 직접 연락드립니다.' },
+          { n:'3', title:'조건 협의', desc:'콘텐츠 방향, 방문 일정 등을 함께 조율합니다.' },
+          { n:'4', title:'아틀리에 방문', desc:'선택하신 날짜에 현장 방문 · 라이브 및 콘텐츠 제작' },
+          { n:'5', title:'업로드 및 정산', desc:'공동작업자 세팅 후 링크 공유 → 협의된 조건으로 정산' },
+        ],
+        cautions: [
+          '업로드한 콘텐츠는 1년간 유지해주세요.',
+          '협찬 표기는 광고법 준수를 위한 항목으로, 캡션에 반드시 포함해주세요.',
+          '일정 변경이 필요한 경우 미리 담당자에게 알려주세요.',
+        ],
+        consentItems: [
+          '업로드한 콘텐츠를 1년간 유지합니다.',
+          '공동작업자 세팅 및 콘텐츠 2차 활용에 동의합니다.',
+          '협찬 표기(#광고 또는 #협찬)를 캡션에 포함합니다.',
+          '수집된 개인정보는 이번 캠페인 운영 목적 외에는 활용되지 않습니다.',
+        ],
+        formSub: '작성 완료 후 내용을 검토하고, 협업이 진행되는 분께 담당자가 개별 연락드립니다.',
+        successBody: '작성해주신 내용을 꼼꼼히 검토하겠습니다.\n협업이 진행되는 분께는 방문 일정과 함께 담당자가 직접 연락드릴 예정입니다.\n\n이번 초대가 첫 번째 인연입니다. 더 잘 맞는 협업으로도 함께할 수 있어요.',
+      },
+      '2': {
+        id: 'mega2',
+        showYt: false,
+        heroTitle: '에스더버니의 아틀리에가<br><em>문을 엽니다.</em>',
+        heroBody: '그 첫 번째 순간을 함께해주실 분으로\n당신을 초대합니다.',
+        heroNote: '아래 내용을 확인하신 후 하단 폼을 작성해주세요.\n검토 후 협업이 진행되는 분께 담당자가 개별 연락드립니다.',
+        rewardMain: '특별 패키징 제공',
+        rewardSub: '협업 확정 후 세부 조건을 함께 협의합니다.',
+        rewardTags: ['인스타그램', '틱톡 미러링', '라이브', '공동작업자', '2차 활용'],
+        conds: [
+          { icon: '📱', title: '플랫폼', desc: '인스타그램 (틱톡 채널 보유 시 미러링 포함)' },
+          { icon: '🎬', title: '콘텐츠 형식', desc: '인스타그램 릴스·피드 — 세부 레퍼런스는 협업 확정 후 안내드립니다.' },
+          { icon: '🔁', title: '틱톡 미러링', desc: '인스타그램 콘텐츠를 틱톡에 동시 발행 (채널 보유 시)' },
+          { icon: '🔴', title: '라이브', desc: '방문 당일 라이브 진행 — 방식과 시간은 함께 조율합니다.' },
+          { icon: '🤝', title: '공동작업자 세팅', desc: '업로드 후 @estherbunny_official 공동작업자 초대' },
+          { icon: '♻️', title: '2차 활용', desc: '업로드된 콘텐츠를 광고 소재로 활용할 수 있습니다.' },
+          { icon: '#️⃣', title: '협찬 표기', desc: '캡션 내 #광고 또는 #협찬 포함 (광고법 준수)' },
+        ],
+        procs: [
+          { n:'1', title:'폼 작성', desc:'아래 폼을 완성해주세요.' },
+          { n:'2', title:'검토 및 연락', desc:'검토 후 협업이 진행되는 분께 담당자가 직접 연락드립니다.' },
+          { n:'3', title:'조건 협의', desc:'콘텐츠 방향, 방문 일정 등을 함께 조율합니다.' },
+          { n:'4', title:'아틀리에 방문', desc:'선택하신 날짜에 현장 방문 · 라이브 및 콘텐츠 제작' },
+          { n:'5', title:'업로드 및 정산', desc:'인스타 + 틱톡 미러링 · 공동작업자 세팅 후 링크 공유' },
+        ],
+        cautions: [
+          '업로드한 콘텐츠는 1년간 유지해주세요.',
+          '협찬 표기는 광고법 준수를 위한 항목으로, 캡션에 반드시 포함해주세요.',
+          '일정 변경이 필요한 경우 미리 담당자에게 알려주세요.',
+        ],
+        consentItems: [
+          '업로드한 콘텐츠를 1년간 유지합니다.',
+          '공동작업자 세팅, 틱톡 미러링, 콘텐츠 2차 활용에 동의합니다.',
+          '협찬 표기(#광고 또는 #협찬)를 캡션에 포함합니다.',
+          '수집된 개인정보는 이번 캠페인 운영 목적 외에는 활용되지 않습니다.',
+        ],
+        formSub: '작성 완료 후 내용을 검토하고, 협업이 진행되는 분께 담당자가 개별 연락드립니다.',
+        successBody: '작성해주신 내용을 꼼꼼히 검토하겠습니다.\n협업이 진행되는 분께는 방문 일정과 함께 담당자가 직접 연락드릴 예정입니다.\n\n이번 초대가 첫 번째 인연입니다. 더 잘 맞는 협업으로도 함께할 수 있어요.',
+      },
+      '3': {
+        id: 'fashion',
+        showYt: false,
+        heroTitle: '에스더버니의 아틀리에가<br><em>문을 엽니다.</em>',
+        heroBody: '이 공간의 첫 번째 손님으로\n당신을 초대합니다.',
+        heroNote: '아래 내용을 확인하신 후 하단 폼을 작성해주세요.\n검토 후 진행되는 분께 방문 일정을 안내드립니다.',
+        rewardMain: '현장 선물 (4–5만원 상당) + 애즈이프캘리 × 에스더버니 콜라보 제품',
+        rewardSub: '현장 방문 시 수령. 제품은 현장에서만 전달됩니다.',
+        rewardTags: ['인스타그램', '현장 선물', '콜라보 제품', '공동작업자', '2차 활용'],
+        conds: [
+          { icon: '📱', title: '플랫폼', desc: '인스타그램 릴스 또는 피드' },
+          { icon: '🎬', title: '콘텐츠 내용', desc: '에스더버니 아틀리에 방문 콘텐츠 — 세부 레퍼런스는 진행 확정 후 안내드립니다.' },
+          { icon: '🤝', title: '공동작업자 세팅', desc: '업로드 후 @estherbunny_official 공동작업자 초대' },
+          { icon: '♻️', title: '2차 활용', desc: '업로드된 콘텐츠를 광고 소재로 활용할 수 있습니다.' },
+          { icon: '#️⃣', title: '협찬 표기', desc: '캡션 내 #광고 또는 #협찬 포함 (광고법 준수)' },
+        ],
+        procs: [
+          { n:'1', title:'폼 작성', desc:'아래 폼을 완성해주세요.' },
+          { n:'2', title:'검토 및 일정 안내', desc:'검토 후 진행되는 분께 방문 날짜를 안내드립니다.' },
+          { n:'3', title:'아틀리에 방문 + 선물 수령', desc:'선택하신 날짜에 방문 · 현장 선물 및 콜라보 제품 수령' },
+          { n:'4', title:'콘텐츠 업로드', desc:'방문 후 자유롭게 제작 · 업로드 후 공동작업자 세팅 + 링크 공유' },
+        ],
+        cautions: [
+          '업로드한 콘텐츠는 사전 협의 없이 삭제하지 않아주세요.',
+          '협찬 표기는 광고법 준수를 위한 항목으로, 캡션에 반드시 포함해주세요.',
+          '일정 변경이 필요한 경우 미리 담당자에게 알려주세요.',
+        ],
+        consentItems: [
+          '공동작업자 세팅 및 콘텐츠 2차 활용에 동의합니다.',
+          '협찬 표기(#광고 또는 #협찬)를 캡션에 포함합니다.',
+          '수집된 개인정보는 이번 캠페인 운영 목적 외에는 활용되지 않습니다.',
+        ],
+        formSub: '작성 완료 후 내용을 검토하고, 진행되는 분께 방문 일정을 안내드립니다.',
+        successBody: '작성해주신 내용을 확인하겠습니다.\n진행이 확정되는 분께 방문 일정과 함께 담당자가 연락드립니다.\n\n이번 초대가 첫 번째 인연입니다. 더 잘 맞는 협업으로도 함께할 수 있어요.',
+      },
+      '4': {
+        id: 'general',
+        showYt: false,
+        heroTitle: '에스더버니의 아틀리에가<br><em>문을 엽니다.</em>',
+        heroBody: '이 공간의 첫 번째 손님으로\n당신을 초대합니다.',
+        heroNote: '아래 내용을 확인하신 후 하단 폼을 작성해주세요.\n검토 후 진행되는 분께 방문 일정을 안내드립니다.',
+        rewardMain: '현장 선물 (4–5만원 상당)',
+        rewardSub: '현장 방문 시 수령.',
+        rewardTags: ['인스타그램', '현장 선물', '공동작업자', '2차 활용'],
+        conds: [
+          { icon: '📱', title: '플랫폼', desc: '인스타그램 릴스 또는 피드' },
+          { icon: '🎬', title: '콘텐츠 내용', desc: '에스더버니 아틀리에 방문 콘텐츠 — 세부 레퍼런스는 진행 확정 후 안내드립니다.' },
+          { icon: '🤝', title: '공동작업자 세팅', desc: '업로드 후 @estherbunny_official 공동작업자 초대' },
+          { icon: '♻️', title: '2차 활용', desc: '업로드된 콘텐츠를 광고 소재로 활용할 수 있습니다.' },
+          { icon: '#️⃣', title: '협찬 표기', desc: '캡션 내 #광고 또는 #협찬 포함 (광고법 준수)' },
+        ],
+        procs: [
+          { n:'1', title:'폼 작성', desc:'아래 폼을 완성해주세요.' },
+          { n:'2', title:'검토 및 일정 안내', desc:'검토 후 진행되는 분께 방문 날짜를 안내드립니다.' },
+          { n:'3', title:'아틀리에 방문 + 선물 수령', desc:'선택하신 날짜에 방문 · 현장 선물 수령' },
+          { n:'4', title:'콘텐츠 업로드', desc:'방문 후 자유롭게 제작 · 업로드 후 공동작업자 세팅 + 링크 공유' },
+        ],
+        cautions: [
+          '업로드한 콘텐츠는 사전 협의 없이 삭제하지 않아주세요.',
+          '협찬 표기는 광고법 준수를 위한 항목으로, 캡션에 반드시 포함해주세요.',
+          '일정 변경이 필요한 경우 미리 담당자에게 알려주세요.',
+        ],
+        consentItems: [
+          '공동작업자 세팅 및 콘텐츠 2차 활용에 동의합니다.',
+          '협찬 표기(#광고 또는 #협찬)를 캡션에 포함합니다.',
+          '수집된 개인정보는 이번 캠페인 운영 목적 외에는 활용되지 않습니다.',
+        ],
+        formSub: '작성 완료 후 내용을 검토하고, 진행되는 분께 방문 일정을 안내드립니다.',
+        successBody: '작성해주신 내용을 확인하겠습니다.\n진행이 확정되는 분께 방문 일정과 함께 담당자가 연락드립니다.\n\n이번 초대가 첫 번째 인연입니다. 더 잘 맞는 협업으로도 함께할 수 있어요.',
+      },
+    };
+
+    /* ── Render ── */
+    const cfg = TIERS[T] || TIERS['4'];
+
+    // hero
+    document.getElementById('hero-title').innerHTML = cfg.heroTitle;
+    document.getElementById('hero-body').innerText = cfg.heroBody;
+    document.getElementById('hero-note').innerText = cfg.heroNote;
+
+    // h-tag
+    const tagMap = { '1':'Mega Creator · Invitation', '2':'Mega Creator · Invitation', '3':'Fashion Creator · Invitation', '4':'Creator · Invitation' };
+    document.getElementById('h-tag').innerText = tagMap[T] || tagMap['4'];
+
+    // reward
+    document.getElementById('reward-main').innerText = cfg.rewardMain;
+    document.getElementById('reward-sub').innerText = cfg.rewardSub;
+    document.getElementById('reward-tags').innerHTML = cfg.rewardTags.map(t => `<span class="rtag">${t}</span>`).join('');
+
+    // conds
+    document.getElementById('cond-list').innerHTML = cfg.conds.map(c =>
+      `<div class="cond-row" role="listitem"><div class="cond-icon" aria-hidden="true">${c.icon}</div><div class="cond-body"><div class="cond-title">${c.title}</div><div class="cond-desc">${c.desc}</div></div></div>`
+    ).join('');
+
+    // procs
+    document.getElementById('proc-list').innerHTML = cfg.procs.map(p =>
+      `<div class="proc-item" role="listitem"><div class="proc-left"><div class="proc-dot" aria-label="${p.n}단계">${p.n}</div><div class="proc-line" aria-hidden="true"></div></div><div class="proc-body"><div class="proc-title">${p.title}</div><div class="proc-desc">${p.desc}</div></div></div>`
+    ).join('');
+
+    // cautions
+    document.getElementById('caution-list').innerHTML = cfg.cautions.map(c => `<li>${c}</li>`).join('');
+
+    // consent items
+    document.getElementById('consent-items').innerHTML = cfg.consentItems.map(c => `<li>${c}</li>`).join('');
+
+    // form-sub
+    document.getElementById('form-sub').innerText = cfg.formSub;
+
+    // yt field
+    if (cfg.showYt) document.getElementById('yt-field').style.display = 'flex';
+
+    // success body
+    document.getElementById('success-body').innerText = cfg.successBody;
+
+    /* ── Date Selection ── */
+    function selectDate(el) {
+      document.querySelectorAll('.date-card').forEach(c => c.classList.remove('sel'));
+      el.classList.add('sel');
+      el.querySelector('input[type="radio"]').checked = true;
+    }
+
+    /* ── Step Navigation ── */
+    let currentStep = 1;
+
+    function setStepNav(n) {
+      [1, 2, 3].forEach(i => {
+        const nav = document.getElementById('step-nav-' + i);
+        nav.classList.remove('active', 'done');
+        if (i < n) nav.classList.add('done');
+        else if (i === n) {
+          nav.classList.add('active');
+          nav.setAttribute('aria-current', 'step');
+        } else {
+          nav.removeAttribute('aria-current');
+        }
+      });
+    }
+
+    function showStep(n) {
+      [1, 2, 3].forEach(i => {
+        const panel = document.getElementById('step-' + i);
+        panel.classList.toggle('active', i === n);
+      });
+      setStepNav(n);
+      currentStep = n;
+      // scroll to form top
+      document.getElementById('form-area').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    function validateStep1() {
+      const name = document.getElementById('f-name').value.trim();
+      const phone = document.getElementById('f-phone').value.trim();
+      const ig = document.getElementById('f-ig').value.trim();
+      const region = document.getElementById('f-region').value;
+
+      if (!name) {
+        alert('이름 또는 활동명을 입력해주세요.');
+        document.getElementById('f-name').focus();
+        return false;
+      }
+      if (!phone) {
+        alert('전화번호를 입력해주세요.');
+        document.getElementById('f-phone').focus();
+        return false;
+      }
+      if (!ig) {
+        alert('인스타그램 URL을 입력해주세요.');
+        document.getElementById('f-ig').focus();
+        return false;
+      }
+      if (!region) {
+        alert('거주 지역을 선택해주세요.');
+        document.getElementById('f-region').focus();
+        return false;
+      }
+      return true;
+    }
+
+    function validateStep2() {
+      const selected = document.querySelector('input[name="visit-date"]:checked');
+      if (!selected) {
+        alert('방문 희망 날짜를 선택해주세요.');
+        return false;
+      }
+      return true;
+    }
+
+    function goStep(n) {
+      if (n === 2 && currentStep === 1) {
+        if (!validateStep1()) return;
+      }
+      if (n === 3 && currentStep === 2) {
+        if (!validateStep2()) return;
+      }
+      showStep(n);
+    }
+
+    /* ── Submit ── */
+    async function submitForm() {
+      if (!document.getElementById('consent-main').checked) {
+        alert('필수 동의 항목을 확인해주세요.');
+        document.getElementById('consent-main').focus();
+        return;
+      }
+      const btn = document.querySelector('.btn-submit');
+      btn.disabled = true;
+      btn.innerText = '제출 중...';
+
+      const visitDate = document.querySelector('input[name="visit-date"]:checked')?.value || '';
+      const data = {
+        tier: cfg.id,
+        campaign: CAMPAIGN,
+        name: document.getElementById('f-name').value,
+        phone: document.getElementById('f-phone').value,
+        kakao: document.getElementById('f-kakao').value,
+        instagram: document.getElementById('f-ig').value,
+        youtube: document.getElementById('f-yt')?.value || '',
+        other: document.getElementById('f-other').value,
+        region: document.getElementById('f-region').value,
+        visitDate,
+        email: document.getElementById('f-email').value,
+        futureConsent: document.getElementById('consent-future').checked ? 'Y' : 'N',
+        timestamp: new Date().toISOString(),
+      };
+
+      try {
+        await fetch(SHEET_ENDPOINT, { method: 'POST', body: JSON.stringify(data) });
+      } catch (e) {}
+
+      document.getElementById('form-area').style.display = 'none';
+      const successEl = document.getElementById('success');
+      successEl.style.display = 'flex';
+      successEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  </script>
+</body>
+</html>

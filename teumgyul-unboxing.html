@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>틈결 Atelier — Creator Invitation</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Faculty+Glyphic&family=Noto+Serif+KR:wght@300;400;500&family=Pretendard:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --ink:#101820;--ink60:rgba(16,24,32,.6);--ink40:rgba(16,24,32,.4);
+  --ink20:rgba(16,24,32,.2);--ink10:rgba(16,24,32,.1);--ink06:rgba(16,24,32,.06);
+  --cream:#f0ebe1;--bg:#faf8f4;--white:#fff;--accent:#8c7d62;
+}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--ink);font-family:'Pretendard','Apple SD Gothic Neo',sans-serif;
+  font-weight:300;font-size:15px;line-height:1.7;min-height:100vh;-webkit-font-smoothing:antialiased}
+
+/* header */
+header{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(250,248,244,.94);
+  backdrop-filter:blur(16px);border-bottom:1px solid var(--ink10);
+  height:52px;display:flex;align-items:center;justify-content:space-between;padding:0 2.5rem}
+.h-brand{font-family:'Faculty Glyphic',serif;font-size:13px;letter-spacing:.1em;color:var(--ink)}
+.h-tag{font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--ink40)}
+
+/* layout */
+main{padding-top:52px}
+.wrap{max-width:620px;margin:0 auto;padding:0 2rem}
+
+/* hero */
+.hero{padding:6.5rem 0 4.5rem;border-bottom:1px solid var(--ink10)}
+.eyebrow{font-size:10px;letter-spacing:.28em;text-transform:uppercase;color:var(--ink40);
+  margin-bottom:2rem;display:flex;align-items:center;gap:10px}
+.eyebrow::before{content:'';width:18px;height:1px;background:var(--ink40)}
+.hero-title{font-family:'Noto Serif KR',serif;font-size:clamp(1.9rem,5.5vw,2.8rem);
+  font-weight:300;line-height:1.2;letter-spacing:-.02em;margin-bottom:1.8rem}
+.hero-title em{font-style:italic}
+.hero-body{font-size:14px;color:var(--ink60);line-height:1.9;max-width:440px}
+.hero-note{margin-top:1.5rem;font-size:12px;color:var(--ink40);
+  border-left:2px solid var(--ink10);padding-left:1rem;line-height:1.7}
+
+/* section */
+.sec{padding:3rem 0;border-bottom:1px solid var(--ink10)}
+.sec:last-of-type{border-bottom:none}
+.sec-label{font-size:10px;letter-spacing:.28em;text-transform:uppercase;color:var(--ink40);
+  margin-bottom:1.8rem;display:flex;align-items:center;gap:10px}
+.sec-label::before{content:'';width:14px;height:1px;background:var(--ink40)}
+
+/* info grid */
+.info-grid{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--ink10);
+  border:1px solid var(--ink10);border-radius:2px;overflow:hidden}
+.info-cell{background:var(--bg);padding:1.2rem 1.5rem}
+.info-cell .k{font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink40);margin-bottom:.35rem}
+.info-cell .v{font-size:13px;color:var(--ink);font-weight:400;line-height:1.45}
+.info-cell .v small{display:block;font-size:11px;color:var(--ink40);margin-top:2px;font-weight:300}
+
+/* floor strip */
+.floor-strip{border:1px solid var(--ink10);border-radius:2px;overflow:hidden;margin-top:1.5rem}
+.floor-row{display:flex;border-bottom:1px solid var(--ink10)}
+.floor-row:last-child{border-bottom:none}
+.floor-f{width:52px;flex-shrink:0;background:var(--cream);border-right:1px solid var(--ink10);
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Faculty Glyphic',serif;font-size:10px;letter-spacing:.06em;color:var(--ink40)}
+.floor-body{padding:.85rem 1.3rem}
+.floor-name{font-size:13px;font-weight:500;margin-bottom:2px}
+.floor-desc{font-size:11px;color:var(--ink40);line-height:1.5}
+
+/* reward card */
+.reward-card{background:var(--cream);border:1px solid var(--ink10);border-radius:2px;padding:1.8rem 2rem}
+.reward-main{font-family:'Noto Serif KR',serif;font-size:1.5rem;font-weight:300;
+  color:var(--ink);margin-bottom:.4rem;letter-spacing:-.01em}
+.reward-sub{font-size:12px;color:var(--ink40);line-height:1.7;margin-bottom:1.3rem}
+.reward-tags{display:flex;flex-wrap:wrap;gap:6px}
+.rtag{font-size:11px;color:var(--ink60);padding:4px 10px;
+  border:1px solid var(--ink20);border-radius:2px;letter-spacing:.03em}
+
+/* content conditions */
+.cond-list{display:flex;flex-direction:column;gap:1px;background:var(--ink10);
+  border:1px solid var(--ink10);border-radius:2px;overflow:hidden}
+.cond-row{background:var(--bg);padding:1rem 1.5rem;display:flex;gap:1.2rem;align-items:flex-start}
+.cond-icon{font-size:14px;flex-shrink:0;margin-top:1px}
+.cond-body{}
+.cond-title{font-size:13px;font-weight:500;margin-bottom:2px}
+.cond-desc{font-size:12px;color:var(--ink40);line-height:1.6}
+
+/* process */
+.proc-list{display:flex;flex-direction:column}
+.proc-item{display:flex;gap:1.3rem;padding-bottom:1.4rem}
+.proc-item:last-child{padding-bottom:0}
+.proc-left{display:flex;flex-direction:column;align-items:center;width:24px;flex-shrink:0}
+.proc-dot{width:24px;height:24px;border-radius:50%;border:1px solid var(--ink20);background:var(--bg);
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Faculty Glyphic',serif;font-size:10px;color:var(--ink40);flex-shrink:0;position:relative;z-index:1}
+.proc-line{width:1px;flex:1;background:var(--ink10);margin-top:5px;min-height:12px}
+.proc-item:last-child .proc-line{display:none}
+.proc-body{padding-top:3px}
+.proc-title{font-size:13px;font-weight:500;margin-bottom:2px}
+.proc-desc{font-size:12px;color:var(--ink40);line-height:1.65}
+
+/* caution */
+.caution{background:var(--bg);border:1px solid var(--ink10);border-radius:2px;padding:1.3rem 1.6rem}
+.caution ul{display:flex;flex-direction:column;gap:7px;list-style:none}
+.caution li{font-size:12px;color:var(--ink60);line-height:1.65;display:flex;gap:10px}
+.caution li::before{content:'—';color:var(--ink20);flex-shrink:0}
+
+/* ── FORM ── */
+.form-wrap{padding:3rem 0 6rem;border-top:1px solid var(--ink10)}
+.form-heading{font-family:'Noto Serif KR',serif;font-size:1.2rem;font-weight:300;margin-bottom:.4rem}
+.form-sub{font-size:13px;color:var(--ink40);line-height:1.7;margin-bottom:2.5rem}
+
+.step{display:none}.step.active{display:block}
+
+.step-dots{display:flex;gap:5px;align-items:center;margin-bottom:2rem}
+.sd{width:5px;height:5px;border-radius:50%;background:var(--ink10)}
+.sd.done{background:var(--ink)}
+.sd.cur{background:var(--ink);width:14px;border-radius:3px}
+
+.fg{display:flex;flex-direction:column;gap:7px;margin-bottom:13px}
+.frow{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.frow .fg{margin-bottom:0}
+.fg.full{grid-column:1/-1}
+
+.fl{font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink40);font-weight:400}
+.req::after{content:' *';color:var(--ink40)}
+
+input[type=text],input[type=tel],input[type=email],select,textarea{
+  background:var(--white);border:1px solid var(--ink20);border-radius:2px;
+  padding:10px 13px;font-size:13px;color:var(--ink);
+  font-family:'Pretendard',sans-serif;font-weight:300;outline:none;
+  transition:border-color .15s;width:100%;-webkit-appearance:none}
+input::placeholder,textarea::placeholder{color:rgba(16,24,32,.22)}
+input:focus,select:focus,textarea:focus{border-color:var(--ink40)}
+select{cursor:pointer}
+textarea{resize:vertical;min-height:72px;line-height:1.65}
+
+.radio-list,.check-list{display:flex;flex-direction:column;gap:7px}
+.ri,.ci{display:flex;align-items:flex-start;gap:10px;cursor:pointer;
+  padding:10px 13px;border:1px solid var(--ink10);border-radius:2px;
+  background:var(--white);transition:border-color .15s}
+.ri:hover,.ci:hover{border-color:var(--ink20)}
+.ri.sel,.ci.sel{border-color:var(--ink)}
+.ri input,.ci input{width:14px;height:14px;flex-shrink:0;margin-top:2px;
+  padding:0;accent-color:var(--ink)}
+.ri input{border-radius:50%}
+.ri-main,.ci-main{font-size:13px;color:var(--ink);font-weight:400;line-height:1.4}
+.ri-sub,.ci-sub{font-size:11px;color:var(--ink40);margin-top:2px;line-height:1.5}
+
+.addr-branch{display:none}.addr-branch.show{display:block}
+.addr-inner{display:none;padding-top:1rem}
+
+.consent-box{background:var(--cream);border:1px solid var(--ink10);border-radius:2px;padding:1.3rem 1.5rem;margin-bottom:13px}
+.consent-title{font-size:12px;font-weight:500;margin-bottom:.5rem}
+.consent-body{font-size:12px;color:var(--ink60);line-height:1.8}
+.consent-body ul{padding-left:1rem;margin-top:.4rem}
+.consent-body li{margin-bottom:2px}
+
+.btn-row{display:flex;gap:8px;margin-top:1.5rem}
+.btn-next,.btn-submit{flex:1;padding:13px;background:var(--ink);color:var(--bg);
+  font-family:'Pretendard',sans-serif;font-size:12px;font-weight:400;
+  letter-spacing:.1em;text-transform:uppercase;border:none;border-radius:2px;cursor:pointer;transition:opacity .15s}
+.btn-back{padding:13px 16px;background:transparent;color:var(--ink40);
+  border:1px solid var(--ink10);border-radius:2px;font-family:'Pretendard',sans-serif;
+  font-size:12px;cursor:pointer;transition:opacity .15s}
+.btn-next:hover,.btn-submit:hover,.btn-back:hover{opacity:.7}
+.btn-submit:disabled{opacity:.3;cursor:not-allowed}
+.form-notice{margin-top:.8rem;font-size:11px;color:var(--ink40);line-height:1.75;text-align:center}
+
+.success{display:none;text-align:center;padding:4rem 0}
+.success.show{display:block}
+.s-mark{font-family:'Faculty Glyphic',serif;font-size:1.6rem;color:var(--ink20);margin-bottom:1.4rem}
+.s-title{font-family:'Noto Serif KR',serif;font-size:1.2rem;font-weight:300;color:var(--ink);margin-bottom:.8rem}
+.s-body{font-size:13px;color:var(--ink40);line-height:1.9}
+
+footer{border-top:1px solid var(--ink10);padding:2rem 0}
+footer .wrap{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:.5rem}
+.f-brand{font-family:'Faculty Glyphic',serif;font-size:11px;letter-spacing:.08em;color:var(--ink40)}
+.f-note{font-size:11px;color:var(--ink20)}
+
+@media(max-width:540px){
+  header{padding:0 1.2rem}
+  .hero{padding:4.5rem 0 3rem}
+  .info-grid{grid-template-columns:1fr}
+  .frow{grid-template-columns:1fr}
+  .h-tag{display:none}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <span class="h-brand">TEUMGYUL</span>
+  <span class="h-tag" id="h-tag">Seongsu Open · Creator Invitation</span>
+</header>
+
+<main>
+<div class="wrap">
+
+  <!-- Hero: tier별 JS 주입 -->
+  <div class="hero">
+    <p class="eyebrow">Iconic Movement × SIRIAI</p>
+    <h1 class="hero-title" id="hero-title"></h1>
+    <p class="hero-body" id="hero-body"></p>
+    <p class="hero-note" id="hero-note"></p>
+  </div>
+
+  <!-- 공간 소개 -->
+  <div class="sec">
+    <p class="sec-label">공간 소개</p>
+    <div class="info-grid">
+      <div class="info-cell"><div class="k">공간</div><div class="v">틈결 Atelier<small>성수동 아뜰리에길</small></div></div>
+      <div class="info-cell"><div class="k">행사</div><div class="v">플래그십 스토어 오픈<small>Esther Bunny's Atelier</small></div></div>
+      <div class="info-cell"><div class="k">주관</div><div class="v">아이코닉무브먼트<small>Iconic Movement</small></div></div>
+      <div class="info-cell"><div class="k">운영</div><div class="v">SIRIAI<small>인플루언서 파트너십</small></div></div>
+    </div>
+    <div class="floor-strip">
+      <div class="floor-row"><div class="floor-f">B1F</div><div class="floor-body"><div class="floor-name">Sketch Atelier</div><div class="floor-desc">에스더버니 아트워크 · 포토존 · 한정판 제품</div></div></div>
+      <div class="floor-row"><div class="floor-f">1F</div><div class="floor-body"><div class="floor-name">틈결 Atelier</div><div class="floor-desc">플래그십 리테일 · 대표 제품 진열 및 판매</div></div></div>
+      <div class="floor-row"><div class="floor-f">2F</div><div class="floor-body"><div class="floor-name">Fashion Atelier</div><div class="floor-desc">패션 협업 의류 · 피팅존 · 포토 체험</div></div></div>
+      <div class="floor-row"><div class="floor-f">3F</div><div class="floor-body"><div class="floor-name">Wonder Atelier</div><div class="floor-desc">에스더버니 세계관 몰입 체험</div></div></div>
+      <div class="floor-row"><div class="floor-f">Roof</div><div class="floor-body"><div class="floor-name">Rooftop</div><div class="floor-desc">서울숲 뷰 · 버니 애드벌룬 포토존</div></div></div>
+    </div>
+  </div>
+
+  <!-- 협업 조건: tier별 JS 주입 -->
+  <div class="sec">
+    <p class="sec-label">협업 조건</p>
+    <div class="reward-card">
+      <div class="reward-main" id="reward-main"></div>
+      <div class="reward-sub" id="reward-sub"></div>
+      <div class="reward-tags" id="reward-tags"></div>
+    </div>
+  </div>
+
+  <!-- 콘텐츠 가이드라인: tier별 JS 주입 -->
+  <div class="sec">
+    <p class="sec-label">콘텐츠 가이드라인</p>
+    <div class="cond-list" id="cond-list"></div>
+  </div>
+
+  <!-- 진행 프로세스: tier별 JS 주입 -->
+  <div class="sec">
+    <p class="sec-label">진행 프로세스</p>
+    <div class="proc-list" id="proc-list"></div>
+  </div>
+
+  <!-- 주의사항: tier별 JS 주입 -->
+  <div class="sec">
+    <p class="sec-label">주의사항</p>
+    <div class="caution"><ul id="caution-list"></ul></div>
+  </div>
+
+  <!-- FORM -->
+  <div class="form-wrap">
+    <p class="sec-label">참여 신청</p>
+    <p class="form-heading">정보를 입력해주세요</p>
+    <p class="form-sub" id="form-sub"></p>
+
+    <div id="form-area">
+
+      <!-- Step 1: 계정 정보 -->
+      <div class="step active" id="step1">
+        <div class="step-dots"><div class="sd cur"></div><div class="sd" id="sd2a"></div><div class="sd" id="sd3a"></div></div>
+        <div class="fg"><label class="fl req">이름 / 활동명</label><input type="text" id="f-name" placeholder="홍길동 / @handle"></div>
+        <div class="frow">
+          <div class="fg"><label class="fl req">전화번호</label><input type="tel" id="f-phone" placeholder="010-0000-0000"></div>
+          <div class="fg"><label class="fl">카카오톡 ID</label><input type="text" id="f-kakao" placeholder="선택사항"></div>
+        </div>
+        <div class="fg"><label class="fl req">인스타그램</label><input type="text" id="f-ig" placeholder="https://www.instagram.com/username"></div>
+        <div class="fg" id="yt-field" style="display:none"><label class="fl">유튜브 채널</label><input type="text" id="f-yt" placeholder="채널 URL"></div>
+        <div class="fg"><label class="fl">기타 플랫폼</label><input type="text" id="f-other" placeholder="틱톡 / 블로그 등 URL (복수 입력 가능)"></div>
+        <div class="btn-row"><button class="btn-next" onclick="goStep(2)">다음 →</button></div>
+      </div>
+
+      <!-- Step 2: 지역 + 조건별 추가 -->
+      <div class="step" id="step2">
+        <div class="step-dots"><div class="sd done"></div><div class="sd cur"></div><div class="sd" id="sd3b"></div></div>
+        <div class="fg">
+          <label class="fl req">거주 지역</label>
+          <select id="f-region">
+            <option value="">선택해주세요</option>
+            <option>서울</option><option>경기 / 인천</option><option>부산 / 경남</option>
+            <option>대구 / 경북</option><option>대전 / 충청</option><option>광주 / 전라</option>
+            <option>강원</option><option>제주</option><option>해외 거주</option>
+          </select>
+          <span style="font-size:11px;color:var(--ink40);margin-top:4px">성수 방문 일정 조율을 위해 확인합니다.</span>
+        </div>
+
+        <!-- 무가시딩만: 주소 수집 -->
+        <div class="addr-branch" id="addr-branch">
+          <div style="height:1px;background:var(--ink10);margin:1.2rem 0"></div>
+          <p style="font-size:12px;color:var(--ink60);margin-bottom:1rem;line-height:1.7">이번 협업에는 제품 사전 발송이 포함됩니다.<br>배송 정보를 입력해주세요.</p>
+          <div class="fg">
+            <label class="fl">이전에 SIRIAI에 배송 정보를 제출한 적 있나요?</label>
+            <div class="radio-list" style="margin-top:4px">
+              <label class="ri" onclick="setAddrYn('yes',this)"><input type="radio" name="addr-yn" value="yes"><div><div class="ri-main">네, 있습니다</div><div class="ri-sub">기존 정보를 그대로 활용합니다</div></div></label>
+              <label class="ri" onclick="setAddrYn('no',this)"><input type="radio" name="addr-yn" value="no"><div><div class="ri-main">아니오, 없습니다</div><div class="ri-sub">잘 기억나지 않거나 주소가 바뀐 경우에도 선택해주세요</div></div></label>
+            </div>
+          </div>
+          <div class="addr-inner" id="addr-inner">
+            <div class="frow">
+              <div class="fg"><label class="fl req">수령인 성함</label><input type="text" id="f-recv" placeholder="홍길동"></div>
+              <div class="fg"><label class="fl req">수령인 연락처</label><input type="tel" id="f-recv-phone" placeholder="010-0000-0000"></div>
+            </div>
+            <div class="fg"><label class="fl req">도로명 주소</label><input type="text" id="f-addr1" placeholder="서울 성동구 ○○로 000" style="margin-bottom:6px"><input type="text" id="f-addr2" placeholder="상세 주소 (동/호수 등)"></div>
+            <div class="fg"><label class="fl req">우편번호</label><input type="text" id="f-zip" placeholder="00000" style="max-width:120px"></div>
+          </div>
+        </div>
+
+        <div class="btn-row">
+          <button class="btn-back" onclick="goStep(1)">← 이전</button>
+          <button class="btn-next" onclick="goStep(3)">다음 →</button>
+        </div>
+      </div>
+
+      <!-- Step 3: 동의 + 제출 -->
+      <div class="step" id="step3">
+        <div class="step-dots"><div class="sd done"></div><div class="sd done"></div><div class="sd cur"></div></div>
+        <div class="consent-box">
+          <div class="consent-title">함께 지켜주실 내용</div>
+          <div class="consent-body">
+            좋은 협업을 위해 아래 내용을 확인해주세요.
+            <ul id="consent-items"></ul>
+          </div>
+        </div>
+        <div class="check-list" style="margin-bottom:13px">
+          <label class="ci" onclick="this.classList.toggle('sel')">
+            <input type="checkbox" id="consent-main">
+            <div><div class="ci-main">위 내용을 확인했으며 캠페인 진행에 동의합니다. <span style="color:var(--ink40)">(필수)</span></div></div>
+          </label>
+          <label class="ci" onclick="this.classList.toggle('sel')">
+            <input type="checkbox" id="consent-future">
+            <div>
+              <div class="ci-main">향후 SIRIAI 파트너십 브랜드 캠페인 제안을 우선 받겠습니다. <span style="color:var(--ink40)">(선택)</span></div>
+              <div class="ci-sub">무신사 PB, 뷰티·패션 브랜드 등 — 이번 캠페인 선정 여부와 무관합니다.</div>
+            </div>
+          </label>
+        </div>
+        <div class="fg"><label class="fl">이메일 <span style="letter-spacing:0;text-transform:none;font-size:10px;color:var(--ink40)">(선택 · 향후 캠페인 안내)</span></label><input type="email" id="f-email" placeholder="hello@email.com"></div>
+        <div class="btn-row">
+          <button class="btn-back" onclick="goStep(2)">← 이전</button>
+          <button class="btn-submit" onclick="submitForm()">신청 완료</button>
+        </div>
+        <p class="form-notice">콘텐츠 업로드 유지, 협찬 표기 등 가이드 준수를 부탁드립니다.<br>수집된 개인정보는 캠페인 진행 목적 외에 활용되지 않습니다.</p>
+      </div>
+    </div>
+
+    <div class="success" id="success">
+      <div class="s-mark">—</div>
+      <p class="s-title">작성해주셔서 감사합니다</p>
+      <p class="s-body" id="success-body"></p>
+    </div>
+  </div>
+
+</div>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span class="f-brand">TEUMGYUL × SIRIAI</span>
+    <span class="f-note">본 페이지는 초대된 크리에이터에게만 공유됩니다.</span>
+  </div>
+</footer>
+
+<script>
+// ── 설정 ────────────────────────────────────────────────────────────────
+const SHEET_ENDPOINT = 'https://script.google.com/macros/s/AKfycbxN_REXe3qJ6AY-uooWV83FULxtbf1qdmtkzbohlzVMBCDXNlSmFQ6xLO7UiFyw7EQI/exec';
+const CAMPAIGN = '틈결 Atelier 오픈 행사 2026';
+
+// URL ?t=1(메가1) | 2(메가2) | 3(무가시딩) | 4(유가시딩)
+const T = '3';
+
+// ── Tier 데이터 ──────────────────────────────────────────────────────────
+const TIERS = {
+  '1': {
+    id: 'mega1',
+    showYt: true,
+    isUnboxing: false,
+    heroTitle: '수많은 크리에이터 중,<br><em>당신을 먼저 떠올렸습니다.</em>',
+    heroBody: '성수동 아뜰리에길에 새로운 틈이 생깁니다.\n그 첫 번째 순간을 함께 기록해주실 분을 찾고 있어요.',
+    heroNote: '아래 내용을 확인하신 후 하단 폼을 작성해주세요.\n검토 후 협업이 진행되는 분께 담당자가 개별 연락드립니다.',
+    rewardMain: '콘텐츠 고료 1,000만원',
+    rewardSub: '예상 금액으로, 세부 조건은 담당자와의 협의를 통해 확정됩니다.',
+    rewardTags: ['인스타그램', '유튜브', '행사 첫날', '공동작업자', '2차 활용', '라이브'],
+    conds: [
+      { icon: '📱', title: '플랫폼', desc: '인스타그램 + 유튜브 (채널 보유 시)' },
+      { icon: '🎬', title: '콘텐츠 형식', desc: '인스타그램 릴스 · 피드 / 유튜브 영상 — 세부 레퍼런스는 협업 확정 후 안내드립니다.' },
+      { icon: '🤝', title: '공동작업자 세팅', desc: '업로드 후 @teumgyul_official 공동작업자 초대' },
+      { icon: '♻️', title: '2차 활용', desc: '업로드된 콘텐츠를 광고 소재로 활용할 수 있습니다.' },
+      { icon: '🔴', title: '라이브', desc: '행사 당일 라이브 진행 — 방식과 시간은 함께 조율합니다.' },
+      { icon: '#️⃣', title: '협찬 표기', desc: '캡션 내 #광고 또는 #협찬 포함 (광고법 준수)' },
+    ],
+    procs: [
+      { n:'1', title:'폼 작성', desc:'아래 폼을 완성해주세요.' },
+      { n:'2', title:'검토 및 연락', desc:'검토 후 협업이 진행되는 분께 담당자가 직접 연락드립니다.' },
+      { n:'3', title:'조건 협의', desc:'고료, 콘텐츠 방향, 행사 일정 등을 함께 조율합니다.' },
+      { n:'4', title:'행사 첫날 방문', desc:'오픈 당일 현장 방문 · 라이브 및 콘텐츠 제작' },
+      { n:'5', title:'업로드 및 정산', desc:'공동작업자 세팅 후 링크 공유 → 고료 지급' },
+    ],
+    cautions: [
+      '업로드한 콘텐츠는 1년간 유지해주세요. 삭제가 필요한 경우 사전에 담당자와 협의해주시면 됩니다.',
+      '협찬 표기는 광고법 준수를 위한 항목으로, 캡션에 반드시 포함해주세요.',
+      '콘텐츠 방향에 대한 피드백이 있을 수 있습니다. 법적 기준 준수를 위한 과정이며, 창작 방향은 최대한 존중합니다.',
+      '일정 변경이 필요한 경우 미리 담당자에게 알려주시면 유연하게 조율합니다.',
+    ],
+    consentItems: [
+      '업로드한 콘텐츠를 1년간 유지합니다. (삭제 필요 시 사전 협의)',
+      '공동작업자 세팅 및 콘텐츠 2차 활용에 동의합니다.',
+      '협찬 표기(#광고 또는 #협찬)를 캡션에 포함합니다.',
+      '수집된 개인정보는 이번 캠페인 운영 목적 외에는 활용되지 않습니다.',
+    ],
+    formSub: '작성 완료 후 내용을 검토하고, 협업이 진행되는 분께 담당자가 개별 연락드립니다.',
+    successBody: '작성해주신 내용을 꼼꼼히 검토하겠습니다.\n협업이 진행되는 분께는 담당자가 직접 연락드릴 예정입니다.\n\n이번 협업이 아니더라도, 더 잘 맞는 캠페인이 생기면 먼저 연락드릴 수 있어요.\n감사합니다.',
+  },
+
+  '2': {
+    id: 'mega2',
+    showYt: false,
+    isUnboxing: false,
+    heroTitle: '수많은 크리에이터 중,<br><em>당신을 먼저 떠올렸습니다.</em>',
+    heroBody: '성수동 아뜰리에길에 새로운 틈이 생깁니다.\n그 첫 번째 순간을 함께 기록해주실 분을 찾고 있어요.',
+    heroNote: '아래 내용을 확인하신 후 하단 폼을 작성해주세요.\n검토 후 협업이 진행되는 분께 담당자가 개별 연락드립니다.',
+    rewardMain: '콘텐츠 고료 100–150만원',
+    rewardSub: '예상 금액으로, 세부 조건은 담당자와의 협의를 통해 확정됩니다.',
+    rewardTags: ['인스타그램', '행사 첫날', '틱톡 미러링', '공동작업자', '2차 활용', '라이브'],
+    conds: [
+      { icon: '📱', title: '플랫폼', desc: '인스타그램 (틱톡 채널 보유 시 미러링 포함)' },
+      { icon: '🎬', title: '콘텐츠 형식', desc: '인스타그램 릴스 · 피드 — 세부 레퍼런스는 협업 확정 후 안내드립니다.' },
+      { icon: '🔁', title: '틱톡 미러링', desc: '인스타그램 콘텐츠를 틱톡에 동시 발행 (채널 보유 시)' },
+      { icon: '🤝', title: '공동작업자 세팅', desc: '업로드 후 @teumgyul_official 공동작업자 초대' },
+      { icon: '♻️', title: '2차 활용', desc: '업로드된 콘텐츠를 광고 소재로 활용할 수 있습니다.' },
+      { icon: '🔴', title: '라이브', desc: '행사 당일 라이브 진행 — 방식과 시간은 함께 조율합니다.' },
+      { icon: '#️⃣', title: '협찬 표기', desc: '캡션 내 #광고 또는 #협찬 포함 (광고법 준수)' },
+    ],
+    procs: [
+      { n:'1', title:'폼 작성', desc:'아래 폼을 완성해주세요.' },
+      { n:'2', title:'검토 및 연락', desc:'검토 후 협업이 진행되는 분께 담당자가 직접 연락드립니다.' },
+      { n:'3', title:'조건 협의', desc:'고료, 콘텐츠 방향, 행사 일정 등을 함께 조율합니다.' },
+      { n:'4', title:'행사 첫날 방문', desc:'오픈 당일 현장 방문 · 라이브 및 콘텐츠 제작' },
+      { n:'5', title:'업로드 및 정산', desc:'인스타 + 틱톡 미러링 · 공동작업자 세팅 후 링크 공유 → 고료 지급' },
+    ],
+    cautions: [
+      '업로드한 콘텐츠는 1년간 유지해주세요. 삭제가 필요한 경우 사전에 담당자와 협의해주시면 됩니다.',
+      '협찬 표기는 광고법 준수를 위한 항목으로, 캡션에 반드시 포함해주세요.',
+      '콘텐츠 방향에 대한 피드백이 있을 수 있습니다. 법적 기준 준수를 위한 과정이며, 창작 방향은 최대한 존중합니다.',
+    ],
+    consentItems: [
+      '업로드한 콘텐츠를 1년간 유지합니다. (삭제 필요 시 사전 협의)',
+      '공동작업자 세팅, 틱톡 미러링, 콘텐츠 2차 활용에 동의합니다.',
+      '협찬 표기(#광고 또는 #협찬)를 캡션에 포함합니다.',
+      '수집된 개인정보는 이번 캠페인 운영 목적 외에는 활용되지 않습니다.',
+    ],
+    formSub: '작성 완료 후 내용을 검토하고, 협업이 진행되는 분께 담당자가 개별 연락드립니다.',
+    successBody: '작성해주신 내용을 꼼꼼히 검토하겠습니다.\n협업이 진행되는 분께는 담당자가 직접 연락드릴 예정입니다.\n\n이번 협업이 아니더라도, 더 잘 맞는 캠페인이 생기면 먼저 연락드릴 수 있어요.\n감사합니다.',
+  },
+
+  '3': {
+    id: 'unboxing',
+    showYt: false,
+    isUnboxing: true,
+    heroTitle: '틈결의 시작을,<br><em>먼저 만나보세요.</em>',
+    heroBody: '성수동 아뜰리에길에 새로운 틈이 생깁니다.\n오픈 전 제품을 먼저 받아보고, 그 설렘을 콘텐츠로 담아주세요.',
+    heroNote: '아래 내용을 확인하신 후 배송 정보와 함께 폼을 작성해주세요.\n검토 후 진행되는 분께 발송 일정을 안내드립니다.',
+    rewardMain: '10만원 상당 제품 제공',
+    rewardSub: '고료 없이 제품만 제공됩니다. 제품의 가치와 브랜드와의 관계를 중요하게 생각해주세요.',
+    rewardTags: ['인스타그램', '제품 사전 발송', '언박싱 콘텐츠', '행사 홍보', '공동작업자'],
+    conds: [
+      { icon: '📦', title: '제품 제공', desc: '틈결 오픈 기념 한정 제품 (10만원 상당) — 행사 전 사전 발송' },
+      { icon: '📱', title: '플랫폼', desc: '인스타그램 릴스 또는 피드' },
+      { icon: '🎬', title: '콘텐츠 내용', desc: '제품 언박싱 + 틈결 오픈 행사 소개 — 세부 레퍼런스는 진행 확정 후 안내드립니다.' },
+      { icon: '🤝', title: '공동작업자 세팅', desc: '업로드 후 @teumgyul_official 공동작업자 초대' },
+      { icon: '#️⃣', title: '협찬 표기', desc: '캡션 내 #광고 또는 #협찬 포함 (광고법 준수)' },
+    ],
+    procs: [
+      { n:'1', title:'폼 작성 + 배송 정보 입력', desc:'아래 폼을 완성해주세요. (주소 포함)' },
+      { n:'2', title:'검토 및 발송 안내', desc:'검토 후 진행되는 분께 발송 일정을 안내드립니다.' },
+      { n:'3', title:'제품 수령', desc:'발송 후 운송장 번호를 별도로 안내드립니다.' },
+      { n:'4', title:'콘텐츠 제작 및 업로드', desc:'수령 후 자유롭게 제작 · [날짜]까지 업로드 + 링크 공유' },
+    ],
+    cautions: [
+      '제품 수령 후 기한 내 콘텐츠를 업로드해주세요. 일정 조율이 필요하면 미리 담당자에게 알려주시면 됩니다.',
+      '협찬 표기는 광고법 준수를 위한 항목으로, 캡션에 반드시 포함해주세요.',
+      '제품을 수령하신 후 콘텐츠를 발행하지 않으시면 향후 협업이 어려울 수 있습니다.',
+    ],
+    consentItems: [
+      '제품 수령 후 기한 내 콘텐츠를 업로드합니다.',
+      '공동작업자 세팅에 동의합니다.',
+      '협찬 표기(#광고 또는 #협찬)를 캡션에 포함합니다.',
+      '수집된 개인정보는 배송 및 캠페인 운영 목적 외에는 활용되지 않습니다.',
+    ],
+    formSub: '배송 정보를 포함해 작성해주세요.\n검토 후 진행되는 분께 발송 일정을 안내드립니다.',
+    successBody: '작성해주신 내용을 확인하겠습니다.\n진행이 확정되는 분께 발송 일정을 안내드릴 예정입니다.\n\n이번 협업이 아니더라도, 더 잘 맞는 캠페인이 생기면 먼저 연락드릴 수 있어요.\n감사합니다.',
+  },
+
+  '4': {
+    id: 'paid',
+    showYt: false,
+    isUnboxing: false,
+    heroTitle: '수많은 크리에이터 중,<br><em>당신을 먼저 떠올렸습니다.</em>',
+    heroBody: '성수동 아뜰리에길에 새로운 틈이 생깁니다.\n현장을 직접 경험하고, 그 감각을 콘텐츠로 담아주세요.',
+    heroNote: '아래 내용을 확인하신 후 하단 폼을 작성해주세요.\n검토 후 협업이 진행되는 분께 방문 일정을 안내드립니다.',
+    rewardMain: '콘텐츠 고료 5–10만원',
+    rewardSub: '업로드 확인 후 즉시 지급 · 예상 금액으로 변동될 수 있습니다.',
+    rewardTags: ['인스타그램', '오프라인 방문', '공동작업자', '2차 활용'],
+    conds: [
+      { icon: '📍', title: '방문 일정', desc: '행사 운영 기간(5일) 중 담당자가 안내한 날짜에 방문 — 조율이 필요하면 미리 알려주세요.' },
+      { icon: '📱', title: '플랫폼', desc: '인스타그램 릴스 또는 피드' },
+      { icon: '🎬', title: '콘텐츠 내용', desc: '틈결 아뜰리에 방문 후기 — 세부 레퍼런스는 진행 확정 후 안내드립니다.' },
+      { icon: '🤝', title: '공동작업자 세팅', desc: '업로드 후 @teumgyul_official 공동작업자 초대' },
+      { icon: '♻️', title: '2차 활용', desc: '업로드된 콘텐츠를 광고 소재로 활용할 수 있습니다.' },
+      { icon: '#️⃣', title: '협찬 표기', desc: '캡션 내 #광고 또는 #협찬 포함 (광고법 준수)' },
+    ],
+    procs: [
+      { n:'1', title:'폼 작성', desc:'아래 폼을 완성해주세요.' },
+      { n:'2', title:'검토 및 일정 안내', desc:'검토 후 협업이 진행되는 분께 방문 날짜를 안내드립니다.' },
+      { n:'3', title:'현장 방문', desc:'틈결 아뜰리에 방문 · 공간을 자유롭게 체험하며 콘텐츠 제작' },
+      { n:'4', title:'업로드', desc:'방문 당일 또는 [N]일 이내 업로드 · 공동작업자 세팅 + 링크 공유' },
+      { n:'5', title:'고료 즉시 지급', desc:'링크 확인 후 바로 정산합니다.' },
+    ],
+    cautions: [
+      '방문 날짜 변경이 필요하시면 미리 담당자에게 알려주세요. 최대한 유연하게 조율합니다.',
+      '업로드한 콘텐츠는 사전 협의 없이 삭제하지 않아주세요.',
+      '협찬 표기는 광고법 준수를 위한 항목으로, 캡션에 반드시 포함해주세요.',
+    ],
+    consentItems: [
+      '안내받은 방문 일정을 준수하며, 변경이 필요한 경우 사전에 담당자와 협의합니다.',
+      '공동작업자 세팅 및 콘텐츠 2차 활용에 동의합니다.',
+      '협찬 표기(#광고 또는 #협찬)를 캡션에 포함합니다.',
+      '수집된 개인정보는 이번 캠페인 운영 목적 외에는 활용되지 않습니다.',
+    ],
+    formSub: '작성 완료 후 내용을 검토하고, 협업이 진행되는 분께 방문 일정을 안내드립니다.',
+    successBody: '작성해주신 내용을 꼼꼼히 검토하겠습니다.\n협업이 진행되는 분께는 방문 날짜와 함께 담당자가 직접 연락드릴 예정입니다.\n\n이번 협업이 아니더라도, 더 잘 맞는 캠페인이 생기면 먼저 연락드릴 수 있어요.\n감사합니다.',
+  },
+};
+
+// ── 렌더링 ────────────────────────────────────────────────────────────────
+const cfg = TIERS[T] || TIERS['4'];
+
+// Hero
+document.getElementById('hero-title').innerHTML = cfg.heroTitle;
+document.getElementById('hero-body').innerText = cfg.heroBody;
+document.getElementById('hero-note').innerText = cfg.heroNote;
+
+// Reward
+document.getElementById('reward-main').innerText = cfg.rewardMain;
+document.getElementById('reward-sub').innerText = cfg.rewardSub;
+document.getElementById('reward-tags').innerHTML = cfg.rewardTags.map(t=>`<span class="rtag">${t}</span>`).join('');
+
+// Conds
+document.getElementById('cond-list').innerHTML = cfg.conds.map(c=>`
+  <div class="cond-row">
+    <div class="cond-icon">${c.icon}</div>
+    <div class="cond-body"><div class="cond-title">${c.title}</div><div class="cond-desc">${c.desc}</div></div>
+  </div>`).join('');
+
+// Process
+document.getElementById('proc-list').innerHTML = cfg.procs.map(p=>`
+  <div class="proc-item">
+    <div class="proc-left"><div class="proc-dot">${p.n}</div><div class="proc-line"></div></div>
+    <div class="proc-body"><div class="proc-title">${p.title}</div><div class="proc-desc">${p.desc}</div></div>
+  </div>`).join('');
+
+// Caution
+document.getElementById('caution-list').innerHTML = cfg.cautions.map(c=>`<li>${c}</li>`).join('');
+
+// Consent
+document.getElementById('consent-items').innerHTML = cfg.consentItems.map(c=>`<li>${c}</li>`).join('');
+
+// Form
+document.getElementById('form-sub').innerText = cfg.formSub;
+
+// 유튜브 필드
+if (cfg.showYt) document.getElementById('yt-field').style.display = 'flex';
+
+// 주소 branch
+if (cfg.isUnboxing) document.getElementById('addr-branch').classList.add('show');
+
+// Success
+document.getElementById('success-body').innerText = cfg.successBody;
+
+// ── 주소 토글 ─────────────────────────────────────────────────────────────
+function setAddrYn(v, el) {
+  document.querySelectorAll('.ri').forEach(r=>r.classList.remove('sel'));
+  el.classList.add('sel');
+  document.getElementById('addr-inner').style.display = v==='no' ? 'block' : 'none';
+}
+
+// ── Step ──────────────────────────────────────────────────────────────────
+function goStep(n) {
+  if(n===2 && !v1()) return;
+  if(n===3 && !v2()) return;
+  document.querySelectorAll('.step').forEach(s=>s.classList.remove('active'));
+  document.getElementById('step'+n).classList.add('active');
+  window.scrollTo({top: document.querySelector('.form-wrap').offsetTop - 70, behavior:'smooth'});
+}
+
+function v1() {
+  if(!g('f-name')){alert('이름 / 활동명을 입력해주세요.');return false}
+  if(!g('f-phone')){alert('전화번호를 입력해주세요.');return false}
+  if(!g('f-ig')){alert('인스타그램 계정을 입력해주세요.');return false}
+  return true;
+}
+function v2() {
+  if(!g('f-region')){alert('거주 지역을 선택해주세요.');return false}
+  if(cfg.isUnboxing) {
+    const yn = document.querySelector('input[name="addr-yn"]:checked');
+    if(!yn){alert('배송 정보 제출 여부를 선택해주세요.');return false}
+    if(yn.value==='no') {
+      if(!g('f-recv')){alert('수령인 성함을 입력해주세요.');return false}
+      if(!g('f-recv-phone')){alert('수령인 연락처를 입력해주세요.');return false}
+      if(!g('f-addr1')){alert('주소를 입력해주세요.');return false}
+      if(!g('f-zip')){alert('우편번호를 입력해주세요.');return false}
+    }
+  }
+  return true;
+}
+
+// ── 제출 ──────────────────────────────────────────────────────────────────
+function g(id){return(document.getElementById(id)?.value||'').trim()}
+
+function submitForm() {
+  if(!document.getElementById('consent-main').checked){
+    alert('캠페인 진행 조건에 동의해주세요.');return;
+  }
+  const btn = document.querySelector('.btn-submit');
+  btn.disabled=true; btn.textContent='제출 중...';
+
+  const yn = document.querySelector('input[name="addr-yn"]:checked');
+  const payload = {
+    campaign: CAMPAIGN, tier: cfg.id,
+    timestamp: new Date().toISOString(),
+    name: g('f-name'), phone: g('f-phone'), kakao: g('f-kakao'),
+    instagram: g('f-ig'), youtube: g('f-yt'), otherPlatform: g('f-other'),
+    region: g('f-region'),
+    addrExisting: cfg.isUnboxing ? (yn?.value==='yes'?'기존 정보 활용':'신규 입력') : '해당없음',
+    recipient: g('f-recv'), recipientPhone: g('f-recv-phone'),
+    address: [g('f-addr1'),g('f-addr2')].filter(Boolean).join(' '),
+    zipcode: g('f-zip'),
+    consentMain: true,
+    consentFuture: document.getElementById('consent-future').checked,
+    email: g('f-email'),
+  };
+
+  if(SHEET_ENDPOINT==='YOUR_APPS_SCRIPT_WEB_APP_URL'){
+    console.log('[틈결]',payload); showSuccess(); return;
+  }
+  fetch(SHEET_ENDPOINT,{method:'POST',mode:'no-cors',
+    headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)})
+  .then(()=>showSuccess())
+  .catch(()=>{btn.disabled=false;btn.textContent='신청 완료';alert('오류가 발생했습니다. 잠시 후 다시 시도해주세요.');});
+}
+
+function showSuccess() {
+  document.getElementById('form-area').style.display='none';
+  const s=document.getElementById('success');
+  s.classList.add('show');
+  s.scrollIntoView({behavior:'smooth',block:'center'});
+}
+</script>
+</body>
+</html>
