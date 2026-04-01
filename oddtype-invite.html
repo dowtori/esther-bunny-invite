@@ -1,0 +1,786 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Oddtype Beauty Campaign</title>
+    <!-- Pretendard Font -->
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.8/dist/web/variable/pretendardvariable.css" />
+    <style>
+        :root {
+            /* Brand Colors for Oddtype */
+            --brand-primary: #ff3366; /* Vibrant tint pink */
+            --brand-secondary: #ff7799; 
+            --brand-accent: #9933ff; /* Deep violet for moody feel */
+            
+            /* UI Colors (Dark Theme) */
+            --bg-base: #0a0a0a;
+            --surface-glass: rgba(255, 255, 255, 0.05);
+            --surface-glass-hover: rgba(255, 255, 255, 0.1);
+            --border-glass: rgba(255, 255, 255, 0.1);
+            --text-primary: #ffffff;
+            --text-secondary: #a0a0a0;
+            --text-muted: #666666;
+            
+            /* Spacing & Effects */
+            --radius-lg: 24px;
+            --radius-md: 16px;
+            --radius-sm: 8px;
+            --shadow-glow: 0 0 30px rgba(255, 51, 102, 0.3);
+            --transition-smooth: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Pretendard Variable', Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, 'Helvetica Neue', 'Segoe UI', 'Apple SD Gothic Neo', 'Noto Sans KR', 'Malgun Gothic', 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-base);
+            color: var(--text-primary);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Ambient Glow Background */
+        .ambient-bg {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            z-index: -1;
+            overflow: hidden;
+            background: linear-gradient(to bottom right, #000000, #111111);
+        }
+        
+        .glow-orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(120px);
+            opacity: 0.6;
+            animation: float 20s infinite ease-in-out alternate;
+        }
+        
+        .orb-1 {
+            width: 400px; height: 400px;
+            background: rgba(255, 51, 102, 0.3);
+            top: -100px; left: -100px;
+        }
+        
+        .orb-2 {
+            width: 500px; height: 500px;
+            background: rgba(153, 51, 255, 0.2);
+            bottom: -200px; right: -100px;
+            animation-delay: -5s;
+        }
+
+        @keyframes float {
+            0% { transform: translate(0, 0) scale(1); }
+            100% { transform: translate(50px, 30px) scale(1.1); }
+        }
+
+        /* Main Container */
+        .app-container {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem 1rem;
+            width: 100%;
+            max-width: 600px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        /* Step Management */
+        .form-step {
+            display: none;
+            width: 100%;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: var(--transition-smooth);
+            animation: slideUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        .form-step.active {
+            display: flex;
+            flex-direction: column;
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Glass Panel */
+        .glass-panel {
+            background: var(--surface-glass);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--border-glass);
+            border-radius: var(--radius-lg);
+            padding: 2.5rem 2rem;
+            width: 100%;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+        }
+
+        /* Typography */
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            letter-spacing: -0.02em;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(135deg, #fff 0%, #ff7799 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        h2 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            color: var(--text-primary);
+        }
+
+        .subtitle {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+            line-height: 1.6;
+            font-weight: 400;
+        }
+
+        .label-text {
+            display: block;
+            font-size: 0.95rem;
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+            color: var(--text-secondary);
+        }
+
+        /* Form Inputs */
+        .input-group {
+            margin-bottom: 1.5rem;
+            width: 100%;
+        }
+
+        .form-control {
+            width: 100%;
+            background: rgba(0, 0, 0, 0.4);
+            border: 1px solid var(--border-glass);
+            border-radius: var(--radius-md);
+            padding: 1rem 1.25rem;
+            color: var(--text-primary);
+            font-size: 1rem;
+            transition: var(--transition-smooth);
+            outline: none;
+        }
+
+        .form-control:focus {
+            border-color: var(--brand-primary);
+            box-shadow: 0 0 0 2px rgba(255, 51, 102, 0.2);
+            background: rgba(0, 0, 0, 0.6);
+        }
+
+        .form-control::placeholder {
+            color: var(--text-muted);
+        }
+
+        textarea.form-control {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        /* Radio & Checkbox Card Options */
+        .option-card {
+            display: block;
+            margin-bottom: 1rem;
+            cursor: pointer;
+        }
+
+        .option-card input {
+            display: none;
+        }
+
+        .option-content {
+            display: flex;
+            align-items: center;
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid var(--border-glass);
+            border-radius: var(--radius-md);
+            padding: 1.25rem 1.5rem;
+            transition: var(--transition-smooth);
+        }
+
+        .option-content:hover {
+            background: var(--surface-glass-hover);
+        }
+
+        .option-card input:checked + .option-content {
+            background: rgba(255, 51, 102, 0.1);
+            border-color: var(--brand-primary);
+            box-shadow: inset 0 0 0 1px var(--brand-primary);
+        }
+
+        .option-title {
+            font-weight: 600;
+            font-size: 1.1rem;
+            margin-bottom: 0.25rem;
+            color: var(--text-primary);
+        }
+
+        .option-desc {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            line-height: 1.4;
+        }
+
+        .indicator {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            border: 2px solid var(--text-muted);
+            margin-right: 1.25rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            transition: var(--transition-smooth);
+        }
+
+        .option-card input[type="radio"]:checked + .option-content .indicator {
+            border-color: var(--brand-primary);
+        }
+
+        .option-card input[type="radio"]:checked + .option-content .indicator::after {
+            content: '';
+            width: 12px;
+            height: 12px;
+            background: var(--brand-primary);
+            border-radius: 50%;
+        }
+
+        .option-card input[type="checkbox"] + .option-content .indicator {
+            border-radius: 6px;
+        }
+
+        .option-card input[type="checkbox"]:checked + .option-content .indicator {
+            background: var(--brand-primary);
+            border-color: var(--brand-primary);
+            position: relative;
+        }
+
+        .option-card input[type="checkbox"]:checked + .option-content .indicator::after {
+            content: '✓';
+            color: white;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        /* Buttons */
+        .btn-wrapper {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2.5rem;
+            justify-content: flex-end;
+        }
+
+        .btn {
+            padding: 1rem 2rem;
+            border-radius: var(--radius-md);
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition-smooth);
+            border: none;
+            outline: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--brand-primary) 0%, #ff1a4d 100%);
+            color: white;
+            box-shadow: 0 4px 15px rgba(255, 51, 102, 0.4);
+            flex: 1;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(255, 51, 102, 0.5);
+        }
+
+        .btn-primary:active {
+            transform: translateY(0);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--text-secondary);
+            border: 1px solid var(--text-muted);
+        }
+
+        .btn-secondary:hover {
+            color: var(--text-primary);
+            border-color: var(--text-secondary);
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        /* Progress Bar */
+        .progress-wrapper {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.1);
+            z-index: 100;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: var(--brand-primary);
+            width: 0%;
+            transition: width 0.4s ease;
+            box-shadow: 0 0 10px var(--brand-primary);
+        }
+
+        /* Utilities */
+        .text-accent {
+            color: var(--brand-primary);
+        }
+        
+        .error-msg {
+            color: #ff4d4d;
+            font-size: 0.85rem;
+            margin-top: 0.5rem;
+            display: none;
+        }
+
+        .has-error .form-control {
+            border-color: #ff4d4d;
+        }
+
+        .has-error .error-msg {
+            display: block;
+            animation: fadeIn 0.3s;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* Success Animation Element */
+        .success-icon-wrapper {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: rgba(255, 51, 102, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 2rem;
+            color: var(--brand-primary);
+            box-shadow: inset 0 0 0 2px var(--brand-primary), 0 0 20px rgba(255, 51, 102, 0.3);
+        }
+
+        .success-icon-wrapper svg {
+            width: 40px;
+            height: 40px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Ambient glowing backgrounds -->
+    <div class="ambient-bg">
+        <div class="glow-orb orb-1"></div>
+        <div class="glow-orb orb-2"></div>
+    </div>
+
+    <div class="progress-wrapper">
+        <div class="progress-bar" id="progressBar"></div>
+    </div>
+
+    <div class="app-container">
+        
+        <!-- STEP 0: Intro Component -->
+        <div class="form-step active" id="step-0">
+            <h1 style="text-align: center; font-size: 3rem; margin-bottom: 1rem;">Oddtype.</h1>
+            <p class="subtitle" style="text-align: center; color: var(--text-primary); font-size: 1.2rem;">
+                "정형화된 뷰티 공식을 벗어난"<br>
+                <span class="text-accent">오드타입</span> 뷰티 캠페인 크루 모집
+            </p>
+            <div class="glass-panel" style="text-align: center;">
+                <p style="color: var(--text-secondary); line-height: 1.7; margin-bottom: 1.5rem; font-size: 1rem;">
+                    오드타입(Oddtype)은 '자기만의 색'을 뚜렷하게 드러내는 틴트 컬러와 감성적인 질감을 중심으로 개성 있는 무드를 표현하는 무신사 뷰티 PB 브랜드입니다.<br><br>
+                    본 설문을 통해 다가오는 신규 캠페인에 예비 크루로 등록하시게 되며,
+                    선정되신 분들께는 향후 높은 보상과 특별한 제품 경험을 우선 제공해 드립니다.
+                </p>
+                <button type="button" class="btn btn-primary" style="width: 100%; border-radius: var(--radius-lg); padding: 1.25rem;" onclick="nextStep()">
+                    캠페인 살펴보기
+                </button>
+            </div>
+            <div style="text-align: center; margin-top: 1.5rem;">
+                <p style="color: var(--text-muted); font-size: 0.9rem;">
+                    "정형화된 뷰티 공식을 벗어난" — Oddtype.<br>
+                    Presented by SIRIAI
+                </p>
+            </div>
+        </div>
+
+        <!-- STEP 1: Campaign Selection -->
+        <div class="form-step" id="step-1">
+            <div class="glass-panel">
+                <h2>진행 캠페인 선택 <span class="text-accent">*</span></h2>
+                <p class="subtitle" style="margin-bottom: 1rem;">원하시는 제품군의 캠페인을 선택해 주세요. (중복 배정 가능)</p>
+                
+                <div class="input-group" id="group-campaign">
+                    <label class="option-card">
+                        <input type="radio" name="campaign_type" value="A" required>
+                        <div class="option-content">
+                            <div class="indicator"></div>
+                            <div>
+                                <div class="option-title">A 타입 (색조)만 희망</div>
+                                <div class="option-desc">오드타입 및 무신사PB 색조 브랜드 위주 배정</div>
+                            </div>
+                        </div>
+                    </label>
+
+                    <label class="option-card">
+                        <input type="radio" name="campaign_type" value="B">
+                        <div class="option-content">
+                            <div class="indicator"></div>
+                            <div>
+                                <div class="option-title">B 타입 (스킨케어)만 희망</div>
+                                <div class="option-desc">무탠뷰티 및 무신사PB 스킨케어 브랜드 위주 배정</div>
+                            </div>
+                        </div>
+                    </label>
+
+                    <label class="option-card">
+                        <input type="radio" name="campaign_type" value="ALL">
+                        <div class="option-content">
+                            <div class="indicator"></div>
+                            <div>
+                                <div class="option-title text-accent">전체 캠페인 지원 (우선 선별 대상)</div>
+                                <div class="option-desc">브랜드 판단 후 가장 적합한 캠페인에 우선 배정됩니다.</div>
+                            </div>
+                        </div>
+                    </label>
+                    <div class="error-msg">진행 방식을 선택해 주세요.</div>
+                </div>
+
+                <div class="btn-wrapper">
+                    <button type="button" class="btn btn-secondary" onclick="prevStep()">이전</button>
+                    <button type="button" class="btn btn-primary" onclick="nextStep()">다음으로</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- STEP 2: Basic Info -->
+        <div class="form-step" id="step-2">
+            <div class="glass-panel">
+                <h2>크리에이터 프로필</h2>
+                <p class="subtitle">제품 발송 및 연락을 위한 기본 정보를 입력해 주세요.</p>
+                
+                <div class="input-group" id="group-name">
+                    <label class="label-text">성함 (본명) <span class="text-accent">*</span></label>
+                    <input type="text" id="inf_name" class="form-control" placeholder="홍길동" required>
+                    <div class="error-msg">성함을 입력해 주세요.</div>
+                </div>
+
+                <div class="input-group" id="group-phone">
+                    <label class="label-text">전화번호 <span class="text-accent">*</span></label>
+                    <input type="tel" id="inf_phone" class="form-control" placeholder="010-0000-0000" required>
+                    <div class="error-msg">연락처를 올바른 형식으로 입력해 주세요.</div>
+                </div>
+
+                <div class="input-group" id="group-age">
+                    <label class="label-text">연령대 <span class="text-accent">*</span></label>
+                    <select id="inf_age" class="form-control" style="appearance: none; background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23ffffff%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E'); background-repeat: no-repeat; background-position: right 1rem top 50%; background-size: 0.65rem auto;" required>
+                        <option value="" disabled selected>연령대 선택</option>
+                        <option value="10대">10대</option>
+                        <option value="20~29세">20~29세</option>
+                        <option value="30~39세">30~39세</option>
+                        <option value="40~49세">40~49세</option>
+                        <option value="50대 이상">50대 이상</option>
+                    </select>
+                    <div class="error-msg">연령대를 선택해 주세요.</div>
+                </div>
+
+                <div class="input-group" id="group-address">
+                    <label class="label-text">배달 주소 (우편번호 및 상세주소 포함) <span class="text-accent">*</span></label>
+                    <input type="text" id="inf_address" class="form-control" placeholder="서울특별시 강남구 테헤란로 00, 101동 101호" required>
+                    <div class="error-msg">주소를 정확히 기재해 주세요.</div>
+                </div>
+
+                <div class="btn-wrapper">
+                    <button type="button" class="btn btn-secondary" onclick="prevStep()">이전</button>
+                    <button type="button" class="btn btn-primary" onclick="nextStep()">다음으로</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- STEP 3: Channels -->
+        <div class="form-step" id="step-3">
+            <div class="glass-panel">
+                <h2>채널 정보</h2>
+                <p class="subtitle">보유하신 채널 정보를 공유해 주세요. (제출 시 당사에서 최적의 원고료를 제안합니다.)</p>
+                
+                <div class="input-group" id="group-insta">
+                    <label class="label-text">인스타그램 링크 <span class="text-accent">*</span></label>
+                    <input type="url" id="inf_insta" class="form-control" placeholder="https://instagram.com/your_id" required>
+                    <div class="error-msg">올바른 URL을 입력해 주세요.</div>
+                </div>
+
+                <div class="input-group">
+                    <label class="label-text">기타 플랫폼 링크 (선택)</label>
+                    <textarea id="inf_others" class="form-control" placeholder="유튜브채널, 틱톡, 혹은 블로그 주소가 있다면 자유롭게 적어주세요."></textarea>
+                </div>
+
+                <div class="btn-wrapper">
+                    <button type="button" class="btn btn-secondary" onclick="prevStep()">이전</button>
+                    <button type="button" class="btn btn-primary" onclick="nextStep()">약관 동의</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- STEP 4: Consent & Submit -->
+        <div class="form-step" id="step-4">
+            <div class="glass-panel">
+                <h2>최종 동의 절차</h2>
+                <p class="subtitle">캠페인 진행을 위한 약관을 확인해 주세요.</p>
+                
+                <div class="input-group" id="group-terms">
+                    <label class="option-card">
+                        <input type="checkbox" id="term_main" required>
+                        <div class="option-content" style="padding: 1rem;">
+                            <div class="indicator"></div>
+                            <div>
+                                <div class="option-title" style="font-size: 1rem;">(필수) 개인정보 수집 및 캠페인 가이드 동의</div>
+                            </div>
+                        </div>
+                    </label>
+
+                    <label class="option-card">
+                        <input type="checkbox" id="term_pool">
+                        <div class="option-content" style="padding: 1rem;">
+                            <div class="indicator"></div>
+                            <div>
+                                <div class="option-title" style="font-size: 1rem;">(선택) 향후 무신사PB/SIRIAI 캠페인 우선 제안 풀 등록</div>
+                            </div>
+                        </div>
+                    </label>
+                    <div class="error-msg" style="margin-left: 0.5rem;">필수 항목에 동의해 주세요.</div>
+                </div>
+
+                <div class="btn-wrapper">
+                    <button type="button" class="btn btn-secondary" onclick="prevStep()">이전</button>
+                    <button type="button" id="submitBtn" class="btn btn-primary" onclick="submitForm()">지원 완료하기</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- STEP 5: Success -->
+        <div class="form-step" id="step-5">
+            <div class="glass-panel" style="text-align: center; padding: 4rem 2rem;">
+                <div class="success-icon-wrapper">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="20 6 9 17 4 12"></polyline>
+                    </svg>
+                </div>
+                <h2>지원이 완료되었습니다!</h2>
+                <p class="subtitle" style="margin-bottom: 2rem;">
+                    오드타입 캠페인에 관심을 가져주셔서 감사합니다.<br>
+                    선정되신 크리에이터 분들께는 입력하신 연락처와 DM을 통해 가장 먼저 좋은 소식을 알려드릴 예정입니다.
+                </p>
+                
+                <p style="color: var(--text-muted); font-size: 0.9rem; margin-top: 2rem;">
+                    "정형화된 뷰티 공식을 벗어난" — Oddtype.<br>
+                    Presented by SIRIAI
+                </p>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Logic -->
+    <script>
+        let currentStep = 0;
+        const totalSteps = 5; // 0 to 4 (5 is success)
+        
+        function updateProgress() {
+            const progressBar = document.getElementById('progressBar');
+            if(currentStep === 0) {
+                progressBar.style.width = '0%';
+            } else if (currentStep >= totalSteps) {
+                progressBar.style.width = '100%';
+            } else {
+                const percentage = (currentStep / (totalSteps - 1)) * 100;
+                progressBar.style.width = percentage + '%';
+            }
+        }
+
+        function validateStep(step) {
+            let isValid = true;
+            
+            if (step === 1) {
+                const campaignGroup = document.getElementById('group-campaign');
+                const campaigns = document.getElementsByName('campaign_type');
+                let checked = false;
+                for(let r of campaigns) {
+                    if (r.checked) { checked = true; break;}
+                }
+                if (!checked) {
+                    campaignGroup.classList.add('has-error');
+                    isValid = false;
+                } else {
+                    campaignGroup.classList.remove('has-error');
+                }
+            }
+            else if (step === 2) {
+                // Name
+                const nameInp = document.getElementById('inf_name');
+                if(!nameInp.value.trim()) {
+                    document.getElementById('group-name').classList.add('has-error');
+                    isValid = false;
+                } else {
+                    document.getElementById('group-name').classList.remove('has-error');
+                }
+                
+                // Phone
+                const phoneInp = document.getElementById('inf_phone');
+                if(!phoneInp.value.trim() || phoneInp.value.length < 9) {
+                    document.getElementById('group-phone').classList.add('has-error');
+                    isValid = false;
+                } else {
+                    document.getElementById('group-phone').classList.remove('has-error');
+                }
+
+                // Age
+                const ageInp = document.getElementById('inf_age');
+                if(!ageInp.value) {
+                    document.getElementById('group-age').classList.add('has-error');
+                    isValid = false;
+                } else {
+                    document.getElementById('group-age').classList.remove('has-error');
+                }
+
+                // Address
+                const addInp = document.getElementById('inf_address');
+                if(!addInp.value.trim()) {
+                    document.getElementById('group-address').classList.add('has-error');
+                    isValid = false;
+                } else {
+                    document.getElementById('group-address').classList.remove('has-error');
+                }
+            }
+            else if (step === 3) {
+                // Insta Link
+                const instaInp = document.getElementById('inf_insta');
+                if(!instaInp.value.trim() || !instaInp.value.includes('http')) {
+                    document.getElementById('group-insta').classList.add('has-error');
+                    isValid = false;
+                } else {
+                    document.getElementById('group-insta').classList.remove('has-error');
+                }
+            }
+            else if (step === 4) {
+                // Terms
+                const termMain = document.getElementById('term_main');
+                if(!termMain.checked) {
+                    document.getElementById('group-terms').classList.add('has-error');
+                    isValid = false;
+                } else {
+                    document.getElementById('group-terms').classList.remove('has-error');
+                }
+            }
+
+            return isValid;
+        }
+
+        function nextStep() {
+            if (currentStep > 0 && !validateStep(currentStep)) {
+                return;
+            }
+            
+            document.getElementById(`step-${currentStep}`).classList.remove('active');
+            currentStep++;
+            document.getElementById(`step-${currentStep}`).classList.add('active');
+            updateProgress();
+            window.scrollTo(0,0);
+        }
+
+        function prevStep() {
+            document.getElementById(`step-${currentStep}`).classList.remove('active');
+            currentStep--;
+            document.getElementById(`step-${currentStep}`).classList.add('active');
+            updateProgress();
+            window.scrollTo(0,0);
+        }
+
+        function submitForm() {
+            if (!validateStep(4)) return;
+
+            const btn = document.getElementById('submitBtn');
+            btn.innerHTML = `처리중... <svg style="animation: spin 1s linear infinite; margin-left:8px; width:16px; height:16px;" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>`;
+            btn.style.pointerEvents = 'none';
+
+            // Gather Data
+            const campaign_type = document.querySelector('input[name="campaign_type"]:checked').value;
+            const inf_name = document.getElementById('inf_name').value;
+            const inf_phone = document.getElementById('inf_phone').value;
+            const inf_age = document.getElementById('inf_age').value;
+            const inf_address = document.getElementById('inf_address').value;
+            const inf_insta = document.getElementById('inf_insta').value;
+            const inf_others = document.getElementById('inf_others').value;
+            const term_pool = document.getElementById('term_pool').checked;
+
+            const payload = {
+                campaign_type,
+                inf_name,
+                inf_phone,
+                inf_age,
+                inf_address,
+                inf_insta,
+                inf_others,
+                term_pool
+            };
+            
+            console.log("Submitting payload to Google Sheets Webhook:", payload);
+
+            // MOCK FETCH DEPLOYMENT
+            /* 
+             * 구글 앱스 스크립트 연결 시 하단 URL을 교체하여 사용합니다.
+             * fetch('https://script.google.com/macros/s/YOUR_API_KEY_HERE/exec', {
+             *      method: 'POST',
+             *      body: JSON.stringify(payload)
+             * }) 
+             */
+            
+            setTimeout(() => {
+                // Simulate network latency & success
+                document.getElementById(`step-${currentStep}`).classList.remove('active');
+                currentStep++;
+                document.getElementById(`step-${currentStep}`).classList.add('active');
+                updateProgress();
+                window.scrollTo(0,0);
+            }, 1200);
+        }
+    </script>
+    <style>
+        @keyframes spin {
+          from { transform: rotate(0deg); }
+          to { transform: rotate(360deg); }
+        }
+    </style>
+</body>
+</html>
