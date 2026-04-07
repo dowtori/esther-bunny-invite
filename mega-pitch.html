@@ -4,6 +4,13 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>에스더버니 × 틈결 | 메가 인플루언서 옵션</title>
+<meta property="og:title" content="에스더버니 × 틈결 | 메가 인플루언서 옵션">
+<meta property="og:image" content="https://teumgyul.vercel.app/images/esther%20bunny.webp">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://teumgyul.vercel.app/images/esther%20bunny.webp">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=DM+Sans:wght@300;400;500;600&family=Noto+Sans+KR:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
@@ -44,7 +51,6 @@ body {
   overflow: hidden;
 }
 
-/* Arch decorative element */
 .hero-arch {
   position: absolute;
   bottom: -120px;
@@ -145,11 +151,82 @@ body {
   color: rgba(255,255,255,0.25);
   padding-bottom: 4px;
   border-bottom: 1px solid transparent;
-  transition: color 0.2s, border-color 0.2s;
   cursor: default;
 }
 .hero-options-nav span.active {
   color: var(--pink);
+  border-color: var(--pink);
+}
+
+/* ── STICKY NAV ── */
+.sticky-nav {
+  position: sticky;
+  top: 0;
+  z-index: 200;
+  background: rgba(17,16,16,0.96);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+  padding: 14px 80px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+}
+.snav-meta {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 10px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.2);
+  white-space: nowrap;
+}
+.snav-options {
+  display: flex;
+  gap: 28px;
+}
+.snav-option {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 11px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.3);
+  text-decoration: none;
+  padding-bottom: 3px;
+  border-bottom: 1px solid transparent;
+  transition: color 0.2s, border-color 0.2s;
+}
+.snav-option:hover { color: rgba(255,255,255,0.6); }
+.snav-option.active {
+  color: var(--pink);
+  border-color: var(--pink);
+}
+.snav-divider {
+  color: rgba(255,255,255,0.12);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14px;
+  line-height: 1;
+  user-select: none;
+}
+.snav-sheets-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--pink);
+  text-decoration: none;
+  padding: 7px 18px;
+  border: 1px solid rgba(232,164,174,0.3);
+  border-radius: 2px;
+  transition: background 0.2s, border-color 0.2s;
+  white-space: nowrap;
+}
+.snav-sheets-btn:hover {
+  background: rgba(232,164,174,0.08);
   border-color: var(--pink);
 }
 
@@ -187,9 +264,6 @@ body {
 
 /* ── OPTION BLOCK ── */
 .option-block {
-  margin-bottom: 120px;
-}
-.option-block:last-child {
   margin-bottom: 0;
 }
 
@@ -202,7 +276,6 @@ body {
   margin-bottom: 56px;
 }
 
-.opt-identity {}
 .opt-tag {
   font-family: 'DM Sans', sans-serif;
   font-size: 10px;
@@ -236,7 +309,7 @@ body {
   letter-spacing: 0.5px;
 }
 
-/* Combo option (Opt 3) */
+/* Combo name style */
 .opt-name-combo {
   display: flex;
   align-items: flex-end;
@@ -254,140 +327,27 @@ body {
   font-family: 'Cormorant Garamond', serif;
   font-size: 36px;
   color: var(--pink);
-  margin: 0 12px;
+  margin: 0 16px;
   line-height: 1.4;
 }
 .opt-name-variable {
   font-family: 'Cormorant Garamond', serif;
-  font-size: clamp(32px, 4vw, 56px);
-  font-weight: 300;
-  font-style: italic;
-  color: var(--muted);
+  font-size: clamp(42px, 5vw, 72px);
+  font-weight: 400;
+  font-style: normal;
+  color: var(--ink);
   line-height: 1;
 }
-.opt-name-variable-label {
-  font-size: 13px;
-  color: var(--pink);
-  font-style: normal;
-  display: block;
-  margin-top: 4px;
-  letter-spacing: 1px;
-  font-family: 'DM Sans', sans-serif;
-}
 
-.opt-fixed-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  font-family: 'DM Sans', sans-serif;
-  font-size: 10px;
-  font-weight: 500;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  color: var(--pink-deep);
-  background: var(--pink-light);
-  padding: 4px 12px;
-  border-radius: 20px;
-  margin-left: 16px;
-  vertical-align: middle;
-  position: relative;
-  top: -8px;
+/* ── OPT BODY INFO ── */
+.opt-body-info {
+  display: grid;
+  gap: 48px;
+  align-items: start;
+  margin-bottom: 56px;
 }
 
 /* ── METRICS ── */
-.opt-body {
-  display: grid;
-  grid-template-columns: 1fr 400px;
-  gap: 64px;
-  align-items: start;
-}
-
-/* ── METRICS SECTION OVERHAUL ── */
-.opt-3-main-photo {
-  width: 100%;
-  height: 380px;
-  border-radius: 4px;
-  overflow: hidden;
-  border: 1px solid var(--border);
-  margin-bottom: 24px;
-  position: relative;
-}
-.opt-3-main-photo img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center 20%; /* Zoom and hide bottom text */
-  transform: scale(1.15); /* Slight zoom to crops out edge text */
-  transition: all 0.2s ease-in-out;
-}
-.opt-3-photo-label {
-  position: absolute;
-  bottom: 12px;
-  left: 12px;
-  background: rgba(0,0,0,0.6);
-  backdrop-filter: blur(4px);
-  color: #fff;
-  padding: 4px 12px;
-  border-radius: 2px;
-  font-size: 10px;
-  font-family: 'DM Sans', sans-serif;
-  letter-spacing: 1.5px;
-  text-transform: uppercase;
-}
-.mini-selection-row {
-  display: flex;
-  gap: 12px;
-}
-.mini-thumb {
-  flex: 1;
-  height: 100px;
-  position: relative;
-  border-radius: 4px;
-  overflow: hidden;
-  cursor: pointer;
-}
-.mini-thumb img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  filter: blur(4px) brightness(0.6);
-  transition: all 0.3s ease;
-}
-.mini-thumb-name {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  color: #fff;
-  font-family: 'DM Sans', sans-serif;
-  font-weight: 800;
-  font-size: 11px; /* Scaled down slightly to fit better */
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  z-index: 2;
-  pointer-events: none;
-  width: 100%;
-  text-align: center;
-}
-.mini-thumb:hover img {
-  filter: blur(0) brightness(1);
-}
-/* Unified ER for PT */
-.er-label {
-  font-family: 'DM Sans', sans-serif;
-  font-size: 10px;
-  font-weight: 700;
-  letter-spacing: 2px;
-  color: #FFFFFF !important;
-  margin-bottom: 6px;
-}
-.er-bar-note {
-  font-family: 'DM Sans', sans-serif;
-  font-size: 11px;
-  color: #FFFFFF !important;
-  opacity: 0.95;
-}
-
 .metrics-section {
   display: grid;
   grid-template-columns: 280px 1fr;
@@ -395,17 +355,10 @@ body {
   align-items: start;
 }
 
-.brand-photo-container {
-  width: 280px;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-
 .photo-stack {
   display: flex;
   gap: 12px;
-  width: 572px; /* 280 * 2 + gap */
+  width: 572px;
 }
 
 .brand-photo-item {
@@ -415,15 +368,14 @@ body {
   overflow: hidden;
   border: 1px solid var(--border);
   position: relative;
+  flex-shrink: 0;
 }
-
 .brand-photo-img {
   width: 100%;
   height: 100%;
   object-fit: cover;
   display: block;
 }
-
 .brand-photo-meta {
   position: absolute;
   bottom: 0;
@@ -433,7 +385,6 @@ body {
   padding: 16px;
   color: #fff;
 }
-
 .bpm-label {
   font-family: 'DM Sans', sans-serif;
   font-size: 8px;
@@ -443,77 +394,17 @@ body {
   display: block;
   margin-bottom: 2px;
 }
-
 .bpm-tag {
   font-family: 'Noto Sans KR', sans-serif;
   font-size: 11px;
   font-weight: 500;
 }
 
-/* ── COMBO VISUAL GRID ── */
-.combo-visual-grid {
+.brand-photo-container {
+  width: 280px;
   display: flex;
-  gap: 16px;
-  margin-bottom: 40px;
-  align-items: stretch;
-}
-.cv-item {
-  position: relative;
-  border-radius: 4px;
-  overflow: hidden;
-  border: 1px solid var(--border);
-  background: var(--off-white);
-  transition: transform 0.3s ease;
-}
-.cv-item:hover { transform: translateY(-4px); }
-.cv-item.fixed { flex: 1.5; height: 380px; }
-.cv-alternatives { 
-  display: flex; 
-  gap: 12px; 
-  flex: 3;
-}
-.cv-item.alt { flex: 1; height: 380px; }
-.cv-item img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-.cv-badge {
-  position: absolute;
-  top: 16px;
-  left: 16px;
-  font-family: 'DM Sans', sans-serif;
-  font-size: 8px;
-  font-weight: 600;
-  letter-spacing: 1.5px;
-  text-transform: uppercase;
-  color: #fff;
-  background: rgba(17,16,16,0.85);
-  padding: 4px 10px;
-  border-radius: 2px;
-  backdrop-filter: blur(8px);
-  z-index: 2;
-}
-.cv-info {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  padding: 20px;
-  background: linear-gradient(to top, rgba(0,0,0,0.9), transparent);
-  color: #fff;
-  z-index: 2;
-}
-.cv-name { font-family: 'Noto Sans KR', sans-serif; font-size: 16px; font-weight: 600; display: block; margin-bottom: 2px; }
-.cv-handle { font-family: 'DM Sans', sans-serif; font-size: 10px; opacity: 0.6; letter-spacing: 0.5px; }
-.cv-sep {
-  display: flex;
-  align-items: center;
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 48px;
-  color: var(--pink);
-  font-weight: 300;
-  padding: 0 16px;
+  flex-direction: column;
+  gap: 12px;
 }
 
 .metrics-grid-wrap {
@@ -521,7 +412,6 @@ body {
   flex-direction: column;
   gap: 12px;
 }
-
 .metrics-top {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -530,16 +420,13 @@ body {
   border-radius: 4px;
   overflow: hidden;
 }
-
 .metric-box {
   padding: 24px 20px;
   border-right: 1px solid var(--border);
   border-bottom: 1px solid var(--border);
 }
-
 .metric-box:nth-child(3n) { border-right: none; }
 .metric-box:nth-child(n+4) { border-bottom: none; }
-
 .metric-box-label {
   font-family: 'DM Sans', sans-serif;
   font-size: 10px;
@@ -549,7 +436,6 @@ body {
   color: var(--muted);
   margin-bottom: 8px;
 }
-
 .metric-box-value {
   font-family: 'DM Sans', sans-serif;
   font-size: 26px;
@@ -557,13 +443,11 @@ body {
   color: var(--ink);
   line-height: 1;
 }
-
 .metric-box-unit {
   font-size: 12px;
   color: var(--muted);
   margin-left: 2px;
 }
-
 .metric-er-row {
   background: var(--ink);
   border-radius: 4px;
@@ -572,36 +456,50 @@ body {
   align-items: center;
   gap: 24px;
 }
-
+.er-label {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  color: #fff;
+  margin-bottom: 6px;
+}
 .er-value {
   font-family: 'Cormorant Garamond', serif;
   font-size: 36px;
   color: var(--pink);
   line-height: 1;
 }
-
 .er-bar-wrap { flex: 1; }
 .er-bar-bg { height: 1px; background: rgba(255,255,255,0.1); margin-bottom: 8px; }
 .er-bar-fill { height: 100%; background: var(--pink); }
-
+.er-bar-note {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 11px;
+  color: #fff;
+  opacity: 0.95;
+}
 .followers-visual {
   background: var(--off-white);
   border: 1px solid var(--border);
   border-radius: 4px;
   padding: 24px;
 }
-
+.fv-label {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 8px;
+}
 .fv-main {
   font-family: 'Cormorant Garamond', serif;
   font-size: 40px;
   color: var(--ink);
   line-height: 1;
-}
-.fv-sub {
-  font-family: 'DM Sans', sans-serif;
-  font-size: 11px;
-  color: var(--muted);
-  margin-bottom: 20px;
+  margin-bottom: 16px;
 }
 .fv-effective {
   display: flex;
@@ -614,116 +512,421 @@ body {
   background: var(--cement);
   border-radius: 2px;
   overflow: hidden;
-  position: relative;
 }
 .fv-eff-fill {
   height: 100%;
   background: var(--pink);
   border-radius: 2px;
 }
-.fv-eff-label {
-  font-family: 'DM Sans', sans-serif;
-  font-size: 10px;
-  color: var(--muted);
-  white-space: nowrap;
-}
-.fv-eff-value {
+
+/* ── COMBINED METRIC (Option 01) ── */
+.metric-box-value-plus {
+  display: block;
   font-family: 'DM Sans', sans-serif;
   font-size: 13px;
   font-weight: 500;
   color: var(--pink-deep);
-  white-space: nowrap;
+  margin-top: 5px;
+  letter-spacing: -0.3px;
+}
+.er-plus {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 18px;
+  color: var(--pink);
+  vertical-align: super;
+  margin-left: 2px;
 }
 
-/* ── ADVANTAGES ── */
-.advantages-section {}
-.adv-title {
+/* ── PACKAGE CARD HIERARCHY REDESIGN ── */
+.pkg-platform-bar {
+  margin: -24px -20px 16px;
+  padding: 7px 20px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 8px;
+  font-weight: 700;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  display: flex;
+  align-items: center;
+}
+.pkg-platform-bar.ig {
+  background: rgba(232,164,174,0.14);
+  color: var(--pink-deep);
+}
+.pkg-platform-bar.mag {
+  background: rgba(180,175,168,0.12);
+  color: var(--muted);
+}
+.handle-link {
+  color: inherit;
+  text-decoration: none;
+  border-bottom: 1px solid rgba(138,132,124,0.3);
+  transition: border-color 0.2s, color 0.2s;
+}
+.handle-link:hover {
+  border-color: var(--pink);
+  color: var(--pink-deep);
+}
+.platform-ext-link {
+  color: inherit;
+  text-decoration: none;
+  border-bottom: 1px solid rgba(138,132,124,0.22);
+  transition: border-color 0.2s;
+}
+.platform-ext-link:hover { border-color: currentColor; }
+
+/* ── PACKAGE REFERENCE SLOT ── */
+.pkg-ref-area {
+  padding-bottom: 12px;
+  margin-bottom: 12px;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.pkg-ref-slot {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  color: var(--ink);
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  padding-bottom: 2px;
+  border-bottom: 1px solid rgba(30,28,26,0.35);
+  transition: color 0.2s, border-color 0.2s;
+}
+.pkg-ref-slot:hover {
+  color: var(--pink-deep);
+  border-color: var(--pink);
+}
+.pkg-person-name {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 22px;
+  font-weight: 500;
+  color: var(--ink);
+  letter-spacing: -0.3px;
+  margin-bottom: 5px;
+  line-height: 1;
+}
+.pkg-content-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex: 1;
+  padding-bottom: 16px;
+}
+.pkg-format-sm {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--ink);
+  letter-spacing: -0.2px;
+}
+.pkg-sep {
+  font-size: 10px;
+  color: var(--cement);
+}
+.pkg-detail-sm {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 11px;
+  color: var(--muted);
+}
+.pkg-detail-sm.active {
+  color: var(--pink-deep);
+}
+
+/* ── PHOTO HOVER INTERACTION (Option 01) ── */
+.photo-hover-item {
+  cursor: pointer;
+  transition: transform 0.25s ease, box-shadow 0.25s ease, opacity 0.25s ease;
+}
+.photo-hover-item:hover,
+.photo-hover-item.is-active {
+  transform: scale(1.02);
+  box-shadow: 0 8px 32px rgba(0,0,0,0.18);
+  outline: 2px solid var(--pink);
+  outline-offset: -2px;
+}
+.photo-hover-item.is-dim {
+  opacity: 0.5;
+  transform: scale(0.985);
+}
+
+/* ── PACKAGE SECTION ── */
+.package-section {
+  border-top: 1px solid var(--border);
+  padding-top: 48px;
+  margin-bottom: 2px;
+}
+.pkg-header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-bottom: 28px;
+}
+.pkg-title-group {
+  display: flex;
+  align-items: baseline;
+  gap: 16px;
+}
+.pkg-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 36px;
+  font-weight: 400;
+  color: var(--ink);
+  letter-spacing: -0.5px;
+}
+.pkg-count {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.pkg-ref-link {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--pink-deep);
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding-bottom: 2px;
+  border-bottom: 1px solid var(--pink);
+  transition: opacity 0.2s;
+}
+.pkg-ref-link:hover { opacity: 0.6; }
+.pkg-items {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 2px;
+  background: var(--cement);
+  border: 1px solid var(--cement);
+  border-radius: 4px;
+  overflow: hidden;
+}
+.pkg-items.items-4 { grid-template-columns: repeat(4, 1fr); }
+.pkg-card {
+  background: var(--off-white);
+  padding: 24px 20px;
+  display: flex;
+  flex-direction: column;
+}
+.pkg-platform {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 6px;
+}
+.pkg-format {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 30px;
+  font-weight: 400;
+  color: var(--ink);
+  line-height: 1.05;
+  letter-spacing: -0.5px;
+  margin-bottom: 14px;
+}
+.pkg-person-chip {
+  display: inline-flex;
+  align-items: center;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--pink-deep);
+  background: var(--pink-light);
+  padding: 3px 10px;
+  border-radius: 20px;
+  align-self: flex-start;
+  margin-bottom: 6px;
+}
+.pkg-condition {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 11px;
+  color: var(--muted);
+  flex: 1;
+  padding-bottom: 16px;
+  line-height: 1.5;
+}
+.pkg-condition.active {
+  color: var(--pink-deep);
+}
+.pkg-card-price.negotiating {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--pink-deep);
+  letter-spacing: 0.5px;
+}
+
+/* ── PACKAGE PRICE BLOCK ── */
+.pkg-price-block {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+.pkg-price-original {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 11px;
+  color: var(--cement-dark);
+  text-decoration: line-through;
+  letter-spacing: -0.2px;
+}
+.pkg-price-meta {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.pkg-price-main {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 17px;
+  font-weight: 500;
+  color: var(--ink);
+  letter-spacing: -0.5px;
+}
+.pkg-discount-badge {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 8px;
+  font-weight: 700;
+  color: var(--pink-deep);
+  background: var(--pink-light);
+  padding: 2px 7px;
+  border-radius: 20px;
+  letter-spacing: 0.5px;
+  flex-shrink: 0;
+}
+
+/* ── PACKAGE TOTAL ROW ── */
+.pkg-total-row {
+  margin-top: 10px;
+  padding: 22px 28px;
+  background: var(--ink);
+  border-radius: 4px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.pkg-total-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+.pkg-total-label {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.4);
+}
+.pkg-total-note {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 11px;
+  color: rgba(255,255,255,0.28);
+}
+.pkg-total-right {
+  text-align: right;
+}
+.pkg-total-value {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 34px;
+  font-weight: 400;
+  color: #fff;
+  letter-spacing: -0.5px;
+  line-height: 1;
+}
+.pkg-total-savings {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 11px;
+  color: var(--pink);
+  margin-top: 5px;
+  letter-spacing: -0.2px;
+}
+
+/* ── WHY SECTION ── */
+.why-section {
+  border-top: 1px solid var(--border);
+  padding-top: 48px;
+  margin-top: 2px;
+}
+.why-label {
   font-family: 'DM Sans', sans-serif;
   font-size: 10px;
   font-weight: 500;
   letter-spacing: 3px;
   text-transform: uppercase;
   color: var(--muted);
-  margin-bottom: 28px;
-  padding-bottom: 16px;
-  border-bottom: 1px solid var(--border);
-}
-
-.adv-item {
-  display: grid;
-  grid-template-columns: 16px 1fr;
-  gap: 16px;
   margin-bottom: 24px;
-  padding-bottom: 24px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.why-label::after {
+  content: '';
+  flex: 0 0 40px;
+  height: 1px;
+  background: var(--border);
+}
+.why-points {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  overflow: hidden;
+}
+.why-point {
+  display: grid;
+  grid-template-columns: 24px 1fr;
+  gap: 20px;
+  padding: 28px 32px;
   border-bottom: 1px solid var(--border);
+  background: var(--off-white);
+  align-items: start;
 }
-.adv-item:last-child {
-  border-bottom: none;
-  margin-bottom: 0;
-  padding-bottom: 0;
-}
-.adv-num {
+.why-point:last-child { border-bottom: none; }
+.why-point-num {
   font-family: 'Cormorant Garamond', serif;
-  font-size: 11px;
+  font-size: 15px;
   font-style: italic;
   color: var(--pink);
-  line-height: 1.8;
+  padding-top: 1px;
 }
-.adv-content {}
-.adv-headline {
-  font-size: 13px;
+.why-point-headline {
+  font-size: 14px;
   font-weight: 600;
   color: var(--ink);
-  margin-bottom: 4px;
+  margin-bottom: 8px;
   line-height: 1.4;
 }
-.adv-desc {
-  font-size: 13.5px; /* Increased from 12.5px */
-  font-weight: 400; /* Increased from 300 for better PT readability */
-  color: #666; /* Darker than var(--muted) for better contrast */
-  line-height: 1.7;
+.why-point-body {
+  font-size: 13.5px;
+  font-weight: 300;
+  color: #666;
+  line-height: 1.78;
 }
-
-/* ── COMBO INFO (Option 3) ── */
-.combo-box {
-  background: var(--ink);
-  border-radius: 4px;
-  padding: 28px;
-  margin-bottom: 24px;
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  gap: 2px;
-}
-.combo-member {
-  padding: 16px;
-  background: rgba(255,255,255,0.04);
-  text-align: center;
-}
-.combo-member:first-child {
-  background: rgba(232,164,174,0.15);
-}
-.combo-role {
+.why-note {
+  margin-top: 12px;
   font-family: 'DM Sans', sans-serif;
-  font-size: 9px;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  color: rgba(255,255,255,0.3);
-  margin-bottom: 8px;
-}
-.combo-name {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 20px;
+  font-size: 11.5px;
   font-weight: 400;
-  color: rgba(255,255,255,0.85);
-  line-height: 1.2;
-}
-.combo-member:first-child .combo-name { color: var(--pink); }
-.combo-name-or {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 14px;
-  font-style: italic;
-  color: rgba(255,255,255,0.2);
-  margin: 4px 0;
+  color: var(--pink-deep);
+  line-height: 1.7;
+  padding: 14px 20px;
+  background: var(--pink-light);
+  border-radius: 4px;
+  border-left: 2px solid var(--pink);
 }
 
 /* ── NEGOTIATION SECTION ── */
@@ -731,7 +934,6 @@ body {
   background: var(--off-white);
   border-top: 1px solid var(--cement);
 }
-
 .neg-intro {
   max-width: 560px;
   margin-bottom: 64px;
@@ -749,10 +951,9 @@ body {
   color: var(--muted);
   line-height: 1.8;
 }
-
 .neg-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
   gap: 2px;
   background: var(--cement);
   border: 1px solid var(--cement);
@@ -761,56 +962,13 @@ body {
 }
 .neg-card {
   background: var(--stone);
-  padding: 32px 28px;
+  padding: 28px 24px;
   position: relative;
-}
-.neg-card-label {
-  font-family: 'DM Sans', sans-serif;
-  font-size: 10px;
-  font-weight: 500;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  color: var(--muted);
-  margin-bottom: 16px;
-}
-.neg-card-name {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 28px;
-  font-weight: 400;
-  color: var(--ink);
-  margin-bottom: 4px;
-}
-.neg-card-handle {
-  font-family: 'DM Sans', sans-serif;
-  font-size: 11px;
-  color: var(--cement-dark);
-  margin-bottom: 24px;
-}
-.neg-price-label {
-  font-family: 'DM Sans', sans-serif;
-  font-size: 9px;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  color: var(--muted);
-  margin-bottom: 6px;
-}
-.neg-price {
-  font-family: 'DM Sans', sans-serif;
-  font-size: 32px;
-  font-weight: 500;
-  color: var(--ink);
-  letter-spacing: -1px;
-}
-.neg-price-note {
-  font-size: 11px;
-  color: var(--muted);
-  margin-top: 4px;
-  font-weight: 300;
 }
 .neg-status-badge {
   position: absolute;
-  top: 24px;
-  right: 24px;
+  top: 20px;
+  right: 20px;
   font-family: 'DM Sans', sans-serif;
   font-size: 8px;
   font-weight: 500;
@@ -824,63 +982,86 @@ body {
 .neg-card-top {
   display: flex;
   align-items: center;
-  gap: 20px;
-  margin-bottom: 24px;
+  gap: 16px;
+  margin-bottom: 20px;
 }
 .neg-card-img {
-  width: 64px;
-  height: 64px;
+  width: 56px;
+  height: 56px;
   border-radius: 50%;
   object-fit: cover;
   border: 1px solid var(--border);
   background: var(--off-white);
 }
-
-/* ── BRAND FIT PHOTO ── */
-.brand-photo-container {
-  width: 280px; 
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-.brand-photo-item {
-  width: 100%;
-  border-radius: 4px;
-  overflow: hidden;
-  border: 1px solid var(--border);
-  background: var(--off-white);
-}
-.brand-photo-img {
-  width: 100%;
-  height: 380px;
-  object-fit: cover;
-  display: block;
-}
-.brand-photo-meta {
-  background: var(--off-white);
-  padding: 12px 16px;
-  border-top: 1px solid var(--border);
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-}
-.bpm-label {
+.neg-card-label {
   font-family: 'DM Sans', sans-serif;
-  font-size: 10px;
+  font-size: 9px;
   font-weight: 500;
   letter-spacing: 2px;
   text-transform: uppercase;
   color: var(--muted);
+  margin-bottom: 4px;
 }
-.bpm-tag {
+.neg-card-name {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 26px;
+  font-weight: 400;
+  color: var(--ink);
+  line-height: 1;
+}
+.neg-card-handle {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 11px;
+  color: var(--cement-dark);
+  margin-bottom: 20px;
+}
+.neg-price-label {
   font-family: 'DM Sans', sans-serif;
   font-size: 9px;
-  letter-spacing: 1px;
+  letter-spacing: 1.5px;
   text-transform: uppercase;
-  color: var(--pink-deep);
-  background: var(--pink-light);
-  padding: 3px 10px;
-  border-radius: 20px;
+  color: var(--muted);
+  margin-bottom: 4px;
+}
+.neg-price {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 28px;
+  font-weight: 500;
+  color: var(--ink);
+  letter-spacing: -0.5px;
+}
+.neg-price-note {
+  font-size: 11px;
+  color: var(--muted);
+  margin-top: 4px;
+  font-weight: 300;
+}
+.neg-price-dual {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 4px;
+}
+.neg-price-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+}
+.neg-price-type {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.neg-price-val {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 18px;
+  font-weight: 500;
+  color: var(--ink);
+  letter-spacing: -0.5px;
 }
 
 /* ── DIVIDER ── */
@@ -927,14 +1108,24 @@ body {
 .opt-wrap-2 { background: var(--off-white); }
 .opt-wrap-3 { background: var(--stone); }
 
+/* ── RESPONSIVE ── */
+@media (max-width: 1100px) {
+  .pkg-items { grid-template-columns: repeat(3, 1fr); }
+  .pkg-items.items-4 { grid-template-columns: repeat(2, 1fr); }
+}
 @media (max-width: 900px) {
   .hero-inner, .section-wrap, .site-footer { padding: 48px 28px; }
+  .sticky-nav { padding: 12px 20px; gap: 12px; }
+  .snav-meta { display: none; }
+  .snav-options { gap: 16px; }
   .section-divider { margin: 0 28px; }
-  .opt-body { grid-template-columns: 1fr; gap: 40px; }
-  .opt-header { flex-direction: column; align-items: flex-start; gap: 16px; }
+  .opt-body-info { grid-template-columns: 1fr !important; gap: 32px; }
+  .photo-stack { width: 100%; }
   .metrics-top { grid-template-columns: repeat(2, 1fr); }
   .hero-bottom { flex-direction: column; gap: 16px; align-items: flex-start; padding: 28px; }
-  .combo-box { grid-template-columns: 1fr; }
+  .pkg-items, .pkg-items.items-4 { grid-template-columns: repeat(2, 1fr); }
+  .neg-grid { grid-template-columns: 1fr 1fr; }
+  .site-footer { flex-direction: column; gap: 12px; align-items: flex-start; }
 }
 </style>
 </head>
@@ -953,265 +1144,29 @@ body {
   </div>
   <div class="hero-bottom">
     <span class="hero-meta">INTERNAL · CONFIDENTIAL · SIRIAI</span>
-    <div class="hero-options-nav">
-      <span class="active">Option 01</span>
-      <span>Option 02</span>
-      <span>Option 03</span>
-    </div>
   </div>
 </section>
 
-<!-- ───────────── OPTION 01 · 웬디 ───────────── -->
-<div class="opt-wrap-1">
+<!-- STICKY NAV -->
+<nav class="sticky-nav" id="sticky-nav">
+  <span class="snav-meta">INTERNAL · CONFIDENTIAL · SIRIAI</span>
+  <div class="snav-options">
+    <a href="#option-01" class="snav-option active">유시은 × 릴리</a>
+    <a href="#option-02" class="snav-option">릴리 × 규진</a>
+    <a href="#option-03" class="snav-option">웬디</a>
+    <span class="snav-divider">·</span>
+    <a href="#negotiation" class="snav-option">협의중</a>
+  </div>
+  <a href="https://docs.google.com/spreadsheets/d/1cb1TOjOCAsPjVDITL6Z53kIJo2CBzY8pFkT6He8ozn8/edit?gid=1489214232#gid=1489214232"
+     target="_blank" rel="noopener" class="snav-sheets-btn">비용협의 시트 →</a>
+</nav>
+
+
+<!-- ───────────── OPTION 01 · 유시은 × 릴리 ───────────── -->
+<div class="opt-wrap-1" id="option-01">
 <section class="section-wrap">
   <div class="section-eyebrow">
     <span class="eyebrow-num">01.</span>
-    <div class="eyebrow-line"></div>
-    <span class="eyebrow-label">Mega Option</span>
-  </div>
-
-  <div class="option-block">
-    <div class="opt-header">
-      <div class="opt-identity">
-        <div class="opt-tag">Option 01</div>
-        <div class="opt-name">웬디<span class="opt-name-sub">Wendy</span></div>
-        <div class="opt-handle">@todayis_wendy &nbsp;·&nbsp; Red Velvet &nbsp;·&nbsp; Instagram</div>
-      </div>
-    </div>
-
-    <div class="opt-body">
-      <!-- LEFT: STABLE GRID LAYOUT -->
-      <div class="metrics-section">
-        <!-- PORTRAIT 280x380 -->
-        <div class="brand-photo-item">
-          <img src="images/웬디.jpg" alt="웬디" class="brand-photo-img">
-          <div class="brand-photo-meta">
-            <span class="bpm-label">Representative Portrait</span>
-            <span class="bpm-tag">Wendy · Red Velvet</span>
-          </div>
-        </div>
-        
-        <!-- DATA GRID (3x2) -->
-        <div class="metrics-grid-wrap">
-          <div class="metrics-top">
-            <div class="metric-box">
-              <div class="metric-box-label">팔로워</div>
-              <div class="metric-box-value">745<span class="metric-box-unit">만</span></div>
-            </div>
-            <div class="metric-box">
-              <div class="metric-box-label">유효 팔로워</div>
-              <div class="metric-box-value">590<span class="metric-box-unit">만</span></div>
-            </div>
-            <div class="metric-box">
-              <div class="metric-box-label">평균 도달</div>
-              <div class="metric-box-value">182<span class="metric-box-unit">만</span></div>
-            </div>
-            <div class="metric-box">
-              <div class="metric-box-label">평균 영상 조회</div>
-              <div class="metric-box-value">170<span class="metric-box-unit">만</span></div>
-            </div>
-            <div class="metric-box">
-              <div class="metric-box-label">평균 좋아요</div>
-              <div class="metric-box-value">19.6<span class="metric-box-unit">만</span></div>
-            </div>
-            <div class="metric-box">
-              <div class="metric-box-label">평균 댓글</div>
-              <div class="metric-box-value">926<span class="metric-box-unit">개</span></div>
-            </div>
-          </div>
-          
-          <div class="metric-er-row">
-            <div class="er-left">
-              <div class="er-label">참여율 ER</div>
-              <div class="er-value">2.64%</div>
-            </div>
-            <div class="er-bar-wrap">
-              <div class="er-bar-bg"><div class="er-bar-fill" style="width:92%"></div></div>
-              <div class="er-bar-note">유사 그룹 상위 5% &nbsp;·&nbsp; 팔로워 성장률 34.5%</div>
-            </div>
-          </div>
-
-          <div class="followers-visual">
-            <div class="fv-label">팔로워 유효성 (79.2%)</div>
-            <div class="fv-main">590<span style="font-size:20px; color:var(--muted);">만</span></div>
-            <div class="fv-effective">
-              <div class="fv-eff-bar"><div class="fv-eff-fill" style="width:79.2%"></div></div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- RIGHT: ADVANTAGES -->
-      <div class="advantages-section">
-        <div class="adv-title">Why Option 01</div>
-        <div class="adv-item">
-          <span class="adv-num">i.</span>
-          <div class="adv-content">
-            <div class="adv-headline">압도적 도달 규모</div>
-            <div class="adv-desc">3개 옵션 중 최다 팔로워 745만. 단일 게시물로 최대 182만 도달 가능. 브랜드 인지도 확장에 최적.</div>
-          </div>
-        </div>
-        <div class="adv-item">
-          <span class="adv-num">ii.</span>
-          <div class="adv-content">
-            <div class="adv-headline">검증된 참여 퀄리티</div>
-            <div class="adv-desc">ER 2.64%는 700만+ 계정 기준 유의미한 수치. 팬덤이 아닌 실질 반응 팔로워 590만 확보.</div>
-          </div>
-        </div>
-        <div class="adv-item">
-          <span class="adv-num">iii.</span>
-          <div class="adv-content">
-            <div class="adv-headline">상승 모멘텀</div>
-            <div class="adv-desc">팔로워 191만 성장, 성장률 34.5%로 유사 그룹 상위 84.39%. 캠페인 시점에 최고 노출 효과 기대.</div>
-          </div>
-        </div>
-        <div class="adv-item">
-          <span class="adv-num">iv.</span>
-          <div class="adv-content">
-            <div class="adv-headline">브랜드 톤 정합성</div>
-            <div class="adv-desc">Red Velvet 웬디의 세련되고 고급스러운 이미지가 에스더버니 아뜰리에 공간 콘셉트와 자연스럽게 공명.</div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-</div>
-
-<div class="section-divider"></div>
-
-<!-- ───────────── OPTION 02 · 릴리 + 규진 ───────────── -->
-<div class="opt-wrap-2">
-<section class="section-wrap">
-  <div class="section-eyebrow">
-    <span class="eyebrow-num">02.</span>
-    <div class="eyebrow-line"></div>
-    <span class="eyebrow-label">Mega Option</span>
-  </div>
-
-  <div class="option-block">
-    <div class="opt-header">
-      <div class="opt-identity">
-        <div class="opt-tag">Option 02</div>
-        <div class="opt-name">릴리<span class="opt-name-sub"> + 규진</span></div>
-        <div class="opt-handle">@nmixx_official &nbsp;·&nbsp; NMIXX &nbsp;·&nbsp; Instagram</div>
-      </div>
-    </div>
-
-    <div class="opt-body">
-      <!-- LEFT: DUAL PORTRAIT LAYOUT -->
-      <div class="metrics-section" style="grid-template-columns: 572px 1fr; gap: 48px;">
-        <!-- LILY + KYUJIN STACK -->
-        <div class="photo-stack">
-          <div class="brand-photo-item">
-            <img src="images/앤믹스 릴리.webp" alt="릴리" class="brand-photo-img">
-            <div class="brand-photo-meta">
-              <span class="bpm-label">NMIXX PORTRAIT</span>
-              <span class="bpm-tag">Lily</span>
-            </div>
-          </div>
-          <div class="brand-photo-item">
-            <img src="https://i.namu.wiki/i/bGZ4vRgQlor7DWX6e0tD87b0srNKBHn2GhFJl5YdRrf4aojXKXHFqcsREx_A0mMq1RC5elDTDcYW9PGaKgTGJS8RoqFFFEqzEO-AP8rjbut3yPluDDkUg2BN1QjeOlGAYFvlzdaYA9j36LcovwxVIw.webp" alt="규진" class="brand-photo-img">
-            <div class="brand-photo-meta">
-              <span class="bpm-label">NMIXX PORTRAIT</span>
-              <span class="bpm-tag">Kyujin</span>
-            </div>
-          </div>
-        </div>
-
-        <div class="metrics-grid-wrap">
-          <div class="metrics-top">
-            <div class="metric-box">
-              <div class="metric-box-label">팔로워</div>
-              <div class="metric-box-value">609<span class="metric-box-unit">만</span></div>
-            </div>
-            <div class="metric-box">
-              <div class="metric-box-label">유효 팔로워</div>
-              <div class="metric-box-value">409<span class="metric-box-unit">만</span></div>
-            </div>
-            <div class="metric-box">
-              <div class="metric-box-label">평균 도달</div>
-              <div class="metric-box-value">124<span class="metric-box-unit">만</span></div>
-            </div>
-            <div class="metric-box">
-              <div class="metric-box-label">평균 영상 조회</div>
-              <div class="metric-box-value">142<span class="metric-box-unit">만</span></div>
-            </div>
-            <div class="metric-box">
-              <div class="metric-box-label">평균 좋아요</div>
-              <div class="metric-box-value">13.2<span class="metric-box-unit">만</span></div>
-            </div>
-            <div class="metric-box">
-              <div class="metric-box-label">평균 댓글</div>
-              <div class="metric-box-value">566<span class="metric-box-unit">개</span></div>
-            </div>
-          </div>
-          
-          <div class="metric-er-row">
-            <div class="er-left">
-              <div class="er-label">참여율 ER</div>
-              <div class="er-value">2.18%</div>
-            </div>
-            <div class="er-bar-wrap">
-              <div class="er-bar-bg"><div class="er-bar-fill" style="width:85%"></div></div>
-              <div class="er-bar-note">600만+ 메가 계정 중 매우 높은 전환 품질</div>
-            </div>
-          </div>
-
-          <div class="followers-visual">
-            <div class="fv-label">팔로워 유효성 (67.2%)</div>
-            <div class="fv-main">409<span style="font-size:20px; color:var(--muted);">만</span></div>
-            <div class="fv-effective">
-              <div class="fv-eff-bar"><div class="fv-eff-fill" style="width:79.2%"></div></div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- RIGHT: ADVANTAGES -->
-      <div class="advantages-section">
-        <div class="adv-title">Why Option 02</div>
-        <div class="adv-item">
-          <span class="adv-num">i.</span>
-          <div class="adv-content">
-            <div class="adv-headline">4세대 JYP 대표 걸그룹</div>
-            <div class="adv-desc">릴리·규진 NMIXX는 현재 가장 주목받는 4세대 아이돌. 10~20대 핵심 소비층에게 직접적이고 강력한 영향력.</div>
-          </div>
-        </div>
-        <div class="adv-item">
-          <span class="adv-num">ii.</span>
-          <div class="adv-content">
-            <div class="adv-headline">Reels 바이럴 최적화</div>
-            <div class="adv-desc">평균 영상 조회 142만. 팔로워 수 대비 영상 조회가 도달을 초과하는 강한 확산 구조 보유.</div>
-          </div>
-        </div>
-        <div class="adv-item">
-          <span class="adv-num">iii.</span>
-          <div class="adv-content">
-            <div class="adv-headline">글로벌 팬덤 기반</div>
-            <div class="adv-desc">국내외 동시 도달 가능한 글로벌 팬덤. 에스더버니 아뜰리에의 키치·팝 아트 컨셉과 에너지가 부합.</div>
-          </div>
-        </div>
-        <div class="adv-item">
-          <span class="adv-num">iv.</span>
-          <div class="adv-content">
-            <div class="adv-headline">2인 시너지 효과</div>
-            <div class="adv-desc">릴리 + 규진 양측에서 크로스 태그·콜라보 콘텐츠 가능. 단일 인플루언서 대비 콘텐츠 다양성 확보.</div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-</div>
-
-<div class="section-divider"></div>
-
-<!-- ───────────── OPTION 03 · 유시은 + [릴리 or 라잇썸 or 루나] ───────────── -->
-<div class="opt-wrap-3">
-<section class="section-wrap">
-  <div class="section-eyebrow">
-    <span class="eyebrow-num">03.</span>
     <div class="eyebrow-line"></div>
     <span class="eyebrow-label">Mega Option · Combo</span>
   </div>
@@ -1219,101 +1174,467 @@ body {
   <div class="option-block">
     <div class="opt-header">
       <div class="opt-identity">
-        <div class="opt-tag">Option 03</div>
-        <div class="opt-name">유시은<span class="opt-name-sub">Yoo Si-eun</span></div>
-        <div class="opt-handle">@yoo__si &nbsp;·&nbsp; 솔로지옥 3 &nbsp;·&nbsp; Instagram</div>
+        <div class="opt-tag">Option 01</div>
+        <div class="opt-name-combo">
+          <span class="opt-name-fixed">유시은</span>
+          <span class="opt-name-separator">×</span>
+          <span class="opt-name-variable">릴리</span>
+        </div>
+        <div class="opt-handle"><a href="https://www.instagram.com/yoo__si/" target="_blank" rel="noopener" class="handle-link">@yoo__si</a> &nbsp;·&nbsp; 솔로지옥 3 &nbsp;&nbsp;+&nbsp;&nbsp; <a href="https://www.instagram.com/nmixx_official/" target="_blank" rel="noopener" class="handle-link">@nmixx_official</a> &nbsp;·&nbsp; NMIXX &nbsp;·&nbsp; Instagram</div>
       </div>
     </div>
 
-    <div class="opt-body">
-      <!-- LEFT: PORTRAIT + BOTTOM THUMBS (MATCHING USER GUIDE) -->
-      <div class="metrics-section">
-        <div class="brand-photo-container">
-          <div class="opt-3-main-photo" id="opt3-photo-container">
-            <img src="https://www.bntnews.co.kr/data/bnt/image/2024/02/26/bnt202402260162.jpg" id="main-opt3-img">
-            <div class="opt-3-photo-label" id="main-opt3-label">FIXED · 유시은</div>
-          </div>
-
-          <!-- THUMBNAILS AT THE BOTTOM OF THE PORTRAIT -->
-          <div class="mini-selection-row">
-            <div class="mini-thumb" 
-                 onmouseover="swapOpt3('images/앤믹스 릴리.webp', 'CANDIDATE · 릴리')"
-                 onmouseout="resetOpt3()">
-              <img src="images/앤믹스 릴리.webp">
-              <div class="mini-thumb-name">Lily</div>
-            </div>
-            <div class="mini-thumb" 
-                 onmouseover="swapOpt3('images/라잇썸.webp', 'CANDIDATE · 라잇썸')"
-                 onmouseout="resetOpt3()">
-              <img src="images/라잇썸.webp">
-              <div class="mini-thumb-name">Lightsum</div>
-            </div>
-            <div class="mini-thumb" 
-                 onmouseover="swapOpt3('https://i.namu.wiki/i/3Zxia5Qvblc8f7eHJqUbrDZq_ZypBqvwsIV-LM0zmRELY0e1tc2nHorYP4gK-IFqfCAJhN-T87rXbNFJHS3gWELgjAjHR0uITNeAHWNq7GUau1SaQRjVFN0xiYW-mqjiEdB2FptEwVANqYVZ5sAzug.webp', 'CANDIDATE · 루나')"
-                 onmouseout="resetOpt3()">
-              <img src="https://i.namu.wiki/i/3Zxia5Qvblc8f7eHJqUbrDZq_ZypBqvwsIV-LM0zmRELY0e1tc2nHorYP4gK-IFqfCAJhN-T87rXbNFJHS3gWELgjAjHR0uITNeAHWNq7GUau1SaQRjVFN0xiYW-mqjiEdB2FptEwVANqYVZ5sAzug.webp">
-              <div class="mini-thumb-name">Luna</div>
-            </div>
+    <!-- PHOTOS + METRICS -->
+    <div class="opt-body-info" style="grid-template-columns: 572px 1fr;">
+      <!-- LEFT: DUAL PHOTOS (hover to swap metrics) -->
+      <div class="photo-stack">
+        <div class="brand-photo-item photo-hover-item" id="o1-photo-ysi" data-person="ysi">
+          <img src="https://www.bntnews.co.kr/data/bnt/image/2024/02/26/bnt202402260162.jpg"
+               alt="유시은" class="brand-photo-img"
+               style="object-position: center 20%; transform: scale(1.15);">
+          <div class="brand-photo-meta">
+            <span class="bpm-label">솔로지옥 3 Portrait</span>
+            <span class="bpm-tag">Yoo Si-eun</span>
           </div>
         </div>
-
-        <div class="metrics-grid-wrap">
-          <div style="font-family:'DM Sans',sans-serif;font-size:10px;font-weight:500;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:12px;">유시은 @yoo__si · 상세 지표 (고정)</div>
-          <div class="metrics-top">
-            <div class="metric-box"><div class="metric-box-label">팔로워</div><div class="metric-box-value">103<span class="metric-box-unit">만</span></div></div>
-            <div class="metric-box"><div class="metric-box-label">유효 팔로워</div><div class="metric-box-value">63.1<span class="metric-box-unit">만</span></div></div>
-            <div class="metric-box"><div class="metric-box-label">평균 도달</div><div class="metric-box-value">13.1<span class="metric-box-unit">만</span></div></div>
-            <div class="metric-box"><div class="metric-box-label">평균 영상 조회</div><div class="metric-box-value">19.7<span class="metric-box-unit">만</span></div></div>
-            <div class="metric-box"><div class="metric-box-label">평균 좋아요</div><div class="metric-box-value">1.1<span class="metric-box-unit">만</span></div></div>
-            <div class="metric-box"><div class="metric-box-label">평균 댓글</div><div class="metric-box-value">103<span class="metric-box-unit">개</span></div></div>
-          </div>
-          <div class="metric-er-row">
-            <div class="er-left"><div class="er-label">참여율 ER</div><div class="er-value">1.08%</div></div>
-            <div class="er-bar-wrap">
-              <div class="er-bar-bg"><div class="er-bar-fill" style="width:82%"></div></div>
-              <div class="er-bar-note">팔로워 대비 높은 실질 반응률 확보</div>
-            </div>
-          </div>
-
-          <div class="followers-visual">
-            <div class="fv-label">팔로워 유효성 (61.3%)</div>
-            <div class="fv-main">63.1<span style="font-size:20px; color:var(--muted);">만</span></div>
-            <div class="fv-effective">
-              <div class="fv-eff-bar"><div class="fv-eff-fill" style="width:84.2%"></div></div>
-            </div>
+        <div class="brand-photo-item photo-hover-item" id="o1-photo-lily" data-person="lily">
+          <img src="images/앤믹스 릴리.webp" alt="릴리" class="brand-photo-img">
+          <div class="brand-photo-meta">
+            <span class="bpm-label">NMIXX Portrait</span>
+            <span class="bpm-tag">Lily</span>
           </div>
         </div>
       </div>
 
-      <!-- RIGHT: ADVANTAGES -->
-      <div class="advantages-section">
-        <div class="adv-title">Why Option 03</div>
-        <div class="adv-item">
-          <span class="adv-num">i.</span>
-          <div class="adv-content">
-            <div class="adv-headline">글로벌 핫토픽 · 솔로지옥 3 서사</div>
-            <div class="adv-desc">넷플릭스 '솔로지옥 3'의 주역으로 국내외 인지도 급상승. 강력한 개인 팬덤과 화제성 형성.</div>
+      <!-- RIGHT: 합산 지표 (유시은 + NMIXX) -->
+      <div class="metrics-grid-wrap" id="o1-metrics-wrap">
+        <div class="o1-header" style="font-family:'DM Sans',sans-serif;font-size:10px;font-weight:500;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:12px;">유시은 @yoo__si &nbsp;+&nbsp; 릴리 @nmixx_official · 합산 지표</div>
+        <div class="metrics-top">
+          <div class="metric-box">
+            <div class="metric-box-label">팔로워</div>
+            <div class="metric-box-value">103<span class="metric-box-unit">만</span>
+              <span class="metric-box-value-plus">+ 609만</span>
+            </div>
+          </div>
+          <div class="metric-box">
+            <div class="metric-box-label">유효 팔로워</div>
+            <div class="metric-box-value">63.1<span class="metric-box-unit">만</span>
+              <span class="metric-box-value-plus">+ 409만</span>
+            </div>
+          </div>
+          <div class="metric-box">
+            <div class="metric-box-label">평균 도달</div>
+            <div class="metric-box-value">13.1<span class="metric-box-unit">만</span>
+              <span class="metric-box-value-plus">+ 124만</span>
+            </div>
+          </div>
+          <div class="metric-box">
+            <div class="metric-box-label">평균 영상 조회</div>
+            <div class="metric-box-value">19.7<span class="metric-box-unit">만</span>
+              <span class="metric-box-value-plus">+ 142만</span>
+            </div>
+          </div>
+          <div class="metric-box">
+            <div class="metric-box-label">평균 좋아요</div>
+            <div class="metric-box-value">1.1<span class="metric-box-unit">만</span>
+              <span class="metric-box-value-plus">+ 13.2만</span>
+            </div>
+          </div>
+          <div class="metric-box">
+            <div class="metric-box-label">평균 댓글</div>
+            <div class="metric-box-value">103<span class="metric-box-unit">개</span>
+              <span class="metric-box-value-plus">+ 566개</span>
+            </div>
           </div>
         </div>
-        <div class="adv-item">
-          <span class="adv-num">ii.</span>
-          <div class="adv-content">
-            <div class="adv-headline">에스더버니 브랜드 페르소나</div>
-            <div class="adv-desc">키치하고 러블리한 유시은의 비주얼이 공간 정체성과 완벽히 일치. 트렌디 분위기 전파.</div>
+        <div class="metric-er-row">
+          <div class="er-left">
+            <div class="er-label">참여율 ER</div>
+            <div class="er-value">1.08%<span class="er-plus">+</span></div>
+          </div>
+          <div class="er-bar-wrap">
+            <div class="er-bar-bg"><div class="er-bar-fill" style="width:82%"></div></div>
+            <div class="er-bar-note">팔로워 대비 높은 실질 반응률 · 팬덤 충성도 우수 + 입체적인 구성</div>
           </div>
         </div>
-        <div class="adv-item">
-          <span class="adv-num">iii.</span>
-          <div class="adv-content">
-            <div class="adv-headline">압도적인 인게이지먼트</div>
-            <div class="adv-desc">종영 이후에도 꾸준히 상승하는 팔로워와 높은 반응률. 팬들의 충성도가 결합된 홍보 효과.</div>
+        <div class="followers-visual">
+          <div class="fv-label">팔로워 유효성 (61.3%+)</div>
+          <div class="fv-main">63.1<span style="font-size:20px; color:var(--muted);">만</span><span style="font-family:'DM Sans',sans-serif;font-size:16px;color:var(--pink-deep);font-weight:600;margin-left:4px;">+</span></div>
+          <div class="fv-effective">
+            <div class="fv-eff-bar"><div class="fv-eff-fill" style="width:61.3%"></div></div>
           </div>
         </div>
-        <div class="adv-item">
-          <span class="adv-num">iv.</span>
-          <div class="adv-content">
-            <div class="adv-headline">선택의 유연성</div>
-            <div class="adv-desc">파트너 인플루언서를 릴리·라잇썸·루나 중 상황에 따라 결정 가능. 최종 협의 결과에 따라 최적 구성 확정.</div>
+      </div>
+    </div>
+
+    <!-- PACKAGE SECTION -->
+    <div class="package-section">
+      <div class="pkg-header">
+        <div class="pkg-title-group">
+          <span class="pkg-title">패키지 구성</span>
+          <span class="pkg-count">총 6건</span>
+        </div>
+      </div>
+      <div class="pkg-items">
+        <div class="pkg-card">
+          <div class="pkg-platform-bar ig">Instagram</div>
+          <div class="pkg-person-name">유시은</div>
+          <div class="pkg-content-row">
+            <span class="pkg-format-sm">Reels</span>
+            <span class="pkg-sep">·</span>
+            <span class="pkg-detail-sm">공동작업자 O</span>
+          </div>
+          <div class="pkg-ref-area">
+            <a href="https://www.instagram.com/reel/DPvdgs5gDw5/" target="_blank" rel="noopener" class="pkg-ref-slot">레퍼런스 1 ↗</a>
+            <a href="https://www.instagram.com/reel/DOn3VYwEzGy/" target="_blank" rel="noopener" class="pkg-ref-slot">레퍼런스 2 ↗</a>
+          </div>
+          <div class="pkg-price-block">
+            <div class="pkg-price-original">₩2,200만</div>
+            <div class="pkg-price-meta">
+              <span class="pkg-price-main">₩1,200만</span>
+              <span class="pkg-discount-badge">-45%</span>
+            </div>
+          </div>
+        </div>
+        <div class="pkg-card">
+          <div class="pkg-platform-bar ig">Instagram</div>
+          <div class="pkg-person-name">릴리(엔믹스)</div>
+          <div class="pkg-content-row">
+            <span class="pkg-format-sm">Feed</span>
+            <span class="pkg-sep">·</span>
+            <span class="pkg-detail-sm">공동작업자 O</span>
+          </div>
+          <div class="pkg-ref-area">
+            <a href="https://www.instagram.com/p/DR4Jo4dj0fO/" target="_blank" rel="noopener" class="pkg-ref-slot">레퍼런스 ↗</a>
+          </div>
+          <div class="pkg-price-block">
+            <div class="pkg-price-original">₩2,000만</div>
+            <div class="pkg-price-meta">
+              <span class="pkg-price-main">₩1,000만</span>
+              <span class="pkg-discount-badge">-50%</span>
+            </div>
+          </div>
+        </div>
+        <div class="pkg-card">
+          <div class="pkg-platform-bar ig">Instagram</div>
+          <div class="pkg-person-name">릴리(엔믹스)</div>
+          <div class="pkg-content-row">
+            <span class="pkg-format-sm">Story</span>
+          </div>
+          <div class="pkg-price-block">
+            <div class="pkg-price-original">₩400만</div>
+            <div class="pkg-price-meta">
+              <span class="pkg-price-main">₩300만</span>
+              <span class="pkg-discount-badge">-25%</span>
+            </div>
+          </div>
+        </div>
+        <div class="pkg-card">
+          <div class="pkg-platform-bar mag"><a href="https://www.instagram.com/dailyfashion_news/" target="_blank" rel="noopener" class="platform-ext-link">데일리패션뉴스</a></div>
+          <div class="pkg-person-name">유시은</div>
+          <div class="pkg-content-row">
+            <span class="pkg-format-sm">Interview</span>
+            <span class="pkg-sep">·</span>
+            <span class="pkg-detail-sm">1건</span>
+          </div>
+          <div class="pkg-ref-area">
+            <a href="https://www.instagram.com/reel/DWsVxUUE9jR/" target="_blank" rel="noopener" class="pkg-ref-slot">레퍼런스 ↗</a>
+          </div>
+          <div class="pkg-price-block">
+            <div class="pkg-price-original">₩400만</div>
+            <div class="pkg-price-meta">
+              <span class="pkg-price-main">₩200만</span>
+              <span class="pkg-discount-badge">-50%</span>
+            </div>
+          </div>
+        </div>
+        <div class="pkg-card">
+          <div class="pkg-platform-bar mag"><a href="https://www.instagram.com/dailyfashion_news/" target="_blank" rel="noopener" class="platform-ext-link">데일리패션뉴스</a></div>
+          <div class="pkg-person-name">릴리(엔믹스)</div>
+          <div class="pkg-content-row">
+            <span class="pkg-format-sm">Interview</span>
+            <span class="pkg-sep">·</span>
+            <span class="pkg-detail-sm">1건</span>
+          </div>
+          <div class="pkg-ref-area">
+            <a href="https://www.instagram.com/reel/DWsVxUUE9jR/" target="_blank" rel="noopener" class="pkg-ref-slot">레퍼런스 ↗</a>
+          </div>
+          <div class="pkg-price-block">
+            <div class="pkg-price-original">₩400만</div>
+            <div class="pkg-price-meta">
+              <span class="pkg-price-main">₩200만</span>
+              <span class="pkg-discount-badge">-50%</span>
+            </div>
+          </div>
+        </div>
+        <div class="pkg-card">
+          <div class="pkg-platform-bar mag"><a href="https://www.instagram.com/dailyfashion_news/" target="_blank" rel="noopener" class="platform-ext-link">데일리패션뉴스</a></div>
+          <div class="pkg-person-name">매거진</div>
+          <div class="pkg-content-row">
+            <span class="pkg-format-sm">Story</span>
+            <span class="pkg-sep">·</span>
+            <span class="pkg-detail-sm">1건</span>
+          </div>
+          <div class="pkg-ref-area">
+            <a href="https://www.instagram.com/reel/DWsVxUUE9jR/" target="_blank" rel="noopener" class="pkg-ref-slot">레퍼런스 ↗</a>
+          </div>
+          <div class="pkg-price-block">
+            <div class="pkg-price-meta">
+              <span class="pkg-price-main">₩100만</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="pkg-total-row">
+        <div class="pkg-total-meta">
+          <div class="pkg-total-label">패키지 총액</div>
+          <div class="pkg-total-note">원가 ₩5,500만 대비 · 협상 완료</div>
+        </div>
+        <div class="pkg-total-right">
+          <div class="pkg-total-value">₩3,000만</div>
+          <div class="pkg-total-savings">₩2,500만 절감</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- WHY SECTION -->
+    <div class="why-section">
+      <div class="why-label">Key Highlights</div>
+      <div class="why-points">
+        <div class="why-point">
+          <span class="why-point-num">i.</span>
+          <div>
+            <div class="why-point-headline">연애 리얼리티 × 아이돌 — 활동 영역이 다른 두 인물의 시너지</div>
+            <div class="why-point-body">연프와 아이돌, 서로 다른 팬덤 베이스를 가진 두 인물의 조합으로 단일 장르를 넘어 입체적인 도달 효과를 기대할 수 있음. 각기 다른 오디언스가 동시에 반응하는 구조.</div>
+          </div>
+        </div>
+        <div class="why-point">
+          <span class="why-point-num">ii.</span>
+          <div>
+            <div class="why-point-headline">비용 합리성 — 협상 과정에서 이끌어낸 조율</div>
+            <div class="why-point-body">유시은의 톤앤무드가 에스더버니와 높은 정합성을 보이며, 협상 과정에서 형성된 라포를 통해 합리적인 비용 조율에 성공. 동급 파급력 대비 효율적인 선택지.</div>
+          </div>
+        </div>
+        <div class="why-point">
+          <span class="why-point-num">iii.</span>
+          <div>
+            <div class="why-point-headline">엔믹스 팬덤 파급력까지 자연스럽게 흡수</div>
+            <div class="why-point-body">릴리의 콘텐츠는 엔믹스 그룹 계정을 통해 609만 팬덤에 자연스럽게 노출됨. 예능을 통해 쌓인 릴리의 유쾌하고 친근한 이미지도 에스더버니 브랜드와 자연스럽게 연결.</div>
+          </div>
+        </div>
+      </div>
+      <div class="why-note">시리아이는 서로 다른 배경의 두 인물이 한 공간에서 자연스럽게 어우러질 수 있도록 현장 케어를 직접 지원합니다.</div>
+    </div>
+  </div>
+</section>
+</div>
+
+<div class="section-divider"></div>
+
+<!-- ───────────── OPTION 02 · 릴리 × 규진 / NMIXX ───────────── -->
+<div class="opt-wrap-2" id="option-02">
+<section class="section-wrap">
+  <div class="section-eyebrow">
+    <span class="eyebrow-num">02.</span>
+    <div class="eyebrow-line"></div>
+    <span class="eyebrow-label">Mega Option · Duo</span>
+  </div>
+
+  <div class="option-block">
+    <div class="opt-header">
+      <div class="opt-identity">
+        <div class="opt-tag">Option 02</div>
+        <div class="opt-name-combo">
+          <span class="opt-name-fixed">릴리</span>
+          <span class="opt-name-separator">×</span>
+          <span class="opt-name-variable">규진</span>
+        </div>
+        <div class="opt-handle"><a href="https://www.instagram.com/nmixx_official/" target="_blank" rel="noopener" class="handle-link">@nmixx_official</a> &nbsp;·&nbsp; NMIXX &nbsp;·&nbsp; Instagram</div>
+      </div>
+    </div>
+
+    <!-- PHOTOS + METRICS -->
+    <div class="opt-body-info" style="grid-template-columns: 572px 1fr;">
+      <!-- LEFT: DUAL PHOTOS -->
+      <div class="photo-stack">
+        <div class="brand-photo-item">
+          <img src="images/앤믹스 릴리.webp" alt="릴리" class="brand-photo-img">
+          <div class="brand-photo-meta">
+            <span class="bpm-label">NMIXX Portrait</span>
+            <span class="bpm-tag">Lily</span>
+          </div>
+        </div>
+        <div class="brand-photo-item">
+          <img src="https://i.namu.wiki/i/bGZ4vRgQlor7DWX6e0tD87b0srNKBHn2GhFJl5YdRrf4aojXKXHFqcsREx_A0mMq1RC5elDTDcYW9PGaKgTGJS8RoqFFFEqzEO-AP8rjbut3yPluDDkUg2BN1QjeOlGAYFvlzdaYA9j36LcovwxVIw.webp"
+               alt="규진" class="brand-photo-img">
+          <div class="brand-photo-meta">
+            <span class="bpm-label">NMIXX Portrait</span>
+            <span class="bpm-tag">Kyujin</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- RIGHT: NMIXX KEY METRICS -->
+      <div class="metrics-grid-wrap">
+        <div style="font-family:'DM Sans',sans-serif;font-size:10px;font-weight:500;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:12px;">NMIXX <a href="https://www.instagram.com/nmixx_official/" target="_blank" rel="noopener" class="handle-link">@nmixx_official</a> · 상세 지표</div>
+        <div class="metrics-top">
+          <div class="metric-box">
+            <div class="metric-box-label">팔로워</div>
+            <div class="metric-box-value">609<span class="metric-box-unit">만</span></div>
+          </div>
+          <div class="metric-box">
+            <div class="metric-box-label">유효 팔로워</div>
+            <div class="metric-box-value">409<span class="metric-box-unit">만</span></div>
+          </div>
+          <div class="metric-box">
+            <div class="metric-box-label">평균 도달</div>
+            <div class="metric-box-value">124<span class="metric-box-unit">만</span></div>
+          </div>
+          <div class="metric-box">
+            <div class="metric-box-label">평균 영상 조회</div>
+            <div class="metric-box-value">142<span class="metric-box-unit">만</span></div>
+          </div>
+          <div class="metric-box">
+            <div class="metric-box-label">평균 좋아요</div>
+            <div class="metric-box-value">13.2<span class="metric-box-unit">만</span></div>
+          </div>
+          <div class="metric-box">
+            <div class="metric-box-label">평균 댓글</div>
+            <div class="metric-box-value">566<span class="metric-box-unit">개</span></div>
+          </div>
+        </div>
+        <div class="metric-er-row">
+          <div class="er-left">
+            <div class="er-label">참여율 ER</div>
+            <div class="er-value">2.18%</div>
+          </div>
+          <div class="er-bar-wrap">
+            <div class="er-bar-bg"><div class="er-bar-fill" style="width:85%"></div></div>
+            <div class="er-bar-note">600만+ 메가 계정 중 매우 높은 전환 품질</div>
+          </div>
+        </div>
+        <div class="followers-visual">
+          <div class="fv-label">팔로워 유효성 (67.2%)</div>
+          <div class="fv-main">409<span style="font-size:20px; color:var(--muted);">만</span></div>
+          <div class="fv-effective">
+            <div class="fv-eff-bar"><div class="fv-eff-fill" style="width:67.2%"></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PACKAGE SECTION -->
+    <div class="package-section">
+      <div class="pkg-header">
+        <div class="pkg-title-group">
+          <span class="pkg-title">패키지 구성</span>
+          <span class="pkg-count">총 4건</span>
+        </div>
+      </div>
+      <div class="pkg-items items-4">
+        <div class="pkg-card">
+          <div class="pkg-platform-bar ig">Instagram</div>
+          <div class="pkg-person-name">엔믹스</div>
+          <div class="pkg-content-row">
+            <span class="pkg-format-sm">Feed</span>
+            <span class="pkg-sep">·</span>
+            <span class="pkg-detail-sm">공동작업자 O</span>
+          </div>
+          <div class="pkg-ref-area">
+            <a href="https://www.instagram.com/p/DHVAxrMO9BC/" target="_blank" rel="noopener" class="pkg-ref-slot">레퍼런스 ↗</a>
+          </div>
+          <div class="pkg-price-block">
+            <div class="pkg-price-original">₩3,000만</div>
+            <div class="pkg-price-meta">
+              <span class="pkg-price-main">₩2,000만</span>
+              <span class="pkg-discount-badge">-33%</span>
+            </div>
+          </div>
+        </div>
+        <div class="pkg-card">
+          <div class="pkg-platform-bar ig">Instagram</div>
+          <div class="pkg-person-name">엔믹스</div>
+          <div class="pkg-content-row">
+            <span class="pkg-format-sm">Story</span>
+          </div>
+          <div class="pkg-price-block">
+            <div class="pkg-price-original">₩700만</div>
+            <div class="pkg-price-meta">
+              <span class="pkg-price-main">₩500만</span>
+              <span class="pkg-discount-badge">-29%</span>
+            </div>
+          </div>
+        </div>
+        <div class="pkg-card">
+          <div class="pkg-platform-bar mag"><a href="https://www.instagram.com/dailyfashion_news/" target="_blank" rel="noopener" class="platform-ext-link">데일리패션뉴스</a></div>
+          <div class="pkg-person-name">엔믹스</div>
+          <div class="pkg-content-row">
+            <span class="pkg-format-sm">Interview</span>
+            <span class="pkg-sep">·</span>
+            <span class="pkg-detail-sm">1건</span>
+          </div>
+          <div class="pkg-ref-area">
+            <a href="https://www.instagram.com/reel/DWsVxUUE9jR/" target="_blank" rel="noopener" class="pkg-ref-slot">레퍼런스 ↗</a>
+          </div>
+          <div class="pkg-price-block">
+            <div class="pkg-price-meta">
+              <span class="pkg-price-main">₩400만</span>
+            </div>
+          </div>
+        </div>
+        <div class="pkg-card">
+          <div class="pkg-platform-bar mag"><a href="https://www.instagram.com/dailyfashion_news/" target="_blank" rel="noopener" class="platform-ext-link">데일리패션뉴스</a></div>
+          <div class="pkg-person-name">매거진</div>
+          <div class="pkg-content-row">
+            <span class="pkg-format-sm">Story</span>
+            <span class="pkg-sep">·</span>
+            <span class="pkg-detail-sm">1건</span>
+          </div>
+          <div class="pkg-ref-area">
+            <a href="https://www.instagram.com/reel/DWsVxUUE9jR/" target="_blank" rel="noopener" class="pkg-ref-slot">레퍼런스 ↗</a>
+          </div>
+          <div class="pkg-price-block">
+            <div class="pkg-price-meta">
+              <span class="pkg-price-main">₩100만</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="pkg-total-row">
+        <div class="pkg-total-meta">
+          <div class="pkg-total-label">패키지 총액</div>
+          <div class="pkg-total-note">원가 ₩4,200만 대비 · 협상 완료</div>
+        </div>
+        <div class="pkg-total-right">
+          <div class="pkg-total-value">₩3,000만</div>
+          <div class="pkg-total-savings">₩1,200만 절감</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- WHY SECTION -->
+    <div class="why-section">
+      <div class="why-label">Key Highlights</div>
+      <div class="why-points">
+        <div class="why-point">
+          <span class="why-point-num">i.</span>
+          <div>
+            <div class="why-point-headline">팬덤 내 하이프를 만들기 최적의 유닛</div>
+            <div class="why-point-body">엔믹스 팬덤 안에서 가장 주목도 높은 2인조 구성. 단독 콘텐츠만으로도 팬덤 내 자발적 화제를 만들어낼 수 있는, 이미 검증된 조합.</div>
+          </div>
+        </div>
+        <div class="why-point">
+          <span class="why-point-num">ii.</span>
+          <div>
+            <div class="why-point-headline">기존 케미스트리로 보장되는 안정적 운영</div>
+            <div class="why-point-body">인터뷰·촬영 등 현장 콘텐츠 상황에서 두 사람의 검증된 합이 전체 운영의 안정성을 높임. 리스크 없이 질 높은 결과물 확보 가능.</div>
+          </div>
+        </div>
+        <div class="why-point">
+          <span class="why-point-num">iii.</span>
+          <div>
+            <div class="why-point-headline">팬덤이 자발적으로 콘텐츠를 재생산</div>
+            <div class="why-point-body">두 사람을 중심으로 형성된 팬덤 레거시 콘텐츠가 존재. 브랜드 콘텐츠가 팬덤 내에서 자연스럽게 재가공·확산되는 구조적 이점으로, 실제 집행 비용 이상의 파급을 기대할 수 있음.</div>
           </div>
         </div>
       </div>
@@ -1324,18 +1645,219 @@ body {
 
 <div class="section-divider"></div>
 
-<!-- ───────────── OTHER CANDIDATES ───────────── -->
-<div class="negotiation-section">
+<!-- ───────────── OPTION 03 · 웬디 ───────────── -->
+<div class="opt-wrap-3" id="option-03">
+<section class="section-wrap">
+  <div class="section-eyebrow">
+    <span class="eyebrow-num">03.</span>
+    <div class="eyebrow-line"></div>
+    <span class="eyebrow-label">Mega Option · Solo</span>
+  </div>
+
+  <div class="option-block">
+    <div class="opt-header">
+      <div class="opt-identity">
+        <div class="opt-tag">Option 03</div>
+        <div class="opt-name">웬디<span class="opt-name-sub">Wendy</span></div>
+        <div class="opt-handle"><a href="https://www.instagram.com/todayis_wendy/" target="_blank" rel="noopener" class="handle-link">@todayis_wendy</a> &nbsp;·&nbsp; Red Velvet &nbsp;·&nbsp; Instagram</div>
+      </div>
+    </div>
+
+    <!-- PHOTOS + METRICS -->
+    <div class="opt-body-info" style="grid-template-columns: 280px 1fr;">
+      <!-- LEFT: PORTRAIT -->
+      <div class="brand-photo-container">
+        <div class="brand-photo-item">
+          <img src="images/웬디.jpg" alt="웬디" class="brand-photo-img">
+          <div class="brand-photo-meta">
+            <span class="bpm-label">Representative Portrait</span>
+            <span class="bpm-tag">Wendy · Red Velvet</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- RIGHT: KEY METRICS -->
+      <div class="metrics-grid-wrap">
+        <div style="font-family:'DM Sans',sans-serif;font-size:10px;font-weight:500;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:12px;">웬디 <a href="https://www.instagram.com/todayis_wendy/" target="_blank" rel="noopener" class="handle-link">@todayis_wendy</a> · 상세 지표</div>
+        <div class="metrics-top">
+          <div class="metric-box">
+            <div class="metric-box-label">팔로워</div>
+            <div class="metric-box-value">745<span class="metric-box-unit">만</span></div>
+          </div>
+          <div class="metric-box">
+            <div class="metric-box-label">유효 팔로워</div>
+            <div class="metric-box-value">590<span class="metric-box-unit">만</span></div>
+          </div>
+          <div class="metric-box">
+            <div class="metric-box-label">평균 도달</div>
+            <div class="metric-box-value">182<span class="metric-box-unit">만</span></div>
+          </div>
+          <div class="metric-box">
+            <div class="metric-box-label">평균 영상 조회</div>
+            <div class="metric-box-value">170<span class="metric-box-unit">만</span></div>
+          </div>
+          <div class="metric-box">
+            <div class="metric-box-label">평균 좋아요</div>
+            <div class="metric-box-value">19.6<span class="metric-box-unit">만</span></div>
+          </div>
+          <div class="metric-box">
+            <div class="metric-box-label">평균 댓글</div>
+            <div class="metric-box-value">926<span class="metric-box-unit">개</span></div>
+          </div>
+        </div>
+        <div class="metric-er-row">
+          <div class="er-left">
+            <div class="er-label">참여율 ER</div>
+            <div class="er-value">2.64%</div>
+          </div>
+          <div class="er-bar-wrap">
+            <div class="er-bar-bg"><div class="er-bar-fill" style="width:92%"></div></div>
+            <div class="er-bar-note">유사 그룹 상위 5% &nbsp;·&nbsp; 팔로워 성장률 34.5%</div>
+          </div>
+        </div>
+        <div class="followers-visual">
+          <div class="fv-label">팔로워 유효성 (79.2%)</div>
+          <div class="fv-main">590<span style="font-size:20px; color:var(--muted);">만</span></div>
+          <div class="fv-effective">
+            <div class="fv-eff-bar"><div class="fv-eff-fill" style="width:79.2%"></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PACKAGE SECTION -->
+    <div class="package-section">
+      <div class="pkg-header">
+        <div class="pkg-title-group">
+          <span class="pkg-title">패키지 구성</span>
+          <span class="pkg-count">총 4건</span>
+        </div>
+      </div>
+      <div class="pkg-items items-4">
+        <div class="pkg-card">
+          <div class="pkg-platform-bar ig">Instagram</div>
+          <div class="pkg-person-name">웬디</div>
+          <div class="pkg-content-row">
+            <span class="pkg-format-sm">Feed</span>
+            <span class="pkg-sep">·</span>
+            <span class="pkg-detail-sm">공동작업자 X</span>
+          </div>
+          <div class="pkg-ref-area">
+            <a href="https://www.instagram.com/p/DWD7RtWiXnK/" target="_blank" rel="noopener" class="pkg-ref-slot">레퍼런스 1 ↗</a>
+            <a href="https://www.instagram.com/p/DVQGvTbk79f/" target="_blank" rel="noopener" class="pkg-ref-slot">레퍼런스 2 ↗</a>
+          </div>
+          <div class="pkg-price-block">
+            <div class="pkg-price-original">₩2,700만</div>
+            <div class="pkg-price-meta">
+              <span class="pkg-price-main">₩2,500만</span>
+              <span class="pkg-discount-badge">-7%</span>
+            </div>
+          </div>
+        </div>
+        <div class="pkg-card">
+          <div class="pkg-platform-bar ig">Instagram</div>
+          <div class="pkg-person-name">웬디</div>
+          <div class="pkg-content-row">
+            <span class="pkg-format-sm">Story</span>
+            <span class="pkg-sep">·</span>
+            <span class="pkg-detail-sm active">협의 진행 중</span>
+          </div>
+          <div class="pkg-price-block">
+            <div class="pkg-card-price negotiating">협의중</div>
+          </div>
+        </div>
+        <div class="pkg-card">
+          <div class="pkg-platform-bar mag"><a href="https://www.instagram.com/dailyfashion_news/" target="_blank" rel="noopener" class="platform-ext-link">데일리패션뉴스</a></div>
+          <div class="pkg-person-name">웬디</div>
+          <div class="pkg-content-row">
+            <span class="pkg-format-sm">Interview</span>
+            <span class="pkg-sep">·</span>
+            <span class="pkg-detail-sm">1건</span>
+          </div>
+          <div class="pkg-ref-area">
+            <a href="https://www.instagram.com/reel/DWtHfNHk1Mm/" target="_blank" rel="noopener" class="pkg-ref-slot">레퍼런스 ↗</a>
+          </div>
+          <div class="pkg-price-block">
+            <div class="pkg-price-meta">
+              <span class="pkg-price-main">₩400만</span>
+            </div>
+          </div>
+        </div>
+        <div class="pkg-card">
+          <div class="pkg-platform-bar mag"><a href="https://www.instagram.com/dailyfashion_news/" target="_blank" rel="noopener" class="platform-ext-link">데일리패션뉴스</a></div>
+          <div class="pkg-person-name">매거진</div>
+          <div class="pkg-content-row">
+            <span class="pkg-format-sm">Story</span>
+            <span class="pkg-sep">·</span>
+            <span class="pkg-detail-sm">1건</span>
+          </div>
+          <div class="pkg-ref-area">
+            <a href="https://www.instagram.com/reel/DWtHfNHk1Mm/" target="_blank" rel="noopener" class="pkg-ref-slot">레퍼런스 ↗</a>
+          </div>
+          <div class="pkg-price-block">
+            <div class="pkg-price-meta">
+              <span class="pkg-price-main">₩100만</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="pkg-total-row">
+        <div class="pkg-total-meta">
+          <div class="pkg-total-label">패키지 총액 (스토리 별도)</div>
+          <div class="pkg-total-note">원가 ₩3,200만 대비 &nbsp;·&nbsp; 스토리 협의 진행 중</div>
+        </div>
+        <div class="pkg-total-right">
+          <div class="pkg-total-value">₩3,000만<span style="font-size:18px;color:var(--pink);margin-left:2px;">+</span></div>
+          <div class="pkg-total-savings">₩200만 절감 (스토리 미포함)</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- WHY SECTION -->
+    <div class="why-section">
+      <div class="why-label">Key Highlights</div>
+      <div class="why-points">
+        <div class="why-point">
+          <span class="why-point-num">i.</span>
+          <div>
+            <div class="why-point-headline">옵션 중 단일 최대 파급력</div>
+            <div class="why-point-body">3개 옵션 중 개인 팔로워 745만으로 압도적 도달 규모. 단일 게시물로 최대 182만 실 도달이 가능한, 이번 캠페인에서 가장 강력한 단일 선택지.</div>
+          </div>
+        </div>
+        <div class="why-point">
+          <span class="why-point-num">ii.</span>
+          <div>
+            <div class="why-point-headline">에스더버니 이미지와 직접적인 연결</div>
+            <div class="why-point-body">웬디의 세련되고 고급스러운 이미지가 에스더버니 아뜰리에 공간 감성과 자연스럽게 공명. 브랜드 톤이 흐트러지지 않는, 가장 안전하고 정확한 이미지 선택.</div>
+          </div>
+        </div>
+        <div class="why-point">
+          <span class="why-point-num">iii.</span>
+          <div>
+            <div class="why-point-headline">팬덤을 넘어 일반 대중까지</div>
+            <div class="why-point-body">레드벨벳 팬덤에만 국한되지 않고 일반 대중에게도 높은 인지도와 호감도를 가진 인물. 브랜드 신뢰도 상승과 신규 고객 유입을 동시에 기대할 수 있는 구조.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+</div>
+
+<div class="section-divider"></div>
+
+<!-- ───────────── 협의 진행 중인 후보들 ───────────── -->
+<div class="negotiation-section" id="negotiation">
 <section class="section-wrap">
   <div class="section-eyebrow">
     <span class="eyebrow-num">ref.</span>
     <div class="eyebrow-line"></div>
-    <span class="eyebrow-label">Other Candidates · 검토 후보군</span>
+    <span class="eyebrow-label">Negotiation In Progress · 협의 진행 중</span>
   </div>
 
   <div class="neg-intro">
-    <h2>함께 검토된<br><em style="font-style:italic;color:var(--pink-deep);">다른 후보들</em></h2>
-    <p>제안된 3개 옵션 선정 과정에서 함께 검토된 인플루언서들입니다.<br>현재 협의가 진행 중이거나 검토된 단계의 예상 단가를 참고로 기재합니다.</p>
+    <h2>현재 협의가<br><em style="font-style:italic;color:var(--pink-deep);">진행 중인 후보들</em></h2>
+    <p>선정된 3개 옵션과 함께 병행 협의 중인 인플루언서입니다.<br>아래 단가는 피드 단건 기준 예상가이며, 협의 결과에 따라 변동될 수 있습니다.</p>
   </div>
 
   <div class="neg-grid">
@@ -1348,9 +1870,9 @@ body {
           <div class="neg-card-name">유리</div>
         </div>
       </div>
-      <div class="neg-card-handle">637만 팔로워 · Instagram</div>
-      <div class="neg-price-label">예상 단가</div>
-      <div class="neg-price">₩85,000,000</div>
+      <div class="neg-card-handle">637.6만 팔로워 · Instagram</div>
+      <div class="neg-price-label">협상가</div>
+      <div class="neg-price">₩50,000,000</div>
       <div class="neg-price-note">협의 진행 중</div>
     </div>
     <div class="neg-card">
@@ -1362,9 +1884,9 @@ body {
           <div class="neg-card-name">KISS OF LIFE</div>
         </div>
       </div>
-      <div class="neg-card-handle">301만 팔로워 · Instagram</div>
-      <div class="neg-price-label">예상 단가</div>
-      <div class="neg-price">₩90,000,000</div>
+      <div class="neg-card-handle">301.4만 팔로워 · Instagram</div>
+      <div class="neg-price-label">협상가</div>
+      <div class="neg-price">₩50,000,000</div>
       <div class="neg-price-note">협의 진행 중</div>
     </div>
     <div class="neg-card">
@@ -1376,37 +1898,9 @@ body {
           <div class="neg-card-name">곽민경</div>
         </div>
       </div>
-      <div class="neg-card-handle">90.7만 팔로워 · Instagram</div>
-      <div class="neg-price-label">예상 단가</div>
-      <div class="neg-price">₩80,000,000</div>
-      <div class="neg-price-note">협의 진행 중</div>
-    </div>
-    <div class="neg-card">
-      <span class="neg-status-badge">협의중</span>
-      <div class="neg-card-top">
-        <img src="images/김소원.webp" alt="김소원" class="neg-card-img">
-        <div>
-          <div class="neg-card-label">G-Friend</div>
-          <div class="neg-card-name">김소원</div>
-        </div>
-      </div>
-      <div class="neg-card-handle">132만 팔로워 · Instagram</div>
-      <div class="neg-price-label">예상 단가</div>
-      <div class="neg-price">₩35,000,000</div>
-      <div class="neg-price-note">협의 진행 중</div>
-    </div>
-    <div class="neg-card">
-      <span class="neg-status-badge">협의중</span>
-      <div class="neg-card-top">
-        <img src="images/us48a9IYH73t6cUip9RXfJLXuajj8eo8ngdbxUx--HKMvJB_XRD0wlzyJHkOQvEYjzRqprDV2WJnDlDGu1ABovfjbZZhQi8cxezJC_B4r7DBGgHUFyfUVc1ysrMlKYQgZsqKmJROVKLYuKtM2JAZ4Q.webp" alt="남유정" class="neg-card-img">
-        <div>
-          <div class="neg-card-label">Brave Girls</div>
-          <div class="neg-card-name">남유정</div>
-        </div>
-      </div>
-      <div class="neg-card-handle">61.6만 팔로워 · Instagram</div>
-      <div class="neg-price-label">예상 단가</div>
-      <div class="neg-price">₩21,000,000</div>
+      <div class="neg-card-handle">90.8만 팔로워 · Instagram</div>
+      <div class="neg-price-label">협상가</div>
+      <div class="neg-price">₩55,000,000</div>
       <div class="neg-price-note">협의 진행 중</div>
     </div>
     <div class="neg-card">
@@ -1418,8 +1912,74 @@ body {
           <div class="neg-card-name">옐언니</div>
         </div>
       </div>
-      <div class="neg-card-handle">436만 팔로워 · Instagram</div>
-      <div class="neg-price-label">예상 단가</div>
+      <div class="neg-card-handle">436만 팔로워 · YouTube</div>
+      <div class="neg-price-label">협상가</div>
+      <div class="neg-price-dual">
+        <div class="neg-price-row">
+          <span class="neg-price-type">숏폼</span>
+          <span class="neg-price-val">₩9,000,000</span>
+        </div>
+        <div class="neg-price-row">
+          <span class="neg-price-type">롱폼</span>
+          <span class="neg-price-val">₩12,000,000</span>
+        </div>
+      </div>
+      <div class="neg-price-note">협의 진행 중</div>
+    </div>
+    <div class="neg-card">
+      <span class="neg-status-badge">협의중</span>
+      <div class="neg-card-top">
+        <img src="images/김소원.webp" alt="김소원" class="neg-card-img">
+        <div>
+          <div class="neg-card-label">여자친구 출신</div>
+          <div class="neg-card-name">김소원</div>
+        </div>
+      </div>
+      <div class="neg-card-handle">132.6만 팔로워 · Instagram</div>
+      <div class="neg-price-label">협상가</div>
+      <div class="neg-price">₩25,000,000</div>
+      <div class="neg-price-note">협의 진행 중</div>
+    </div>
+    <div class="neg-card">
+      <span class="neg-status-badge">협의중</span>
+      <div class="neg-card-top">
+        <img src="images/라잇썸.webp" alt="라잇썸" class="neg-card-img">
+        <div>
+          <div class="neg-card-label">아이돌 그룹</div>
+          <div class="neg-card-name">라잇썸</div>
+        </div>
+      </div>
+      <div class="neg-card-handle">46.2만 팔로워 · Instagram</div>
+      <div class="neg-price-label">협상가</div>
+      <div class="neg-price">₩13,000,000</div>
+      <div class="neg-price-note">협의 진행 중</div>
+    </div>
+    <div class="neg-card">
+      <span class="neg-status-badge">협의중</span>
+      <div class="neg-card-top">
+        <img src="images/루나(fx).jpg" alt="루나" class="neg-card-img">
+        <div>
+          <div class="neg-card-label">f(x)</div>
+          <div class="neg-card-name">루나</div>
+        </div>
+      </div>
+      <div class="neg-card-handle">142.8만 팔로워 · Instagram</div>
+      <div class="neg-price-label">협상가</div>
+      <div class="neg-price">₩13,000,000</div>
+      <div class="neg-price-note">협의 진행 중</div>
+    </div>
+    <div class="neg-card">
+      <span class="neg-status-badge">협의중</span>
+      <div class="neg-card-top">
+        <img src="images/us48a9IYH73t6cUip9RXfJLXuajj8eo8ngdbxUx--HKMvJB_XRD0wlzyJHkOQvEYjzRqprDV2WJnDlDGu1ABovfjbZZhQi8cxezJC_B4r7DBGgHUFyfUVc1ysrMlKYQgZsqKmJROVKLYuKtM2JAZ4Q.webp"
+             alt="남유정" class="neg-card-img">
+        <div>
+          <div class="neg-card-label">브레이브걸스 출신</div>
+          <div class="neg-card-name">남유정</div>
+        </div>
+      </div>
+      <div class="neg-card-handle">61.6만 팔로워 · Instagram</div>
+      <div class="neg-price-label">협상가</div>
       <div class="neg-price">₩15,000,000</div>
       <div class="neg-price-note">협의 진행 중</div>
     </div>
@@ -1430,9 +1990,129 @@ body {
 <!-- FOOTER -->
 <footer class="site-footer">
   <span class="footer-brand">Esther Bunny Atelier × SIRIAI</span>
-  <span class="footer-note">데이터 출처 · featuring.co · 2026.04.03 기준</span>
   <span class="footer-note">Internal · Confidential</span>
 </footer>
 
+<script>
+(function() {
+  // ── Sticky Nav Active State ──
+  const sections = ['option-01', 'option-02', 'option-03', 'negotiation'];
+  const links = document.querySelectorAll('.snav-option');
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        links.forEach(l => l.classList.remove('active'));
+        const link = document.querySelector(`.snav-option[href="#${entry.target.id}"]`);
+        if (link) link.classList.add('active');
+      }
+    });
+  }, { rootMargin: '-20% 0px -60% 0px' });
+
+  sections.forEach(id => {
+    const el = document.getElementById(id);
+    if (el) observer.observe(el);
+  });
+
+  document.querySelectorAll('.snav-option').forEach(link => {
+    link.addEventListener('click', function(e) {
+      e.preventDefault();
+      const target = document.querySelector(this.getAttribute('href'));
+      if (target) {
+        const navH = document.getElementById('sticky-nav').offsetHeight;
+        const top = target.getBoundingClientRect().top + window.scrollY - navH;
+        window.scrollTo({ top, behavior: 'smooth' });
+      }
+    });
+  });
+
+  // ── Option 01 Photo Hover Data Swap ──
+  const wrap = document.getElementById('o1-metrics-wrap');
+  if (!wrap) return;
+
+  const states = {
+    ysi: {
+      header: '유시은 <a href="https://www.instagram.com/yoo__si/" target="_blank" rel="noopener" class="handle-link">@yoo__si</a> &nbsp;+&nbsp; 릴리 <a href="https://www.instagram.com/nmixx_official/" target="_blank" rel="noopener" class="handle-link">@nmixx_official</a> · 합산 지표',
+      metrics: [
+        { val: '103', unit: '만', plus: '+ 609만' },
+        { val: '63.1', unit: '만', plus: '+ 409만' },
+        { val: '13.1', unit: '만', plus: '+ 124만' },
+        { val: '19.7', unit: '만', plus: '+ 142만' },
+        { val: '1.1', unit: '만', plus: '+ 13.2만' },
+        { val: '103', unit: '개', plus: '+ 566개' }
+      ],
+      er: { val: '1.08%', bar: '82', note: '팔로워 대비 높은 실질 반응률 · 팬덤 충성도 우수 + 입체적인 구성' },
+      fv: { label: '팔로워 유효성 (61.3%+)', main: '63.1', bar: '61.3' }
+    },
+    lily: {
+      header: '릴리 <a href="https://www.instagram.com/nmixx_official/" target="_blank" rel="noopener" class="handle-link">@nmixx_official</a> &nbsp;+&nbsp; 유시은 <a href="https://www.instagram.com/yoo__si/" target="_blank" rel="noopener" class="handle-link">@yoo__si</a> · 합산 지표',
+      metrics: [
+        { val: '609', unit: '만', plus: '+ 103만' },
+        { val: '409', unit: '만', plus: '+ 63.1만' },
+        { val: '124', unit: '만', plus: '+ 13.1만' },
+        { val: '142', unit: '만', plus: '+ 19.7만' },
+        { val: '13.2', unit: '만', plus: '+ 1.1만' },
+        { val: '566', unit: '개', plus: '+ 103개' }
+      ],
+      er: { val: '2.18%', bar: '85', note: '600만+ 메가 계정 중 매우 높은 전환 품질 + 입체적인 구성' },
+      fv: { label: '팔로워 유효성 (67.2%+)', main: '409', bar: '67.2' }
+    }
+  };
+
+  function applyState(key) {
+    const d = states[key];
+    const header = wrap.querySelector('.o1-header');
+    if (header) header.innerHTML = d.header;
+
+    const boxes = wrap.querySelectorAll('.metric-box-value');
+    boxes.forEach((box, i) => {
+      const m = d.metrics[i];
+      if (m) box.innerHTML = `${m.val}<span class="metric-box-unit">${m.unit}</span><span class="metric-box-value-plus">${m.plus}</span>`;
+    });
+
+    const erVal = wrap.querySelector('.er-value');
+    const erBar = wrap.querySelector('.er-bar-fill');
+    const erNote = wrap.querySelector('.er-bar-note');
+    if (erVal) erVal.innerHTML = `${d.er.val}<span class="er-plus">+</span>`;
+    if (erBar) erBar.style.width = d.er.bar + '%';
+    if (erNote) erNote.textContent = d.er.note;
+
+    const fvLabel = wrap.querySelector('.fv-label');
+    const fvMain = wrap.querySelector('.fv-main');
+    const fvBar = wrap.querySelector('.fv-eff-fill');
+    if (fvLabel) fvLabel.textContent = d.fv.label;
+    if (fvMain) fvMain.innerHTML = `${d.fv.main}<span style="font-size:20px;color:var(--muted);">만</span><span style="font-family:'DM Sans',sans-serif;font-size:16px;color:var(--pink-deep);font-weight:600;margin-left:4px;">+</span>`;
+    if (fvBar) fvBar.style.width = d.fv.bar + '%';
+  }
+
+  applyState('ysi');
+
+  const photoYsi = document.getElementById('o1-photo-ysi');
+  const photoLily = document.getElementById('o1-photo-lily');
+
+  if (photoYsi && photoLily) {
+    photoYsi.addEventListener('mouseenter', () => {
+      photoYsi.classList.add('is-active');
+      photoLily.classList.add('is-dim');
+      applyState('ysi');
+    });
+    photoYsi.addEventListener('mouseleave', () => {
+      photoYsi.classList.remove('is-active', 'is-dim');
+      photoLily.classList.remove('is-active', 'is-dim');
+      applyState('ysi');
+    });
+    photoLily.addEventListener('mouseenter', () => {
+      photoLily.classList.add('is-active');
+      photoYsi.classList.add('is-dim');
+      applyState('lily');
+    });
+    photoLily.addEventListener('mouseleave', () => {
+      photoLily.classList.remove('is-active', 'is-dim');
+      photoYsi.classList.remove('is-active', 'is-dim');
+      applyState('ysi');
+    });
+  }
+})();
+</script>
 </body>
 </html>
