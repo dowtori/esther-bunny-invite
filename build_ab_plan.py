@@ -60,14 +60,7 @@ custom_css = """
 .fv-eff-bar { flex: 1; height: 3px; background: var(--cement); border-radius: 2px; overflow: hidden; }
 .fv-eff-fill { height: 100%; background: var(--pink); border-radius: 2px; }
 
-/* ── SMALL CARTOON THUMB (HOVER ZOOM) ── */
-.cartoon-thumb { position: relative; margin-top: 16px; margin-bottom: 48px;  display: inline-block; cursor: default; }
-.ct-btn { display: inline-flex; align-items: center; gap: 8px; font-family: 'Noto Sans KR', sans-serif; font-size: 12px; font-weight: 600; color: var(--ink); background: #fff; border: 1px solid var(--border); padding: 10px 20px; border-radius: 20px; transition: all 0.2s; box-shadow: 0 4px 12px rgba(0,0,0,0.03); }
-.ct-btn:hover { color: var(--pink-deep); border-color: var(--pink); box-shadow: 0 4px 16px rgba(0,0,0,0.08); }
-.ct-popover { position: absolute; z-index: 100; top: 120%; left: 0; width: 450px; background: #fff; border: 1px solid var(--pink); border-radius: 8px; box-shadow: 0 12px 32px rgba(0,0,0,0.15); padding: 16px; opacity: 0; pointer-events: none; transform: translateY(10px); transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1); }
-.cartoon-thumb:hover .ct-popover { opacity: 1; pointer-events: auto; transform: translateY(0); }
-.ct-pop-img { width: 100%; height: auto; border-radius: 4px; border: 1px solid var(--border); }
-.ct-kor-overlay { position: absolute; top: 10%; right: 5%; background: rgba(255,255,255,0.95); border: 2px solid var(--black); border-radius: 12px; padding: 10px 16px; font-family: 'Noto Sans KR', sans-serif; font-weight: 800; font-size: 13px; box-shadow: 2px 2px 0px var(--black); word-break:keep-all; }
+
 
 /* ── SYNERGY JOURNEY ── */
 .synergy-journey-section { padding-top: 64px; border-top: 1px solid var(--border); margin-top: 48px; }
@@ -111,10 +104,8 @@ html += """
 """
 
 DUMMY_IMG = "file:///C:/Users/WD/.gemini/antigravity/brain/e1a93622-2e8e-44e2-a09b-7dded7e390f9/dummy_influencer_1775558232037.png"
-CARTOON_A = "file:///C:/Users/WD/.gemini/antigravity/brain/e1a93622-2e8e-44e2-a09b-7dded7e390f9/marketoonist_presence_kr_1775556772803.png"
-CARTOON_B = "file:///C:/Users/WD/.gemini/antigravity/brain/e1a93622-2e8e-44e2-a09b-7dded7e390f9/marketoonist_sales_kr_1775556788986.png"
 
-def render_option(opt_id, badge_title, title_left, title_right, img1, meta1_label, meta1_name, img2, meta2_label, meta2_name, metrics, nodes, cartoon=None, c_text=None, single_person=False):
+def render_option(opt_id, badge_title, title_left, title_right, img1, meta1_label, meta1_name, img2, meta2_label, meta2_name, metrics, nodes, single_person=False):
     # Build photos block
     photo1 = f"""
         <div class="brand-photo-wrap">
@@ -169,16 +160,7 @@ def render_option(opt_id, badge_title, title_left, title_right, img1, meta1_labe
       </div>
     </div>
 """
-    if cartoon:
-        res += f"""
-    <div class="cartoon-thumb">
-      <div class="ct-btn">🔍 시나리오 보기</div>
-      <div class="ct-popover">
-        <div class="ct-kor-overlay">{c_text}</div>
-        <img src="{cartoon}" class="ct-pop-img" alt="cartoon">
-      </div>
-    </div>
-"""
+
     res += """
     <div class="synergy-journey-section">
       <div class="sj-title">Consumer Synergy Journey</div>
@@ -262,7 +244,7 @@ html += '<div class="plan-level-header"><div class="plan-level-budget">Budget In
 html += render_option("opt1", "Plan A 최적안", "김고은", "릴리", 
     "images/김고은.webp", "A-LIST ACTOR", "김고은", 
     "images/앤믹스 릴리.webp", "NMIXX PORTRAIT", "릴리", 
-    metrics_a_best, a_best_nodes, CARTOON_A, "웨이팅 길어도 남겨야지📸")
+    metrics_a_best, a_best_nodes)
 
 html += render_option("opt1-alt1", "Plan A 대안 1", "이시안 외", "릴리", 
     "images/이시안.webp", "FASHION INFLUENCER", "이시안", 
@@ -281,7 +263,7 @@ html += '<div class="plan-level-header"><div class="plan-level-budget">Current B
 html += render_option("opt2", "Plan B 최적안", "릴리", "매니아급 유튜버", 
     "images/앤믹스 릴리.webp", "NMIXX PORTRAIT", "릴리", 
     "images/송이송이.jpg", "NICHE YOUTUBER", "송이송이", 
-    metrics_b_best, b_best_nodes, CARTOON_B, "할인 시간 1시간 남음! 결제간다💸")
+    metrics_b_best, b_best_nodes)
 
 html += render_option("opt2-alt1", "Plan B 대안 1", "릴리", "미드티어 그룹", 
     "images/앤믹스 릴리.webp", "NMIXX PORTRAIT", "릴리", 
