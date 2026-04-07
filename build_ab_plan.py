@@ -116,21 +116,13 @@ def render_option(opt_id, badge_title, title_left, title_right, img1, meta1_labe
     photo1 = f"""
         <div class="brand-photo-wrap">
           <div class="brand-photo-item">
-            <img src="{img1}" alt="{meta1_name}" class="brand-photo-img">
-          </div>
-          <div class="brand-photo-meta">
-            <span class="bpm-label">{meta1_label}</span>
-            <span class="bpm-tag">{meta1_name}</span>
+            <img src="{img1}" alt="" class="brand-photo-img">
           </div>
         </div>"""
     photo2 = "" if single_person else f"""
         <div class="brand-photo-wrap">
           <div class="brand-photo-item">
-            <img src="{img2}" alt="{meta2_name}" class="brand-photo-img">
-          </div>
-          <div class="brand-photo-meta">
-            <span class="bpm-label">{meta2_label}</span>
-            {f'<span class="bpm-tag">{meta2_name}</span>' if meta2_name else ''}
+            <img src="{img2}" alt="" class="brand-photo-img">
           </div>
         </div>"""
     title_part = title_left if single_person else f"{title_left} <span class=\"ho-subtitle\">× {title_right}</span>"
@@ -258,7 +250,7 @@ html += render_option("opt1-alt1", "Plan A 대안 1", "이시안 외", "릴리",
     metrics_a_alt1, a_alt1_nodes)
 
 html += render_option("opt1-alt2", "Plan A 대안 2", "S급 유튜버", "", 
-    "images/강민경.webp", "S-TIER CATEGORY EXAMPLE", "(예: 강민경)", 
+    "images/강민경.webp", "S-TIER CATEGORY", "(예시: 강민경)", 
     "", "", "", 
     metrics_a_alt2, a_alt2_nodes, single_person=True)
 html += '</div>'
