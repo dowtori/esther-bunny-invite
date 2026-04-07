@@ -26,13 +26,14 @@ custom_css = """
 
 /* ── ORIGINAL METRICS & PHOTO DUAL ── */
 .opt-body-info { display: flex; gap: 48px; align-items: start; margin-bottom: 56px; }
-.photo-stack { display: flex; gap: 12px; width: 572px; flex-shrink:0; }
-.brand-photo-item { width: 280px; height: 380px; border-radius: 4px; overflow: hidden; border: 1px solid var(--border); position: relative; flex-shrink: 0; }
-.brand-photo-img { width: 100%; height: 100%; object-fit: cover; display: block; filter: grayscale(20%); transition: filter 0.3s; }
+.photo-stack { display: flex; gap: 16px; flex-shrink:0; }
+.brand-photo-wrap { display: flex; flex-direction: column; width: 280px; flex-shrink: 0; }
+.brand-photo-item { width: 280px; height: 360px; border-radius: 8px; overflow: hidden; border: 1px solid var(--border); position: relative; }
+.brand-photo-img { width: 100%; height: 100%; object-fit: cover; display: block; filter: grayscale(15%); transition: filter 0.3s; }
 .brand-photo-item:hover .brand-photo-img { filter: grayscale(0%); }
-.brand-photo-meta { position: absolute; bottom: 0; left: 0; right: 0; background: linear-gradient(transparent, rgba(0,0,0,0.8)); padding: 16px; color: #fff; }
-.bpm-label { font-family: 'DM Sans', sans-serif; font-size: 8px; letter-spacing: 1.5px; text-transform: uppercase; opacity: 0.6; display: block; margin-bottom: 2px; }
-.bpm-tag { font-family: 'Noto Sans KR', sans-serif; font-size: 11px; font-weight: 500; }
+.brand-photo-meta { padding: 12px 4px 0; }
+.bpm-label { font-family: 'DM Sans', sans-serif; font-size: 9px; letter-spacing: 2px; text-transform: uppercase; color: var(--muted); display: block; margin-bottom: 6px; }
+.bpm-tag { display: inline-block; font-family: 'Noto Sans KR', sans-serif; font-size: 13px; font-weight: 600; color: var(--pink-deep); background: var(--pink-light); padding: 4px 16px; border-radius: 20px; letter-spacing: 0.5px; }
 
 .metrics-grid-wrap { display: flex; flex-direction: column; gap: 12px; flex:1; }
 .o1-header { font-family:'DM Sans',sans-serif; font-size:10px; font-weight:500; letter-spacing:2px; text-transform:uppercase; color:var(--muted); margin-bottom:12px; }
@@ -113,27 +114,35 @@ DUMMY_IMG = "file:///C:/Users/WD/.gemini/antigravity/brain/e1a93622-2e8e-44e2-a0
 CARTOON_A = "file:///C:/Users/WD/.gemini/antigravity/brain/e1a93622-2e8e-44e2-a09b-7dded7e390f9/marketoonist_presence_kr_1775556772803.png"
 CARTOON_B = "file:///C:/Users/WD/.gemini/antigravity/brain/e1a93622-2e8e-44e2-a09b-7dded7e390f9/marketoonist_sales_kr_1775556788986.png"
 
-def render_option(opt_id, badge_title, title_left, title_right, img1, meta1_label, meta1_name, img2, meta2_label, meta2_name, metrics, nodes, cartoon=None, c_text=None):
-    res = f"""
-  <div class="full-option-block" id="{opt_id}">
-    <div class="ho-badge">{badge_title}</div>
-    <div class="ho-title">{title_left} <span class="ho-subtitle">× {title_right}</span></div>
-    <div class="opt-body-info">
-      <div class="photo-stack">
-        <div class="brand-photo-item">
-          <img src="{img1}" alt="{meta1_name}" class="brand-photo-img">
+def render_option(opt_id, badge_title, title_left, title_right, img1, meta1_label, meta1_name, img2, meta2_label, meta2_name, metrics, nodes, cartoon=None, c_text=None, single_person=False):
+    # Build photos block
+    photo1 = f"""
+        <div class="brand-photo-wrap">
+          <div class="brand-photo-item">
+            <img src="{img1}" alt="{meta1_name}" class="brand-photo-img">
+          </div>
           <div class="brand-photo-meta">
             <span class="bpm-label">{meta1_label}</span>
             <span class="bpm-tag">{meta1_name}</span>
           </div>
-        </div>
-        <div class="brand-photo-item">
-          <img src="{img2}" alt="{meta2_name}" class="brand-photo-img">
+        </div>"""
+    photo2 = "" if single_person else f"""
+        <div class="brand-photo-wrap">
+          <div class="brand-photo-item">
+            <img src="{img2}" alt="{meta2_name}" class="brand-photo-img">
+          </div>
           <div class="brand-photo-meta">
             <span class="bpm-label">{meta2_label}</span>
             <span class="bpm-tag">{meta2_name}</span>
           </div>
-        </div>
+        </div>"""
+    title_part = title_left if single_person else f"{title_left} <span class=\"ho-subtitle\">× {title_right}</span>"
+    res = f"""
+  <div class="full-option-block" id="{opt_id}">
+    <div class="ho-badge">{badge_title}</div>
+    <div class="ho-title">{title_part}</div>
+    <div class="opt-body-info">
+      <div class="photo-stack">{photo1}{photo2}
       </div>
       <div class="metrics-grid-wrap">
         <div class="o1-header">합산 지표 예측</div>
@@ -220,9 +229,9 @@ a_alt1_nodes = [
 ]
 
 a_alt2_nodes = [
-    {'avatar': '🎥', 'action': '<strong>S급 초대형 유튜버(TBD)</strong>가 대형 예능 혹은 롱폼 기획물에서 자연스러운 제품 PPL을 진행합니다.', 'f_icon': '📺', 'f_title': '초대형 롱폼 예능', 'f_desc': '거대한 조회수와 함께 시청자들을 몰입시키는 기획력', 'f_tags': 'YOUTUBE', 'c_avatar': '👨🏻‍💻', 'c_bubble': '오늘 영상 폼 미쳤다 ㅋㅋ <span>저기 나온 템 몬지 찾아봐야지.</span>', 'm_label': '초기 조회 트래픽', 'm_value': '200M+'},
-    {'avatar': '🎵', 'action': '<strong>릴리</strong>의 클립 영상과 파티형 숏폼이 파생되며 시너지를 폭발시킵니다.', 'f_icon': '📱', 'f_title': '인터랙티브 쇼츠핑', 'f_desc': '유튜브 영상 하단 쇼핑 연동과 숏폼 클립 파생', 'f_tags': 'SHORTS / COMMERCE', 'c_avatar': '🎮', 'c_bubble': '재밌어서 끝까지 봤는데 구매링크 있었네? <span>바로 들어가본다.</span>', 'm_label': '자사몰 인바운드 전송', 'm_value': 'Limit'},
-    {'avatar': '📦', 'action': '<strong>알고리즘 폭발</strong>을 통해 자사몰 트래픽이 일시 마비되며 최단시간 제품이 매진됩니다.', 'f_icon': '💸', 'f_title': '트래픽 마비 및 결제증가', 'f_desc': '메인 콜라보 라인업 최단시간 솔드아웃 파이프라인', 'f_tags': 'E-COMMERCE', 'c_avatar': '🛒', 'c_bubble': '아 장바구니 담았는데 <span>그새 품절됨... 제발 재입고 해주세요 ㅠㅠ</span>', 'm_label': '결제액 폭증 및 Sold Out', 'm_value': 'Sold Out'}
+    {'avatar': '🎥', 'action': '<strong>강민경</strong>이 대형 유튜브 기획물에서 브랜드 아이템을 자연스럽게 노출하고, 감성적인 인스타그램 피드로 이중 공략합니다.', 'f_icon': '📺', 'f_title': '초대형 롱폼 예능', 'f_desc': '거대한 구독자층을 기반으로 시청자들을 몰입시키는 기획력', 'f_tags': 'YOUTUBE', 'c_avatar': '👨🏻‍💻', 'c_bubble': '오늘 영상 폼 미쳤다 ㅋㅋ <span>저기 나온 템 뭔지 찾아봐야지.</span>', 'm_label': '초기 조회 트래픽', 'm_value': '200M+'},
+    {'avatar': '📸', 'action': '<strong>강민경</strong>의 인스타그램 피드와 숏폼이 연계되며, 유튜브 시청자를 비주얼 콘텐츠로 재유입시킵니다.', 'f_icon': '📱', 'f_title': 'SNS 크로스 플랫폼 연계', 'f_desc': '유튜브 팬과 인스타 팔로워를 하나의 퍼널로 통합', 'f_tags': 'INSTAGRAM / SHORTS', 'c_avatar': '🎮', 'c_bubble': '유튜브에서 봤는데 인스타에도 올라왔네. <span>완전 빠져들었다. 바로 들어가본다.</span>', 'm_label': '자사몰 인바운드 전송', 'm_value': 'Limit'},
+    {'avatar': '📦', 'action': '<strong>단독 캠페인 집중 효과</strong>로 예산 분산 없이 강민경 채널의 폭발력이 자사몰 트래픽을 일시 마비시킵니다.', 'f_icon': '💸', 'f_title': '트래픽 집중 폭발 및 매진', 'f_desc': '메인 콜라보 라인업 최단시간 솔드아웃 파이프라인', 'f_tags': 'E-COMMERCE', 'c_avatar': '🛒', 'c_bubble': '장바구니 담아뒀는데 <span>그새 품절됨... 재입고 알림 신청했다 ㅠ</span>', 'm_label': '결제액 집중 및 Sold Out', 'm_value': 'Sold Out'}
 ]
 
 # ────────── PLAN B DATA ──────────
@@ -251,19 +260,19 @@ html += '<!-- ───────────── PLAN A ──────�
 html += '<div class="plan-level-header"><div class="plan-level-budget">Budget Increase: 35,000,000 KRW</div><div class="plan-level-title">하이엔드 영향력과<br>프리미엄 확산의 극대화</div></div>'
 
 html += render_option("opt1", "Plan A 최적안", "김고은", "릴리", 
-    "https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=600&auto=format&fit=crop", "A-LIST ACTOR", "김고은", 
+    "images/김고은.webp", "A-LIST ACTOR", "김고은", 
     "images/앤믹스 릴리.webp", "NMIXX PORTRAIT", "릴리", 
     metrics_a_best, a_best_nodes, CARTOON_A, "웨이팅 길어도 남겨야지📸")
 
 html += render_option("opt1-alt1", "Plan A 대안 1", "이시안 외", "릴리", 
-    "images/유리.webp", "FASHION INFLUENCER", "이시안(예시)", 
+    "images/이시안.webp", "FASHION INFLUENCER", "이시안", 
     "images/앤믹스 릴리.webp", "NMIXX PORTRAIT", "릴리", 
     metrics_a_alt1, a_alt1_nodes)
 
-html += render_option("opt1-alt2", "Plan A 대안 2", "S급 유튜버", "릴리", 
-    DUMMY_IMG, "S-TIER YOUTUBER (TBD)", "TBD CREATOR", 
-    "images/앤믹스 릴리.webp", "NMIXX PORTRAIT", "릴리", 
-    metrics_a_alt2, a_alt2_nodes)
+html += render_option("opt1-alt2", "Plan A 대안 2", "강민경", "", 
+    "images/강민경.webp", "S-TIER YOUTUBER", "강민경", 
+    "", "", "", 
+    metrics_a_alt2, a_alt2_nodes, single_person=True)
 html += '</div>'
 
 html += '<!-- ───────────── PLAN B ───────────── -->\n<div id="plan-b">'
@@ -271,7 +280,7 @@ html += '<div class="plan-level-header"><div class="plan-level-budget">Current B
 
 html += render_option("opt2", "Plan B 최적안", "릴리", "매니아급 유튜버", 
     "images/앤믹스 릴리.webp", "NMIXX PORTRAIT", "릴리", 
-    DUMMY_IMG, "NICHE YOUTUBER (TBD)", "TBD CREATOR", 
+    "images/송이송이.jpg", "NICHE YOUTUBER", "송이송이", 
     metrics_b_best, b_best_nodes, CARTOON_B, "할인 시간 1시간 남음! 결제간다💸")
 
 html += render_option("opt2-alt1", "Plan B 대안 1", "릴리", "미드티어 그룹", 

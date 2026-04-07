@@ -957,13 +957,14 @@ body {
 
 /* ── ORIGINAL METRICS & PHOTO DUAL ── */
 .opt-body-info { display: flex; gap: 48px; align-items: start; margin-bottom: 56px; }
-.photo-stack { display: flex; gap: 12px; width: 572px; flex-shrink:0; }
-.brand-photo-item { width: 280px; height: 380px; border-radius: 4px; overflow: hidden; border: 1px solid var(--border); position: relative; flex-shrink: 0; }
-.brand-photo-img { width: 100%; height: 100%; object-fit: cover; display: block; filter: grayscale(20%); transition: filter 0.3s; }
+.photo-stack { display: flex; gap: 16px; flex-shrink:0; }
+.brand-photo-wrap { display: flex; flex-direction: column; width: 280px; flex-shrink: 0; }
+.brand-photo-item { width: 280px; height: 360px; border-radius: 8px; overflow: hidden; border: 1px solid var(--border); position: relative; }
+.brand-photo-img { width: 100%; height: 100%; object-fit: cover; display: block; filter: grayscale(15%); transition: filter 0.3s; }
 .brand-photo-item:hover .brand-photo-img { filter: grayscale(0%); }
-.brand-photo-meta { position: absolute; bottom: 0; left: 0; right: 0; background: linear-gradient(transparent, rgba(0,0,0,0.8)); padding: 16px; color: #fff; }
-.bpm-label { font-family: 'DM Sans', sans-serif; font-size: 8px; letter-spacing: 1.5px; text-transform: uppercase; opacity: 0.6; display: block; margin-bottom: 2px; }
-.bpm-tag { font-family: 'Noto Sans KR', sans-serif; font-size: 11px; font-weight: 500; }
+.brand-photo-meta { padding: 12px 4px 0; }
+.bpm-label { font-family: 'DM Sans', sans-serif; font-size: 9px; letter-spacing: 2px; text-transform: uppercase; color: var(--muted); display: block; margin-bottom: 6px; }
+.bpm-tag { display: inline-block; font-family: 'Noto Sans KR', sans-serif; font-size: 13px; font-weight: 600; color: var(--pink-deep); background: var(--pink-light); padding: 4px 16px; border-radius: 20px; letter-spacing: 0.5px; }
 
 .metrics-grid-wrap { display: flex; flex-direction: column; gap: 12px; flex:1; }
 .o1-header { font-family:'DM Sans',sans-serif; font-size:10px; font-weight:500; letter-spacing:2px; text-transform:uppercase; color:var(--muted); margin-bottom:12px; }
@@ -1044,15 +1045,19 @@ body {
     <div class="ho-title">김고은 <span class="ho-subtitle">× 릴리</span></div>
     <div class="opt-body-info">
       <div class="photo-stack">
-        <div class="brand-photo-item">
-          <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=600&auto=format&fit=crop" alt="김고은" class="brand-photo-img">
+        <div class="brand-photo-wrap">
+          <div class="brand-photo-item">
+            <img src="images/김고은.webp" alt="김고은" class="brand-photo-img">
+          </div>
           <div class="brand-photo-meta">
             <span class="bpm-label">A-LIST ACTOR</span>
             <span class="bpm-tag">김고은</span>
           </div>
         </div>
-        <div class="brand-photo-item">
-          <img src="images/앤믹스 릴리.webp" alt="릴리" class="brand-photo-img">
+        <div class="brand-photo-wrap">
+          <div class="brand-photo-item">
+            <img src="images/앤믹스 릴리.webp" alt="릴리" class="brand-photo-img">
+          </div>
           <div class="brand-photo-meta">
             <span class="bpm-label">NMIXX PORTRAIT</span>
             <span class="bpm-tag">릴리</span>
@@ -1182,15 +1187,19 @@ body {
     <div class="ho-title">이시안 외 <span class="ho-subtitle">× 릴리</span></div>
     <div class="opt-body-info">
       <div class="photo-stack">
-        <div class="brand-photo-item">
-          <img src="images/유리.webp" alt="이시안(예시)" class="brand-photo-img">
+        <div class="brand-photo-wrap">
+          <div class="brand-photo-item">
+            <img src="images/이시안.webp" alt="이시안" class="brand-photo-img">
+          </div>
           <div class="brand-photo-meta">
             <span class="bpm-label">FASHION INFLUENCER</span>
-            <span class="bpm-tag">이시안(예시)</span>
+            <span class="bpm-tag">이시안</span>
           </div>
         </div>
-        <div class="brand-photo-item">
-          <img src="images/앤믹스 릴리.webp" alt="릴리" class="brand-photo-img">
+        <div class="brand-photo-wrap">
+          <div class="brand-photo-item">
+            <img src="images/앤믹스 릴리.webp" alt="릴리" class="brand-photo-img">
+          </div>
           <div class="brand-photo-meta">
             <span class="bpm-label">NMIXX PORTRAIT</span>
             <span class="bpm-tag">릴리</span>
@@ -1309,21 +1318,16 @@ body {
   </div>
   <div class="full-option-block" id="opt1-alt2">
     <div class="ho-badge">Plan A 대안 2</div>
-    <div class="ho-title">S급 유튜버 <span class="ho-subtitle">× 릴리</span></div>
+    <div class="ho-title">강민경</div>
     <div class="opt-body-info">
       <div class="photo-stack">
-        <div class="brand-photo-item">
-          <img src="file:///C:/Users/WD/.gemini/antigravity/brain/e1a93622-2e8e-44e2-a09b-7dded7e390f9/dummy_influencer_1775558232037.png" alt="TBD CREATOR" class="brand-photo-img">
-          <div class="brand-photo-meta">
-            <span class="bpm-label">S-TIER YOUTUBER (TBD)</span>
-            <span class="bpm-tag">TBD CREATOR</span>
+        <div class="brand-photo-wrap">
+          <div class="brand-photo-item">
+            <img src="images/강민경.webp" alt="강민경" class="brand-photo-img">
           </div>
-        </div>
-        <div class="brand-photo-item">
-          <img src="images/앤믹스 릴리.webp" alt="릴리" class="brand-photo-img">
           <div class="brand-photo-meta">
-            <span class="bpm-label">NMIXX PORTRAIT</span>
-            <span class="bpm-tag">릴리</span>
+            <span class="bpm-label">S-TIER YOUTUBER</span>
+            <span class="bpm-tag">강민경</span>
           </div>
         </div>
       </div>
@@ -1360,13 +1364,13 @@ body {
         <div class="sj-content-col">
           <div class="inf-action">
             <div class="inf-avatar">🎥</div>
-            <div><strong>S급 초대형 유튜버(TBD)</strong>가 대형 예능 혹은 롱폼 기획물에서 자연스러운 제품 PPL을 진행합니다.</div>
+            <div><strong>강민경</strong>이 대형 유튜브 기획물에서 브랜드 아이템을 자연스럽게 노출하고, 감성적인 인스타그램 피드로 이중 공략합니다.</div>
           </div>
           <div class="content-format-card">
             <div class="cfc-icon">📺</div>
             <div class="cfc-body">
               <div class="cfc-title">초대형 롱폼 예능</div>
-              <div class="cfc-desc">거대한 조회수와 함께 시청자들을 몰입시키는 기획력</div>
+              <div class="cfc-desc">거대한 구독자층을 기반으로 시청자들을 몰입시키는 기획력</div>
               <div class="cfc-tags">YOUTUBE</div>
             </div>
           </div>
@@ -1374,7 +1378,7 @@ body {
         <div class="sj-reaction-col">
           <div class="sj-chat-box">
             <div class="sj-chat-avatar">👨🏻‍💻</div>
-            <div class="sj-chat-bubble">오늘 영상 폼 미쳤다 ㅋㅋ <span>저기 나온 템 몬지 찾아봐야지.</span></div>
+            <div class="sj-chat-bubble">오늘 영상 폼 미쳤다 ㅋㅋ <span>저기 나온 템 뭔지 찾아봐야지.</span></div>
           </div>
           <div class="sj-metric">
             <span class="sjm-label">초기 조회 트래픽</span><span class="sjm-value">200M+</span>
@@ -1386,22 +1390,22 @@ body {
         <div class="sj-phase-col"><div class="sj-phase-dot">2</div></div>
         <div class="sj-content-col">
           <div class="inf-action">
-            <div class="inf-avatar">🎵</div>
-            <div><strong>릴리</strong>의 클립 영상과 파티형 숏폼이 파생되며 시너지를 폭발시킵니다.</div>
+            <div class="inf-avatar">📸</div>
+            <div><strong>강민경</strong>의 인스타그램 피드와 숏폼이 연계되며, 유튜브 시청자를 비주얼 콘텐츠로 재유입시킵니다.</div>
           </div>
           <div class="content-format-card">
             <div class="cfc-icon">📱</div>
             <div class="cfc-body">
-              <div class="cfc-title">인터랙티브 쇼츠핑</div>
-              <div class="cfc-desc">유튜브 영상 하단 쇼핑 연동과 숏폼 클립 파생</div>
-              <div class="cfc-tags">SHORTS / COMMERCE</div>
+              <div class="cfc-title">SNS 크로스 플랫폼 연계</div>
+              <div class="cfc-desc">유튜브 팬과 인스타 팔로워를 하나의 퍼널로 통합</div>
+              <div class="cfc-tags">INSTAGRAM / SHORTS</div>
             </div>
           </div>
         </div>
         <div class="sj-reaction-col">
           <div class="sj-chat-box">
             <div class="sj-chat-avatar">🎮</div>
-            <div class="sj-chat-bubble">재밌어서 끝까지 봤는데 구매링크 있었네? <span>바로 들어가본다.</span></div>
+            <div class="sj-chat-bubble">유튜브에서 봤는데 인스타에도 올라왔네. <span>완전 빠져들었다. 바로 들어가본다.</span></div>
           </div>
           <div class="sj-metric">
             <span class="sjm-label">자사몰 인바운드 전송</span><span class="sjm-value">Limit</span>
@@ -1414,12 +1418,12 @@ body {
         <div class="sj-content-col">
           <div class="inf-action">
             <div class="inf-avatar">📦</div>
-            <div><strong>알고리즘 폭발</strong>을 통해 자사몰 트래픽이 일시 마비되며 최단시간 제품이 매진됩니다.</div>
+            <div><strong>단독 캠페인 집중 효과</strong>로 예산 분산 없이 강민경 채널의 폭발력이 자사몰 트래픽을 일시 마비시킵니다.</div>
           </div>
           <div class="content-format-card">
             <div class="cfc-icon">💸</div>
             <div class="cfc-body">
-              <div class="cfc-title">트래픽 마비 및 결제증가</div>
+              <div class="cfc-title">트래픽 집중 폭발 및 매진</div>
               <div class="cfc-desc">메인 콜라보 라인업 최단시간 솔드아웃 파이프라인</div>
               <div class="cfc-tags">E-COMMERCE</div>
             </div>
@@ -1428,10 +1432,10 @@ body {
         <div class="sj-reaction-col">
           <div class="sj-chat-box">
             <div class="sj-chat-avatar">🛒</div>
-            <div class="sj-chat-bubble">아 장바구니 담았는데 <span>그새 품절됨... 제발 재입고 해주세요 ㅠㅠ</span></div>
+            <div class="sj-chat-bubble">장바구니 담아뒀는데 <span>그새 품절됨... 재입고 알림 신청했다 ㅠ</span></div>
           </div>
           <div class="sj-metric">
-            <span class="sjm-label">결제액 폭증 및 Sold Out</span><span class="sjm-value">Sold Out</span>
+            <span class="sjm-label">결제액 집중 및 Sold Out</span><span class="sjm-value">Sold Out</span>
           </div>
         </div>
       </div>
@@ -1443,18 +1447,22 @@ body {
     <div class="ho-title">릴리 <span class="ho-subtitle">× 매니아급 유튜버</span></div>
     <div class="opt-body-info">
       <div class="photo-stack">
-        <div class="brand-photo-item">
-          <img src="images/앤믹스 릴리.webp" alt="릴리" class="brand-photo-img">
+        <div class="brand-photo-wrap">
+          <div class="brand-photo-item">
+            <img src="images/앤믹스 릴리.webp" alt="릴리" class="brand-photo-img">
+          </div>
           <div class="brand-photo-meta">
             <span class="bpm-label">NMIXX PORTRAIT</span>
             <span class="bpm-tag">릴리</span>
           </div>
         </div>
-        <div class="brand-photo-item">
-          <img src="file:///C:/Users/WD/.gemini/antigravity/brain/e1a93622-2e8e-44e2-a09b-7dded7e390f9/dummy_influencer_1775558232037.png" alt="TBD CREATOR" class="brand-photo-img">
+        <div class="brand-photo-wrap">
+          <div class="brand-photo-item">
+            <img src="images/송이송이.jpg" alt="송이송이" class="brand-photo-img">
+          </div>
           <div class="brand-photo-meta">
-            <span class="bpm-label">NICHE YOUTUBER (TBD)</span>
-            <span class="bpm-tag">TBD CREATOR</span>
+            <span class="bpm-label">NICHE YOUTUBER</span>
+            <span class="bpm-tag">송이송이</span>
           </div>
         </div>
       </div>
@@ -1581,15 +1589,19 @@ body {
     <div class="ho-title">릴리 <span class="ho-subtitle">× 미드티어 그룹</span></div>
     <div class="opt-body-info">
       <div class="photo-stack">
-        <div class="brand-photo-item">
-          <img src="images/앤믹스 릴리.webp" alt="릴리" class="brand-photo-img">
+        <div class="brand-photo-wrap">
+          <div class="brand-photo-item">
+            <img src="images/앤믹스 릴리.webp" alt="릴리" class="brand-photo-img">
+          </div>
           <div class="brand-photo-meta">
             <span class="bpm-label">NMIXX PORTRAIT</span>
             <span class="bpm-tag">릴리</span>
           </div>
         </div>
-        <div class="brand-photo-item">
-          <img src="images/라잇썸.webp" alt="GROUP 30" class="brand-photo-img">
+        <div class="brand-photo-wrap">
+          <div class="brand-photo-item">
+            <img src="images/라잇썸.webp" alt="GROUP 30" class="brand-photo-img">
+          </div>
           <div class="brand-photo-meta">
             <span class="bpm-label">MID-TIER CREATORS (x30)</span>
             <span class="bpm-tag">GROUP 30</span>
