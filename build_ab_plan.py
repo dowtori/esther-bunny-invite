@@ -199,75 +199,74 @@ def render_option(opt_id, badge_title, title_left, title_right, img1, meta1_labe
 
 # ────────── PLAN A DATA ──────────
 a_best_nodes = [
-    {'avatar': '🎬', 'action': '<strong>김고은</strong>님이 브랜드 아뜰리에 콘셉트와 공명하는 고급스러운 공간 투어 화보/피드를 업로드합니다.', 'f_icon': '💎', 'f_title': '프리미엄 공간 화보', 'f_desc': '가장 고급스러운 형태로 브랜드 인지도 수직 상승', 'f_tags': 'INSTAGRAM FEED', 'c_avatar': '👩🏻‍🎓', 'c_bubble': '와 스케일 대박. <span>여기가 요즘 제일 핫하다며?</span>', 'm_label': '예상 초기 도달', 'm_value': '250M+'},
-    {'avatar': '🎵', 'action': '<strong>릴리</strong>가 현장 인증 챌린지를 진행하며 Z세대 팬덤을 확산의 중심 도구로 활용합니다.', 'f_icon': '🕺', 'f_title': '현장 인증 챌린지', 'f_desc': '무거운 브랜드 무드에 젊고 바이럴한 생동감 믹스', 'f_tags': 'REELS / SHORTS', 'c_avatar': '👱🏻‍♀️', 'c_bubble': '내 최애도 다녀갔네. <span>나도 이번 주말에 무조건 인증 찍는다!</span>', 'm_label': '2차 확산 화제성', 'm_value': 'Max'},
-    {'avatar': '🔥', 'action': '<strong>김고은 × 릴리 팬덤</strong>과 일반고객의 폭발적인 교집합으로, 오프라인 방문 대기열이 극대화됩니다.', 'f_icon': '📍', 'f_title': '위치태그 인증 및 리뷰', 'f_desc': '팝업스토어 오프라인 방문폭주 및 굿즈 메인라인 완판', 'f_tags': 'UGC / OFFLINE', 'c_avatar': '📸', 'c_bubble': '웨이팅 3시간 실화냐 ㅠㅠ <span>그래도 들어왔으니 굿즈 싹다 털어간다.</span>', 'm_label': '오프라인 대기 및 결제', 'm_value': 'Tier 1'}
+    {'avatar': '📽️', 'action': '<strong>김고은</strong>: 브랜드 \'아뜰리에\'의 예술적 서사를 담아낸 하이패션 시네마틱 피드로 선망성의 임계치를 돌파합니다.', 'f_icon': '📜', 'f_title': '예술적 서사 아카이빙', 'f_desc': '브랜드 철학을 고도화된 비주얼 라이브러리로 제안', 'f_tags': 'INSTAGRAM ARTISTIC FEED', 'c_avatar': '👱🏻‍♀️', 'c_bubble': '와 이건 그냥 화보네... <span>이번 팝업 무조건 가야 할 이유가 생김.</span>', 'm_label': '브랜드 인지도 도달', 'm_value': '250M+'},
+    {'avatar': '🎵', 'action': '<strong>릴리</strong>: 라이브러리에 리드미컬한 생동감을 부여하는 챌린지와 현장 인증으로 Z세대의 결속을 유도합니다.', 'f_icon': '🚀', 'f_title': '디지털 임팩트 숏폼', 'f_desc': '하이엔드 무드에 영(Young)한 바이럴 동력 주입', 'f_tags': 'SHORT-FORM VIRAL', 'c_avatar': '👩🏻‍🎓', 'c_bubble': '내 최애도 다녀갔네 ㅠㅠ <span>이번 주말 인증샷 성지는 여기다!</span>', 'm_label': '숏폼 확산 지수', 'm_value': 'Limit+'},
+    {'avatar': '🔥', 'action': '<strong>팬덤 시너지</strong>: 최정상급 배우와 글로벌 팬덤의 교집합이 오프라인 방문 대기열과 굿즈 조기 완판의 기폭제가 됩니다.', 'f_icon': '📍', 'f_title': '자발적 UGC 확산', 'f_desc': '팝업스토어 현장 대기열 폭발 및 프리미엄 라인업 매진', 'f_tags': 'UGC / OFFLINE EXPLOSION', 'c_avatar': '🛒', 'c_bubble': '3시간 기다려서 겨우 들어옴... <span>그래도 에스더버니 굿즈 싹다 털어간다!</span>', 'm_label': '오프라인 실구매 전환', 'm_value': 'Top-Tier'}
 ]
 
 a_alt1_nodes = [
-    {'avatar': '👗', 'action': '<strong>이시안 등(패션/라이프 인플루언서)</strong>이 라이프스타일 템플릿(OOTD) 기반 브이로그를 업로드합니다.', 'f_icon': '👜', 'f_title': 'OOTD 라이프스타일로그', 'f_desc': '브랜드 아이템을 일상 패션에 자연스럽게 녹여냄', 'f_tags': 'YOUTUBE / FEED', 'c_avatar': '👩🏻‍💼', 'c_bubble': '저 옷 코디 완전 내 스타일인데? <span>당장 손민수해야지.</span>', 'm_label': '관심 타겟 도달', 'm_value': '150M+'},
-    {'avatar': '🎵', 'action': '<strong>릴리</strong>의 숏폼 챌린지 교차가 발생하며 팬덤 유입을 유도합니다.', 'f_icon': '✨', 'f_title': '크로스태그 챌린지', 'f_desc': '이종 관심사(패션+아이돌) 타겟간 믹스효과', 'f_tags': 'REELS', 'c_avatar': '🎧', 'c_bubble': '릴리한테 이 옷 완전 찰떡! 나도 입어보고 싶어지네.', 'm_label': '바이럴 확산율', 'm_value': '180% ➚'},
-    {'avatar': '📈', 'action': '<strong>커뮤니티 파급력</strong>이 무신사, 지그재그 등 핵심 패션 고관여 플랫폼 유저층에 스며듭니다.', 'f_icon': '💬', 'f_title': '커뮤니티 자발적 바이럴', 'f_desc': '브랜드 제품의 트렌디 아이템화 (Brand Affinity)', 'f_tags': 'COMMUNITY / FORUM', 'c_avatar': '👕', 'c_bubble': '요즘 이거 입은 사람들 엄청 보이네. <span>완전 대세템 등극인듯.</span>', 'm_label': '호감도(Affinity) 상승', 'm_value': 'High'}
+    {'avatar': '🧥', 'action': '<strong>이시안</strong>: 라이프스타일 템플릿(OOTD)에 브랜드 아이템을 자연스럽게 큐레이션하여 타겟의 소유욕을 자극합니다.', 'f_icon': '👗', 'f_title': '하이엔드 OOTD 큐레이션', 'f_desc': '브랜드 제품을 일상 속 트렌디 아이템으로 재정의', 'f_tags': 'INSTAGRAM CORE FEED', 'c_avatar': '🧥', 'c_bubble': '이 코디 그대로 사고 싶다... <span>어디꺼인지 바로 들어가봐야지!</span>', 'm_label': '관심 타겟 정밀 도달', 'm_value': '150M+'},
+    {'avatar': '🎵', 'action': '<strong>릴리</strong>: 패션 중심 피드에 아이돌 팬덤의 결속력을 더해 타겟 확장을 시도하는 크로스 플랫폼 캠페인을 전개합니다.', 'f_icon': '✨', 'f_title': '크로스-팬덤 인터페이스', 'f_desc': '패션 고관여층과 팬덤 타겟의 전략적 믹싱 숏폼', 'f_tags': 'MULTI-PLATFORM VIRAL', 'c_avatar': '🎧', 'c_bubble': '릴리한테 이 룩 너무 잘 어울림! <span>나도 이번 룩은 손민수 예약.</span>', 'm_label': '교차 유입 시너지', 'm_value': '185% ➚'},
+    {'avatar': '💬', 'action': '<strong>커뮤니티 파급력</strong>: 무신사, 지그재그 등 핵심 플랫폼 유저층에 스며들어 자발적 아이템 추천과 검색량 폭증을 유도합니다.', 'f_icon': '📊', 'f_title': '자발적 디지털 바이럴', 'f_desc': '브랜드 제품의 \'머스트-해브\' 디지털 대세감 형성', 'f_tags': 'DIGITAL COMMUNITY DOMINANCE', 'c_avatar': '📈', 'c_bubble': '요즘 커뮤니티에 이거 엄청 올라오네. <span>이거 입은 사람들 길거리에서도 자주 보임.</span>', 'm_label': '브랜드 애피니티(Affinity)', 'm_value': 'Significant'}
 ]
 
 a_alt2_nodes = [
-    {'avatar': '🎥', 'action': '<strong>강민경</strong>이 대형 유튜브 기획물에서 브랜드 아이템을 자연스럽게 노출하고, 감성적인 인스타그램 피드로 이중 공략합니다.', 'f_icon': '📺', 'f_title': '초대형 롱폼 예능', 'f_desc': '거대한 구독자층을 기반으로 시청자들을 몰입시키는 기획력', 'f_tags': 'YOUTUBE', 'c_avatar': '👨🏻‍💻', 'c_bubble': '오늘 영상 폼 미쳤다 ㅋㅋ <span>저기 나온 템 뭔지 찾아봐야지.</span>', 'm_label': '초기 조회 트래픽', 'm_value': '200M+'},
-    {'avatar': '📸', 'action': '<strong>강민경</strong>의 인스타그램 피드와 숏폼이 연계되며, 유튜브 시청자를 비주얼 콘텐츠로 재유입시킵니다.', 'f_icon': '📱', 'f_title': 'SNS 크로스 플랫폼 연계', 'f_desc': '유튜브 팬과 인스타 팔로워를 하나의 퍼널로 통합', 'f_tags': 'INSTAGRAM / SHORTS', 'c_avatar': '🎮', 'c_bubble': '유튜브에서 봤는데 인스타에도 올라왔네. <span>완전 빠져들었다. 바로 들어가본다.</span>', 'm_label': '자사몰 인바운드 전송', 'm_value': 'Limit'},
-    {'avatar': '📦', 'action': '<strong>단독 캠페인 집중 효과</strong>로 예산 분산 없이 강민경 채널의 폭발력이 자사몰 트래픽을 일시 마비시킵니다.', 'f_icon': '💸', 'f_title': '트래픽 집중 폭발 및 매진', 'f_desc': '메인 콜라보 라인업 최단시간 솔드아웃 파이프라인', 'f_tags': 'E-COMMERCE', 'c_avatar': '🛒', 'c_bubble': '장바구니 담아뒀는데 <span>그새 품절됨... 재입고 알림 신청했다 ㅠ</span>', 'm_label': '결제액 집중 및 Sold Out', 'm_value': 'Sold Out'}
+    {'avatar': '📹', 'action': '<strong>강민경</strong>: 압도적인 트래픽과 기획력을 보유한 롱폼 콘텐츠를 통해 브랜드의 감성을 독점적인 시각으로 조명합니다.', 'f_icon': '📺', 'f_title': '메가 브랜디드 필름', 'f_desc': '단독 영상만으로 전국적 인지도와 트래픽 마동력을 확보', 'f_tags': 'MEGA YOUTUBE STRATEGY', 'c_avatar': '🍿', 'c_bubble': '오늘 영상 퀄리티 미쳤네 ㅋㅋㅋ <span>영상에 나온 템들 다 내 스타일이야.</span>', 'm_label': '초동 조회 임팩트', 'm_value': '200M+'},
+    {'avatar': '📸', 'action': '<strong>강민경</strong>의 인스타그램과 숏폼 클립 연계를 통해 유튜브의 폭발력을 비주얼 퍼널로 락인(Lock-in)시킵니다.', 'f_icon': '📱', 'f_title': '크로스 플랫폼 퍼널', 'f_desc': '유튜브 시청자를 인스타그램 비주얼 아카이브로 유도', 'f_tags': 'SNS LOCK-IN STRATEGY', 'c_avatar': '📷', 'c_bubble': '방금 유튜브 보고 바로 인스타 팔로우함. <span>룩북 정보 다 담고 싶음!</span>', 'm_label': '퍼널 전환 효율', 'm_value': 'Maximized'},
+    {'avatar': '🏢', 'action': '<strong>트래픽 마비 효과</strong>: 강민경 단독 캠페인이 유발하는 압도적인 화력을 통해 자사몰 서버 마비와 조기 솔드아웃을 달성합니다.', 'f_icon': '💸', 'f_title': '서버 폭주 및 집중 결제', 'f_desc': '가장 빠르고 강력한 제품 솔드아웃 파이프라인 구축', 'f_tags': 'TRAFFIC TO SALES', 'c_avatar': '🛒', 'c_bubble': '아 장바구니 담는 와중에 품절 ㅠㅠ <span>제발 재입고 일정 좀 알려주세요!</span>', 'm_label': '결제 전환액', 'm_value': 'Sold Out'}
 ]
 
 # ────────── PLAN B DATA ──────────
 b_best_nodes = [
-    {'avatar': '🎵', 'action': '<strong>릴리</strong>가 쇼츠와 릴스를 통해 대중의 이목과 신제품에 대한 호기심을 이끕니다.', 'f_icon': '🕺', 'f_title': '숏폼 호기심 티징', 'f_desc': '광범위한 타겟에게 브랜드 신규 콜라보레이션 티징', 'f_tags': 'REELS / SHORTS', 'c_avatar': '🎧', 'c_bubble': '새 노래 뜨는 거 보니까 <span>본편 리뷰 영상도 곧 올라오겠네.</span>', 'm_label': '고관여 인지 트래픽', 'm_value': '2.0M+'},
-    {'avatar': '💻', 'action': '<strong>매니아급 유튜버(TBD)</strong>가 프로모션 코드가 포함된 딥-다이브 리뷰 영상을 게재하여 구매욕을 자극합니다.', 'f_icon': '📺', 'f_title': '제품 리뷰 & 프로모션', 'f_desc': '설득력 있는 리뷰와 한정 할인 코드로 강한 전환 유도', 'f_tags': 'YOUTUBE / SALES', 'c_avatar': '🛒', 'c_bubble': '코드 1시간 남았다고? <span>이건 못참지. 당장 세트로 결제한다.</span>', 'm_label': '할인코드 결제 전환율', 'm_value': '4.1%'},
-    {'avatar': '🤳', 'action': '<strong>선순환 UGC 생성</strong> 시청자의 즉각적인 결제가 결국 자발적 2차 언박싱 숏폼으로 이어집니다.', 'f_icon': '📦', 'f_title': '자발적 언박싱 및 리뷰', 'f_desc': '결제자들이 직접 만드는 구매 후기 숏폼 확산 트리거', 'f_tags': 'TIKTOK / SHORTS UGC', 'c_avatar': '🥰', 'c_bubble': '무사히 특템 성공! <span>배송 오자마자 바로 언박싱 영상 올려야지~</span>', 'm_label': 'UGC 2차 확산 비율', 'm_value': '250% ➚'}
+    {'avatar': '📱', 'action': '<strong>릴리</strong>: 고감도 숏폼 티징을 통해 브랜드 콜라보레이션에 대한 고관여 타겟의 원초적인 호기심을 극대화합니다.', 'f_icon': '🎭', 'f_title': '전략적 호기심 티징', 'f_desc': '짧고 강렬한 이미지 잔상으로 본편 리뷰 기대감 증폭', 'f_tags': 'TEASING SHORTS', 'c_avatar': '🎧', 'c_bubble': '에스더버니 콜라보 실화? <span>빨리 릴리 리뷰 영상 정주행하고 싶음.</span>', 'm_label': '인지 정밀 트래픽', 'm_value': '2.0M+'},
+    {'avatar': '💻', 'action': '<strong>송이송이</strong>: 전문가급 딥-다이브 리뷰와 독점 프로모션 혜택을 연계하여 실질적인 구매 전환을 관통합니다.', 'f_icon': '🛒', 'f_title': '딥-다이브 리뷰 & 커머스', 'f_desc': '설득력 있는 리뷰와 한정 할인 코드로 구매 장벽 제거', 'f_tags': 'REVIEW TO CONVERSION', 'c_avatar': '💳', 'c_bubble': '송이송이 코드로 할인 엄청 되네? <span>마감 전에 무조건 세트로 지른다.</span>', 'm_label': '할인코드 전환율', 'm_value': '4.15%'},
+    {'avatar': '📦', 'action': '<strong>자생적 공유(UGC)</strong>: 구매 타겟의 만족감이 자발적인 언박싱 및 팬덤 챌린지로 이어지며 유기적 확산을 완성합니다.', 'f_icon': '📸', 'f_title': '유기적 2차 확산 트리거', 'f_desc': '실구매자의 자발적 숏폼 언박싱과 선순환 알고리즘', 'f_tags': 'ORGANIC UGC VIRAL', 'c_avatar': '💝', 'c_bubble': '배송 오자마자 언박싱 영상 올림! <span>실물이 오조오억 배 예뻐요 ㅠㅠ</span>', 'm_label': 'UGC 자생 비율', 'm_value': '250% ➚'}
 ]
 
 b_alt1_nodes = [
-    {'avatar': '🎵', 'action': '<strong>릴리</strong>가 메인 캠페인 앵커 형태의 숏폼을 우선 발행하여 알고리즘 기준점을 세웁니다.', 'f_icon': '🎯', 'f_title': '메인 앵커 숏폼', 'f_desc': '공식 해시태그와 음원을 알리는 신호탄 역할', 'f_tags': 'INSTAGRAM REELS', 'c_avatar': '📱', 'c_bubble': '이 브금(BGM) 완전 좋네. 요즘 다 이 필터로 찍던데?', 'm_label': '관심 시작점 형성', 'm_value': 'Base'},
-    {'avatar': '🧑‍🤝‍🧑', 'action': '<strong>미드티어 인플루언서 30명</strong>이 약속된 해시태그와 함께 릴스를 융단 폭격하여 노출을 극대화합니다.', 'f_icon': '💥', 'f_title': '릴스 물량 융단폭격', 'f_desc': '다수의 미드급 채널을 동시 다발적으로 가동하여 알고리즘 해킹', 'f_tags': 'REELS (x30)', 'c_avatar': '👀', 'c_bubble': '요즘 인스타 켤 때마다 <span>이거 무조건 한 번씩은 보이네. 대세긴 대세네.</span>', 'm_label': '동시다발적 점유율', 'm_value': '60M+'},
-    {'avatar': '🌐', 'action': '<strong>탐색 탭(Explore) 지배</strong> 특정 주말 동안 인스타그램 탐색 탭을 압도적으로 지배하며 트렌드를 창조합니다.', 'f_icon': '📈', 'f_title': '대세감 알고리즘 형성', 'f_desc': '누구나 한 번쯤 보게 되는 파괴적인 대세감과 뇌리 주입', 'f_tags': 'EXPLORE TAB / TREND', 'c_avatar': '🔥', 'c_bubble': '내 친구들도 다 이거 얘기하더라. <span>결국 호기심에 한 번 사본다.</span>', 'm_label': '최종 대세감 점유율', 'm_value': 'Dominant'}
+    {'avatar': '🎯', 'action': '<strong>릴리</strong>: 캠페인의 기준점이 되는 앵커 숏폼을 선발행하여 알고리즘의 중심축과 대세감을 형성합니다.', 'f_icon': '⚓', 'f_title': '알고리즘 앵커 숏폼', 'f_desc': '공식 음원 및 필터 바이럴의 가이드라인 제시', 'f_tags': 'MAIN CAMPAIGN ANCHOR', 'c_avatar': '📱', 'c_bubble': '요즘 릴스 넘기면 이 브금은 무조건 나옴 ㅋㅋ <span>완전 대세인 듯!</span>', 'm_label': '인지 시작점 형성', 'm_value': 'Critical'},
+    {'avatar': '🏘️', 'action': '<strong>미드티어 30인</strong>: 약속된 주간 내 30개의 채널에서 융단폭격을 가해 인스타그램 알고리즘 탭을 점유합니다.', 'f_icon': '💣', 'f_title': '디지털 점유 융단폭격', 'f_desc': '다각적 채널 운용을 통한 압도적인 노출 빈도 확보', 'f_tags': 'REELS MASSIVE CAMPAIGN', 'c_avatar': '👀', 'c_bubble': '오늘만 이 피드 세 번 봄. <span>이정도면 나도 안 사면 손해인 느낌?</span>', 'm_label': '노출 점유 효율', 'm_value': '65M+'},
+    {'avatar': '🌍', 'action': '<strong>탐색 탭(Explore) 장악</strong>: 주말 골든타임 탐색 탭을 압도적으로 지배하며 트렌드 창조자(Target Hero)로 등급을 강화합니다.', 'f_icon': '📊', 'f_title': '알고리즘 대세감 고착화', 'f_desc': '단기간 내 집중 노출로 뇌리에 브랜드를 각인시키는 전략', 'f_tags': 'TREND DOMINANCE', 'c_avatar': '🔥', 'c_bubble': '말해 뭐해, 이번 주말 인스타는 이게 다 함. <span>결국 홀린 듯 구매 완료함.</span>', 'm_label': '대세감 점유율', 'm_value': 'Dominant'}
 ]
 
 
-metrics_a_best = {'followers':'850', 'fandom':'460', 'reach':'130', 'views':'160', 'likes':'15', 'comments':'700', 'er':'1.45', 'er_bar':87, 'er_note':'메가급 배우의 대중성과 K-POP 코어 팬덤의 압도적 반응률', 'core':'54.1%'}
-metrics_a_alt1 = {'followers':'610', 'fandom':'340', 'reach':'110', 'views':'130', 'likes':'11', 'comments':'550', 'er':'1.80', 'er_bar':92, 'er_note':'패션 고관여 층 밀집으로 클릭 구매 및 전환에 극대화된 임팩트', 'core':'55.7%'}
-metrics_a_alt2 = {'followers':'1,100', 'fandom':'550', 'reach':'200', 'views':'250', 'likes':'20', 'comments':'1,500', 'er':'1.25', 'er_bar':75, 'er_note':'무차별적 글로벌 트래픽의 발생으로 거시적 관점의 파급력 보장', 'core':'50.0%'}
+metrics_a_best = {'followers':'850', 'fandom':'460', 'reach':'130', 'views':'160', 'likes':'15', 'comments':'700', 'er':'1.45', 'er_bar':87, 'er_note': '글로벌 아이콘의 대중적 파급력과 K-POP 코어 팬덤의 열광적 충성도 결합', 'core':'54.1%'}
+metrics_a_alt1 = {'followers':'610', 'fandom':'340', 'reach':'110', 'views':'130', 'likes':'11', 'comments':'550', 'er':'1.80', 'er_bar':92, 'er_note': '패션 고관여 페르소나형 타겟에 대한 정밀한 접근과 세분화된 구매 전환 유도', 'core':'55.7%'}
+metrics_a_alt2 = {'followers':'1,100', 'fandom':'550', 'reach':'200', 'views':'250', 'likes':'20', 'comments':'1,500', 'er':'1.25', 'er_bar':75, 'er_note': '압도적인 디지털 도달 범위와 검색어 지배력을 통한 거시적 브랜드 파급력 확보', 'core':'50.0%'}
 
-metrics_b_best = {'followers':'690', 'fandom':'400', 'reach':'120', 'views':'250', 'likes':'11', 'comments':'완판', 'er':'3.20', 'er_bar':92, 'er_note':'상세 리뷰 영상을 통한 프로모션 직결로 세일즈 전환율 극대화', 'core':'82.1%'}
-metrics_b_alt1 = {'followers':'350 (Total)','fandom':'210', 'reach':'80', 'views':'180', 'likes':'8', 'comments':'400', 'er':'2.10', 'er_bar':85, 'er_note':'30개 채널 동시다발 분산을 통한 락인 방어 및 노출 빈도 확대', 'core':'60.0%'}
-
+metrics_b_best = {'followers':'690', 'fandom':'400', 'reach':'120', 'views':'250', 'likes':'11', 'comments':'완판', 'er':'3.20', 'er_bar':92, 'er_note': '심층 리뷰를 통한 고관여 타겟 설득과 프로모션 코드 연계로 즉각적 ROI 창출', 'core':'82.1%'}
+metrics_b_alt1 = {'followers':'350 (Total)','fandom':'210', 'reach':'80', 'views':'180', 'likes':'8', 'comments':'400', 'er':'2.10', 'er_bar':85, 'er_note': '30개 채널 동시다발 분산을 통한 노출 빈도 극대화 및 알고리즘 해킹 전략', 'core':'60.0%'}
 
 html += '<!-- ───────────── PLAN A ───────────── -->\n<div id="plan-a">'
-html += '<div class="plan-level-header"><div class="plan-level-budget">Budget Increase: 35,000,000 KRW</div><div class="plan-level-title">하이엔드 영향력과<br>프리미엄 확산의 극대화</div></div>'
+html += '<div class="plan-level-header"><div class="plan-level-budget">Strategy Increase: 35,000,000 KRW</div><div class="plan-level-title">하이엔드 임팩트: 브랜드 아카이브의<br>예술적 확장과 선망성 극대화</div></div>'
 
 html += render_option("opt1", "Plan A 최적안", "김고은", "릴리", 
-    "images/김고은.webp", "A-LIST ACTOR", "김고은", 
-    "images/앤믹스 릴리.webp", "NMIXX PORTRAIT", "릴리", 
+    "images/김고은.webp", "A-LIST ARTOR ARCHIVE", "김고은", 
+    "images/앤믹스 릴리.webp", "GLOBAL ICON PORTRAIT", "릴리", 
     metrics_a_best, a_best_nodes)
 
 html += render_option("opt1-alt1", "Plan A 대안 1", "이시안 외", "릴리", 
-    "images/이시안.webp", "FASHION INFLUENCER", "이시안", 
-    "images/앤믹스 릴리.webp", "NMIXX PORTRAIT", "릴리", 
+    "images/이시안.webp", "FASHION TREND-SETTER", "이시안", 
+    "images/앤믹스 릴리.webp", "GLOBAL ICON PORTRAIT", "릴리", 
     metrics_a_alt1, a_alt1_nodes)
 
 html += render_option("opt1-alt2", "Plan A 대안 2", "강민경", "", 
-    "images/강민경.webp", "S-TIER YOUTUBER", "강민경", 
+    "images/강민경.webp", "MEGA CREATOR SYNERGY", "강민경", 
     "", "", "", 
     metrics_a_alt2, a_alt2_nodes, single_person=True)
 html += '</div>'
 
 html += '<!-- ───────────── PLAN B ───────────── -->\n<div id="plan-b">'
-html += '<div class="plan-level-header"><div class="plan-level-budget">Current Budget: 25,000,000 KRW</div><div class="plan-level-title">타겟 지향적 매출 전환과<br>콘텐츠 융단 폭격</div></div>'
+html += '<div class="plan-level-header"><div class="plan-level-budget">Efficiency Plan: 25,000,000 KRW</div><div class="plan-level-title">퍼포먼스 집약: 고관여 타겟 점유를 통한<br>실질적 전환과 디지털 대세감 점유</div></div>'
 
-html += render_option("opt2", "Plan B 최적안", "릴리", "매니아급 유튜버", 
-    "images/앤믹스 릴리.webp", "NMIXX PORTRAIT", "릴리", 
-    "images/송이송이.jpg", "NICHE YOUTUBER", "송이송이", 
+html += render_option("opt2", "Plan B 최적안", "릴리", "송이송이", 
+    "images/앤믹스 릴리.webp", "GLOBAL ICON PORTRAIT", "릴리", 
+    "images/송이송이.jpg", "NICHE EXPERT REVIEWER", "송이송이", 
     metrics_b_best, b_best_nodes)
 
 html += render_option("opt2-alt1", "Plan B 대안 1", "릴리", "미드티어 그룹", 
-    "images/앤믹스 릴리.webp", "NMIXX PORTRAIT", "릴리", 
-    "images/라잇썸.webp", "MID-TIER CREATORS (x30)", "GROUP 30", 
+    "images/앤믹스 릴리.webp", "GLOBAL ICON PORTRAIT", "릴리", 
+    "images/라잇썸.webp", "MASSIVE MID-TIER CREATORS (x30)", "GROUP 30", 
     metrics_b_alt1, b_alt1_nodes)
 html += '</div></body></html>'
 
