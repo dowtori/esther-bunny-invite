@@ -27,18 +27,17 @@ custom_css = """
 /* ── ORIGINAL METRICS & PHOTO DUAL ── */
 .opt-body-info { display: flex; gap: 48px; align-items: start; margin-bottom: 56px; }
 .photo-stack { display: flex; gap: 16px; flex-shrink:0; }
-.brand-photo-wrap { display: flex; flex-direction: column; width: 280px; border: 1px solid var(--border); border-radius: 8px; overflow: hidden; background: #fff; flex-shrink: 0; }
-.brand-photo-item { width: 100%; height: 360px; position: relative; border-bottom: 1px solid var(--border); }
-.brand-photo-img { width: 100%; height: 100%; object-fit: cover; display: block; filter: grayscale(15%); transition: filter 0.3s; }
+.brand-photo-wrap { display: flex; flex-direction: column; width: 280px; flex-shrink: 0; }
+.brand-photo-item { width: 100%; height: 360px; border-radius: 8px; overflow: hidden; border: 1px solid var(--border); position: relative; }
+.brand-photo-img { width: 100%; height: 100%; object-fit: cover; display: block; filter: grayscale(10%); transition: filter 0.3s; }
 .brand-photo-item:hover .brand-photo-img { filter: grayscale(0%); }
-.brand-photo-meta { padding: 16px; background: var(--off-white); }
-.bpm-label { font-family: 'DM Sans', sans-serif; font-size: 9px; letter-spacing: 2px; text-transform: uppercase; color: var(--muted); display: block; margin-bottom: 8px; }
-.bpm-tag { display: inline-block; font-family: 'Noto Sans KR', sans-serif; font-size: 13px; font-weight: 600; color: var(--pink-deep); background: var(--pink-light); padding: 4px 16px; border-radius: 4px; letter-spacing: 0.5px; width: 100%; text-align: center; }
+.brand-photo-meta { position: absolute; bottom: 0; left: 0; right: 0; padding: 32px 16px 16px; background: linear-gradient(to top, rgba(0,0,0,0.75) 0%, transparent 100%); }
+.bpm-label { font-family: 'DM Sans', sans-serif; font-size: 8px; letter-spacing: 2px; text-transform: uppercase; color: rgba(255,255,255,0.65); display: block; margin-bottom: 6px; }
+.bpm-tag { display: inline-block; font-family: 'Noto Sans KR', sans-serif; font-size: 13px; font-weight: 600; color: #fff; background: var(--pink-deep); padding: 4px 14px; border-radius: 4px; letter-spacing: 0.5px; }
 
 /* SINGLE HERO LAYOUT */
 .opt-body-info.single-layout .brand-photo-wrap { width: 450px; }
 .opt-body-info.single-layout .brand-photo-item { height: 500px; }
-.opt-body-info.single-layout .ho-title { font-size: 88px; }
 .opt-body-info.single-layout .metrics-grid-wrap { padding-top: 10px; }
 
 .metrics-grid-wrap { display: flex; flex-direction: column; gap: 12px; flex:1; }
@@ -117,20 +116,20 @@ def render_option(opt_id, badge_title, title_left, title_right, img1, meta1_labe
         <div class="brand-photo-wrap">
           <div class="brand-photo-item">
             <img src="{img1}" alt="" class="brand-photo-img">
-          </div>
-          <div class="brand-photo-meta">
-            <span class="bpm-label">{meta1_label}</span>
-            <span class="bpm-tag">{meta1_name}</span>
+            <div class="brand-photo-meta">
+              <span class="bpm-label">{meta1_label}</span>
+              <span class="bpm-tag">{meta1_name}</span>
+            </div>
           </div>
         </div>"""
     photo2 = "" if single_person else f"""
         <div class="brand-photo-wrap">
           <div class="brand-photo-item">
             <img src="{img2}" alt="" class="brand-photo-img">
-          </div>
-          <div class="brand-photo-meta">
-            <span class="bpm-label">{meta2_label}</span>
-            <span class="bpm-tag">{meta2_name}</span>
+            <div class="brand-photo-meta">
+              <span class="bpm-label">{meta2_label}</span>
+              <span class="bpm-tag">{meta2_name}</span>
+            </div>
           </div>
         </div>"""
     title_part = title_left if single_person else f"{title_left} <span class=\"ho-subtitle\">× {title_right}</span>"
