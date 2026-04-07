@@ -28,12 +28,18 @@ custom_css = """
 .opt-body-info { display: flex; gap: 48px; align-items: start; margin-bottom: 56px; }
 .photo-stack { display: flex; gap: 16px; flex-shrink:0; }
 .brand-photo-wrap { display: flex; flex-direction: column; width: 280px; flex-shrink: 0; }
-.brand-photo-item { width: 280px; height: 360px; border-radius: 8px; overflow: hidden; border: 1px solid var(--border); position: relative; }
+.brand-photo-item { width: 100%; height: 360px; border-radius: 8px; overflow: hidden; border: 1px solid var(--border); position: relative; }
 .brand-photo-img { width: 100%; height: 100%; object-fit: cover; display: block; filter: grayscale(15%); transition: filter 0.3s; }
 .brand-photo-item:hover .brand-photo-img { filter: grayscale(0%); }
 .brand-photo-meta { padding: 12px 4px 0; }
 .bpm-label { font-family: 'DM Sans', sans-serif; font-size: 9px; letter-spacing: 2px; text-transform: uppercase; color: var(--muted); display: block; margin-bottom: 6px; }
 .bpm-tag { display: inline-block; font-family: 'Noto Sans KR', sans-serif; font-size: 13px; font-weight: 600; color: var(--pink-deep); background: var(--pink-light); padding: 4px 16px; border-radius: 20px; letter-spacing: 0.5px; }
+
+/* SINGLE HERO LAYOUT */
+.opt-body-info.single-layout .brand-photo-wrap { width: 450px; }
+.opt-body-info.single-layout .brand-photo-item { height: 500px; }
+.opt-body-info.single-layout .ho-title { font-size: 88px; }
+.opt-body-info.single-layout .metrics-grid-wrap { padding-top: 10px; }
 
 .metrics-grid-wrap { display: flex; flex-direction: column; gap: 12px; flex:1; }
 .o1-header { font-family:'DM Sans',sans-serif; font-size:10px; font-weight:500; letter-spacing:2px; text-transform:uppercase; color:var(--muted); margin-bottom:12px; }
@@ -124,15 +130,16 @@ def render_option(opt_id, badge_title, title_left, title_right, img1, meta1_labe
           </div>
           <div class="brand-photo-meta">
             <span class="bpm-label">{meta2_label}</span>
-            <span class="bpm-tag">{meta2_name}</span>
+            {f'<span class="bpm-tag">{meta2_name}</span>' if meta2_name else ''}
           </div>
         </div>"""
     title_part = title_left if single_person else f"{title_left} <span class=\"ho-subtitle\">× {title_right}</span>"
+    info_class = "opt-body-info single-layout" if single_person else "opt-body-info"
     res = f"""
   <div class="full-option-block" id="{opt_id}">
     <div class="ho-badge">{badge_title}</div>
     <div class="ho-title">{title_part}</div>
-    <div class="opt-body-info">
+    <div class="opt-body-info {info_class}">
       <div class="photo-stack">{photo1}{photo2}
       </div>
       <div class="metrics-grid-wrap">
@@ -250,8 +257,8 @@ html += render_option("opt1-alt1", "Plan A 대안 1", "이시안 외", "릴리",
     "images/앤믹스 릴리.webp", "GLOBAL ICON PORTRAIT", "릴리", 
     metrics_a_alt1, a_alt1_nodes)
 
-html += render_option("opt1-alt2", "Plan A 대안 2", "강민경", "", 
-    "images/강민경.webp", "MEGA CREATOR SYNERGY", "강민경", 
+html += render_option("opt1-alt2", "Plan A 대안 2", "S급 유튜버", "", 
+    "images/강민경.webp", "S-TIER CATEGORY EXAMPLE", "(예: 강민경)", 
     "", "", "", 
     metrics_a_alt2, a_alt2_nodes, single_person=True)
 html += '</div>'
@@ -266,7 +273,7 @@ html += render_option("opt2", "Plan B 최적안", "릴리", "송이송이",
 
 html += render_option("opt2-alt1", "Plan B 대안 1", "릴리", "미드티어 그룹", 
     "images/앤믹스 릴리.webp", "GLOBAL ICON PORTRAIT", "릴리", 
-    "images/라잇썸.webp", "MASSIVE MID-TIER CREATORS (x30)", "GROUP 30", 
+    "images/라잇썸.webp", "MASSIVE MID-TIER CREATORS (x30)", "", 
     metrics_b_alt1, b_alt1_nodes)
 html += '</div></body></html>'
 
