@@ -111,7 +111,7 @@ html += """
 
 DUMMY_IMG = "file:///C:/Users/WD/.gemini/antigravity/brain/e1a93622-2e8e-44e2-a09b-7dded7e390f9/dummy_influencer_1775558232037.png"
 
-def render_option(opt_id, badge_title, title_left, title_right, img1, meta1_label, meta1_name, img2, meta2_label, meta2_name, metrics, nodes, single_person=False):
+def render_option(opt_id, badge_title, title_left, title_right, img1, img2, metrics, nodes, single_person=False):
     # Build photos block
     photo1 = f"""
         <div class="brand-photo-wrap">
@@ -137,12 +137,12 @@ def render_option(opt_id, badge_title, title_left, title_right, img1, meta1_labe
       <div class="metrics-grid-wrap">
         <div class="o1-header">합산 지표 예측</div>
         <div class="metrics-top">
-          <div class="metric-box"><div class="metric-box-label">총 팔로워</div><div class="metric-box-value">{metrics['followers']}</div></div>
-          <div class="metric-box"><div class="metric-box-label">유효 팬덤</div><div class="metric-box-value">{metrics['fandom']}</div></div>
-          <div class="metric-box"><div class="metric-box-label">평균 도달</div><div class="metric-box-value">{metrics['reach']}</div></div>
-          <div class="metric-box"><div class="metric-box-label">영상 조회수</div><div class="metric-box-value">{metrics['views']}</div></div>
-          <div class="metric-box"><div class="metric-box-label">평균 좋아요</div><div class="metric-box-value">{metrics['likes']}</div></div>
-          <div class="metric-box"><div class="metric-box-label">반응 댓글</div><div class="metric-box-value">{metrics['comments']}</div></div>
+          <div class="metric-box"><div class="metric-box-label">총 팔로워</div><div class="metric-box-value">{metrics['followers']}</div><div class="metric-box-unit">만 명</div></div>
+          <div class="metric-box"><div class="metric-box-label">유효 팬덤</div><div class="metric-box-value">{metrics['fandom']}</div><div class="metric-box-unit">만 명</div></div>
+          <div class="metric-box"><div class="metric-box-label">평균 도달</div><div class="metric-box-value">{metrics['reach']}</div><div class="metric-box-unit">만 명</div></div>
+          <div class="metric-box"><div class="metric-box-label">영상 조회수</div><div class="metric-box-value">{metrics['views']}</div><div class="metric-box-unit">만 회</div></div>
+          <div class="metric-box"><div class="metric-box-label">평균 좋아요</div><div class="metric-box-value">{metrics['likes']}</div><div class="metric-box-unit">만 개</div></div>
+          <div class="metric-box"><div class="metric-box-label">반응 댓글</div><div class="metric-box-value">{metrics['comments']}</div><div class="metric-box-unit">개+</div></div>
         </div>
         <div class="metric-er-row">
           <div class="er-left"><div class="er-label">예상 참여율 ER</div><div class="er-value">{metrics['er']}<span class="er-plus">+</span></div></div>
@@ -153,7 +153,7 @@ def render_option(opt_id, badge_title, title_left, title_right, img1, meta1_labe
         </div>
         <div class="followers-visual">
           <div class="fv-label">코어 시너지 지수 ({metrics['core']})</div>
-          <div class="fv-main">{metrics['fandom']}&nbsp;&nbsp;&nbsp;</div>
+          <div class="fv-main">{metrics['fandom']}<span style="font-size:18px; margin-left:8px;">만 명</span></div>
           <div class="fv-effective"><div class="fv-eff-bar"><div class="fv-eff-fill" style="width:{metrics['core']}"></div></div></div>
         </div>
       </div>
@@ -188,7 +188,7 @@ def render_option(opt_id, badge_title, title_left, title_right, img1, meta1_labe
             <div class="sj-chat-bubble">{node['c_bubble']}</div>
           </div>
           <div class="sj-metric">
-            <span class="sjm-label">{node['m_label']}</span><span class="sjm-value">{node['m_value']}</span>
+            <span class="sjm-label">{node['m_label']}</span><span class="sjm-value">{node['m_value']}</span><span class="sjm-unit" style="color:var(--pink); font-size:10px; margin-left:4px;">만 명+</span>
           </div>
         </div>
       </div>
@@ -240,18 +240,15 @@ html += '<!-- ───────────── PLAN A ──────�
 html += '<div class="plan-level-header"><div class="plan-level-budget">Strategy Increase: 35,000,000 KRW</div><div class="plan-level-title">하이엔드 임팩트: 브랜드 아카이브의<br>예술적 확장과 선망성 극대화</div></div>'
 
 html += render_option("opt1", "Plan A 최적안", "김고은", "릴리", 
-    "images/김고은.webp", "A-LIST ARTOR ARCHIVE", "김고은", 
-    "images/앤믹스 릴리.webp", "GLOBAL ICON PORTRAIT", "릴리", 
+    "images/kimgoeun.webp", "images/lily.webp", 
     metrics_a_best, a_best_nodes)
 
 html += render_option("opt1-alt1", "Plan A 대안 1", "이시안 외", "릴리", 
-    "images/이시안.webp", "FASHION TREND-SETTER", "이시안", 
-    "images/앤믹스 릴리.webp", "GLOBAL ICON PORTRAIT", "릴리", 
+    "images/leesian.webp", "images/lily.webp", 
     metrics_a_alt1, a_alt1_nodes)
 
 html += render_option("opt1-alt2", "Plan A 대안 2", "S급 유튜버", "", 
-    "images/강민경.webp", "S-TIER CATEGORY", "(예시: 강민경)", 
-    "", "", "", 
+    "images/kmk.webp", "", 
     metrics_a_alt2, a_alt2_nodes, single_person=True)
 html += '</div>'
 
@@ -259,13 +256,11 @@ html += '<!-- ───────────── PLAN B ──────�
 html += '<div class="plan-level-header"><div class="plan-level-budget">Efficiency Plan: 25,000,000 KRW</div><div class="plan-level-title">퍼포먼스 집약: 고관여 타겟 점유를 통한<br>실질적 전환과 디지털 대세감 점유</div></div>'
 
 html += render_option("opt2", "Plan B 최적안", "릴리", "송이송이", 
-    "images/앤믹스 릴리.webp", "GLOBAL ICON PORTRAIT", "릴리", 
-    "images/송이송이.jpg", "NICHE EXPERT REVIEWER", "송이송이", 
+    "images/lily.webp", "images/songisongi.jpg", 
     metrics_b_best, b_best_nodes)
 
 html += render_option("opt2-alt1", "Plan B 대안 1", "릴리", "미드티어 그룹", 
-    "images/앤믹스 릴리.webp", "GLOBAL ICON PORTRAIT", "릴리", 
-    "images/라잇썸.webp", "MASSIVE MID-TIER CREATORS (x30)", "", 
+    "images/lily.webp", "images/lightsum.webp", 
     metrics_b_alt1, b_alt1_nodes)
 html += '</div></body></html>'
 
