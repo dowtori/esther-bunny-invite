@@ -31,9 +31,9 @@ custom_css = """
 .photo-stack { display: flex; gap: 12px; width: 572px; flex-shrink: 0; }
 .brand-photo-item { width: 280px; height: 380px; border-radius: 4px; overflow: hidden; border: 1px solid var(--border); position: relative; }
 .brand-photo-img { width: 100%; height: 100%; object-fit: cover; display: block; }
-.brand-photo-meta { position: absolute; bottom: 0; left: 0; right: 0; background: linear-gradient(transparent, rgba(0,0,0,0.8)); padding: 16px; color: #fff; }
-.bpm-label { font-family: 'DM Sans', sans-serif; font-size: 8px; letter-spacing: 1.5px; text-transform: uppercase; opacity: 0.6; display: block; margin-bottom: 2px; }
-.bpm-tag { font-family: 'Noto Sans KR', sans-serif; font-size: 11px; font-weight: 500; }
+.brand-photo-meta { position: absolute; bottom: 0; left: 0; right: 0; background: #ffffff; padding: 16px; border-top: 1px solid var(--border); }
+.bpm-label { font-family: 'DM Sans', sans-serif; font-size: 10px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; color: var(--muted); display: block; margin-bottom: 8px; }
+.bpm-tag { display: inline-block; font-family: 'Noto Sans KR', sans-serif; font-size: 11px; font-weight: 600; color: var(--pink-deep); background: var(--pink-light); padding: 4px 12px; border-radius: 12px; letter-spacing: 0.5px; }
 
 /* SINGLE HERO LAYOUT */
 .opt-body-info.single-layout .brand-photo-item { width: 450px; height: 480px; }
