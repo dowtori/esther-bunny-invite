@@ -27,13 +27,13 @@ custom_css = """
 /* ── ORIGINAL METRICS & PHOTO DUAL ── */
 .opt-body-info { display: flex; gap: 48px; align-items: start; margin-bottom: 56px; }
 .photo-stack { display: flex; gap: 16px; flex-shrink:0; }
-.brand-photo-wrap { display: flex; flex-direction: column; width: 280px; flex-shrink: 0; }
-.brand-photo-item { width: 100%; height: 360px; border-radius: 8px; overflow: hidden; border: 1px solid var(--border); position: relative; }
+.brand-photo-wrap { display: flex; flex-direction: column; width: 280px; border: 1px solid var(--border); border-radius: 8px; overflow: hidden; background: #fff; flex-shrink: 0; }
+.brand-photo-item { width: 100%; height: 360px; position: relative; border-bottom: 1px solid var(--border); }
 .brand-photo-img { width: 100%; height: 100%; object-fit: cover; display: block; filter: grayscale(15%); transition: filter 0.3s; }
 .brand-photo-item:hover .brand-photo-img { filter: grayscale(0%); }
-.brand-photo-meta { padding: 12px 4px 0; }
-.bpm-label { font-family: 'DM Sans', sans-serif; font-size: 9px; letter-spacing: 2px; text-transform: uppercase; color: var(--muted); display: block; margin-bottom: 6px; }
-.bpm-tag { display: inline-block; font-family: 'Noto Sans KR', sans-serif; font-size: 13px; font-weight: 600; color: var(--pink-deep); background: var(--pink-light); padding: 4px 16px; border-radius: 20px; letter-spacing: 0.5px; }
+.brand-photo-meta { padding: 16px; background: var(--off-white); }
+.bpm-label { font-family: 'DM Sans', sans-serif; font-size: 9px; letter-spacing: 2px; text-transform: uppercase; color: var(--muted); display: block; margin-bottom: 8px; }
+.bpm-tag { display: inline-block; font-family: 'Noto Sans KR', sans-serif; font-size: 13px; font-weight: 600; color: var(--pink-deep); background: var(--pink-light); padding: 4px 16px; border-radius: 4px; letter-spacing: 0.5px; width: 100%; text-align: center; }
 
 /* SINGLE HERO LAYOUT */
 .opt-body-info.single-layout .brand-photo-wrap { width: 450px; }
@@ -111,18 +111,26 @@ html += """
 
 DUMMY_IMG = "file:///C:/Users/WD/.gemini/antigravity/brain/e1a93622-2e8e-44e2-a09b-7dded7e390f9/dummy_influencer_1775558232037.png"
 
-def render_option(opt_id, badge_title, title_left, title_right, img1, img2, metrics, nodes, single_person=False):
+def render_option(opt_id, badge_title, title_left, title_right, img1, meta1_label, meta1_name, img2, meta2_label, meta2_name, metrics, nodes, single_person=False):
     # Build photos block
     photo1 = f"""
         <div class="brand-photo-wrap">
           <div class="brand-photo-item">
             <img src="{img1}" alt="" class="brand-photo-img">
           </div>
+          <div class="brand-photo-meta">
+            <span class="bpm-label">{meta1_label}</span>
+            <span class="bpm-tag">{meta1_name}</span>
+          </div>
         </div>"""
     photo2 = "" if single_person else f"""
         <div class="brand-photo-wrap">
           <div class="brand-photo-item">
             <img src="{img2}" alt="" class="brand-photo-img">
+          </div>
+          <div class="brand-photo-meta">
+            <span class="bpm-label">{meta2_label}</span>
+            <span class="bpm-tag">{meta2_name}</span>
           </div>
         </div>"""
     title_part = title_left if single_person else f"{title_left} <span class=\"ho-subtitle\">× {title_right}</span>"
@@ -240,15 +248,18 @@ html += '<!-- ───────────── PLAN A ──────�
 html += '<div class="plan-level-header"><div class="plan-level-budget">Strategy Increase: 35,000,000 KRW</div><div class="plan-level-title">하이엔드 임팩트: 브랜드 아카이브의<br>예술적 확장과 선망성 극대화</div></div>'
 
 html += render_option("opt1", "Plan A 최적안", "김고은", "릴리", 
-    "images/kimgoeun.webp", "images/lily.webp", 
+    "images/kimgoeun.webp", "A-LIST ACTOR ARCHIVE", "김고은",
+    "images/lily.webp", "GLOBAL ICON PORTRAIT", "릴리", 
     metrics_a_best, a_best_nodes)
 
 html += render_option("opt1-alt1", "Plan A 대안 1", "이시안 외", "릴리", 
-    "images/leesian.webp", "images/lily.webp", 
+    "images/leesian.webp", "FASHION TREND-SETTER", "이시안",
+    "images/lily.webp", "GLOBAL ICON PORTRAIT", "릴리", 
     metrics_a_alt1, a_alt1_nodes)
 
 html += render_option("opt1-alt2", "Plan A 대안 2", "S급 유튜버", "", 
-    "images/kmk.webp", "", 
+    "images/kmk.webp", "S-TIER CATEGORY", "(예시: 강민경)",
+    "", "", "", 
     metrics_a_alt2, a_alt2_nodes, single_person=True)
 html += '</div>'
 
@@ -256,11 +267,13 @@ html += '<!-- ───────────── PLAN B ──────�
 html += '<div class="plan-level-header"><div class="plan-level-budget">Efficiency Plan: 25,000,000 KRW</div><div class="plan-level-title">퍼포먼스 집약: 고관여 타겟 점유를 통한<br>실질적 전환과 디지털 대세감 점유</div></div>'
 
 html += render_option("opt2", "Plan B 최적안", "릴리", "송이송이", 
-    "images/lily.webp", "images/songisongi.jpg", 
+    "images/lily.webp", "GLOBAL ICON PORTRAIT", "릴리",
+    "images/songisongi.jpg", "NICHE EXPERT REVIEWER", "송이송이", 
     metrics_b_best, b_best_nodes)
 
 html += render_option("opt2-alt1", "Plan B 대안 1", "릴리", "미드티어 그룹", 
-    "images/lily.webp", "images/lightsum.webp", 
+    "images/lily.webp", "GLOBAL ICON PORTRAIT", "릴리",
+    "images/lightsum.webp", "MASSIVE MID-TIER CREATORS (x30)", "GROUP 30", 
     metrics_b_alt1, b_alt1_nodes)
 html += '</div></body></html>'
 
