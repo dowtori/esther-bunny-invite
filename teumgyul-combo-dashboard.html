@@ -1025,6 +1025,53 @@ body {
 
 @media(max-width:900px) { .plan-level-header { padding: 80px 28px; } .hero-option-wrap, .full-option-block { padding: 48px 28px; } .sj-node { flex-direction: column; gap: 24px; } .sj-node:not(:last-child)::after { display: none; } .sj-phase-col { display: none; } .opt-body-info { flex-direction: column; } .photo-stack { width: 100%; flex-direction: column; } .brand-photo-item { width: 100%; height: 300px; } }
 
+/* ── CONSUMER SCENARIO STRIP ── */
+.scenario-strip { margin-top: 48px; padding: 36px; background: var(--black); border-radius: 12px; }
+.scenario-label { font-family: 'DM Sans', sans-serif; font-size: 10px; font-weight: 500; letter-spacing: 3px; text-transform: uppercase; color: rgba(255,255,255,0.35); margin-bottom: 28px; }
+.scenario-panels { display: grid; grid-template-columns: repeat(3, 1fr); gap: 3px; border-radius: 8px; overflow: hidden; }
+.scenario-panel { background: rgba(255,255,255,0.04); padding: 28px 24px; }
+.scenario-panel:first-child { background: rgba(232,164,174,0.08); }
+.scenario-panel-phase { font-family: 'DM Sans', sans-serif; font-size: 9px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--pink); margin-bottom: 16px; }
+.scenario-panel-emoji { font-size: 28px; margin-bottom: 14px; display: block; }
+.scenario-panel-quote { font-family: 'Noto Sans KR', sans-serif; font-size: 13.5px; color: rgba(255,255,255,0.8); line-height: 1.7; word-break: keep-all; }
+.scenario-panel-quote strong { color: #fff; font-weight: 700; background: rgba(232,164,174,0.25); padding: 1px 4px; border-radius: 3px; }
+.scenario-panel-outcome { margin-top: 16px; font-family: 'DM Sans', sans-serif; font-size: 10px; color: rgba(255,255,255,0.35); letter-spacing: 0.5px; padding-top: 14px; border-top: 1px solid rgba(255,255,255,0.07); }
+@media(max-width:900px) { .scenario-panels { grid-template-columns: 1fr; } }
+
+/* ── CONTENT DELIVERABLES GRID ── */
+.ct-section { margin-top: 40px; }
+.ct-section-label { font-family: 'DM Sans', sans-serif; font-size: 10px; font-weight: 500; letter-spacing: 3px; text-transform: uppercase; color: var(--muted); margin-bottom: 20px; padding-bottom: 14px; border-bottom: 1px solid var(--border); }
+.ct-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 2px; background: var(--cement); border: 1px solid var(--cement); border-radius: 6px; overflow: hidden; }
+.ct-item { background: var(--stone); padding: 24px 20px; }
+.ct-item:hover { background: #fff; }
+.ct-icon { font-size: 22px; margin-bottom: 12px; display: block; }
+.ct-name { font-family: 'Noto Sans KR', sans-serif; font-size: 13px; font-weight: 700; color: var(--ink); margin-bottom: 6px; }
+.ct-desc { font-size: 12px; color: var(--muted); line-height: 1.6; margin-bottom: 10px; }
+.ct-platform { display: inline-block; padding: 3px 9px; border-radius: 10px; font-family: 'DM Sans', sans-serif; font-size: 9px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; }
+.ct-platform.ig { background: #F5E8F5; color: #8B5A8B; }
+.ct-platform.yt { background: #F5E8E8; color: #8B3030; }
+.ct-platform.tt { background: #E8F5F5; color: #2A7A7A; }
+.ct-platform.multi { background: var(--stone); color: var(--muted); border: 1px solid var(--border); }
+
+/* ── OFFLINE RIPPLE CHAIN ── */
+.ripple-section { margin-top: 24px; margin-bottom: 0; }
+.ripple-section-label { font-family: 'DM Sans', sans-serif; font-size: 10px; font-weight: 500; letter-spacing: 3px; text-transform: uppercase; color: var(--muted); margin-bottom: 16px; }
+.ripple-chain { display: flex; align-items: stretch; border-radius: 8px; overflow: hidden; border: 1px solid var(--border); }
+.ripple-step { flex: 1; padding: 22px 14px; display: flex; flex-direction: column; align-items: center; text-align: center; background: #fff; border-right: 1px solid var(--border); }
+.ripple-step:last-child { border-right: none; }
+.ripple-step.highlight { background: var(--ink); }
+.ripple-step-icon { font-size: 24px; margin-bottom: 10px; }
+.ripple-step-label { font-family: 'DM Sans', sans-serif; font-size: 9px; font-weight: 500; letter-spacing: 1.5px; text-transform: uppercase; color: var(--muted); margin-bottom: 6px; }
+.ripple-step.highlight .ripple-step-label { color: rgba(255,255,255,0.45); }
+.ripple-step-value { font-family: 'Cormorant Garamond', serif; font-size: 20px; font-weight: 400; color: var(--ink); line-height: 1.2; margin-bottom: 4px; }
+.ripple-step.highlight .ripple-step-value { color: var(--pink); }
+.ripple-step-note { font-size: 10px; color: var(--muted); line-height: 1.4; }
+.ripple-step.highlight .ripple-step-note { color: rgba(255,255,255,0.35); }
+@media(max-width:900px) { .ripple-chain { flex-direction: column; } .ripple-step { border-right: none; border-bottom: 1px solid var(--border); } .ripple-step:last-child { border-bottom: none; } }
+
+/* ── POST-JOURNEY WRAPPER ── */
+.post-journey { padding-top: 48px; border-top: 1px solid var(--border); margin-top: 48px; display: flex; flex-direction: column; gap: 32px; }
+
 </style>
 </head>
 <body>
@@ -1037,7 +1084,7 @@ body {
   </div>
 </nav>
 <!-- ───────────── PLAN A ───────────── -->
-<div id="plan-a"><div class="plan-level-header"><div class="plan-level-budget">Strategy Increase: 35,000,000 KRW</div><div class="plan-level-title">하이엔드 임팩트: 브랜드 아카이브의<br>예술적 확장과 선망성 극대화</div></div>
+<div id="plan-a"><div class="plan-level-header"><div class="plan-level-budget">Strategy Increase: 35,000,000 KRW</div><div class="plan-level-title">스타가 찾으면, 사람들이 줄 선다<br><span style="font-size:0.55em; opacity:0.6; font-weight:300;">— 대기줄, 완판, SNS 도배까지 일어나는 이유</span></div></div>
   <div class="full-option-block" id="opt1">
     <div class="ho-badge">Plan A 최적안</div>
     <div class="ho-title">김고은 <span class="ho-subtitle">× 릴리</span></div>
@@ -1167,6 +1214,101 @@ body {
           </div>
           <div class="sj-metric">
             <span class="sjm-label">오프라인 실구매 전환</span><span class="sjm-value">Top-Tier</span><span class="sjm-unit" style="color:var(--pink); font-size:10px; margin-left:4px;">만 명+</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="post-journey">
+      <!-- 소비자 시나리오 스트립 -->
+      <div class="scenario-strip">
+        <div class="scenario-label">Consumer Scenario · 콘텐츠 발행 후 72시간</div>
+        <div class="scenario-panels">
+          <div class="scenario-panel">
+            <div class="scenario-panel-phase">D+0 · 온라인 발견</div>
+            <span class="scenario-panel-emoji">📱</span>
+            <div class="scenario-panel-quote">"김고은 피드 봤는데... 이거 완전 화보 아니야? 팝업 어디서 하는 거야?"</div>
+            <div class="scenario-panel-outcome">→ 피드 저장 & 친구 공유 폭발</div>
+          </div>
+          <div class="scenario-panel">
+            <div class="scenario-panel-phase">D+1 · 오프라인 결심</div>
+            <span class="scenario-panel-emoji">🗺️</span>
+            <div class="scenario-panel-quote">"릴리도 다녀갔네. <strong>이번 주말 무조건 가야지.</strong> 카카오지도 저장 완료."</div>
+            <div class="scenario-panel-outcome">→ 위치 검색 급등 & 방문 약속 잡힘</div>
+          </div>
+          <div class="scenario-panel">
+            <div class="scenario-panel-phase">D+2 · 오프라인 방문</div>
+            <span class="scenario-panel-emoji">🏪</span>
+            <div class="scenario-panel-quote">"웨이팅 1시간... <strong>그래도 굿즈 다 털어왔다. 인증샷 당연히 올림.</strong>"</div>
+            <div class="scenario-panel-outcome">→ 현장 UGC 재확산 & 완판 달성</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 발행 콘텐츠 명세 -->
+      <div class="ct-section">
+        <div class="ct-section-label">발행 콘텐츠 명세</div>
+        <div class="ct-grid">
+          <div class="ct-item">
+            <span class="ct-icon">💎</span>
+            <div class="ct-name">하이패션 아카이브 피드</div>
+            <div class="ct-desc">김고은의 화보급 피드로 브랜드 공간의 선망성 극대화. 저장율 & 공유율 높음.</div>
+            <span class="ct-platform ig">Instagram Feed</span>
+          </div>
+          <div class="ct-item">
+            <span class="ct-icon">🎵</span>
+            <div class="ct-name">릴리 바이럴 숏폼</div>
+            <div class="ct-desc">Z세대 팬덤의 팝업 방문 욕구를 자극하는 챌린지형 영상. 탐색탭 점유.</div>
+            <span class="ct-platform tt">TikTok / Reels</span>
+          </div>
+          <div class="ct-item">
+            <span class="ct-icon">📍</span>
+            <div class="ct-name">현장 방문 스토리</div>
+            <div class="ct-desc">실제 팝업 방문 기록. 위치 태그 → 브랜드 위치 검색 급증 → 방문 욕구 자극.</div>
+            <span class="ct-platform ig">Instagram Stories</span>
+          </div>
+          <div class="ct-item">
+            <span class="ct-icon">🔥</span>
+            <div class="ct-name">팬덤 UGC 트리거</div>
+            <div class="ct-desc">양측 팬층의 자발적 인증샷 & 언박싱. 추가 예산 없이 발생하는 2차 확산.</div>
+            <span class="ct-platform multi">Multi-Channel UGC</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 온라인→오프라인 파급 경로 -->
+      <div class="ripple-section">
+        <div class="ripple-section-label">온라인 발행 → 오프라인 파급 경로</div>
+        <div class="ripple-chain">
+          <div class="ripple-step">
+            <div class="ripple-step-icon">📱</div>
+            <div class="ripple-step-label">콘텐츠 발행</div>
+            <div class="ripple-step-value">피드 + 숏폼</div>
+            <div class="ripple-step-note">동시 배포</div>
+          </div>
+          <div class="ripple-step">
+            <div class="ripple-step-icon">👀</div>
+            <div class="ripple-step-label">피드 노출</div>
+            <div class="ripple-step-value">250만+</div>
+            <div class="ripple-step-note">팔로워 + 탐색탭</div>
+          </div>
+          <div class="ripple-step">
+            <div class="ripple-step-icon">🔍</div>
+            <div class="ripple-step-label">브랜드 검색</div>
+            <div class="ripple-step-value">+340%</div>
+            <div class="ripple-step-note">발행 후 24h 이내</div>
+          </div>
+          <div class="ripple-step highlight">
+            <div class="ripple-step-icon">🏪</div>
+            <div class="ripple-step-label">팝업 방문</div>
+            <div class="ripple-step-value">대기줄 형성</div>
+            <div class="ripple-step-note">오픈 당일 웨이팅</div>
+          </div>
+          <div class="ripple-step highlight">
+            <div class="ripple-step-icon">🛒</div>
+            <div class="ripple-step-label">굿즈 판매</div>
+            <div class="ripple-step-value">완판</div>
+            <div class="ripple-step-note">캠페인 당일</div>
           </div>
         </div>
       </div>
@@ -1305,6 +1447,68 @@ body {
         </div>
       </div>
     </div>
+
+    <div class="post-journey">
+      <div class="ct-section">
+        <div class="ct-section-label">발행 콘텐츠 명세</div>
+        <div class="ct-grid">
+          <div class="ct-item">
+            <span class="ct-icon">👗</span>
+            <div class="ct-name">스타일링 OOTD 피드</div>
+            <div class="ct-desc">이시안의 일상 코디에 브랜드 아이템을 자연스럽게 녹인 피드. 구매욕 직접 자극.</div>
+            <span class="ct-platform ig">Instagram Feed</span>
+          </div>
+          <div class="ct-item">
+            <span class="ct-icon">✨</span>
+            <div class="ct-name">크로스-팬덤 숏폼</div>
+            <div class="ct-desc">릴리의 팬덤과 패션 고관여 층을 동시에 공략하는 바이럴 영상. 교차 확산.</div>
+            <span class="ct-platform tt">TikTok / Reels</span>
+          </div>
+          <div class="ct-item">
+            <span class="ct-icon">📍</span>
+            <div class="ct-name">팝업 현장 스토리</div>
+            <div class="ct-desc">두 인플루언서의 현장 방문 인증. 위치 검색 급등 & 방문 욕구 자극.</div>
+            <span class="ct-platform ig">Instagram Stories</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="ripple-section">
+        <div class="ripple-section-label">온라인 발행 → 오프라인 파급 경로</div>
+        <div class="ripple-chain">
+          <div class="ripple-step">
+            <div class="ripple-step-icon">👗</div>
+            <div class="ripple-step-label">OOTD 피드 발행</div>
+            <div class="ripple-step-value">패션 피드</div>
+            <div class="ripple-step-note">자연스러운 노출</div>
+          </div>
+          <div class="ripple-step">
+            <div class="ripple-step-icon">👀</div>
+            <div class="ripple-step-label">피드 노출</div>
+            <div class="ripple-step-value">185만+</div>
+            <div class="ripple-step-note">패션 고관여 타겟</div>
+          </div>
+          <div class="ripple-step">
+            <div class="ripple-step-icon">🔍</div>
+            <div class="ripple-step-label">아이템 검색</div>
+            <div class="ripple-step-value">+270%</div>
+            <div class="ripple-step-note">브랜드 & 상품명</div>
+          </div>
+          <div class="ripple-step highlight">
+            <div class="ripple-step-icon">🏪</div>
+            <div class="ripple-step-label">팝업 방문</div>
+            <div class="ripple-step-value">핫플 등극</div>
+            <div class="ripple-step-note">패션 커뮤니티 입소문</div>
+          </div>
+          <div class="ripple-step highlight">
+            <div class="ripple-step-icon">🛒</div>
+            <div class="ripple-step-label">구매 전환</div>
+            <div class="ripple-step-value">손민수 급증</div>
+            <div class="ripple-step-note">구매 & 재구매</div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
   <div class="full-option-block" id="opt1-alt2">
     <div class="ho-badge">Plan A 대안 2</div>
@@ -1430,8 +1634,70 @@ body {
         </div>
       </div>
     </div>
+
+    <div class="post-journey">
+      <div class="ct-section">
+        <div class="ct-section-label">발행 콘텐츠 명세</div>
+        <div class="ct-grid">
+          <div class="ct-item">
+            <span class="ct-icon">📺</span>
+            <div class="ct-name">메가 브랜디드 유튜브 필름</div>
+            <div class="ct-desc">강민경의 기획력으로 브랜드 감성을 풀어내는 장편 영상. 250만 조회 기대.</div>
+            <span class="ct-platform yt">YouTube</span>
+          </div>
+          <div class="ct-item">
+            <span class="ct-icon">📱</span>
+            <div class="ct-name">크로스 플랫폼 피드</div>
+            <div class="ct-desc">유튜브 시청자를 인스타그램 비주얼 아카이브로 연결. 구매 퍼널 완성.</div>
+            <span class="ct-platform ig">Instagram Feed</span>
+          </div>
+          <div class="ct-item">
+            <span class="ct-icon">✂️</span>
+            <div class="ct-name">숏폼 클립 컷</div>
+            <div class="ct-desc">유튜브 핵심 장면을 숏폼으로 재편집. 알고리즘 추가 도달 확보.</div>
+            <span class="ct-platform tt">Reels / Shorts</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="ripple-section">
+        <div class="ripple-section-label">온라인 발행 → 실매출 파급 경로</div>
+        <div class="ripple-chain">
+          <div class="ripple-step">
+            <div class="ripple-step-icon">📹</div>
+            <div class="ripple-step-label">유튜브 발행</div>
+            <div class="ripple-step-value">메가 필름</div>
+            <div class="ripple-step-note">단독 영상</div>
+          </div>
+          <div class="ripple-step">
+            <div class="ripple-step-icon">👀</div>
+            <div class="ripple-step-label">초동 조회</div>
+            <div class="ripple-step-value">200만+</div>
+            <div class="ripple-step-note">48h 이내</div>
+          </div>
+          <div class="ripple-step">
+            <div class="ripple-step-icon">🔍</div>
+            <div class="ripple-step-label">검색어 점유</div>
+            <div class="ripple-step-value">+500%</div>
+            <div class="ripple-step-note">네이버 급등</div>
+          </div>
+          <div class="ripple-step highlight">
+            <div class="ripple-step-icon">💻</div>
+            <div class="ripple-step-label">자사몰 트래픽</div>
+            <div class="ripple-step-value">서버 마비</div>
+            <div class="ripple-step-note">동시 접속 폭발</div>
+          </div>
+          <div class="ripple-step highlight">
+            <div class="ripple-step-icon">🛒</div>
+            <div class="ripple-step-label">매출 전환</div>
+            <div class="ripple-step-value">Sold Out</div>
+            <div class="ripple-step-note">캠페인 당일</div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div></div><!-- ───────────── PLAN B ───────────── -->
-<div id="plan-b"><div class="plan-level-header"><div class="plan-level-budget">Efficiency Plan: 25,000,000 KRW</div><div class="plan-level-title">퍼포먼스 집약: 고관여 타겟 점유를 통한<br>실질적 전환과 디지털 대세감 점유</div></div>
+<div id="plan-b"><div class="plan-level-header"><div class="plan-level-budget">Efficiency Plan: 25,000,000 KRW</div><div class="plan-level-title">리뷰 한 편이 지갑을 연다<br><span style="font-size:0.55em; opacity:0.6; font-weight:300;">— 구매력 높은 팬덤에게 정확히 닿는 방법</span></div></div>
   <div class="full-option-block" id="opt2">
     <div class="ho-badge">Plan B 최적안</div>
     <div class="ho-title">릴리 <span class="ho-subtitle">× 송이송이</span></div>
@@ -1561,6 +1827,99 @@ body {
           </div>
           <div class="sj-metric">
             <span class="sjm-label">UGC 자생 비율</span><span class="sjm-value">250% ➚</span><span class="sjm-unit" style="color:var(--pink); font-size:10px; margin-left:4px;">만 명+</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="post-journey">
+      <!-- 소비자 시나리오 스트립 -->
+      <div class="scenario-strip">
+        <div class="scenario-label">Consumer Scenario · 콘텐츠 발행 후 48시간</div>
+        <div class="scenario-panels">
+          <div class="scenario-panel">
+            <div class="scenario-panel-phase">D+0 · 온라인 발견</div>
+            <span class="scenario-panel-emoji">📱</span>
+            <div class="scenario-panel-quote">"릴리가 에스더버니 콜라보 한다고? 릴스에 자꾸 뜨네. 리뷰 찾아봐야겠다."</div>
+            <div class="scenario-panel-outcome">→ 숏폼 조회 후 유튜브 리뷰 검색</div>
+          </div>
+          <div class="scenario-panel">
+            <div class="scenario-panel-phase">D+1 · 구매 결심</div>
+            <span class="scenario-panel-emoji">💻</span>
+            <div class="scenario-panel-quote">"송이송이 리뷰 완전 꼼꼼하네. <strong>할인 코드까지? 지금 바로 사야지.</strong>"</div>
+            <div class="scenario-panel-outcome">→ 할인코드 클릭 & 즉시 결제</div>
+          </div>
+          <div class="scenario-panel">
+            <div class="scenario-panel-phase">D+3 · 자발적 확산</div>
+            <span class="scenario-panel-emoji">📦</span>
+            <div class="scenario-panel-quote">"배송 왔다! <strong>실물이 진짜 예뻐서 언박싱 영상 올려버렸음.</strong>"</div>
+            <div class="scenario-panel-outcome">→ UGC 언박싱 & 재구매 루프</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="ct-section">
+        <div class="ct-section-label">발행 콘텐츠 명세</div>
+        <div class="ct-grid">
+          <div class="ct-item">
+            <span class="ct-icon">🎭</span>
+            <div class="ct-name">전략적 티징 숏폼</div>
+            <div class="ct-desc">릴리의 짧고 강렬한 콜라보 예고. 본편 리뷰에 대한 기대감 증폭.</div>
+            <span class="ct-platform tt">TikTok / Reels</span>
+          </div>
+          <div class="ct-item">
+            <span class="ct-icon">🎬</span>
+            <div class="ct-name">딥-다이브 리뷰 영상</div>
+            <div class="ct-desc">송이송이의 전문가급 꼼꼼 리뷰. 구매 이유 설득 + 프로모션 코드 연계.</div>
+            <span class="ct-platform yt">YouTube</span>
+          </div>
+          <div class="ct-item">
+            <span class="ct-icon">🎁</span>
+            <div class="ct-name">프로모션 코드 연계</div>
+            <div class="ct-desc">전용 할인 코드로 긴급성 부여 & 실시간 ROI 추적. 명확한 성과 측정 가능.</div>
+            <span class="ct-platform multi">Multi-Channel</span>
+          </div>
+          <div class="ct-item">
+            <span class="ct-icon">📦</span>
+            <div class="ct-name">언박싱 UGC 트리거</div>
+            <div class="ct-desc">실구매자의 자발적 언박싱 & 선순환 알고리즘. 추가 예산 없는 3차 확산.</div>
+            <span class="ct-platform multi">Organic UGC</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="ripple-section">
+        <div class="ripple-section-label">온라인 발행 → 실구매 파급 경로</div>
+        <div class="ripple-chain">
+          <div class="ripple-step">
+            <div class="ripple-step-icon">📱</div>
+            <div class="ripple-step-label">릴리 티징</div>
+            <div class="ripple-step-value">숏폼 배포</div>
+            <div class="ripple-step-note">호기심 자극</div>
+          </div>
+          <div class="ripple-step">
+            <div class="ripple-step-icon">👀</div>
+            <div class="ripple-step-label">리뷰 탐색</div>
+            <div class="ripple-step-value">120만+</div>
+            <div class="ripple-step-note">구매의향 타겟</div>
+          </div>
+          <div class="ripple-step">
+            <div class="ripple-step-icon">💻</div>
+            <div class="ripple-step-label">리뷰 설득</div>
+            <div class="ripple-step-value">ER 3.2%</div>
+            <div class="ripple-step-note">송이송이 리뷰</div>
+          </div>
+          <div class="ripple-step highlight">
+            <div class="ripple-step-icon">🎁</div>
+            <div class="ripple-step-label">코드 적용</div>
+            <div class="ripple-step-value">4.15% 전환</div>
+            <div class="ripple-step-note">할인코드 클릭</div>
+          </div>
+          <div class="ripple-step highlight">
+            <div class="ripple-step-icon">🛒</div>
+            <div class="ripple-step-label">즉시 결제</div>
+            <div class="ripple-step-value">완판</div>
+            <div class="ripple-step-note">빠른 ROI 실현</div>
           </div>
         </div>
       </div>
@@ -1695,6 +2054,68 @@ body {
           </div>
           <div class="sj-metric">
             <span class="sjm-label">대세감 점유율</span><span class="sjm-value">Dominant</span><span class="sjm-unit" style="color:var(--pink); font-size:10px; margin-left:4px;">만 명+</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="post-journey">
+      <div class="ct-section">
+        <div class="ct-section-label">발행 콘텐츠 명세</div>
+        <div class="ct-grid">
+          <div class="ct-item">
+            <span class="ct-icon">⚓</span>
+            <div class="ct-name">앵커 숏폼 (릴리)</div>
+            <div class="ct-desc">캠페인 기준점. 릴리의 숏폼으로 알고리즘 중심축과 초기 대세감 형성.</div>
+            <span class="ct-platform tt">TikTok / Reels</span>
+          </div>
+          <div class="ct-item">
+            <span class="ct-icon">💣</span>
+            <div class="ct-name">30채널 동시 릴스 폭격</div>
+            <div class="ct-desc">동일 주간 내 30개 채널 동시 발행. 피드 점유율 극대화 & 알고리즘 해킹.</div>
+            <span class="ct-platform ig">Instagram Reels ×30</span>
+          </div>
+          <div class="ct-item">
+            <span class="ct-icon">📊</span>
+            <div class="ct-name">탐색탭 대세감 고착</div>
+            <div class="ct-desc">주말 골든타임 탐색탭 지배. 단기 집중 노출로 브랜드 뇌리 각인.</div>
+            <span class="ct-platform multi">Algorithm</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="ripple-section">
+        <div class="ripple-section-label">온라인 발행 → 대세감 파급 경로</div>
+        <div class="ripple-chain">
+          <div class="ripple-step">
+            <div class="ripple-step-icon">⚓</div>
+            <div class="ripple-step-label">앵커 발행</div>
+            <div class="ripple-step-value">릴리 숏폼</div>
+            <div class="ripple-step-note">알고리즘 시동</div>
+          </div>
+          <div class="ripple-step">
+            <div class="ripple-step-icon">💣</div>
+            <div class="ripple-step-label">30채널 폭발</div>
+            <div class="ripple-step-value">65만+</div>
+            <div class="ripple-step-note">동시다발 노출</div>
+          </div>
+          <div class="ripple-step">
+            <div class="ripple-step-icon">👁️</div>
+            <div class="ripple-step-label">탐색탭 장악</div>
+            <div class="ripple-step-value">Dominant</div>
+            <div class="ripple-step-note">주말 골든타임</div>
+          </div>
+          <div class="ripple-step highlight">
+            <div class="ripple-step-icon">🔥</div>
+            <div class="ripple-step-label">대세감 각인</div>
+            <div class="ripple-step-value">3회+ 노출</div>
+            <div class="ripple-step-note">"오늘만 이거 세 번 봄"</div>
+          </div>
+          <div class="ripple-step highlight">
+            <div class="ripple-step-icon">🛒</div>
+            <div class="ripple-step-label">구매 결심</div>
+            <div class="ripple-step-value">FOMO 전환</div>
+            <div class="ripple-step-note">"안 사면 나만 손해"</div>
           </div>
         </div>
       </div>
