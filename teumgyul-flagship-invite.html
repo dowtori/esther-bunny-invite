@@ -1,0 +1,868 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>틈결 1st Flagship Store · Opening Invitation</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@300;400;500&family=Pretendard:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    /* ── CSS Variables ── */
+    :root {
+      --pink: #F7A8C4;
+      --bg: #FFF8F5;
+      --accent: #E8826A;
+      --accent2: #FF85A1;
+      --ink: #2A1A14;
+      --ink60: rgba(42,26,20,.6);
+      --ink40: rgba(42,26,20,.4);
+      --ink20: rgba(42,26,20,.2);
+      --ink10: rgba(42,26,20,.1);
+      --cream: #FEF5F0;
+      --border: #EDD8CC;
+      --card: #FFFAF8;
+      --font-serif: 'Noto Serif KR', serif;
+      --font-sans: 'Pretendard', 'Apple SD Gothic Neo', sans-serif;
+      --radius: 12px;
+      --radius-sm: 8px;
+      --radius-pill: 24px;
+    }
+
+    /* ── Reset ── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--bg);
+      color: var(--ink);
+      font-family: var(--font-sans);
+      font-size: 15px;
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+    }
+
+    /* ── Layout ── */
+    .wrap { max-width: 680px; margin: 0 auto; padding: 0 20px; }
+
+    /* ── Skip Link ── */
+    .skip-link {
+      position: absolute; top: -48px; left: 0;
+      background: var(--accent); color: #fff;
+      padding: 8px 16px; border-radius: 0 0 var(--radius-sm) 0;
+      font-size: 14px; text-decoration: none; z-index: 10000;
+      transition: top 0.2s ease;
+    }
+    .skip-link:focus { top: 0; }
+
+    /* ── Header ── */
+    header {
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(255,248,245,0.94);
+      backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 14px 20px;
+      display: flex; align-items: baseline; gap: 12px;
+    }
+    .h-brand {
+      font-family: var(--font-serif); font-weight: 500; font-size: 16px;
+      color: var(--ink); letter-spacing: 0.02em;
+    }
+    .h-tag {
+      font-size: 11px; font-weight: 400; color: var(--ink40);
+      letter-spacing: 0.06em; text-transform: uppercase;
+    }
+    .h-parent {
+      margin-left: auto;
+      font-size: 10px; color: var(--ink40); letter-spacing: 0.08em;
+      text-transform: uppercase; font-weight: 400;
+    }
+
+    /* ── Hero ── */
+    .hero {
+      position: relative; overflow: hidden;
+      padding: 80px 20px 72px; text-align: center;
+      background: linear-gradient(160deg, #fff5f0 0%, var(--bg) 55%);
+    }
+    .hero-deco {
+      position: absolute; top: 0; right: 0;
+      width: 200px; height: 200px; opacity: 0.06;
+      pointer-events: none;
+    }
+    .hero-eyebrow {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-size: 11px; font-weight: 400; letter-spacing: 0.14em;
+      text-transform: uppercase; color: var(--accent);
+      margin-bottom: 24px; padding: 5px 16px;
+      border: 1px solid var(--border); border-radius: var(--radius-pill);
+      background: var(--cream);
+    }
+    .eyebrow-dot {
+      width: 4px; height: 4px; border-radius: 50%;
+      background: var(--border); display: inline-block;
+    }
+    .hero h1 {
+      font-family: var(--font-serif); font-weight: 400;
+      font-size: clamp(26px, 6vw, 40px); line-height: 1.35;
+      color: var(--ink); margin-bottom: 28px; letter-spacing: -0.01em;
+    }
+    .hero h1 em { font-style: italic; color: var(--accent); }
+    .hero-body {
+      font-size: 15px; color: var(--ink60);
+      line-height: 1.9; margin-bottom: 20px;
+      max-width: 420px; margin-left: auto; margin-right: auto;
+      word-break: keep-all;
+    }
+    .hero-date-bar {
+      display: inline-flex; align-items: center; gap: 10px;
+      font-size: 12px; color: var(--ink40); letter-spacing: 0.06em;
+      padding: 10px 18px;
+      background: var(--cream); border-radius: var(--radius-sm);
+      border: 1px solid var(--border);
+    }
+    .hero-date-bar strong { color: var(--ink); font-weight: 500; }
+    .hero-date-sep { color: var(--border); }
+
+    /* ── Section ── */
+    section { padding: 52px 0; }
+    .section-label {
+      font-size: 10px; font-weight: 500; letter-spacing: 0.14em;
+      text-transform: uppercase; color: var(--accent); margin-bottom: 8px;
+    }
+    .section-title {
+      font-family: var(--font-serif); font-size: 20px; font-weight: 400;
+      color: var(--ink); margin-bottom: 20px; letter-spacing: 0.01em;
+    }
+    .section-body {
+      font-size: 14px; color: var(--ink60); line-height: 1.9;
+      word-break: keep-all; margin-bottom: 24px;
+    }
+    .section-divider { border: none; border-top: 1px solid var(--border); margin: 0; }
+
+    /* ── Info Grid ── */
+    .info-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 0;
+    }
+    @media (max-width: 480px) { .info-grid { grid-template-columns: 1fr; } }
+    .info-cell {
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 16px 18px;
+    }
+    .info-cell-label {
+      font-size: 10px; font-weight: 500; letter-spacing: 0.1em;
+      text-transform: uppercase; color: var(--ink40); margin-bottom: 5px;
+    }
+    .info-cell-value { font-size: 14px; color: var(--ink); line-height: 1.5; font-weight: 400; }
+    .info-cell-sub { font-size: 12px; color: var(--ink40); margin-top: 2px; }
+
+    /* ── Brand Cards ── */
+    .brand-intro {
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 24px;
+      margin-bottom: 16px; overflow: hidden;
+    }
+    .brand-intro-label {
+      font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--accent); font-weight: 500; margin-bottom: 6px;
+    }
+    .brand-intro-name {
+      font-family: var(--font-serif); font-size: 18px; font-weight: 400;
+      color: var(--ink); margin-bottom: 10px; letter-spacing: 0.02em;
+    }
+    .brand-intro-desc {
+      font-size: 13px; color: var(--ink60); line-height: 1.8;
+      word-break: keep-all;
+    }
+    .brand-collab-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 10px;
+    }
+    @media (max-width: 480px) { .brand-collab-grid { grid-template-columns: 1fr; } }
+    .brand-collab-card {
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 18px 20px; overflow: hidden;
+    }
+    .brand-collab-badge {
+      display: inline-block; font-size: 10px; letter-spacing: 0.1em;
+      text-transform: uppercase; color: var(--accent2);
+      background: rgba(255,133,161,0.08); border: 1px solid rgba(255,133,161,0.2);
+      border-radius: var(--radius-pill); padding: 3px 10px;
+      margin-bottom: 8px; font-weight: 500;
+    }
+    .brand-collab-name {
+      font-family: var(--font-serif); font-size: 15px; font-weight: 400;
+      color: var(--ink); margin-bottom: 6px;
+    }
+    .brand-collab-desc { font-size: 12px; color: var(--ink60); line-height: 1.7; word-break: keep-all; }
+
+    /* ── Hierarchy Tag ── */
+    .hierarchy-row {
+      display: flex; align-items: center; gap: 6px; flex-wrap: wrap;
+      margin-bottom: 24px;
+    }
+    .h-chip {
+      font-size: 11px; color: var(--ink40); letter-spacing: 0.04em;
+      padding: 3px 10px; border: 1px solid var(--border);
+      border-radius: var(--radius-pill); background: var(--cream);
+    }
+    .h-chip.main { color: var(--ink); border-color: var(--border); background: var(--card); }
+    .h-arrow { font-size: 11px; color: var(--ink20); }
+
+    /* ── Map Note ── */
+    .map-note {
+      margin-top: 12px;
+      display: flex; align-items: flex-start; gap: 10px;
+      padding: 14px 16px; background: var(--cream);
+      border: 1px solid var(--border); border-radius: var(--radius-sm);
+    }
+    .map-note-icon { font-size: 16px; flex-shrink: 0; margin-top: 1px; }
+    .map-note-text { font-size: 13px; color: var(--ink60); line-height: 1.7; word-break: keep-all; }
+
+    /* ── Form ── */
+    .form-area { padding: 52px 0 72px; }
+    .form-sub { font-size: 13px; color: var(--ink40); line-height: 1.7; margin-bottom: 28px; }
+
+    /* Steps */
+    .steps-nav { display: flex; align-items: center; gap: 0; margin-bottom: 32px; }
+    .step-indicator { display: flex; align-items: center; gap: 8px; flex: 1; }
+    .step-indicator:not(:last-child)::after {
+      content: ''; flex: 1; height: 1px; background: var(--border);
+    }
+    .step-num {
+      width: 28px; height: 28px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 12px; font-weight: 500; flex-shrink: 0;
+      border: 2px solid var(--border); color: var(--ink40);
+      background: var(--card);
+      transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+    }
+    .step-indicator.active .step-num { background: var(--accent); border-color: var(--accent); color: #fff; }
+    .step-indicator.done .step-num { background: var(--pink); border-color: var(--pink); color: #fff; }
+    .step-label { font-size: 12px; color: var(--ink40); font-weight: 400; }
+    .step-indicator.active .step-label { color: var(--accent); font-weight: 500; }
+    .step-indicator.done .step-label { color: var(--pink); }
+    .step-panel { display: none; }
+    .step-panel.active { display: block; }
+
+    /* Fields */
+    .field-group { display: flex; flex-direction: column; gap: 16px; margin-bottom: 24px; }
+    .field { display: flex; flex-direction: column; gap: 6px; }
+    .field label { font-size: 13px; font-weight: 500; color: var(--ink); }
+    .field label .req { color: var(--accent); margin-left: 2px; }
+    .field input, .field textarea {
+      width: 100%; padding: 11px 14px;
+      border: 1.5px solid var(--border); border-radius: var(--radius-sm);
+      background: #fff; color: var(--ink);
+      font-family: var(--font-sans); font-size: 14px; line-height: 1.5;
+      transition: border-color 0.15s ease, box-shadow 0.15s ease;
+      appearance: none; -webkit-appearance: none;
+    }
+    .field input:focus, .field textarea:focus {
+      outline: none; border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(232,130,106,0.15);
+    }
+    .field input::placeholder { color: var(--ink20); }
+
+    /* Date Cards */
+    .date-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 16px; }
+    @media (max-width: 400px) { .date-cards { grid-template-columns: 1fr; } }
+    .date-card {
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      padding: 20px 10px; border: 2px solid var(--border);
+      border-radius: var(--radius); background: var(--card);
+      cursor: pointer; text-align: center;
+      transition: border-color 0.15s ease, background 0.15s ease, box-shadow 0.15s ease;
+      user-select: none; -webkit-user-select: none; min-height: 90px;
+    }
+    .date-card:hover { border-color: var(--pink); background: var(--cream); }
+    .date-card:focus-within { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px rgba(232,130,106,0.15); }
+    .date-card.sel { border-color: var(--accent); background: var(--cream); box-shadow: 0 2px 12px rgba(232,130,106,0.18); }
+    .date-card input[type="radio"] { position: absolute; width: 1px; height: 1px; opacity: 0; pointer-events: none; }
+    .date-num { font-family: var(--font-serif); font-size: 22px; font-weight: 300; color: var(--ink); margin-bottom: 4px; }
+    .date-month { font-size: 10px; color: var(--ink40); letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 6px; }
+    .date-day { font-size: 12px; color: var(--ink60); }
+    .date-card.sel .date-num { color: var(--accent); }
+    .date-notice {
+      font-size: 12px; color: var(--ink40); line-height: 1.65;
+      padding: 12px 14px; background: var(--cream);
+      border-radius: var(--radius-sm); border: 1px solid var(--border);
+      word-break: keep-all;
+    }
+
+    /* Consent */
+    .consent-box {
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 18px 20px 14px; margin-bottom: 20px;
+    }
+    .consent-title { font-size: 12px; font-weight: 500; color: var(--ink60); margin-bottom: 10px; letter-spacing: 0.04em; }
+    .consent-items {
+      list-style: none; display: flex; flex-direction: column; gap: 6px;
+      margin-bottom: 16px; padding-bottom: 16px; border-bottom: 1px solid var(--border);
+    }
+    .consent-items li {
+      font-size: 13px; color: var(--ink60); padding-left: 16px;
+      position: relative; line-height: 1.6;
+    }
+    .consent-items li::before { content: '·'; position: absolute; left: 4px; color: var(--pink); font-size: 16px; line-height: 1.45; }
+    .check-label { display: flex; align-items: flex-start; gap: 10px; cursor: pointer; }
+    .check-label input[type="checkbox"] {
+      width: 18px; height: 18px; min-width: 18px;
+      border: 1.5px solid var(--border); border-radius: 4px;
+      appearance: none; -webkit-appearance: none;
+      background: #fff; cursor: pointer; margin-top: 1px;
+      transition: background 0.15s ease, border-color 0.15s ease; position: relative;
+    }
+    .check-label input[type="checkbox"]:checked { background: var(--accent); border-color: var(--accent); }
+    .check-label input[type="checkbox"]:checked::after {
+      content: ''; position: absolute; top: 3px; left: 5px;
+      width: 6px; height: 9px; border: 2px solid #fff;
+      border-top: none; border-left: none; transform: rotate(45deg);
+    }
+    .check-label input[type="checkbox"]:focus { outline: none; box-shadow: 0 0 0 3px rgba(232,130,106,0.2); }
+    .check-text { font-size: 13px; color: var(--ink); line-height: 1.6; }
+
+    /* Buttons */
+    .form-nav { display: flex; gap: 10px; align-items: center; margin-top: 28px; }
+    .btn-back {
+      padding: 12px 24px; border: 1.5px solid var(--border);
+      border-radius: var(--radius-pill); background: transparent;
+      color: var(--ink60); font-family: var(--font-sans); font-size: 14px;
+      cursor: pointer; transition: border-color 0.15s ease, color 0.15s ease; min-height: 44px;
+    }
+    .btn-back:hover { border-color: var(--pink); color: var(--ink); }
+    .btn-next, .btn-submit {
+      flex: 1; padding: 13px 28px; background: var(--accent); color: #fff;
+      border: none; border-radius: var(--radius-pill);
+      font-family: var(--font-sans); font-size: 14px; font-weight: 500;
+      cursor: pointer; transition: background 0.15s ease, transform 0.1s ease, box-shadow 0.15s ease;
+      min-height: 44px; letter-spacing: 0.02em;
+    }
+    .btn-next:hover, .btn-submit:hover { background: #d46e52; box-shadow: 0 4px 16px rgba(232,130,106,0.3); }
+    .btn-next:active, .btn-submit:active { transform: scale(0.98); }
+    .btn-next:disabled, .btn-submit:disabled { opacity: 0.55; cursor: not-allowed; transform: none; }
+
+    /* ── Success ── */
+    #success {
+      display: none; min-height: 60vh; align-items: center;
+      justify-content: center; padding: 64px 20px;
+    }
+    .success-inner { text-align: center; max-width: 480px; margin: 0 auto; }
+    .success-icon {
+      width: 72px; height: 72px; border-radius: 50%;
+      background: var(--cream); border: 2px solid var(--border);
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 24px; font-size: 28px;
+    }
+    .s-title { font-family: var(--font-serif); font-size: 22px; font-weight: 400; color: var(--ink); margin-bottom: 16px; line-height: 1.45; }
+    .s-body { font-size: 14px; color: var(--ink60); white-space: pre-line; line-height: 1.85; }
+
+    /* ── Footer ── */
+    footer { background: var(--card); border-top: 1px solid var(--border); padding: 28px 20px; }
+    footer .wrap { display: flex; flex-direction: column; gap: 8px; align-items: center; text-align: center; }
+    .f-hierarchy { display: flex; align-items: center; gap: 6px; }
+    .f-brand { font-family: var(--font-serif); font-size: 14px; color: var(--ink); font-weight: 400; }
+    .f-sep { font-size: 11px; color: var(--ink20); }
+    .f-note { font-size: 11px; color: var(--ink40); line-height: 1.6; }
+
+    /* ── Brand Card Images ── */
+    .brand-card-img {
+      display: block; width: calc(100% + 48px);
+      margin: -24px -24px 18px;
+      aspect-ratio: 16/9; object-fit: cover;
+      border-radius: var(--radius) var(--radius) 0 0;
+    }
+    .brand-collab-img {
+      display: block; width: calc(100% + 40px);
+      margin: -18px -20px 14px;
+      aspect-ratio: 16/9; object-fit: cover;
+      border-radius: var(--radius) var(--radius) 0 0;
+    }
+
+    /* ── Space Gallery ── */
+    .space-gallery-section { padding: 52px 0 0; }
+    .space-gallery-scroll {
+      display: flex; gap: 10px; overflow-x: auto;
+      scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch;
+      scrollbar-width: none; padding-bottom: 2px; margin-top: 16px;
+      cursor: grab; user-select: none; -webkit-user-select: none;
+    }
+    .space-gallery-scroll.dragging { cursor: grabbing; scroll-snap-type: none; }
+    .space-gallery-scroll::-webkit-scrollbar { display: none; }
+    .space-gallery-item {
+      flex: 0 0 78%; scroll-snap-align: start;
+      border-radius: var(--radius); overflow: hidden;
+      border: 1px solid var(--border); background: var(--card);
+      pointer-events: none;
+    }
+    .space-gallery-item img {
+      width: 100%; aspect-ratio: 16/9; object-fit: cover; display: block;
+    }
+    .space-gallery-caption {
+      padding: 10px 14px;
+      font-size: 11px; color: var(--ink40); letter-spacing: 0.05em;
+    }
+    .space-gallery-hint {
+      margin-top: 10px; font-size: 11px; color: var(--ink20);
+      letter-spacing: 0.04em; text-align: right;
+    }
+    @media (max-width: 600px) {
+      .space-gallery-scroll {
+        margin-left: -20px; margin-right: -20px;
+        padding-left: 20px; padding-right: 20px;
+      }
+      .space-gallery-item { flex: 0 0 86%; }
+      .space-gallery-hint { padding-right: 20px; }
+    }
+
+    /* ── Mobile ── */
+    @media (max-width: 480px) {
+      .hero { padding: 56px 20px 48px; }
+      section { padding: 40px 0; }
+      .form-area { padding: 40px 0 56px; }
+      .brand-intro { padding: 20px; }
+      .brand-collab-card { padding: 16px; }
+      .brand-card-img { margin: -20px -20px 14px; width: calc(100% + 40px); }
+      .brand-collab-img { margin: -16px -16px 12px; width: calc(100% + 32px); }
+      .space-gallery-section { padding: 40px 0 0; }
+      .steps-nav { gap: 0; }
+      .step-label { font-size: 11px; }
+    }
+
+    /* ── Utility ── */
+    .visually-hidden {
+      position: absolute; width: 1px; height: 1px; padding: 0;
+      margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0;
+    }
+    a { color: var(--accent); }
+    a:focus { outline: none; box-shadow: 0 0 0 3px rgba(232,130,106,0.3); border-radius: 2px; }
+  </style>
+</head>
+<body>
+
+  <a href="#form-area" class="skip-link">방문 확정 폼으로 바로 이동</a>
+
+  <!-- Header -->
+  <header role="banner">
+    <span class="h-brand">틈결</span>
+    <span class="h-tag">TeumGyul 1st Flagship · Opening Invitation</span>
+    <span class="h-parent">Iconic Movement</span>
+  </header>
+
+  <!-- Hero -->
+  <section class="hero" aria-labelledby="hero-title">
+    <!-- 장식: 추상적인 원형 그래픽 -->
+    <svg class="hero-deco" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+      <circle cx="100" cy="100" r="90" stroke="#E8826A" stroke-width="1.5"/>
+      <circle cx="100" cy="100" r="70" stroke="#E8826A" stroke-width="1"/>
+      <circle cx="100" cy="100" r="50" stroke="#E8826A" stroke-width="0.5"/>
+    </svg>
+    <div class="wrap">
+      <p class="hero-eyebrow">
+        <span>Iconic Movement</span>
+        <span class="eyebrow-dot"></span>
+        <span>TeumGyul</span>
+        <span class="eyebrow-dot"></span>
+        <span>Opening 2026</span>
+      </p>
+      <h1 id="hero-title">
+        틈결의 첫 번째 플래그쉽이<br>
+        <em>성수에서 문을 엽니다.</em>
+      </h1>
+      <p class="hero-body">
+        아이코닉무브먼트가 선보이는 경험형 리테일 브랜드 '틈결'의<br>
+        첫 번째 플래그쉽 스토어 성수점에 여러분을 초대합니다.<br><br>
+        상품을 넘어, 경험으로 이어지는 공간.<br>
+        그리고 새로운 방식의 쇼핑을 직접 경험해보시기 바랍니다.
+      </p>
+      <div class="hero-date-bar" role="note" aria-label="행사 일정">
+        <strong>2026. 5. 1 FRI</strong>
+        <span class="hero-date-sep">–</span>
+        <strong>5. 3 SUN</strong>
+        <span class="hero-date-sep">·</span>
+        <span>성수동 1가 668-56</span>
+      </div>
+    </div>
+  </section>
+
+  <hr class="section-divider">
+
+  <!-- 틈결 소개 -->
+  <section aria-labelledby="about-title">
+    <div class="wrap">
+      <p class="section-label">About TeumGyul</p>
+      <h2 class="section-title" id="about-title">틈결을 소개합니다</h2>
+
+      <div class="hierarchy-row" role="list" aria-label="브랜드 구조">
+        <span class="h-chip" role="listitem">Iconic Movement</span>
+        <span class="h-arrow" aria-hidden="true">›</span>
+        <span class="h-chip main" role="listitem">틈결 TeumGyul</span>
+        <span class="h-arrow" aria-hidden="true">›</span>
+        <span class="h-chip" role="listitem">Esther Bunny Flagship</span>
+      </div>
+
+      <p class="section-body">
+        틈결은 수백 개에서 수천 개에 이르는 다양한 IP 기반 상품과 함께
+        패션, 뷰티 등 이종 산업과의 협업을 통해 탄생한 콜라보 상품,
+        그리고 IP를 직접 체험할 수 있는 공간으로 구성되어 있습니다.<br><br>
+        틈결의 첫 플래그쉽 스토어는 일본에서 큰 사랑을 받고 있는
+        캐릭터 IP 에스더버니(Esther Bunny)와 함께 성수에서 출발합니다.
+      </p>
+
+      <!-- 에스더버니 메인 -->
+      <div class="brand-intro" role="region" aria-label="에스더버니 소개">
+        <img class="brand-card-img" src="images/brand/teumgyul-render-p8.png" alt="틈결 성수 — 에스더버니 갤러리 월 렌더링" loading="lazy">
+        <p class="brand-intro-label">Flagship Space · Main Brand</p>
+        <p class="brand-intro-name">Esther Bunny</p>
+        <p class="brand-intro-desc">
+          2011년 일러스트레이터 에스더킴에 의해 창작된 캐릭터로,
+          LA와 도쿄에서의 문화적 경험을 바탕으로 감각적이고 사랑스러운 세계관을 구축했습니다.
+          일본을 비롯한 아시아 전역에서 사랑받으며, 틈결 성수점의 메인 공간을 함께합니다.
+        </p>
+      </div>
+
+      <!-- 콜라보 브랜드 -->
+      <div class="brand-collab-grid" role="list" aria-label="협업 브랜드">
+        <div class="brand-collab-card" role="listitem">
+          <img class="brand-collab-img" src="images/brand/78under-p2.png" alt="78UNDER 브랜드 비주얼" loading="lazy">
+          <span class="brand-collab-badge">Collaboration</span>
+          <p class="brand-collab-name">세븐에잇언더<br><span style="font-size:12px;font-family:var(--font-sans);letter-spacing:0.04em;">78UNDER</span></p>
+          <p class="brand-collab-desc">오직 틈결에서만 만나볼 수 있는 에스더버니 × 78UNDER 콜라보 상품을 선보입니다.</p>
+        </div>
+        <div class="brand-collab-card" role="listitem">
+          <img class="brand-collab-img" src="images/brand/eb-calie-p2.png" alt="에스더버니 × asif CALIE 콜라보 티셔츠 디자인시안" loading="lazy">
+          <span class="brand-collab-badge">Collaboration</span>
+          <p class="brand-collab-name">애즈이프캘리<br><span style="font-size:12px;font-family:var(--font-sans);letter-spacing:0.04em;">asif CALIE</span></p>
+          <p class="brand-collab-desc">오직 틈결에서만 만나볼 수 있는 에스더버니 × asif CALIE 콜라보 상품을 선보입니다.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 공간 미리보기 -->
+  <section class="space-gallery-section" aria-labelledby="space-gallery-title">
+    <div class="wrap">
+      <p class="section-label">Space Preview</p>
+      <h2 class="section-title" id="space-gallery-title">공간을 미리 만나보세요</h2>
+      <p class="section-body" style="margin-bottom:0;">아이코닉무브먼트가 설계한 틈결 성수점은 IP 아트와 리테일이 공존하는 경험형 공간입니다. 캐릭터 세계관을 담은 갤러리 월과 함께, 에스더버니의 모든 것을 한 곳에서 만나보실 수 있습니다.</p>
+      <div class="space-gallery-scroll" role="list" aria-label="공간 렌더링 미리보기">
+        <div class="space-gallery-item" role="listitem">
+          <img src="images/brand/teumgyul-render-p13.png" alt="틈결 성수 — 메인 리테일 공간 렌더링" loading="lazy">
+          <p class="space-gallery-caption">B1F · 메인 리테일 공간</p>
+        </div>
+        <div class="space-gallery-item" role="listitem">
+          <img src="images/brand/teumgyul-render-p11.png" alt="틈결 성수 — 아카이브 존 렌더링" loading="lazy">
+          <p class="space-gallery-caption">B1F · 아카이브 존</p>
+        </div>
+        <div class="space-gallery-item" role="listitem">
+          <img src="images/brand/teumgyul-render-p9.png" alt="틈결 성수 — 에스더버니 갤러리 월 렌더링" loading="lazy">
+          <p class="space-gallery-caption">B1F · 에스더버니 갤러리 월</p>
+        </div>
+        <div class="space-gallery-item" role="listitem">
+          <img src="images/brand/teumgyul-render-p12.png" alt="틈결 성수 — 체험 공간 렌더링" loading="lazy">
+          <p class="space-gallery-caption">B1F · 체험 &amp; 리테일 존</p>
+        </div>
+      </div>
+      <p class="space-gallery-hint">← 옆으로 스크롤하여 더 보기</p>
+    </div>
+  </section>
+
+  <hr class="section-divider">
+
+  <!-- 행사 정보 -->
+  <section aria-labelledby="event-title">
+    <div class="wrap">
+      <p class="section-label">Event Details</p>
+      <h2 class="section-title" id="event-title">행사 안내</h2>
+      <div class="info-grid" role="list">
+        <div class="info-cell" role="listitem">
+          <p class="info-cell-label">일정</p>
+          <p class="info-cell-value">2026년 5월 1일(금)<br>– 5월 3일(일)</p>
+          <p class="info-cell-sub">3일간 진행</p>
+        </div>
+        <div class="info-cell" role="listitem">
+          <p class="info-cell-label">장소</p>
+          <p class="info-cell-value">틈결 성수점</p>
+          <p class="info-cell-sub">서울 성동구 성수동 1가 668-56</p>
+        </div>
+        <div class="info-cell" role="listitem">
+          <p class="info-cell-label">주관</p>
+          <p class="info-cell-value">아이코닉무브먼트</p>
+          <p class="info-cell-sub">Iconic Movement</p>
+        </div>
+        <div class="info-cell" role="listitem">
+          <p class="info-cell-label">공간</p>
+          <p class="info-cell-value">에스더버니 플래그십</p>
+          <p class="info-cell-sub">틈결 성수 1호점 메인 스토어</p>
+        </div>
+      </div>
+      <div class="map-note" role="note">
+        <span class="map-note-icon" aria-hidden="true">📍</span>
+        <p class="map-note-text">성수동 1가 668-56 · 서울숲 인근. 상세 오시는 길 및 주차 안내는 방문 확정 후 별도 안내드립니다.</p>
+      </div>
+    </div>
+  </section>
+
+  <hr class="section-divider">
+
+  <!-- RSVP Form -->
+  <main id="form-area" class="form-area">
+    <div class="wrap">
+      <p class="section-label">Confirm Your Visit</p>
+      <h2 class="section-title">방문 예정일 확인</h2>
+      <p class="form-sub">초대에 응해주셔서 감사합니다.<br>아래 정보를 입력해주시면 담당자가 방문 일정을 확정해드립니다.</p>
+
+      <!-- Steps Nav -->
+      <nav aria-label="폼 단계" class="steps-nav">
+        <div class="step-indicator active" id="step-nav-1" aria-current="step">
+          <span class="step-num" aria-label="1단계">1</span>
+          <span class="step-label">기본 정보</span>
+        </div>
+        <div class="step-indicator" id="step-nav-2">
+          <span class="step-num" aria-label="2단계">2</span>
+          <span class="step-label">방문 예정일</span>
+        </div>
+        <div class="step-indicator" id="step-nav-3">
+          <span class="step-num" aria-label="3단계">3</span>
+          <span class="step-label">최종 확인</span>
+        </div>
+      </nav>
+
+      <form id="invite-form" novalidate aria-label="방문 확정 폼">
+
+        <!-- Step 1: 기본 정보 -->
+        <div class="step-panel active" id="step-1" role="tabpanel" aria-labelledby="step-nav-1">
+          <fieldset style="border:none;padding:0">
+            <legend class="visually-hidden">기본 정보</legend>
+            <div class="field-group">
+              <div class="field">
+                <label for="f-name">이름<span class="req" aria-hidden="true">*</span></label>
+                <input type="text" id="f-name" name="name" required aria-required="true"
+                  autocomplete="name" placeholder="홍길동">
+              </div>
+              <div class="field">
+                <label for="f-phone">전화번호<span class="req" aria-hidden="true">*</span></label>
+                <input type="tel" id="f-phone" name="phone" required aria-required="true"
+                  autocomplete="tel" inputmode="tel" placeholder="010-0000-0000">
+              </div>
+            </div>
+          </fieldset>
+          <div class="form-nav">
+            <button type="button" class="btn-next" onclick="goStep(2)">계속하기</button>
+          </div>
+        </div>
+
+        <!-- Step 2: 방문 일정 -->
+        <div class="step-panel" id="step-2" role="tabpanel" aria-labelledby="step-nav-2">
+          <fieldset style="border:none;padding:0">
+            <legend style="font-size:14px;font-weight:500;color:var(--ink);margin-bottom:16px;display:block;">
+              방문 예정일을 선택해주세요<span class="req" aria-hidden="true">*</span>
+            </legend>
+            <div class="date-cards" role="group" aria-label="방문 날짜 선택">
+              <label class="date-card" onclick="selectDate(this)">
+                <input type="radio" name="visit-date" value="2026년 5월 1일(금)" required aria-required="true">
+                <div class="date-num" aria-hidden="true">01</div>
+                <div class="date-month" aria-hidden="true">MAY · FRI</div>
+                <div class="date-day" aria-hidden="true">금요일 · Opening</div>
+              </label>
+              <label class="date-card" onclick="selectDate(this)">
+                <input type="radio" name="visit-date" value="2026년 5월 2일(토)">
+                <div class="date-num" aria-hidden="true">02</div>
+                <div class="date-month" aria-hidden="true">MAY · SAT</div>
+                <div class="date-day" aria-hidden="true">토요일 · Day 2</div>
+              </label>
+              <label class="date-card" onclick="selectDate(this)">
+                <input type="radio" name="visit-date" value="2026년 5월 3일(일)">
+                <div class="date-num" aria-hidden="true">03</div>
+                <div class="date-month" aria-hidden="true">MAY · SUN</div>
+                <div class="date-day" aria-hidden="true">일요일 · Day 3</div>
+              </label>
+            </div>
+            <p class="date-notice" role="note">
+              방문 인원이 날짜별로 분산 안배되므로, 선택하신 날짜가 조정될 수 있습니다. 변경 필요 시 담당자가 사전 안내드립니다.
+            </p>
+          </fieldset>
+          <div class="form-nav">
+            <button type="button" class="btn-back" onclick="goStep(1)">이전</button>
+            <button type="button" class="btn-next" onclick="goStep(3)">계속하기</button>
+          </div>
+        </div>
+
+        <!-- Step 3: 제출 확인 -->
+        <div class="step-panel" id="step-3" role="tabpanel" aria-labelledby="step-nav-3">
+          <section aria-labelledby="consent-heading">
+            <h3 id="consent-heading" class="visually-hidden">동의 항목</h3>
+            <div class="consent-box">
+              <p class="consent-title">개인정보 수집 안내</p>
+              <ul class="consent-items" aria-label="수집 항목">
+                <li>수집 항목: 이름, 전화번호</li>
+                <li>수집 목적: 틈결 오프닝 방문 일정 안내 및 운영</li>
+                <li>보유 기간: 행사 종료 후 30일 이내 파기</li>
+              </ul>
+              <div class="consent-checks">
+                <label class="check-label" for="consent-main">
+                  <input type="checkbox" id="consent-main" name="consent-main" required aria-required="true">
+                  <span class="check-text">위 개인정보 수집 및 이용에 동의합니다.</span>
+                </label>
+              </div>
+            </div>
+          </section>
+          <div class="form-nav">
+            <button type="button" class="btn-back" onclick="goStep(2)">이전</button>
+            <button type="button" class="btn-submit" onclick="submitForm()">방문 확정하기</button>
+          </div>
+        </div>
+
+      </form>
+    </div>
+  </main>
+
+  <!-- Success -->
+  <section id="success" style="display:none;" aria-live="polite" aria-label="신청 완료 안내">
+    <div class="wrap">
+      <div class="success-inner">
+        <div class="success-icon" aria-hidden="true" role="img">✦</div>
+        <h2 class="s-title">초대를 수락해주셔서<br>감사합니다</h2>
+        <p class="s-body">신청해주신 내용을 확인 후, 방문 일정과 함께<br>담당자가 개별 연락드릴 예정입니다.<br><br>새로운 경험의 시작, 틈결에서 기다리겠습니다.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer role="contentinfo">
+    <div class="wrap">
+      <div class="f-hierarchy">
+        <span class="f-brand">틈결 TeumGyul</span>
+        <span class="f-sep">·</span>
+        <span style="font-size:12px;color:var(--ink40);">Iconic Movement</span>
+      </div>
+      <span class="f-note">본 페이지는 초대된 분들에게만 공유됩니다. 1st Flagship Store Opening 2026</span>
+    </div>
+  </footer>
+
+  <script>
+    /* ── Gallery Mouse Drag ── */
+    (function() {
+      const el = document.querySelector('.space-gallery-scroll');
+      if (!el) return;
+      let isDown = false, startX, startScrollLeft;
+
+      el.addEventListener('mousedown', e => {
+        isDown = true;
+        el.classList.add('dragging');
+        startX = e.pageX - el.offsetLeft;
+        startScrollLeft = el.scrollLeft;
+        e.preventDefault();
+      });
+      document.addEventListener('mouseup', () => {
+        if (!isDown) return;
+        isDown = false;
+        el.classList.remove('dragging');
+      });
+      document.addEventListener('mousemove', e => {
+        if (!isDown) return;
+        const x = e.pageX - el.offsetLeft;
+        el.scrollLeft = startScrollLeft - (x - startX);
+      });
+    })();
+
+    const SHEET_ENDPOINT = 'SHEET_ENDPOINT_HERE';
+    const CAMPAIGN = 'TeumGyul 1st Flagship Opening 2026';
+
+    /* ── Date Selection ── */
+    function selectDate(el) {
+      document.querySelectorAll('.date-card').forEach(c => c.classList.remove('sel'));
+      el.classList.add('sel');
+      el.querySelector('input[type="radio"]').checked = true;
+    }
+
+    /* ── Step Navigation ── */
+    let currentStep = 1;
+
+    function setStepNav(n) {
+      [1, 2, 3].forEach(i => {
+        const nav = document.getElementById('step-nav-' + i);
+        nav.classList.remove('active', 'done');
+        if (i < n) nav.classList.add('done');
+        else if (i === n) {
+          nav.classList.add('active');
+          nav.setAttribute('aria-current', 'step');
+        } else {
+          nav.removeAttribute('aria-current');
+        }
+      });
+    }
+
+    function showStep(n) {
+      [1, 2, 3].forEach(i => {
+        document.getElementById('step-' + i).classList.toggle('active', i === n);
+      });
+      setStepNav(n);
+      currentStep = n;
+      document.getElementById('form-area').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    function validateStep1() {
+      const name = document.getElementById('f-name').value.trim();
+      const phone = document.getElementById('f-phone').value.trim();
+      if (!name) {
+        alert('이름을 입력해주세요.');
+        document.getElementById('f-name').focus();
+        return false;
+      }
+      if (!phone) {
+        alert('전화번호를 입력해주세요.');
+        document.getElementById('f-phone').focus();
+        return false;
+      }
+      return true;
+    }
+
+    function validateStep2() {
+      const selected = document.querySelector('input[name="visit-date"]:checked');
+      if (!selected) {
+        alert('방문 희망 날짜를 선택해주세요.');
+        return false;
+      }
+      return true;
+    }
+
+    function goStep(n) {
+      if (n === 2 && currentStep === 1 && !validateStep1()) return;
+      if (n === 3 && currentStep === 2 && !validateStep2()) return;
+      showStep(n);
+    }
+
+    /* ── Submit ── */
+    async function submitForm() {
+      if (!document.getElementById('consent-main').checked) {
+        alert('개인정보 수집 동의를 확인해주세요.');
+        document.getElementById('consent-main').focus();
+        return;
+      }
+      const btn = document.querySelector('.btn-submit');
+      btn.disabled = true;
+      btn.innerText = '제출 중...';
+
+      const visitDate = document.querySelector('input[name="visit-date"]:checked')?.value || '';
+      const data = {
+        campaign: CAMPAIGN,
+        name: document.getElementById('f-name').value,
+        phone: document.getElementById('f-phone').value,
+        visitDate,
+        timestamp: new Date().toISOString(),
+      };
+
+      try {
+        await fetch(SHEET_ENDPOINT, { method: 'POST', body: JSON.stringify(data) });
+      } catch (e) {}
+
+      document.getElementById('form-area').style.display = 'none';
+      const successEl = document.getElementById('success');
+      successEl.style.display = 'flex';
+      successEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  </script>
+</body>
+</html>
