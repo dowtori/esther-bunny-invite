@@ -416,6 +416,37 @@
       .space-gallery-hint { padding-right: 20px; }
     }
 
+    /* ── Day Schedule ── */
+    .day-list { display: flex; flex-direction: column; gap: 12px; margin-top: 20px; }
+    .day-card {
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 20px 22px;
+    }
+    .day-badge {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-family: 'DM Sans', 'Pretendard', sans-serif;
+      font-size: 10px; font-weight: 700; letter-spacing: 0.12em;
+      text-transform: uppercase; color: var(--accent);
+      margin-bottom: 10px;
+    }
+    .day-badge-dot {
+      width: 5px; height: 5px; border-radius: 50%;
+      background: var(--accent); flex-shrink: 0;
+    }
+    .day-title {
+      font-family: var(--font-serif); font-size: 17px; font-weight: 400;
+      color: var(--ink); margin-bottom: 8px; letter-spacing: 0.01em;
+    }
+    .day-desc {
+      font-size: 13px; color: var(--ink60); line-height: 1.8;
+      word-break: keep-all; margin-bottom: 10px;
+    }
+    .day-tag {
+      display: inline-block; font-size: 11px; color: var(--ink40);
+      background: var(--cream); border: 1px solid var(--border);
+      border-radius: var(--radius-pill); padding: 3px 12px;
+    }
+
     /* ── Highlights ── */
     .hl-list { list-style: none; margin-top: 20px; }
     .hl-item {
@@ -527,16 +558,18 @@
       </div>
 
       <p class="section-body">
-        틈결은 캐릭터 IP의 세계가 공간이 되는 곳입니다.<br>
-        들어오는 순간, 그 세계 안에 있게 됩니다.<br><br>
-        첫 번째 틈결은 에스더버니와 함께합니다. 아시아 전역에서 사랑받는
-        이 캐릭터의 1,000여 종 상품과 패션·쥬얼리 콜라보 컬렉션이,
-        5개 층의 공간 안에 처음으로 모입니다.
+        틈결(TeumGyul)은 단순한 쇼핑을 넘어, IP와 브랜드, 공간이 결합된
+        새로운 리테일 경험을 제공합니다.<br>
+        매 6개월마다 새로운 IP를 선보이는 라이프스타일 리테일 플랫폼 틈결의
+        첫 플래그쉽 콜라보 IP는 일본에서 가장 사랑받는 캐릭터 IP
+        에스더버니와 함께합니다.<br><br>
+        아시아 전역에서 사랑받는 에스더버니의 1,000여 종 상품과
+        패션·쥬얼리 콜라보 컬렉션을 틈결 성수에서 처음으로 만나보세요.
       </p>
 
       <!-- 에스더버니 메인 -->
       <div class="brand-intro" role="region" aria-label="에스더버니 소개">
-        <img class="brand-card-img" src="images/brand/teumgyul-render-p8.png" alt="틈결 성수 — 에스더버니 갤러리 월 렌더링" loading="lazy">
+        <img class="brand-card-img" src="images/틈결 플래그쉽 외관 이미지.png" alt="틈결 플래그쉽 성수 외관 렌더링" loading="lazy">
         <p class="brand-intro-label">Flagship Space · Main Brand</p>
         <p class="brand-intro-name">Esther Bunny</p>
         <p class="brand-intro-desc">
@@ -549,13 +582,13 @@
       <!-- 콜라보 브랜드 -->
       <div class="brand-collab-grid" role="list" aria-label="협업 브랜드">
         <div class="brand-collab-card" role="listitem">
-          <img class="brand-collab-img" src="images/asifcalie-bi.png" alt="asif CALIE 브랜드 아이덴티티" loading="lazy">
+          <img class="brand-collab-img" src="images/brand/eb-calie-p2.png" alt="에스더버니 × asif CALIE 콜라보 디자인시안" loading="lazy">
           <span class="brand-collab-badge">Collaboration</span>
           <p class="brand-collab-name">애즈이프캘리<br><span style="font-size:12px;font-family:var(--font-sans);letter-spacing:0.04em;">asif CALIE</span></p>
           <p class="brand-collab-desc">에스더버니 × asif CALIE. 틈결에서만, 처음으로.</p>
         </div>
         <div class="brand-collab-card" role="listitem">
-          <img class="brand-collab-img" src="images/brand/78under-p2.png" alt="78UNDER 브랜드 비주얼" loading="lazy">
+          <img class="brand-collab-img" src="images/brand/78under-p2.png" alt="에스더버니 × 78UNDER 콜라보" loading="lazy">
           <span class="brand-collab-badge">Collaboration</span>
           <p class="brand-collab-name">세븐에잇언더<br><span style="font-size:12px;font-family:var(--font-sans);letter-spacing:0.04em;">78UNDER</span></p>
           <p class="brand-collab-desc">에스더버니 × 78UNDER. 틈결에서만, 처음으로.</p>
@@ -564,33 +597,37 @@
     </div>
   </section>
 
-  <!-- 공간 미리보기 -->
-  <section class="space-gallery-section" aria-labelledby="space-gallery-title">
+  <hr class="section-divider">
+
+  <!-- Day Schedule -->
+  <section aria-labelledby="schedule-title">
     <div class="wrap">
-      <p class="section-label">Space Preview</p>
-      <h2 class="section-title" id="space-gallery-title">이런 공간에서 만나게 됩니다</h2>
-      <p class="section-body" style="margin-bottom:0;">에스더버니의 세계관을 담아 설계된 공간입니다. 사진 밖의 이야기는 현장에서 직접 느껴보시기 바랍니다.</p>
-      <div class="space-gallery-scroll" role="list" aria-label="공간 렌더링 미리보기">
-        <div class="space-gallery-item" role="listitem">
-          <img src="images/brand/teumgyul-render-p13.png" alt="틈결 성수 — 메인 리테일 공간 렌더링" loading="lazy">
-          <p class="space-gallery-caption">리테일 공간 일부</p>
+      <p class="section-label">Program</p>
+      <h2 class="section-title" id="schedule-title">3일간의 프로그램</h2>
+      <div class="day-list">
+        <div class="day-card">
+          <p class="day-badge"><span class="day-badge-dot"></span>DAY 1 · 5월 1일 (금)</p>
+          <p class="day-title">Grand Opening</p>
+          <p class="day-desc">레드벨벳 웬디, 엔믹스 릴리 등 유명 아티스트와 매거진이 참여하는 틈결 플래그쉽의 공식 오프닝 행사.</p>
+          <span class="day-tag">브랜드 런칭 & 미디어 집중 데이</span>
         </div>
-        <div class="space-gallery-item" role="listitem">
-          <img src="images/brand/teumgyul-render-p11.png" alt="틈결 성수 — 아카이브 존 렌더링" loading="lazy">
-          <p class="space-gallery-caption">IP 아카이브 존</p>
+        <div class="day-card">
+          <p class="day-badge"><span class="day-badge-dot"></span>DAY 2 · 5월 2일 (토)</p>
+          <p class="day-title">Creator Day</p>
+          <p class="day-desc">에스더버니 원작자 에스더킴(Esther Kim)이 직접 참여하는 드로잉 쇼 및 라이브 콘텐츠 특별 프로그램.</p>
+          <span class="day-tag">IP 스토리 & 아트 경험</span>
         </div>
-        <div class="space-gallery-item" role="listitem">
-          <img src="images/brand/teumgyul-render-p9.png" alt="틈결 성수 — 에스더버니 갤러리 월 렌더링" loading="lazy">
-          <p class="space-gallery-caption">에스더버니 갤러리 월</p>
-        </div>
-        <div class="space-gallery-item" role="listitem">
-          <img src="images/brand/teumgyul-render-p12.png" alt="틈결 성수 — 체험 공간 렌더링" loading="lazy">
-          <p class="space-gallery-caption">체험 &amp; 리테일 존</p>
+        <div class="day-card">
+          <p class="day-badge"><span class="day-badge-dot"></span>DAY 3 · 5월 3일 (일)</p>
+          <p class="day-title">Influencer Day</p>
+          <p class="day-desc">"에스더버니가 서울숲에 온다고?" 국내외 유명 인플루언서들이 참여하는 콘텐츠 중심의 경험형 이벤트 데이.</p>
+          <span class="day-tag">SNS 확산 & 바이럴 극대화</span>
         </div>
       </div>
-      <p class="space-gallery-hint">나머지 층은 현장에서 직접 만나보세요 →</p>
     </div>
   </section>
+
+  <hr class="section-divider">
 
   <!-- Opening Highlights -->
   <section aria-labelledby="highlights-title">
