@@ -834,7 +834,7 @@ body { font-family: 'Noto Sans KR', sans-serif; background: var(--stone); color:
 .cd-panel {
   display: none;
   grid-template-columns: 420px 1fr 1fr;
-  min-height: 680px;
+  min-height: 860px;
 }
 .cd-panel.active { display: grid; }
 
@@ -1048,6 +1048,80 @@ body { font-family: 'Noto Sans KR', sans-serif; background: var(--stone); color:
   font-family: 'Noto Sans KR', sans-serif; font-size: 12px; color: var(--muted); line-height: 1.6;
 }
 
+/* ── STORYBOARD INFOGRAPHIC ── */
+.sb-kicker {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 9px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase;
+  color: var(--muted); margin-bottom: 12px;
+}
+.sb-meta-row { display: flex; flex-direction: column; gap: 6px; margin-bottom: 16px; }
+.sb-chip {
+  display: flex; align-items: flex-start; gap: 8px;
+  background: var(--stone); border-radius: 6px; padding: 8px 12px;
+}
+.sb-chip-key {
+  font-family: 'DM Sans', sans-serif; font-size: 9px; font-weight: 700;
+  letter-spacing: 1.5px; text-transform: uppercase; color: var(--muted);
+  width: 60px; flex-shrink: 0; padding-top: 2px;
+}
+.sb-chip-val {
+  font-family: 'Noto Sans KR', sans-serif; font-size: 11px; color: var(--ink);
+  line-height: 1.55; word-break: keep-all;
+}
+.sb-scenes { display: flex; flex-direction: column; gap: 8px; }
+.sb-scene {
+  display: flex; gap: 12px; align-items: flex-start;
+  background: #fff; border: 1px solid var(--border); border-radius: 8px; padding: 10px 12px;
+}
+.sb-scene-num {
+  font-family: 'DM Sans', sans-serif; font-size: 9px; font-weight: 700;
+  letter-spacing: 1px; color: var(--pink-deep);
+  background: rgba(211, 97, 144, 0.08);
+  border-radius: 4px; padding: 3px 6px; flex-shrink: 0; min-width: 24px; text-align: center;
+}
+.sb-scene-loc {
+  font-family: 'DM Sans', sans-serif; font-size: 11px; font-weight: 600;
+  color: var(--ink); margin-bottom: 3px;
+}
+.sb-scene-txt {
+  font-family: 'Noto Sans KR', sans-serif; font-size: 11px; color: var(--muted);
+  line-height: 1.5; word-break: keep-all;
+}
+
+/* ── PACKAGE TIERS IN RIPPLE ── */
+.ripple-pkg {
+  margin-top: 28px; border-top: 1px solid rgba(255,255,255,0.12); padding-top: 24px;
+}
+.ripple-pkg-label {
+  font-family: 'DM Sans', sans-serif; font-size: 9px; font-weight: 700;
+  letter-spacing: 2px; text-transform: uppercase; color: rgba(255,255,255,0.4); margin-bottom: 14px;
+}
+.ripple-pkg-tiers { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+.rpt {
+  background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 10px; padding: 14px 12px;
+}
+.rpt.recommended { background: rgba(211,97,144,0.18); border-color: var(--pink-deep); }
+.rpt-badge {
+  font-family: 'DM Sans', sans-serif; font-size: 8px; font-weight: 700;
+  letter-spacing: 1px; text-transform: uppercase; color: var(--pink-deep); margin-bottom: 5px;
+}
+.rpt-name {
+  font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 700;
+  color: #fff; margin-bottom: 10px;
+}
+.rpt-tags { display: flex; flex-wrap: wrap; gap: 4px; margin-bottom: 8px; }
+.rpt-tag {
+  font-family: 'DM Sans', sans-serif; font-size: 9px; font-weight: 600;
+  padding: 2px 7px; border-radius: 4px;
+  background: rgba(255,255,255,0.06); color: rgba(255,255,255,0.25);
+}
+.rpt-tag.on { background: rgba(255,255,255,0.16); color: #fff; }
+.rpt-desc {
+  font-family: 'Noto Sans KR', sans-serif; font-size: 10px;
+  color: rgba(255,255,255,0.45); line-height: 1.5; word-break: keep-all;
+}
+
 /* ── WENDY ZONE ── */
 .zone-2-wendy { background: var(--zone2-wendy-bg); }
 
@@ -1248,65 +1322,6 @@ body { font-family: 'Noto Sans KR', sans-serif; background: var(--stone); color:
     </div>
   </div>
 
-  <!-- 패키지 구성 -->
-  <div class="package-section">
-    <div class="package-header">
-      <div class="package-header-left">
-        <span class="zone-num">—</span>
-        <span class="package-header-title">패키지 구성</span>
-      </div>
-      <a href="#" class="package-ref-link">레퍼런스 링크 →</a>
-    </div>
-    <div class="package-grid">
-      <div class="pkg-card">
-        <div class="pkg-name">Lite</div>
-        <div class="pkg-contents">
-          <span class="pkg-tag included">A 피드</span>
-          <span class="pkg-tag included">B 스토리</span>
-          <span class="pkg-tag">C 릴스</span>
-          <span class="pkg-tag">D 스토리</span>
-        </div>
-        <div class="pkg-desc">NMIXX 피드 (릴리) + NMIXX 스토리 (릴리) 기본 2종. 팬덤 코어 커버에 집중한 최소 구성.</div>
-        <div class="pkg-price">비용 협의</div>
-      </div>
-      <div class="pkg-card recommended">
-        <div class="pkg-recommended-badge">Recommended</div>
-        <div class="pkg-name">Standard</div>
-        <div class="pkg-contents">
-          <span class="pkg-tag included">A 피드</span>
-          <span class="pkg-tag included">B 스토리</span>
-          <span class="pkg-tag included">C 릴스</span>
-          <span class="pkg-tag">D 스토리</span>
-        </div>
-        <div class="pkg-desc">데패뉴 릴스를 추가해 팬덤 외 패션 관여층까지 커버. 가성비 최적 조합.</div>
-        <div class="pkg-price">비용 협의</div>
-      </div>
-      <div class="pkg-card">
-        <div class="pkg-name">Premium</div>
-        <div class="pkg-contents">
-          <span class="pkg-tag included">A 피드</span>
-          <span class="pkg-tag included">B 스토리</span>
-          <span class="pkg-tag included">C 릴스</span>
-          <span class="pkg-tag included">D 스토리</span>
-        </div>
-        <div class="pkg-desc">4개 콘텐츠 풀 구성. 팬덤·대중·패션 미디어 3개 채널 동시 커버.</div>
-        <div class="pkg-price">비용 협의</div>
-      </div>
-      <div class="pkg-card">
-        <div class="pkg-name">Full Scale</div>
-        <div class="pkg-contents">
-          <span class="pkg-tag included">A 피드</span>
-          <span class="pkg-tag included">B 스토리</span>
-          <span class="pkg-tag included">C 릴스</span>
-          <span class="pkg-tag included">D 스토리</span>
-          <span class="pkg-tag included">+ 추가</span>
-        </div>
-        <div class="pkg-desc">Premium + 추가 파트너 결합. 플랫폼 다변화 및 타겟층 확장.</div>
-        <div class="pkg-price">비용 협의</div>
-      </div>
-    </div>
-  </div>
-
   <!-- 콘텐츠 카드 섹션 -->
   <div class="content-origin-section">
     <div class="cos-header">
@@ -1360,27 +1375,46 @@ body { font-family: 'Noto Sans KR', sans-serif; background: var(--stone); color:
               <span class="cdp-type-label">Instagram Feed · 3 Slides · @nmixx_official</span>
             </div>
             <div class="cdp-title">현장 방문 화보형 피드<br>NMIXX 공식 발행 + 공동작업자 태그</div>
-            <div class="cdp-desc">에스더버니 팝업스토어를 방문한 릴리의 화보형 피드입니다. <strong>NMIXX 공식 계정(@nmixx_official) 발행 + @틈결아뜰리에 공동작업자 태그</strong>로 두 채널 팔로워에게 동시 노출됩니다.<br><br>좌측 3장 슬라이드 — Burberry 피드 / 릴리 화보 / 공동작업자 태그 사례 — 가 구조 레퍼런스입니다.</div>
-            <div class="cdp-brief-section">
-              <div class="cdp-brief-header">
-                <span class="cdp-brief-label">콘텐츠 스토리보드</span>
-                <span class="cdp-brief-badge">작성 예정</span>
+            <div class="sb-kicker">콘텐츠 스토리보드</div>
+            <div class="sb-meta-row">
+              <div class="sb-chip">
+                <span class="sb-chip-key">콘셉</span>
+                <span class="sb-chip-val">릴리가 아뜰리에를 거닐다 포착된 3컷. 팝업 홍보가 아니라 릴리의 하루처럼.</span>
               </div>
-              <div class="cdp-brief-row">
-                <span class="cdp-brief-row-label">컨셉</span>
-                <span class="cdp-brief-row-value">— 상세 브리프 작성 중</span>
+              <div class="sb-chip">
+                <span class="sb-chip-key">톤 & 무드</span>
+                <span class="sb-chip-val">조용하고 감각적. 핑크·화이트 공간과 착장이 자연스럽게 어우러지는 무드.</span>
               </div>
-              <div class="cdp-brief-row">
-                <span class="cdp-brief-row-label">톤 & 무드</span>
-                <span class="cdp-brief-row-value">— 작성 예정</span>
+              <div class="sb-chip">
+                <span class="sb-chip-key">키 메시지</span>
+                <span class="sb-chip-val">릴리가 픽한 공간. 팬이 따라오고 싶어지는 것.</span>
               </div>
-              <div class="cdp-brief-row">
-                <span class="cdp-brief-row-label">키 메시지</span>
-                <span class="cdp-brief-row-value">— 작성 예정</span>
+              <div class="sb-chip">
+                <span class="sb-chip-key">발행</span>
+                <span class="sb-chip-val">팝업 오픈 당일 촬영 → 편집·보정 후 1주 이내 발행</span>
               </div>
-              <div class="cdp-brief-row">
-                <span class="cdp-brief-row-label">발행 타이밍</span>
-                <span class="cdp-brief-row-value">— 작성 예정</span>
+            </div>
+            <div class="sb-scenes">
+              <div class="sb-scene">
+                <div class="sb-scene-num">S1</div>
+                <div class="sb-scene-body">
+                  <div class="sb-scene-loc">외부 계단</div>
+                  <div class="sb-scene-txt">asif CALIE + 78 Under 풀샷. 성수 팝업 맥락 전달하는 훅.</div>
+                </div>
+              </div>
+              <div class="sb-scene">
+                <div class="sb-scene-num">S2</div>
+                <div class="sb-scene-body">
+                  <div class="sb-scene-loc">B1F 원화 갤러리</div>
+                  <div class="sb-scene-txt">릴리가 원화 들여다보는 자연스러운 미디엄샷.</div>
+                </div>
+              </div>
+              <div class="sb-scene">
+                <div class="sb-scene-num">S3</div>
+                <div class="sb-scene-body">
+                  <div class="sb-scene-loc">3F 핑크룸 조형물</div>
+                  <div class="sb-scene-txt">가장 임팩트 있는 포토스팟. 저장 유도 컷.</div>
+                </div>
               </div>
             </div>
           </div>
@@ -1434,27 +1468,46 @@ body { font-family: 'Noto Sans KR', sans-serif; background: var(--stone); color:
               <span class="cdp-type-label">Instagram Story · 24h · @nmixx_official</span>
             </div>
             <div class="cdp-title">현장 스토리<br>NMIXX 공식 계정</div>
-            <div class="cdp-desc">팝업스토어 방문 당일, NMIXX 공식 계정(@nmixx_official)에서 발행되는 24시간 한정 스토리입니다. 위치 태그와 제품 태그를 활용해 현장감을 그대로 전달합니다.</div>
-            <div class="cdp-brief-section">
-              <div class="cdp-brief-header">
-                <span class="cdp-brief-label">콘텐츠 스토리보드</span>
-                <span class="cdp-brief-badge">작성 예정</span>
+            <div class="sb-kicker">콘텐츠 스토리보드</div>
+            <div class="sb-meta-row">
+              <div class="sb-chip">
+                <span class="sb-chip-key">콘셉</span>
+                <span class="sb-chip-val">팝업스토어 방문 그 순간. 릴리의 시선으로 담은 현장 스케치.</span>
               </div>
-              <div class="cdp-brief-row">
-                <span class="cdp-brief-row-label">컨셉</span>
-                <span class="cdp-brief-row-value">— 상세 브리프 작성 중</span>
+              <div class="sb-chip">
+                <span class="sb-chip-key">톤 & 무드</span>
+                <span class="sb-chip-val">생생하고 즉흥적. 24시간 한정이라는 긴박감을 살리는 리얼 현장감.</span>
               </div>
-              <div class="cdp-brief-row">
-                <span class="cdp-brief-row-label">톤 & 무드</span>
-                <span class="cdp-brief-row-value">— 작성 예정</span>
+              <div class="sb-chip">
+                <span class="sb-chip-key">키 메시지</span>
+                <span class="sb-chip-val">지금 바로 가야 할 이유.</span>
               </div>
-              <div class="cdp-brief-row">
-                <span class="cdp-brief-row-label">키 메시지</span>
-                <span class="cdp-brief-row-value">— 작성 예정</span>
+              <div class="sb-chip">
+                <span class="sb-chip-key">발행</span>
+                <span class="sb-chip-val">방문 당일 실시간 발행 · 24시간 내 집중 소비</span>
               </div>
-              <div class="cdp-brief-row">
-                <span class="cdp-brief-row-label">발행 타이밍</span>
-                <span class="cdp-brief-row-value">— 작성 예정</span>
+            </div>
+            <div class="sb-scenes">
+              <div class="sb-scene">
+                <div class="sb-scene-num">S1</div>
+                <div class="sb-scene-body">
+                  <div class="sb-scene-loc">아뜰리에 입장</div>
+                  <div class="sb-scene-txt">입구 + 위치 태그. 팔로워의 방문 호기심 유발.</div>
+                </div>
+              </div>
+              <div class="sb-scene">
+                <div class="sb-scene-num">S2</div>
+                <div class="sb-scene-body">
+                  <div class="sb-scene-loc">공간 하이라이트</div>
+                  <div class="sb-scene-txt">핑크룸·루프탑 등 포토스팟 중심 공간 소개.</div>
+                </div>
+              </div>
+              <div class="sb-scene">
+                <div class="sb-scene-num">S3</div>
+                <div class="sb-scene-body">
+                  <div class="sb-scene-loc">팝업 안내 + CTA</div>
+                  <div class="sb-scene-txt">제품 + 일정 안내. 계정 태그로 브랜드 연결.</div>
+                </div>
               </div>
             </div>
           </div>
@@ -1504,27 +1557,53 @@ body { font-family: 'Noto Sans KR', sans-serif; background: var(--stone); color:
               <span class="cdp-type-label">Instagram Reels · @dailyfashion_news · 단독</span>
             </div>
             <div class="cdp-title">현장 방문 인터뷰 릴스<br>데패뉴 단독 발행</div>
-            <div class="cdp-desc">릴리의 방문 소감과 추천 포인트를 데패뉴 특유의 스낵형 인터뷰 포맷으로 담습니다. <strong>공동작업자 없이 데패뉴 계정 단독 발행</strong>으로, 패션 고관여층과 일반 대중에게 브랜드를 자연스럽게 소개합니다.</div>
-            <div class="cdp-brief-section">
-              <div class="cdp-brief-header">
-                <span class="cdp-brief-label">콘텐츠 스토리보드</span>
-                <span class="cdp-brief-badge">작성 예정</span>
+            <div class="sb-kicker">콘텐츠 스토리보드 · 60–90초</div>
+            <div class="sb-meta-row">
+              <div class="sb-chip">
+                <span class="sb-chip-key">콘셉</span>
+                <span class="sb-chip-val">데패뉴 기자가 팝업 현장을 직접 취재. 공간 소개 + 릴리·웬디 인터뷰를 하나의 영상에.</span>
               </div>
-              <div class="cdp-brief-row">
-                <span class="cdp-brief-row-label">컨셉</span>
-                <span class="cdp-brief-row-value">— 상세 브리프 작성 중</span>
+              <div class="sb-chip">
+                <span class="sb-chip-key">톤 & 무드</span>
+                <span class="sb-chip-val">가볍고 유쾌한 취재 톤. 광고가 아닌 콘텐츠로 소비되도록.</span>
               </div>
-              <div class="cdp-brief-row">
-                <span class="cdp-brief-row-label">톤 & 무드</span>
-                <span class="cdp-brief-row-value">— 작성 예정</span>
+              <div class="sb-chip">
+                <span class="sb-chip-key">키 메시지</span>
+                <span class="sb-chip-val">릴리·웬디가 함께한 공간. 팔로워가 직접 가고 싶어지는 것.</span>
               </div>
-              <div class="cdp-brief-row">
-                <span class="cdp-brief-row-label">키 메시지</span>
-                <span class="cdp-brief-row-value">— 작성 예정</span>
+              <div class="sb-chip">
+                <span class="sb-chip-key">발행</span>
+                <span class="sb-chip-val">팝업 오픈 당일 촬영 → 편집 후 1주 이내 발행</span>
               </div>
-              <div class="cdp-brief-row">
-                <span class="cdp-brief-row-label">발행 타이밍</span>
-                <span class="cdp-brief-row-value">— 작성 예정</span>
+            </div>
+            <div class="sb-scenes">
+              <div class="sb-scene">
+                <div class="sb-scene-num">C1</div>
+                <div class="sb-scene-body">
+                  <div class="sb-scene-loc">오프닝 훅</div>
+                  <div class="sb-scene-txt">"성수에 이런 공간이 생겼다고?" + 건물 외관 b-roll</div>
+                </div>
+              </div>
+              <div class="sb-scene">
+                <div class="sb-scene-num">C2</div>
+                <div class="sb-scene-body">
+                  <div class="sb-scene-loc">공간 투어</div>
+                  <div class="sb-scene-txt">데패뉴 기자 등장 + 층별 하이라이트 소개.</div>
+                </div>
+              </div>
+              <div class="sb-scene">
+                <div class="sb-scene-num">C3</div>
+                <div class="sb-scene-body">
+                  <div class="sb-scene-loc">셀럽 인터뷰</div>
+                  <div class="sb-scene-txt">릴리·웬디 인사 + "가장 마음에 든 공간은?" 인터뷰.</div>
+                </div>
+              </div>
+              <div class="sb-scene">
+                <div class="sb-scene-num">C4</div>
+                <div class="sb-scene-body">
+                  <div class="sb-scene-loc">마무리</div>
+                  <div class="sb-scene-txt">두 사람 함께 카메라 보며 한 마디. 방문 유도 마무리.</div>
+                </div>
               </div>
             </div>
           </div>
@@ -1578,27 +1657,46 @@ body { font-family: 'Noto Sans KR', sans-serif; background: var(--stone); color:
               <span class="cdp-type-label">Instagram Story · 24h · @dailyfashion_news</span>
             </div>
             <div class="cdp-title">팝업 소식 스토리<br>데패뉴 단독 발행</div>
-            <div class="cdp-desc">팝업스토어 개최 소식을 속보·프레스 형태로 간결하게 전달하는 스토리입니다. <strong>링크 스티커로 팝업 상세 페이지 또는 브랜드 공식 계정으로 직접 유도</strong>합니다.</div>
-            <div class="cdp-brief-section">
-              <div class="cdp-brief-header">
-                <span class="cdp-brief-label">콘텐츠 스토리보드</span>
-                <span class="cdp-brief-badge">작성 예정</span>
+            <div class="sb-kicker">콘텐츠 스토리보드</div>
+            <div class="sb-meta-row">
+              <div class="sb-chip">
+                <span class="sb-chip-key">콘셉</span>
+                <span class="sb-chip-val">속보형 프레스 릴리즈. 팝업 개최 소식을 가장 먼저 전달.</span>
               </div>
-              <div class="cdp-brief-row">
-                <span class="cdp-brief-row-label">컨셉</span>
-                <span class="cdp-brief-row-value">— 상세 브리프 작성 중</span>
+              <div class="sb-chip">
+                <span class="sb-chip-key">톤 & 무드</span>
+                <span class="sb-chip-val">간결하고 임팩트 있게. 데패뉴 특유의 정보 전달형 스타일.</span>
               </div>
-              <div class="cdp-brief-row">
-                <span class="cdp-brief-row-label">톤 & 무드</span>
-                <span class="cdp-brief-row-value">— 작성 예정</span>
+              <div class="sb-chip">
+                <span class="sb-chip-key">키 메시지</span>
+                <span class="sb-chip-val">지금 이 공간, 놓치면 후회.</span>
               </div>
-              <div class="cdp-brief-row">
-                <span class="cdp-brief-row-label">키 메시지</span>
-                <span class="cdp-brief-row-value">— 작성 예정</span>
+              <div class="sb-chip">
+                <span class="sb-chip-key">발행</span>
+                <span class="sb-chip-val">팝업 오픈 당일 즉시 발행 · 24시간 내 집중 소비</span>
               </div>
-              <div class="cdp-brief-row">
-                <span class="cdp-brief-row-label">발행 타이밍</span>
-                <span class="cdp-brief-row-value">— 작성 예정</span>
+            </div>
+            <div class="sb-scenes">
+              <div class="sb-scene">
+                <div class="sb-scene-num">S1</div>
+                <div class="sb-scene-body">
+                  <div class="sb-scene-loc">커버 슬라이드</div>
+                  <div class="sb-scene-txt">팝업 정보 + 비주얼. "지금 성수에서" 자막 훅.</div>
+                </div>
+              </div>
+              <div class="sb-scene">
+                <div class="sb-scene-num">S2</div>
+                <div class="sb-scene-body">
+                  <div class="sb-scene-loc">공간 하이라이트</div>
+                  <div class="sb-scene-txt">핵심 포토스팟 스틸컷. 방문 욕구 자극.</div>
+                </div>
+              </div>
+              <div class="sb-scene">
+                <div class="sb-scene-num">S3</div>
+                <div class="sb-scene-body">
+                  <div class="sb-scene-loc">링크 스티커 + CTA</div>
+                  <div class="sb-scene-txt">팝업 상세 페이지 또는 브랜드 계정 직접 연결.</div>
+                </div>
               </div>
             </div>
           </div>
@@ -1671,6 +1769,53 @@ body { font-family: 'Noto Sans KR', sans-serif; background: var(--stone); color:
         <div class="ripple-step-label">행동 전환</div>
         <div class="ripple-step-value">방문 유도</div>
         <div class="ripple-step-note">팝업 방문 관심 환기</div>
+      </div>
+    </div>
+    <div class="ripple-pkg">
+      <div class="ripple-pkg-label">패키지 구성</div>
+      <div class="ripple-pkg-tiers">
+        <div class="rpt">
+          <div class="rpt-name">Lite</div>
+          <div class="rpt-tags">
+            <span class="rpt-tag on">A 피드</span>
+            <span class="rpt-tag on">B 스토리</span>
+            <span class="rpt-tag">C 릴스</span>
+            <span class="rpt-tag">D 스토리</span>
+          </div>
+          <div class="rpt-desc">팬덤 코어 커버에 집중한 최소 구성.</div>
+        </div>
+        <div class="rpt recommended">
+          <div class="rpt-badge">Recommended</div>
+          <div class="rpt-name">Standard</div>
+          <div class="rpt-tags">
+            <span class="rpt-tag on">A 피드</span>
+            <span class="rpt-tag on">B 스토리</span>
+            <span class="rpt-tag on">C 릴스</span>
+            <span class="rpt-tag">D 스토리</span>
+          </div>
+          <div class="rpt-desc">데패뉴 릴스 추가. 가성비 최적 조합.</div>
+        </div>
+        <div class="rpt">
+          <div class="rpt-name">Premium</div>
+          <div class="rpt-tags">
+            <span class="rpt-tag on">A 피드</span>
+            <span class="rpt-tag on">B 스토리</span>
+            <span class="rpt-tag on">C 릴스</span>
+            <span class="rpt-tag on">D 스토리</span>
+          </div>
+          <div class="rpt-desc">팬덤·대중·패션 미디어 3채널 동시 커버.</div>
+        </div>
+        <div class="rpt">
+          <div class="rpt-name">Full Scale</div>
+          <div class="rpt-tags">
+            <span class="rpt-tag on">A 피드</span>
+            <span class="rpt-tag on">B 스토리</span>
+            <span class="rpt-tag on">C 릴스</span>
+            <span class="rpt-tag on">D 스토리</span>
+            <span class="rpt-tag on">+ α</span>
+          </div>
+          <div class="rpt-desc">플랫폼 다변화 및 타겟층 확장.</div>
+        </div>
       </div>
     </div>
   </div>
@@ -2006,27 +2151,46 @@ body { font-family: 'Noto Sans KR', sans-serif; background: var(--stone); color:
               <span class="cdp-type-label">Instagram Story · 24h · @dailyfashion_news</span>
             </div>
             <div class="cdp-title">팝업 소식 스토리<br>데패뉴 단독 발행</div>
-            <div class="cdp-desc">팝업스토어 개최 소식을 속보·프레스 형태로 간결하게 전달하는 스토리입니다. <strong>링크 스티커로 팝업 상세 페이지 또는 브랜드 공식 계정으로 직접 유도</strong>합니다.</div>
-            <div class="cdp-brief-section">
-              <div class="cdp-brief-header">
-                <span class="cdp-brief-label">콘텐츠 스토리보드</span>
-                <span class="cdp-brief-badge">작성 예정</span>
+            <div class="sb-kicker">콘텐츠 스토리보드</div>
+            <div class="sb-meta-row">
+              <div class="sb-chip">
+                <span class="sb-chip-key">콘셉</span>
+                <span class="sb-chip-val">속보형 프레스 릴리즈. 팝업 개최 소식을 가장 먼저 전달.</span>
               </div>
-              <div class="cdp-brief-row">
-                <span class="cdp-brief-row-label">컨셉</span>
-                <span class="cdp-brief-row-value">— 상세 브리프 작성 중</span>
+              <div class="sb-chip">
+                <span class="sb-chip-key">톤 & 무드</span>
+                <span class="sb-chip-val">간결하고 임팩트 있게. 데패뉴 특유의 정보 전달형 스타일.</span>
               </div>
-              <div class="cdp-brief-row">
-                <span class="cdp-brief-row-label">톤 & 무드</span>
-                <span class="cdp-brief-row-value">— 작성 예정</span>
+              <div class="sb-chip">
+                <span class="sb-chip-key">키 메시지</span>
+                <span class="sb-chip-val">지금 이 공간, 놓치면 후회.</span>
               </div>
-              <div class="cdp-brief-row">
-                <span class="cdp-brief-row-label">키 메시지</span>
-                <span class="cdp-brief-row-value">— 작성 예정</span>
+              <div class="sb-chip">
+                <span class="sb-chip-key">발행</span>
+                <span class="sb-chip-val">팝업 오픈 당일 즉시 발행 · 24시간 내 집중 소비</span>
               </div>
-              <div class="cdp-brief-row">
-                <span class="cdp-brief-row-label">발행 타이밍</span>
-                <span class="cdp-brief-row-value">— 작성 예정</span>
+            </div>
+            <div class="sb-scenes">
+              <div class="sb-scene">
+                <div class="sb-scene-num">S1</div>
+                <div class="sb-scene-body">
+                  <div class="sb-scene-loc">커버 슬라이드</div>
+                  <div class="sb-scene-txt">팝업 정보 + 비주얼. "지금 성수에서" 자막 훅.</div>
+                </div>
+              </div>
+              <div class="sb-scene">
+                <div class="sb-scene-num">S2</div>
+                <div class="sb-scene-body">
+                  <div class="sb-scene-loc">공간 하이라이트</div>
+                  <div class="sb-scene-txt">핵심 포토스팟 스틸컷. 방문 욕구 자극.</div>
+                </div>
+              </div>
+              <div class="sb-scene">
+                <div class="sb-scene-num">S3</div>
+                <div class="sb-scene-body">
+                  <div class="sb-scene-loc">링크 스티커 + CTA</div>
+                  <div class="sb-scene-txt">팝업 상세 페이지 또는 브랜드 계정 직접 연결.</div>
+                </div>
               </div>
             </div>
           </div>
