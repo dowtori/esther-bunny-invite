@@ -416,6 +416,30 @@
       .space-gallery-hint { padding-right: 20px; }
     }
 
+    /* ── Highlights ── */
+    .hl-list { list-style: none; margin-top: 20px; }
+    .hl-item {
+      display: flex; gap: 16px; align-items: flex-start;
+      padding: 18px 0; border-bottom: 1px solid var(--border);
+    }
+    .hl-item:first-child { border-top: 1px solid var(--border); }
+    .hl-num {
+      font-family: var(--font-serif); font-size: 13px; font-weight: 300;
+      color: var(--accent); min-width: 22px; padding-top: 2px; letter-spacing: 0.04em;
+    }
+    .hl-title {
+      font-size: 14px; font-weight: 500; color: var(--ink);
+      margin-bottom: 5px; line-height: 1.5; word-break: keep-all;
+    }
+    .hl-desc { font-size: 13px; color: var(--ink60); line-height: 1.75; word-break: keep-all; }
+    .hl-badge {
+      display: inline-block; font-size: 9px; font-weight: 500; letter-spacing: 0.1em;
+      text-transform: uppercase; color: var(--accent2);
+      background: rgba(255,133,161,0.08); border: 1px solid rgba(255,133,161,0.2);
+      border-radius: var(--radius-pill); padding: 2px 8px;
+      margin-left: 6px; vertical-align: middle;
+    }
+
     /* ── Mobile ── */
     @media (max-width: 480px) {
       .hero { padding: 56px 20px 48px; }
@@ -503,10 +527,10 @@
       </div>
 
       <p class="section-body">
-        틈결은 수백 개에서 수천 개에 이르는 다양한 IP 기반 상품과 함께
-        패션, 뷰티 등 이종 산업과의 협업을 통해 탄생한 콜라보 상품,
-        그리고 IP를 직접 체험할 수 있는 공간으로 구성되어 있습니다.<br><br>
-        틈결의 첫 플래그쉽 스토어는 일본에서 큰 사랑을 받고 있는
+        틈결의 첫 번째 플래그쉽은 5개 층 전체를 에스더버니의 세계관으로 채운
+        몰입형 경험 공간입니다. 아시아 전역에서 엄선된 1,000여 종의 IP 상품,
+        패션과 쥬얼리로 확장된 콜라보 라인업이 처음으로 한 공간에 모입니다.<br><br>
+        틈결의 첫 플래그쉽 스토어는 일본을 비롯한 아시아 전역에서 사랑받는
         캐릭터 IP 에스더버니(Esther Bunny)와 함께 성수에서 출발합니다.
       </p>
 
@@ -543,28 +567,73 @@
   <!-- 공간 미리보기 -->
   <section class="space-gallery-section" aria-labelledby="space-gallery-title">
     <div class="wrap">
-      <p class="section-label">Space Preview</p>
-      <h2 class="section-title" id="space-gallery-title">공간을 미리 만나보세요</h2>
-      <p class="section-body" style="margin-bottom:0;">아이코닉무브먼트가 설계한 틈결 성수점은 IP 아트와 리테일이 공존하는 경험형 공간입니다. 캐릭터 세계관을 담은 갤러리 월과 함께, 에스더버니의 모든 것을 한 곳에서 만나보실 수 있습니다.</p>
+      <p class="section-label">Sneak Peek</p>
+      <h2 class="section-title" id="space-gallery-title">공간의 일부를 먼저 공개합니다</h2>
+      <p class="section-body" style="margin-bottom:0;">아이코닉무브먼트가 설계한 틈결 성수점의 일부 장면입니다. 5개 층에 걸친 나머지 공간과 그 안에 담긴 이야기는 현장에서 직접 확인하실 수 있습니다.</p>
       <div class="space-gallery-scroll" role="list" aria-label="공간 렌더링 미리보기">
         <div class="space-gallery-item" role="listitem">
           <img src="images/brand/teumgyul-render-p13.png" alt="틈결 성수 — 메인 리테일 공간 렌더링" loading="lazy">
-          <p class="space-gallery-caption">B1F · 메인 리테일 공간</p>
+          <p class="space-gallery-caption">리테일 공간 일부</p>
         </div>
         <div class="space-gallery-item" role="listitem">
           <img src="images/brand/teumgyul-render-p11.png" alt="틈결 성수 — 아카이브 존 렌더링" loading="lazy">
-          <p class="space-gallery-caption">B1F · 아카이브 존</p>
+          <p class="space-gallery-caption">IP 아카이브 존</p>
         </div>
         <div class="space-gallery-item" role="listitem">
           <img src="images/brand/teumgyul-render-p9.png" alt="틈결 성수 — 에스더버니 갤러리 월 렌더링" loading="lazy">
-          <p class="space-gallery-caption">B1F · 에스더버니 갤러리 월</p>
+          <p class="space-gallery-caption">에스더버니 갤러리 월</p>
         </div>
         <div class="space-gallery-item" role="listitem">
           <img src="images/brand/teumgyul-render-p12.png" alt="틈결 성수 — 체험 공간 렌더링" loading="lazy">
-          <p class="space-gallery-caption">B1F · 체험 &amp; 리테일 존</p>
+          <p class="space-gallery-caption">체험 &amp; 리테일 존</p>
         </div>
       </div>
-      <p class="space-gallery-hint">← 옆으로 스크롤하여 더 보기</p>
+      <p class="space-gallery-hint">나머지 층은 현장에서 직접 만나보세요 →</p>
+    </div>
+  </section>
+
+  <!-- Opening Highlights -->
+  <section aria-labelledby="highlights-title">
+    <div class="wrap">
+      <p class="section-label">What to Expect</p>
+      <h2 class="section-title" id="highlights-title">Opening에서 직접 만나게 됩니다</h2>
+      <ol class="hl-list">
+        <li class="hl-item">
+          <span class="hl-num">01</span>
+          <div>
+            <p class="hl-title">아시아 전역에서 모인 에스더버니 1,000여 종<span class="hl-badge">Scale</span></p>
+            <p class="hl-desc">국내 어디서도 한번에 만날 수 없었던 규모. 아시아 각국의 단독 수집 상품까지 한 공간에서 만나볼 수 있습니다.</p>
+          </div>
+        </li>
+        <li class="hl-item">
+          <span class="hl-num">02</span>
+          <div>
+            <p class="hl-title">세상 어디보다 먼저 — 태닝버니 외 5종 단독 공개<span class="hl-badge">Exclusive</span></p>
+            <p class="hl-desc">이번 시즌 한정 태닝버니 캐릭터를 포함, 5종의 신규 에스더버니를 틈결에서 단독으로 처음 선보입니다.</p>
+          </div>
+        </li>
+        <li class="hl-item">
+          <span class="hl-num">03</span>
+          <div>
+            <p class="hl-title">에스더버니 세계관을 담은 고감도 쥬얼리</p>
+            <p class="hl-desc">캐릭터 IP가 패션을 넘어 쥬얼리로 확장됩니다. 틈결에서만 만날 수 있는 에스더버니 쥬얼리 라인을 소개합니다.</p>
+          </div>
+        </li>
+        <li class="hl-item">
+          <span class="hl-num">04</span>
+          <div>
+            <p class="hl-title">asif CALIE × 78UNDER — 콜라보 패션 선공개</p>
+            <p class="hl-desc">국내 유명 패션 브랜드 두 곳과 함께 탄생한 에스더버니 콜라보 컬렉션. Opening 기간에 가장 먼저 만나보실 수 있습니다.</p>
+          </div>
+        </li>
+        <li class="hl-item">
+          <span class="hl-num">05</span>
+          <div>
+            <p class="hl-title">5개 층을 가득 채운 에스더버니 유니버스<span class="hl-badge">Immersive</span></p>
+            <p class="hl-desc">상품 진열을 넘어, 에스더버니의 세계관 전체를 5개 층 공간으로 체험합니다. 각 층마다 다른 이야기가 펼쳐집니다.</p>
+          </div>
+        </li>
+      </ol>
     </div>
   </section>
 
