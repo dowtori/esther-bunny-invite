@@ -1088,6 +1088,34 @@ body { font-family: 'Noto Sans KR', sans-serif; background: var(--stone); color:
   line-height: 1.5; word-break: keep-all;
 }
 
+/* ── COMPACT RIPPLE IN DATA COLUMN ── */
+.cdp-ripple {
+  margin-top: 16px;
+  background: var(--ink); border-radius: 10px;
+  padding: 16px 18px;
+}
+.cdp-ripple-label {
+  font-family: 'DM Sans', sans-serif; font-size: 9px; font-weight: 700;
+  letter-spacing: 2px; text-transform: uppercase; color: rgba(255,255,255,0.35);
+  margin-bottom: 12px;
+}
+.cdp-rs {
+  display: flex; align-items: flex-start; gap: 10px;
+  padding: 8px 0; border-bottom: 1px solid rgba(255,255,255,0.07);
+}
+.cdp-rs:last-child { border-bottom: none; }
+.cdp-rs-icon { font-size: 13px; flex-shrink: 0; width: 18px; }
+.cdp-rs-title {
+  font-family: 'DM Sans', sans-serif; font-size: 11px; font-weight: 600;
+  color: rgba(255,255,255,0.55); line-height: 1.3;
+}
+.cdp-rs-note {
+  font-family: 'Noto Sans KR', sans-serif; font-size: 10px;
+  color: rgba(255,255,255,0.3); margin-top: 2px; word-break: keep-all;
+}
+.cdp-rs.hl .cdp-rs-title { color: var(--pink-deep); }
+.cdp-rs.hl .cdp-rs-note { color: rgba(211,97,144,0.55); }
+
 /* ── PACKAGE TIERS IN RIPPLE ── */
 .ripple-pkg {
   margin-top: 28px; border-top: 1px solid rgba(255,255,255,0.12); padding-top: 24px;
@@ -1445,6 +1473,14 @@ body { font-family: 'Noto Sans KR', sans-serif; background: var(--stone); color:
               <div class="cdp-outcome-label">기대 효과</div>
               <div class="cdp-outcome-text">팬덤 내 초동 확산 → 공간·아이템 인지. 팬 커뮤니티에서 브랜드 콘텐츠가 자연스럽게 소비됩니다.</div>
             </div>
+            <div class="cdp-ripple">
+              <div class="cdp-ripple-label">기대 퍼포먼스</div>
+              <div class="cdp-rs"><div class="cdp-rs-icon">📱</div><div><div class="cdp-rs-title">코어 채널 발행</div><div class="cdp-rs-note">4 Posts · 피드·스토리·릴스</div></div></div>
+              <div class="cdp-rs"><div class="cdp-rs-icon">👀</div><div><div class="cdp-rs-title">팬덤 노출 확보</div><div class="cdp-rs-note">코어 팬덤 + 대중 침투</div></div></div>
+              <div class="cdp-rs"><div class="cdp-rs-icon">💬</div><div><div class="cdp-rs-title">관여도 생성</div><div class="cdp-rs-note">저장·공유·댓글 ER</div></div></div>
+              <div class="cdp-rs hl"><div class="cdp-rs-icon">📣</div><div><div class="cdp-rs-title">인지도 형성</div><div class="cdp-rs-note">패션 고관여층 노출</div></div></div>
+              <div class="cdp-rs hl"><div class="cdp-rs-icon">📍</div><div><div class="cdp-rs-title">방문 유도</div><div class="cdp-rs-note">팝업 방문 관심 환기</div></div></div>
+            </div>
           </div>
         </div>
 
@@ -1537,6 +1573,14 @@ body { font-family: 'Noto Sans KR', sans-serif; background: var(--stone); color:
             <div class="cdp-outcome">
               <div class="cdp-outcome-label">기대 효과</div>
               <div class="cdp-outcome-text">실시간 현장감 전달 → 팔로워 간 DM·공유 유발. 하이라이트 저장 시 상시 노출로 이어집니다.</div>
+            </div>
+            <div class="cdp-ripple">
+              <div class="cdp-ripple-label">기대 퍼포먼스</div>
+              <div class="cdp-rs"><div class="cdp-rs-icon">📱</div><div><div class="cdp-rs-title">코어 채널 발행</div><div class="cdp-rs-note">4 Posts · 피드·스토리·릴스</div></div></div>
+              <div class="cdp-rs"><div class="cdp-rs-icon">👀</div><div><div class="cdp-rs-title">팬덤 노출 확보</div><div class="cdp-rs-note">코어 팬덤 + 대중 침투</div></div></div>
+              <div class="cdp-rs"><div class="cdp-rs-icon">💬</div><div><div class="cdp-rs-title">관여도 생성</div><div class="cdp-rs-note">저장·공유·댓글 ER</div></div></div>
+              <div class="cdp-rs hl"><div class="cdp-rs-icon">📣</div><div><div class="cdp-rs-title">인지도 형성</div><div class="cdp-rs-note">패션 고관여층 노출</div></div></div>
+              <div class="cdp-rs hl"><div class="cdp-rs-icon">📍</div><div><div class="cdp-rs-title">방문 유도</div><div class="cdp-rs-note">팝업 방문 관심 환기</div></div></div>
             </div>
           </div>
         </div>
@@ -1634,6 +1678,14 @@ body { font-family: 'Noto Sans KR', sans-serif; background: var(--stone); color:
               <div class="cdp-outcome-label">기대 효과</div>
               <div class="cdp-outcome-text">트렌드 민감층 노출 → 브랜드 감도 어필. 릴스 알고리즘을 통한 비팔로워 확산 가능성이 있습니다.</div>
             </div>
+            <div class="cdp-ripple">
+              <div class="cdp-ripple-label">기대 퍼포먼스</div>
+              <div class="cdp-rs"><div class="cdp-rs-icon">📱</div><div><div class="cdp-rs-title">코어 채널 발행</div><div class="cdp-rs-note">4 Posts · 피드·스토리·릴스</div></div></div>
+              <div class="cdp-rs"><div class="cdp-rs-icon">👀</div><div><div class="cdp-rs-title">팬덤 노출 확보</div><div class="cdp-rs-note">코어 팬덤 + 대중 침투</div></div></div>
+              <div class="cdp-rs"><div class="cdp-rs-icon">💬</div><div><div class="cdp-rs-title">관여도 생성</div><div class="cdp-rs-note">저장·공유·댓글 ER</div></div></div>
+              <div class="cdp-rs hl"><div class="cdp-rs-icon">📣</div><div><div class="cdp-rs-title">인지도 형성</div><div class="cdp-rs-note">패션 고관여층 노출</div></div></div>
+              <div class="cdp-rs hl"><div class="cdp-rs-icon">📍</div><div><div class="cdp-rs-title">방문 유도</div><div class="cdp-rs-note">팝업 방문 관심 환기</div></div></div>
+            </div>
           </div>
         </div>
 
@@ -1727,95 +1779,75 @@ body { font-family: 'Noto Sans KR', sans-serif; background: var(--stone); color:
               <div class="cdp-outcome-label">기대 효과</div>
               <div class="cdp-outcome-text">미디어 공신력 기반 정보 전달 → 팝업 방문 관심 환기 및 링크 클릭 유도.</div>
             </div>
+            <div class="cdp-ripple">
+              <div class="cdp-ripple-label">기대 퍼포먼스</div>
+              <div class="cdp-rs"><div class="cdp-rs-icon">📱</div><div><div class="cdp-rs-title">코어 채널 발행</div><div class="cdp-rs-note">4 Posts · 피드·스토리·릴스</div></div></div>
+              <div class="cdp-rs"><div class="cdp-rs-icon">👀</div><div><div class="cdp-rs-title">팬덤 노출 확보</div><div class="cdp-rs-note">코어 팬덤 + 대중 침투</div></div></div>
+              <div class="cdp-rs"><div class="cdp-rs-icon">💬</div><div><div class="cdp-rs-title">관여도 생성</div><div class="cdp-rs-note">저장·공유·댓글 ER</div></div></div>
+              <div class="cdp-rs hl"><div class="cdp-rs-icon">📣</div><div><div class="cdp-rs-title">인지도 형성</div><div class="cdp-rs-note">패션 고관여층 노출</div></div></div>
+              <div class="cdp-rs hl"><div class="cdp-rs-icon">📍</div><div><div class="cdp-rs-title">방문 유도</div><div class="cdp-rs-note">팝업 방문 관심 환기</div></div></div>
+            </div>
           </div>
         </div>
-
-
 
       </div><!-- /cd-panels -->
     </div><!-- /content-dashboard -->
   </div><!-- /content-origin-section -->
 
-  <!-- 예상 파급 경로 (현실적 수정) -->
-  <div class="ripple-section">
-    <div class="ripple-section-label">기대 퍼포먼스 — 코어 채널 발행 → 브랜드 관여 전환</div>
-    <div class="ripple-chain">
-      <div class="ripple-step">
-        <div class="ripple-step-icon">📱</div>
-        <div class="ripple-step-label">코어 포메이션</div>
-        <div class="ripple-step-value">4 Posts</div>
-        <div class="ripple-step-note">피드·인터뷰·스토리</div>
-      </div>
-      <div class="ripple-step">
-        <div class="ripple-step-icon">👀</div>
-        <div class="ripple-step-label">브랜드 노출</div>
-        <div class="ripple-step-value">규모 확보</div>
-        <div class="ripple-step-note">팬덤 + 대중 침투</div>
-      </div>
-      <div class="ripple-step">
-        <div class="ripple-step-icon">💬</div>
-        <div class="ripple-step-label">관여도 지표</div>
-        <div class="ripple-step-value">상호 작용</div>
-        <div class="ripple-step-note">저장·공유·댓글 ER</div>
-      </div>
-      <div class="ripple-step hl">
-        <div class="ripple-step-icon">📣</div>
-        <div class="ripple-step-label">브랜드 인지</div>
-        <div class="ripple-step-value">인지도 형성</div>
-        <div class="ripple-step-note">패션 고관여층 노출</div>
-      </div>
-      <div class="ripple-step hl">
-        <div class="ripple-step-icon">📍</div>
-        <div class="ripple-step-label">행동 전환</div>
-        <div class="ripple-step-value">방문 유도</div>
-        <div class="ripple-step-note">팝업 방문 관심 환기</div>
+  <!-- 패키지 구성 -->
+  <div class="package-section">
+    <div class="package-header">
+      <div class="package-header-left">
+        <span class="zone-num">—</span>
+        <span class="package-header-title">패키지 구성</span>
       </div>
     </div>
-    <div class="ripple-pkg">
-      <div class="ripple-pkg-label">패키지 구성</div>
-      <div class="ripple-pkg-tiers">
-        <div class="rpt">
-          <div class="rpt-name">Lite</div>
-          <div class="rpt-tags">
-            <span class="rpt-tag on">A 피드</span>
-            <span class="rpt-tag on">B 스토리</span>
-            <span class="rpt-tag">C 릴스</span>
-            <span class="rpt-tag">D 스토리</span>
-          </div>
-          <div class="rpt-desc">팬덤 코어 커버에 집중한 최소 구성.</div>
+    <div class="package-grid">
+      <div class="pkg-card">
+        <div class="pkg-name">Lite</div>
+        <div class="pkg-contents">
+          <span class="pkg-tag included">A 피드</span>
+          <span class="pkg-tag included">B 스토리</span>
+          <span class="pkg-tag">C 릴스</span>
+          <span class="pkg-tag">D 스토리</span>
         </div>
-        <div class="rpt recommended">
-          <div class="rpt-badge">Recommended</div>
-          <div class="rpt-name">Standard</div>
-          <div class="rpt-tags">
-            <span class="rpt-tag on">A 피드</span>
-            <span class="rpt-tag on">B 스토리</span>
-            <span class="rpt-tag on">C 릴스</span>
-            <span class="rpt-tag">D 스토리</span>
-          </div>
-          <div class="rpt-desc">데패뉴 릴스 추가. 가성비 최적 조합.</div>
+        <div class="pkg-desc">NMIXX 피드 (릴리) + NMIXX 스토리 (릴리) 기본 2종. 팬덤 코어 커버에 집중한 최소 구성.</div>
+        <div class="pkg-price">비용 협의</div>
+      </div>
+      <div class="pkg-card recommended">
+        <div class="pkg-recommended-badge">Recommended</div>
+        <div class="pkg-name">Standard</div>
+        <div class="pkg-contents">
+          <span class="pkg-tag included">A 피드</span>
+          <span class="pkg-tag included">B 스토리</span>
+          <span class="pkg-tag included">C 릴스</span>
+          <span class="pkg-tag">D 스토리</span>
         </div>
-        <div class="rpt">
-          <div class="rpt-name">Premium</div>
-          <div class="rpt-tags">
-            <span class="rpt-tag on">A 피드</span>
-            <span class="rpt-tag on">B 스토리</span>
-            <span class="rpt-tag on">C 릴스</span>
-            <span class="rpt-tag on">D 스토리</span>
-          </div>
-          <div class="rpt-desc">팬덤·대중·패션 미디어 3채널 동시 커버.</div>
+        <div class="pkg-desc">데패뉴 릴스를 추가해 팬덤 외 패션 관여층까지 커버. 가성비 최적 조합.</div>
+        <div class="pkg-price">비용 협의</div>
+      </div>
+      <div class="pkg-card">
+        <div class="pkg-name">Premium</div>
+        <div class="pkg-contents">
+          <span class="pkg-tag included">A 피드</span>
+          <span class="pkg-tag included">B 스토리</span>
+          <span class="pkg-tag included">C 릴스</span>
+          <span class="pkg-tag included">D 스토리</span>
         </div>
-        <div class="rpt">
-          <div class="rpt-name">Full Scale</div>
-          <div class="rpt-tags">
-            <span class="rpt-tag on">A 피드</span>
-            <span class="rpt-tag on">B 스토리</span>
-            <span class="rpt-tag on">C 릴스</span>
-            <span class="rpt-tag on">D 스토리</span>
-            <span class="rpt-tag on">+ α</span>
-          </div>
-          <div class="rpt-desc">플랫폼 다변화 및 타겟층 확장.</div>
+        <div class="pkg-desc">4개 콘텐츠 풀 구성. 팬덤·대중·패션 미디어 3개 채널 동시 커버.</div>
+        <div class="pkg-price">비용 협의</div>
+      </div>
+      <div class="pkg-card">
+        <div class="pkg-name">Full Scale</div>
+        <div class="pkg-contents">
+          <span class="pkg-tag included">A 피드</span>
+          <span class="pkg-tag included">B 스토리</span>
+          <span class="pkg-tag included">C 릴스</span>
+          <span class="pkg-tag included">D 스토리</span>
+          <span class="pkg-tag included">+ 추가</span>
         </div>
+        <div class="pkg-desc">Premium + 추가 파트너 결합. 플랫폼 다변화 및 타겟층 확장.</div>
+        <div class="pkg-price">비용 협의</div>
       </div>
     </div>
   </div>
