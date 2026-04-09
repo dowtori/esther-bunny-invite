@@ -1068,24 +1068,28 @@ body { font-family: 'Noto Sans KR', sans-serif; background: var(--stone); color:
   font-family: 'Noto Sans KR', sans-serif; font-size: 11px; color: var(--ink);
   line-height: 1.55; word-break: keep-all;
 }
-.sb-scenes { display: flex; flex-direction: column; gap: 8px; }
+.sb-scenes { display: flex; flex-direction: column; gap: 0; }
 .sb-scene {
-  display: flex; gap: 12px; align-items: flex-start;
-  background: #fff; border: 1px solid var(--border); border-radius: 8px; padding: 10px 12px;
+  display: grid; grid-template-columns: 52px 1fr; gap: 16px; align-items: start;
+  background: #fff; border: 1px solid var(--border); border-radius: 10px; padding: 20px 22px;
+}
+.sb-arrow {
+  display: flex; align-items: center; justify-content: center;
+  padding: 6px 0; font-size: 22px; font-weight: 900;
+  color: var(--pink-deep); opacity: 0.4;
 }
 .sb-scene-num {
-  font-family: 'DM Sans', sans-serif; font-size: 9px; font-weight: 700;
-  letter-spacing: 1px; color: var(--pink-deep);
-  background: rgba(211, 97, 144, 0.08);
-  border-radius: 4px; padding: 3px 6px; flex-shrink: 0; min-width: 24px; text-align: center;
+  font-family: 'DM Sans', sans-serif; font-size: 12px; font-weight: 800;
+  color: var(--pink-deep); background: rgba(211, 97, 144, 0.08);
+  border-radius: 6px; padding: 10px 0; text-align: center;
 }
 .sb-scene-loc {
-  font-family: 'DM Sans', sans-serif; font-size: 11px; font-weight: 600;
-  color: var(--ink); margin-bottom: 3px;
+  font-family: 'DM Sans', sans-serif; font-size: 15px; font-weight: 700;
+  color: var(--ink); margin-bottom: 8px;
 }
 .sb-scene-txt {
-  font-family: 'Noto Sans KR', sans-serif; font-size: 11px; color: var(--muted);
-  line-height: 1.5; word-break: keep-all;
+  font-family: 'Noto Sans KR', sans-serif; font-size: 13px; color: var(--muted);
+  line-height: 1.65; word-break: keep-all;
 }
 
 /* ── DATA COLUMN VISUALIZATION ── */
@@ -1193,6 +1197,9 @@ body { font-family: 'Noto Sans KR', sans-serif; background: var(--stone); color:
 /* ── WENDY ZONE ── */
 .zone-2-wendy { background: var(--zone2-wendy-bg); }
 
+/* ── DFN ZONE ── */
+.zone-3-dfn { background: #F4F6F8; }
+
 /* ── RESPONSIVE ── */
 @media (max-width: 1100px) {
   .lily-hero-grid { grid-template-columns: 280px 1fr; gap: 40px; }
@@ -1226,6 +1233,7 @@ body { font-family: 'Noto Sans KR', sans-serif; background: var(--stone); color:
   <div class="nav-zones">
     <a href="#zone1" class="nav-zone-item active">01 Lily</a>
     <a href="#zone2" class="nav-zone-item">02 Wendy</a>
+    <a href="#zone3" class="nav-zone-item">03 데패뉴</a>
   </div>
   <span class="nav-confirmed-badge">LILY + WENDY</span>
 </nav>
@@ -1470,6 +1478,7 @@ body { font-family: 'Noto Sans KR', sans-serif; background: var(--stone); color:
                   <div class="sb-scene-txt">asif CALIE + 78 Under 풀샷. 성수 팝업 맥락 전달하는 훅.</div>
                 </div>
               </div>
+              <div class="sb-arrow">→</div>
               <div class="sb-scene">
                 <div class="sb-scene-num">S2</div>
                 <div class="sb-scene-body">
@@ -1477,6 +1486,7 @@ body { font-family: 'Noto Sans KR', sans-serif; background: var(--stone); color:
                   <div class="sb-scene-txt">릴리가 원화 들여다보는 자연스러운 미디엄샷.</div>
                 </div>
               </div>
+              <div class="sb-arrow">→</div>
               <div class="sb-scene">
                 <div class="sb-scene-num">S3</div>
                 <div class="sb-scene-body">
@@ -1573,6 +1583,7 @@ body { font-family: 'Noto Sans KR', sans-serif; background: var(--stone); color:
                   <div class="sb-scene-txt">입구 + 위치 태그. 팔로워의 방문 호기심 유발.</div>
                 </div>
               </div>
+              <div class="sb-arrow">→</div>
               <div class="sb-scene">
                 <div class="sb-scene-num">S2</div>
                 <div class="sb-scene-body">
@@ -1580,6 +1591,7 @@ body { font-family: 'Noto Sans KR', sans-serif; background: var(--stone); color:
                   <div class="sb-scene-txt">핑크룸·루프탑 등 포토스팟 중심 공간 소개.</div>
                 </div>
               </div>
+              <div class="sb-arrow">→</div>
               <div class="sb-scene">
                 <div class="sb-scene-num">S3</div>
                 <div class="sb-scene-body">
@@ -1664,6 +1676,7 @@ body { font-family: 'Noto Sans KR', sans-serif; background: var(--stone); color:
                   <div class="sb-scene-txt">"성수에 이런 공간이 생겼다고?" + 건물 외관 b-roll</div>
                 </div>
               </div>
+              <div class="sb-arrow">→</div>
               <div class="sb-scene">
                 <div class="sb-scene-num">C2</div>
                 <div class="sb-scene-body">
@@ -1671,6 +1684,7 @@ body { font-family: 'Noto Sans KR', sans-serif; background: var(--stone); color:
                   <div class="sb-scene-txt">데패뉴 기자 등장 + 층별 하이라이트 소개.</div>
                 </div>
               </div>
+              <div class="sb-arrow">→</div>
               <div class="sb-scene">
                 <div class="sb-scene-num">C3</div>
                 <div class="sb-scene-body">
@@ -1678,6 +1692,7 @@ body { font-family: 'Noto Sans KR', sans-serif; background: var(--stone); color:
                   <div class="sb-scene-txt">릴리·웬디 인사 + "가장 마음에 든 공간은?" 인터뷰.</div>
                 </div>
               </div>
+              <div class="sb-arrow">→</div>
               <div class="sb-scene">
                 <div class="sb-scene-num">C4</div>
                 <div class="sb-scene-body">
@@ -1767,6 +1782,7 @@ body { font-family: 'Noto Sans KR', sans-serif; background: var(--stone); color:
                   <div class="sb-scene-txt">팝업 정보 + 비주얼. "지금 성수에서" 자막 훅.</div>
                 </div>
               </div>
+              <div class="sb-arrow">→</div>
               <div class="sb-scene">
                 <div class="sb-scene-num">S2</div>
                 <div class="sb-scene-body">
@@ -1774,6 +1790,7 @@ body { font-family: 'Noto Sans KR', sans-serif; background: var(--stone); color:
                   <div class="sb-scene-txt">핵심 포토스팟 스틸컷. 방문 욕구 자극.</div>
                 </div>
               </div>
+              <div class="sb-arrow">→</div>
               <div class="sb-scene">
                 <div class="sb-scene-num">S3</div>
                 <div class="sb-scene-body">
@@ -2063,9 +2080,29 @@ body { font-family: 'Noto Sans KR', sans-serif; background: var(--stone); color:
               <div class="sb-chip"><span class="sb-chip-key">발행</span><span class="sb-chip-val">팝업 오픈 당일 촬영 → 편집·보정 후 1주 이내 발행</span></div>
             </div>
             <div class="sb-scenes">
-              <div class="sb-scene"><div class="sb-scene-num">S1</div><div class="sb-scene-body"><div class="sb-scene-loc">루프탑</div><div class="sb-scene-txt">에스더버니 애드벌룬 + 성수 뷰 배경 풀샷. 해외 팔로워도 반하는 비주얼 훅.</div></div></div>
-              <div class="sb-scene"><div class="sb-scene-num">S2</div><div class="sb-scene-body"><div class="sb-scene-loc">2F 패션아뜰리에 아치</div><div class="sb-scene-txt">웬디의 여성스러운 실루엣이 살아나는 미디엄샷.</div></div></div>
-              <div class="sb-scene"><div class="sb-scene-num">S3</div><div class="sb-scene-body"><div class="sb-scene-loc">3F 핑크룸 네온사인</div><div class="sb-scene-txt">"Esther Bunny" 배경. 클로즈업 or 프로필 컷.</div></div></div>
+              <div class="sb-scene">
+                <div class="sb-scene-num">S1</div>
+                <div class="sb-scene-body">
+                  <div class="sb-scene-loc">루프탑</div>
+                  <div class="sb-scene-txt">에스더버니 애드벌룬 + 성수 뷰 배경 풀샷. 해외 팔로워도 반하는 비주얼 훅.</div>
+                </div>
+              </div>
+              <div class="sb-arrow">→</div>
+              <div class="sb-scene">
+                <div class="sb-scene-num">S2</div>
+                <div class="sb-scene-body">
+                  <div class="sb-scene-loc">2F 패션아뜰리에 아치</div>
+                  <div class="sb-scene-txt">웬디의 여성스러운 실루엣이 살아나는 미디엄샷.</div>
+                </div>
+              </div>
+              <div class="sb-arrow">→</div>
+              <div class="sb-scene">
+                <div class="sb-scene-num">S3</div>
+                <div class="sb-scene-body">
+                  <div class="sb-scene-loc">3F 핑크룸 네온사인</div>
+                  <div class="sb-scene-txt">"Esther Bunny" 배경. 클로즈업 or 프로필 컷.</div>
+                </div>
+              </div>
             </div>
           </div>
           <div class="cd-panel-data">
@@ -2129,9 +2166,29 @@ body { font-family: 'Noto Sans KR', sans-serif; background: var(--stone); color:
               <div class="sb-chip"><span class="sb-chip-key">발행</span><span class="sb-chip-val">방문 당일 실시간 발행 · 24시간 내 집중 소비</span></div>
             </div>
             <div class="sb-scenes">
-              <div class="sb-scene"><div class="sb-scene-num">S1</div><div class="sb-scene-body"><div class="sb-scene-loc">아뜰리에 입장</div><div class="sb-scene-txt">입구 + 위치 태그. 팔로워의 방문 호기심 유발.</div></div></div>
-              <div class="sb-scene"><div class="sb-scene-num">S2</div><div class="sb-scene-body"><div class="sb-scene-loc">2F / 루프탑 하이라이트</div><div class="sb-scene-txt">웬디 감성의 공간 소개. 저장 유도.</div></div></div>
-              <div class="sb-scene"><div class="sb-scene-num">S3</div><div class="sb-scene-body"><div class="sb-scene-loc">팝업 안내 + CTA</div><div class="sb-scene-txt">일정 안내 + 계정 태그로 브랜드 연결.</div></div></div>
+              <div class="sb-scene">
+                <div class="sb-scene-num">S1</div>
+                <div class="sb-scene-body">
+                  <div class="sb-scene-loc">아뜰리에 입장</div>
+                  <div class="sb-scene-txt">입구 + 위치 태그. 팔로워의 방문 호기심 유발.</div>
+                </div>
+              </div>
+              <div class="sb-arrow">→</div>
+              <div class="sb-scene">
+                <div class="sb-scene-num">S2</div>
+                <div class="sb-scene-body">
+                  <div class="sb-scene-loc">2F / 루프탑 하이라이트</div>
+                  <div class="sb-scene-txt">웬디 감성의 공간 소개. 저장 유도.</div>
+                </div>
+              </div>
+              <div class="sb-arrow">→</div>
+              <div class="sb-scene">
+                <div class="sb-scene-num">S3</div>
+                <div class="sb-scene-body">
+                  <div class="sb-scene-loc">팝업 안내 + CTA</div>
+                  <div class="sb-scene-txt">일정 안내 + 계정 태그로 브랜드 연결.</div>
+                </div>
+              </div>
             </div>
           </div>
           <div class="cd-panel-data">
@@ -2183,10 +2240,37 @@ body { font-family: 'Noto Sans KR', sans-serif; background: var(--stone); color:
               <div class="sb-chip"><span class="sb-chip-key">발행</span><span class="sb-chip-val">팝업 오픈 당일 촬영 → 편집 후 1주 이내 발행</span></div>
             </div>
             <div class="sb-scenes">
-              <div class="sb-scene"><div class="sb-scene-num">C1</div><div class="sb-scene-body"><div class="sb-scene-loc">오프닝 훅</div><div class="sb-scene-txt">"성수에 이런 공간이 생겼다고?" + 건물 외관 b-roll</div></div></div>
-              <div class="sb-scene"><div class="sb-scene-num">C2</div><div class="sb-scene-body"><div class="sb-scene-loc">공간 투어</div><div class="sb-scene-txt">데패뉴 기자 등장 + 층별 하이라이트 소개.</div></div></div>
-              <div class="sb-scene"><div class="sb-scene-num">C3</div><div class="sb-scene-body"><div class="sb-scene-loc">웬디 인터뷰</div><div class="sb-scene-txt">웬디 인사 + "가장 마음에 든 공간은?" 인터뷰.</div></div></div>
-              <div class="sb-scene"><div class="sb-scene-num">C4</div><div class="sb-scene-body"><div class="sb-scene-loc">마무리</div><div class="sb-scene-txt">웬디 카메라 향해 한 마디. 방문 유도 마무리.</div></div></div>
+              <div class="sb-scene">
+                <div class="sb-scene-num">C1</div>
+                <div class="sb-scene-body">
+                  <div class="sb-scene-loc">오프닝 훅</div>
+                  <div class="sb-scene-txt">"성수에 이런 공간이 생겼다고?" + 건물 외관 b-roll</div>
+                </div>
+              </div>
+              <div class="sb-arrow">→</div>
+              <div class="sb-scene">
+                <div class="sb-scene-num">C2</div>
+                <div class="sb-scene-body">
+                  <div class="sb-scene-loc">공간 투어</div>
+                  <div class="sb-scene-txt">데패뉴 기자 등장 + 층별 하이라이트 소개.</div>
+                </div>
+              </div>
+              <div class="sb-arrow">→</div>
+              <div class="sb-scene">
+                <div class="sb-scene-num">C3</div>
+                <div class="sb-scene-body">
+                  <div class="sb-scene-loc">웬디 인터뷰</div>
+                  <div class="sb-scene-txt">웬디 인사 + "가장 마음에 든 공간은?" 인터뷰.</div>
+                </div>
+              </div>
+              <div class="sb-arrow">→</div>
+              <div class="sb-scene">
+                <div class="sb-scene-num">C4</div>
+                <div class="sb-scene-body">
+                  <div class="sb-scene-loc">마무리</div>
+                  <div class="sb-scene-txt">웬디 카메라 향해 한 마디. 방문 유도 마무리.</div>
+                </div>
+              </div>
             </div>
           </div>
           <div class="cd-panel-data">
@@ -2262,6 +2346,7 @@ body { font-family: 'Noto Sans KR', sans-serif; background: var(--stone); color:
                   <div class="sb-scene-txt">팝업 정보 + 비주얼. "지금 성수에서" 자막 훅.</div>
                 </div>
               </div>
+              <div class="sb-arrow">→</div>
               <div class="sb-scene">
                 <div class="sb-scene-num">S2</div>
                 <div class="sb-scene-body">
@@ -2269,6 +2354,7 @@ body { font-family: 'Noto Sans KR', sans-serif; background: var(--stone); color:
                   <div class="sb-scene-txt">핵심 포토스팟 스틸컷. 방문 욕구 자극.</div>
                 </div>
               </div>
+              <div class="sb-arrow">→</div>
               <div class="sb-scene">
                 <div class="sb-scene-num">S3</div>
                 <div class="sb-scene-body">
@@ -2307,6 +2393,451 @@ body { font-family: 'Noto Sans KR', sans-serif; background: var(--stone); color:
   </div><!-- /content-origin-section -->
 
 </section><!-- /zone-2-wendy -->
+
+<div class="section-divider"></div>
+
+<!-- ── ZONE 3: 데패뉴 (DFN) ── -->
+<section class="zone zone-3-dfn" id="zone3">
+
+  <div class="zone-eyebrow">
+    <span class="zone-num">03.</span>
+    <span class="zone-label">데패뉴 — Fashion Media</span>
+    <span class="zone-desc">패션 미디어 채널 @depafneu 기반 공신력 콘텐츠</span>
+  </div>
+
+  <!-- DFN 프로필 + 지표 -->
+  <div class="lily-hero-grid">
+
+    <!-- LEFT: 채널 비주얼 -->
+    <div class="lily-photo-col">
+      <div class="lily-photo-wrap" style="background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%); display:flex; align-items:center; justify-content:center; min-height:360px;">
+        <div style="text-align:center; color:#fff;">
+          <div style="font-family:'DM Sans',sans-serif; font-size:48px; font-weight:900; letter-spacing:-2px; margin-bottom:8px;">DFN</div>
+          <div style="font-family:'Noto Sans KR',sans-serif; font-size:14px; opacity:0.6; letter-spacing:3px;">데패뉴</div>
+          <div style="margin-top:20px; font-family:'DM Sans',sans-serif; font-size:11px; opacity:0.45; letter-spacing:1px; text-transform:uppercase;">Fashion · Beauty · Lifestyle</div>
+        </div>
+        <div class="lily-confirmed-overlay">
+          <div class="lco-top">
+            <div class="lco-name">데패뉴</div>
+            <div class="lco-badge" style="background:rgba(255,255,255,0.15); color:#fff;">MEDIA</div>
+          </div>
+          <div class="lco-handle">Fashion Media · @depafneu</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- RIGHT: 지표 -->
+    <div class="lily-metrics-col">
+      <div class="metrics-section-label">채널 도달 지표</div>
+
+      <div class="account-metrics-wrap">
+        <div class="account-block">
+          <div class="account-block-header">
+            <span class="account-type-tag" style="background:rgba(15,52,96,0.1); color:#0f3460;">미디어 채널</span>
+            <span class="account-block-name">데패뉴 공식 @depafneu</span>
+          </div>
+          <div class="account-metrics-grid">
+            <div class="am-item">
+              <div class="am-label">팔로워</div>
+              <div class="am-value">12<span class="am-unit">만</span></div>
+            </div>
+            <div class="am-item">
+              <div class="am-label">월간 도달</div>
+              <div class="am-value">110<span class="am-unit">만</span></div>
+            </div>
+            <div class="am-item">
+              <div class="am-label">콘텐츠 도달</div>
+              <div class="am-value">8.9<span class="am-unit">만</span></div>
+            </div>
+            <div class="am-item">
+              <div class="am-label">패션 관여</div>
+              <div class="am-value">68<span class="am-unit">%</span></div>
+            </div>
+          </div>
+          <div class="er-bar-wrap">
+            <div class="er-bar-row">
+              <span class="er-bar-lbl">패션 관여 오디언스</span>
+              <span class="er-bar-num">68%</span>
+            </div>
+            <div class="er-bar-track">
+              <div class="er-bar-fill" data-value="68%"></div>
+            </div>
+            <div class="er-bar-note">팔로워 중 패션·뷰티 고관여층 비율. 셀럽 콘텐츠 시 도달 2–3배 증폭</div>
+          </div>
+        </div>
+      </div><!-- /account-metrics-wrap -->
+
+      <!-- 핵심 포지셔닝 -->
+      <div class="combined-reach-bar">
+        <div class="cr-left">
+          <div class="cr-label">셀럽 콘텐츠 예상 도달</div>
+          <div class="cr-value">30만+</div>
+        </div>
+        <div class="cr-note">
+          릴리·웬디 인터뷰 편성 시<br>
+          팔로워 기반 + 알고리즘 추천<br>합산 수치.
+        </div>
+      </div>
+
+      <!-- 오디언스 도넛 -->
+      <div class="validity-wrap">
+        <div class="validity-donut">
+          <svg width="80" height="80" viewBox="0 0 80 80">
+            <circle class="donut-bg" cx="40" cy="40" r="32" stroke-width="7"/>
+            <circle class="donut-fill" id="donut-dfn" cx="40" cy="40" r="32" stroke-width="7"
+              transform="rotate(-90 40 40)"
+              style="stroke-dasharray:0 201; stroke-dashoffset:0;"/>
+          </svg>
+        </div>
+        <div class="validity-info">
+          <div class="validity-pct">68%</div>
+          <div class="validity-lbl">패션 고관여 오디언스</div>
+          <div class="validity-sub">셀럽 방문 릴스 기준<br>패션·라이프스타일 관심층 집중 노출.</div>
+        </div>
+      </div>
+
+    </div><!-- /lily-metrics-col -->
+  </div><!-- /lily-hero-grid -->
+
+  <!-- WHY 데패뉴 — 독립 풀너비 섹션 -->
+  <div class="why-standalone">
+    <div class="why-standalone-eyebrow">
+      <span class="zone-num">—</span>
+      <span class="zone-label">Why 데패뉴</span>
+    </div>
+    <div class="why-grid">
+      <div class="why-card">
+        <div class="why-card-num">01</div>
+        <div class="why-card-title">패션 미디어 공신력</div>
+        <div class="why-card-desc">브랜드가 직접 말하는 광고와 달리, 데패뉴의 취재 형식 콘텐츠는 제3자 시각에서의 신뢰와 정보력을 전달합니다.</div>
+      </div>
+      <div class="why-card">
+        <div class="why-card-num">02</div>
+        <div class="why-card-title">패션 고관여층 직접 도달</div>
+        <div class="why-card-desc">팔로워 중 68%가 패션·뷰티 관심층. 에스더버니 아뜰리에의 핵심 타겟 오디언스와 정확하게 맞닿아 있습니다.</div>
+      </div>
+      <div class="why-card">
+        <div class="why-card-num">03</div>
+        <div class="why-card-title">롱폼 스토리텔링</div>
+        <div class="why-card-desc">60–90초 릴스로 공간·셀럽·브랜드를 한 편의 콘텐츠 안에 담아냅니다. 셀럽 피드 단독 발행 대비 정보 밀도가 높습니다.</div>
+      </div>
+      <div class="why-card">
+        <div class="why-card-num">04</div>
+        <div class="why-card-title">릴리·웬디 콘텐츠와 시너지</div>
+        <div class="why-card-desc">셀럽 피드 발행 직후 데패뉴 미디어 커버리지가 더해지면 이슈가 2차 증폭됩니다. 단순 합산 이상의 파급력.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- DFN 콘텐츠 카드 섹션 -->
+  <div class="content-origin-section">
+    <div class="cos-header">
+      <span class="cos-title">발행 예정 콘텐츠 — 데패뉴</span>
+      <span class="cos-hint">카테고리를 선택해 콘텐츠 상세를 확인하세요</span>
+    </div>
+
+    <div class="content-dashboard">
+      <div class="cd-tabs">
+        <button class="cd-tab active" data-target="d-panel-A" onclick="openTab('d-panel-A', this)">
+          <span class="cd-tab-badge">A</span> 현장 취재 릴스
+        </button>
+        <button class="cd-tab" data-target="d-panel-B" onclick="openTab('d-panel-B', this)">
+          <span class="cd-tab-badge">B</span> 릴리·웬디 인터뷰 릴스
+        </button>
+        <button class="cd-tab" data-target="d-panel-C" onclick="openTab('d-panel-C', this)">
+          <span class="cd-tab-badge">C</span> 팝업 소식 스토리
+        </button>
+      </div>
+
+      <div class="cd-panels">
+
+        <!-- DFN Panel A: 현장 취재 릴스 -->
+        <div class="cd-panel active" id="d-panel-A">
+          <div class="cd-panel-left">
+            <div class="ig-embed-wrap">
+              <div class="ig-embed-kicker">콘텐츠 레퍼런스 — 데패뉴 현장 취재</div>
+              <div class="ig-embed-single">
+                <iframe src="https://www.instagram.com/reels/DQ_2Eg4E4JC/embed/" frameborder="0" scrolling="no" allowtransparency="true" style="width:100%; min-height:700px; border:none;"></iframe>
+              </div>
+            </div>
+          </div>
+          <div class="cd-panel-storyboard">
+            <div class="cdp-channel-row">
+              <div class="cdp-channel-dot"></div>
+              <span class="cdp-type-label">Instagram Reels · @depafneu · 단독 발행</span>
+            </div>
+            <div class="cdp-title">현장 취재형 릴스<br>데패뉴 단독 발행 · 60–90초</div>
+            <div class="sb-kicker">콘텐츠 스토리보드</div>
+            <div class="sb-meta-row">
+              <div class="sb-chip"><span class="sb-chip-key">콘셉</span><span class="sb-chip-val">데패뉴 기자가 에스더버니 아뜰리에를 직접 취재. 공간 + 전시 + 방문 포인트를 미디어 시각으로 담아냅니다.</span></div>
+              <div class="sb-chip"><span class="sb-chip-key">톤 & 무드</span><span class="sb-chip-val">가볍고 유쾌한 취재 톤. 광고가 아닌 콘텐츠로 소비되도록 연출.</span></div>
+              <div class="sb-chip"><span class="sb-chip-key">키 메시지</span><span class="sb-chip-val">패션·라이프 관심층이 찾아가야 할 성수 핫스팟으로 포지셔닝.</span></div>
+              <div class="sb-chip"><span class="sb-chip-key">발행</span><span class="sb-chip-val">팝업 오픈 당일 또는 익일 발행 → 초동 확산 극대화</span></div>
+            </div>
+            <div class="sb-scenes">
+              <div class="sb-scene">
+                <div class="sb-scene-num">C1</div>
+                <div class="sb-scene-body">
+                  <div class="sb-scene-loc">오프닝 훅</div>
+                  <div class="sb-scene-txt">"성수에 이런 공간이?" + 건물 외관 b-roll. 첫 3초 이탈 방지.</div>
+                </div>
+              </div>
+              <div class="sb-arrow">→</div>
+              <div class="sb-scene">
+                <div class="sb-scene-num">C2</div>
+                <div class="sb-scene-body">
+                  <div class="sb-scene-loc">공간 투어</div>
+                  <div class="sb-scene-txt">데패뉴 기자 등장 + 층별 하이라이트 소개. B1F·1F·2F·루프탑 순서.</div>
+                </div>
+              </div>
+              <div class="sb-arrow">→</div>
+              <div class="sb-scene">
+                <div class="sb-scene-num">C3</div>
+                <div class="sb-scene-body">
+                  <div class="sb-scene-loc">전시 포인트</div>
+                  <div class="sb-scene-txt">원화 갤러리 + asif CALIE 협업 상품 클로즈업. 콘텐츠 가치 부각.</div>
+                </div>
+              </div>
+              <div class="sb-arrow">→</div>
+              <div class="sb-scene">
+                <div class="sb-scene-num">C4</div>
+                <div class="sb-scene-body">
+                  <div class="sb-scene-loc">마무리 CTA</div>
+                  <div class="sb-scene-txt">운영 기간·장소 자막 + 방문 유도. @esterbunny 브랜드 계정 태그.</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="cd-panel-data">
+            <div class="cdp-viz">
+              <div class="cdp-viz-item">
+                <div class="cdp-viz-row"><span class="cdp-viz-label">예상 조회수</span><span class="cdp-viz-val">89,000</span></div>
+                <div class="cdp-viz-bar"><div class="cdp-viz-fill" style="width:81%"></div></div>
+                <div class="cdp-viz-sub">셀럽 방문 편성 시 알고리즘 추천 포함</div>
+              </div>
+              <div class="cdp-viz-item">
+                <div class="cdp-viz-row"><span class="cdp-viz-label">패션 관여 오디언스</span><span class="cdp-viz-val">68%</span></div>
+                <div class="cdp-viz-compare">
+                  <div class="cdp-viz-cmp"><div class="cdp-viz-cmp-label">데패뉴</div><div class="cdp-viz-cmp-bar"><div class="cdp-viz-cmp-fill pink" style="width:100%"></div></div></div>
+                  <div class="cdp-viz-cmp"><div class="cdp-viz-cmp-label">일반 인플루언서</div><div class="cdp-viz-cmp-bar"><div class="cdp-viz-cmp-fill grey" style="width:44%"></div></div></div>
+                </div>
+                <div class="cdp-viz-sub">패션 고관여층 집중 노출 <span class="cdp-viz-badge">1.5배+</span></div>
+              </div>
+              <div class="cdp-viz-item">
+                <div class="cdp-viz-row"><span class="cdp-viz-label">콘텐츠 수명</span><span class="cdp-viz-val">72시간+</span></div>
+                <div class="cdp-viz-bar"><div class="cdp-viz-fill" style="width:60%"></div></div>
+                <div class="cdp-viz-sub">릴스 알고리즘 추천 지속 기간</div>
+              </div>
+            </div>
+            <div class="cdp-outcome">
+              <div class="cdp-outcome-label">기대 효과</div>
+              <div class="cdp-outcome-text">미디어 공신력 기반 공간 소개 → 패션 고관여층에게 에스더버니 아뜰리에 인지 형성 + 방문 유도.</div>
+            </div>
+            <div class="cdp-ripple">
+              <div class="cdp-ripple-label">기대 퍼포먼스</div>
+              <div class="cdp-rs"><div class="cdp-rs-icon">📹</div><div><div class="cdp-rs-title">미디어 취재 발행</div><div class="cdp-rs-note">데패뉴 단독 · 릴스 1편</div></div></div>
+              <div class="cdp-rs"><div class="cdp-rs-icon">👁️</div><div><div class="cdp-rs-title">패션층 도달</div><div class="cdp-rs-note">고관여 패션 오디언스 집중 노출</div></div></div>
+              <div class="cdp-rs hl"><div class="cdp-rs-icon">🔁</div><div><div class="cdp-rs-title">릴리·웬디 피드와 교차 증폭</div><div class="cdp-rs-note">셀럽 콘텐츠 + 미디어 커버리지 시너지</div></div></div>
+              <div class="cdp-rs hl"><div class="cdp-rs-icon">📍</div><div><div class="cdp-rs-title">팝업 방문 유도</div><div class="cdp-rs-note">정보형 콘텐츠로 방문 전환율 ↑</div></div></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- DFN Panel B: 릴리·웬디 인터뷰 릴스 -->
+        <div class="cd-panel" id="d-panel-B">
+          <div class="cd-panel-left">
+            <div class="ig-embed-wrap">
+              <div class="ig-embed-kicker">콘텐츠 레퍼런스 — 데패뉴 × 웬디</div>
+              <div class="ig-embed-single">
+                <iframe src="https://www.instagram.com/reels/DWwKvKZkxl1/embed/" frameborder="0" scrolling="no" allowtransparency="true" style="width:100%; min-height:700px; border:none;"></iframe>
+              </div>
+            </div>
+          </div>
+          <div class="cd-panel-storyboard">
+            <div class="cdp-channel-row">
+              <div class="cdp-channel-dot"></div>
+              <span class="cdp-type-label">Instagram Reels · @depafneu · 릴리·웬디 협업</span>
+            </div>
+            <div class="cdp-title">셀럽 인터뷰 릴스<br>데패뉴 발행 · 릴리 + 웬디 출연</div>
+            <div class="sb-kicker">콘텐츠 스토리보드</div>
+            <div class="sb-meta-row">
+              <div class="sb-chip"><span class="sb-chip-key">콘셉</span><span class="sb-chip-val">릴리·웬디가 함께 에스더버니 아뜰리에를 방문. 데패뉴 기자가 두 사람의 솔직한 반응을 담아냅니다.</span></div>
+              <div class="sb-chip"><span class="sb-chip-key">톤 & 무드</span><span class="sb-chip-val">자연스럽고 유쾌한 두 셀럽의 케미. 광고 아닌 리얼 리액션으로 연출.</span></div>
+              <div class="sb-chip"><span class="sb-chip-key">키 메시지</span><span class="sb-chip-val">릴리+웬디 양 팬덤 동시 공략. 미디어 포맷으로 신뢰도 극대화.</span></div>
+              <div class="sb-chip"><span class="sb-chip-key">발행</span><span class="sb-chip-val">촬영 당일 편집 → 팝업 기간 내 발행 · 양 셀럽 계정 공유 태그</span></div>
+            </div>
+            <div class="sb-scenes">
+              <div class="sb-scene">
+                <div class="sb-scene-num">C1</div>
+                <div class="sb-scene-body">
+                  <div class="sb-scene-loc">오프닝 훅</div>
+                  <div class="sb-scene-txt">릴리·웬디 두 사람 첫 등장. "오늘 저희 같이 왔어요" 자연스러운 훅.</div>
+                </div>
+              </div>
+              <div class="sb-arrow">→</div>
+              <div class="sb-scene">
+                <div class="sb-scene-num">C2</div>
+                <div class="sb-scene-body">
+                  <div class="sb-scene-loc">공간 투어</div>
+                  <div class="sb-scene-txt">두 사람 함께 층별 이동. 각자 포토스팟에서 자연스러운 리액션.</div>
+                </div>
+              </div>
+              <div class="sb-arrow">→</div>
+              <div class="sb-scene">
+                <div class="sb-scene-num">C3</div>
+                <div class="sb-scene-body">
+                  <div class="sb-scene-loc">인터뷰 포인트</div>
+                  <div class="sb-scene-txt">"가장 마음에 든 공간은?" 각자의 대답. 릴리 vs 웬디 취향 대비 연출.</div>
+                </div>
+              </div>
+              <div class="sb-arrow">→</div>
+              <div class="sb-scene">
+                <div class="sb-scene-num">C4</div>
+                <div class="sb-scene-body">
+                  <div class="sb-scene-loc">마무리</div>
+                  <div class="sb-scene-txt">두 사람 함께 카메라 향해 한 마디. @esterbunny 브랜드 계정 태그 + 방문 유도.</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="cd-panel-data">
+            <div class="cdp-viz">
+              <div class="cdp-viz-item">
+                <div class="cdp-viz-row"><span class="cdp-viz-label">예상 조회수</span><span class="cdp-viz-val">250,000+</span></div>
+                <div class="cdp-viz-bar"><div class="cdp-viz-fill" style="width:90%"></div></div>
+                <div class="cdp-viz-sub">릴리·웬디 팬덤 + 미디어 추천 교차 도달</div>
+              </div>
+              <div class="cdp-viz-item">
+                <div class="cdp-viz-row"><span class="cdp-viz-label">팬덤 교차 도달</span><span class="cdp-viz-val">이중 커버</span></div>
+                <div class="cdp-viz-compare">
+                  <div class="cdp-viz-cmp"><div class="cdp-viz-cmp-label">NMIXX 팬덤</div><div class="cdp-viz-cmp-bar"><div class="cdp-viz-cmp-fill pink" style="width:100%"></div></div></div>
+                  <div class="cdp-viz-cmp"><div class="cdp-viz-cmp-label">Red Velvet 팬덤</div><div class="cdp-viz-cmp-bar"><div class="cdp-viz-cmp-fill grey" style="width:95%"></div></div></div>
+                </div>
+                <div class="cdp-viz-sub">두 팬덤 동시 공략 <span class="cdp-viz-badge">최대 파급력</span></div>
+              </div>
+              <div class="cdp-viz-item">
+                <div class="cdp-viz-row"><span class="cdp-viz-label">콘텐츠 수명</span><span class="cdp-viz-val">7일+</span></div>
+                <div class="cdp-viz-bar"><div class="cdp-viz-fill" style="width:75%"></div></div>
+                <div class="cdp-viz-sub">팬덤 2차 확산 + 커뮤니티 공유 포함</div>
+              </div>
+            </div>
+            <div class="cdp-outcome">
+              <div class="cdp-outcome-label">기대 효과</div>
+              <div class="cdp-outcome-text">릴리·웬디 팬덤 동시 공략 + 미디어 공신력 = 이 캠페인의 최대 파급력 콘텐츠. 두 팬덤이 콘텐츠를 공유하며 에스더버니 브랜드 인지가 확산됩니다.</div>
+            </div>
+            <div class="cdp-ripple">
+              <div class="cdp-ripple-label">기대 퍼포먼스</div>
+              <div class="cdp-rs"><div class="cdp-rs-icon">🎬</div><div><div class="cdp-rs-title">릴리·웬디 협업 릴스</div><div class="cdp-rs-note">데패뉴 발행 · 양 계정 태그</div></div></div>
+              <div class="cdp-rs"><div class="cdp-rs-icon">📣</div><div><div class="cdp-rs-title">NMIXX + Red Velvet 팬덤 교차</div><div class="cdp-rs-note">단일 콘텐츠 최대 도달</div></div></div>
+              <div class="cdp-rs hl"><div class="cdp-rs-icon">🔥</div><div><div class="cdp-rs-title">커뮤니티 2차 확산</div><div class="cdp-rs-note">팬 커뮤니티 공유 + 이슈화</div></div></div>
+              <div class="cdp-rs hl"><div class="cdp-rs-icon">🏷️</div><div><div class="cdp-rs-title">브랜드 인지 피크</div><div class="cdp-rs-note">팝업 기간 내 최고 인지도 형성</div></div></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- DFN Panel C: 팝업 소식 스토리 -->
+        <div class="cd-panel" id="d-panel-C">
+          <div class="cd-panel-left">
+            <div class="ig-mockup">
+              <div class="ig-header">
+                <div class="ig-avatar" style="background:linear-gradient(135deg,#1a1a2e,#0f3460);">D</div>
+                <div class="ig-handle-wrap">
+                  <span class="ig-handle">@depafneu</span>
+                  <span class="ig-subtext">데패뉴 스토리</span>
+                </div>
+                <span class="ig-more">···</span>
+              </div>
+              <div class="ig-story-area" style="background:linear-gradient(160deg,#1a1a2e 0%,#16213e 60%,#0f3460 100%);">
+                <div class="story-time-bar"><div class="story-time-fill" style="width:60%"></div></div>
+                <div style="display:flex;flex-direction:column;gap:12px;padding:16px;">
+                  <div style="background:rgba(255,255,255,0.12);border-radius:10px;padding:14px 16px;">
+                    <div style="font-family:'DM Sans',sans-serif;font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,0.45);margin-bottom:6px;">BREAKING</div>
+                    <div style="font-family:'Noto Sans KR',sans-serif;font-size:13px;font-weight:600;color:#fff;line-height:1.5;word-break:keep-all;">에스더버니 × 틈결 팝업<br>성수 개막 📍</div>
+                  </div>
+                  <div style="background:rgba(255,255,255,0.08);border-radius:10px;padding:12px 16px;">
+                    <div style="font-family:'Noto Sans KR',sans-serif;font-size:11px;color:rgba(255,255,255,0.6);line-height:1.6;word-break:keep-all;">릴리·웬디가 다녀간 그곳.<br>지금 바로 가보세요 👇</div>
+                  </div>
+                  <div style="background:var(--pink-deep);border-radius:8px;padding:10px 16px;text-align:center;">
+                    <div style="font-family:'DM Sans',sans-serif;font-size:11px;font-weight:700;color:#fff;letter-spacing:0.5px;">자세히 보기 →</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="cd-panel-storyboard">
+            <div class="cdp-channel-row">
+              <div class="cdp-channel-dot"></div>
+              <span class="cdp-type-label">Instagram Story · @depafneu · 24시간</span>
+            </div>
+            <div class="cdp-title">팝업 소식 스토리<br>데패뉴 단독 발행</div>
+            <div class="sb-kicker">콘텐츠 스토리보드</div>
+            <div class="sb-meta-row">
+              <div class="sb-chip"><span class="sb-chip-key">콘셉</span><span class="sb-chip-val">팝업 오픈 속보 형식 스토리. 릴리·웬디 방문 직후 실시간 소식으로 긴박감과 관심 유발.</span></div>
+              <div class="sb-chip"><span class="sb-chip-key">톤 & 무드</span><span class="sb-chip-val">속보·뉴스 톤. "지금 이 순간"의 현장감을 살려 팔로워가 바로 행동하도록 유도.</span></div>
+              <div class="sb-chip"><span class="sb-chip-key">키 메시지</span><span class="sb-chip-val">릴리·웬디가 다녀간 공간이라는 것 + 방문 유도 링크 연결.</span></div>
+              <div class="sb-chip"><span class="sb-chip-key">발행</span><span class="sb-chip-val">릴스 발행과 동시 또는 직후 → 팔로워 알림 최대화</span></div>
+            </div>
+            <div class="sb-scenes">
+              <div class="sb-scene">
+                <div class="sb-scene-num">S1</div>
+                <div class="sb-scene-body">
+                  <div class="sb-scene-loc">속보 커버</div>
+                  <div class="sb-scene-txt">에스더버니 팝업 오픈 소식. "릴리·웬디가 다녀갔습니다" 자막 + 브랜드 로고.</div>
+                </div>
+              </div>
+              <div class="sb-arrow">→</div>
+              <div class="sb-scene">
+                <div class="sb-scene-num">S2</div>
+                <div class="sb-scene-body">
+                  <div class="sb-scene-loc">공간 하이라이트</div>
+                  <div class="sb-scene-txt">릴리·웬디 방문 컷 스틸 발췌 + 공간 포인트. 방문 욕구 자극.</div>
+                </div>
+              </div>
+              <div class="sb-arrow">→</div>
+              <div class="sb-scene">
+                <div class="sb-scene-num">S3</div>
+                <div class="sb-scene-body">
+                  <div class="sb-scene-loc">링크 스티커 + CTA</div>
+                  <div class="sb-scene-txt">팝업 상세 페이지 또는 @esterbunny 계정 직접 연결. 방문 예약·정보 확인 유도.</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="cd-panel-data">
+            <div class="cdp-viz">
+              <div class="cdp-viz-item">
+                <div class="cdp-viz-row"><span class="cdp-viz-label">예상 도달</span><span class="cdp-viz-val">41,000</span></div>
+                <div class="cdp-viz-bar"><div class="cdp-viz-fill" style="width:37%"></div></div>
+                <div class="cdp-viz-sub">데패뉴 스토리 팔로워 활성 기준</div>
+              </div>
+              <div class="cdp-viz-item">
+                <div class="cdp-viz-row"><span class="cdp-viz-label">링크 클릭률</span><span class="cdp-viz-val">12%+</span></div>
+                <div class="cdp-viz-bar"><div class="cdp-viz-fill" style="width:60%"></div></div>
+                <div class="cdp-viz-sub">셀럽 방문 소식 스토리 기준 평균 CTR</div>
+              </div>
+              <div class="cdp-viz-item">
+                <div class="cdp-viz-row"><span class="cdp-viz-label">콘텐츠 수명</span><span class="cdp-viz-val">24시간</span></div>
+                <div class="cdp-viz-sub">스토리 발행 → 링크 클릭 집중 유도</div>
+              </div>
+            </div>
+            <div class="cdp-outcome">
+              <div class="cdp-outcome-label">기대 효과</div>
+              <div class="cdp-outcome-text">릴스 발행과 동시 스토리 속보 형식 → 팔로워의 즉각적인 방문 관심 유발 + 링크 클릭 전환 극대화.</div>
+            </div>
+            <div class="cdp-ripple">
+              <div class="cdp-ripple-label">기대 퍼포먼스</div>
+              <div class="cdp-rs"><div class="cdp-rs-icon">📲</div><div><div class="cdp-rs-title">속보 스토리 발행</div><div class="cdp-rs-note">데패뉴 · 24시간 한정</div></div></div>
+              <div class="cdp-rs"><div class="cdp-rs-icon">🔗</div><div><div class="cdp-rs-title">링크 클릭 전환</div><div class="cdp-rs-note">팝업 정보 페이지 유입</div></div></div>
+              <div class="cdp-rs hl"><div class="cdp-rs-icon">⚡</div><div><div class="cdp-rs-title">릴스와 동시 증폭</div><div class="cdp-rs-note">릴스 + 스토리 동시 노출로 파급력 ↑</div></div></div>
+            </div>
+          </div>
+        </div>
+
+      </div><!-- /cd-panels -->
+    </div><!-- /content-dashboard -->
+  </div><!-- /content-origin-section -->
+
+</section><!-- /zone-3-dfn -->
 
 <!-- FOOTER -->
 <footer class="site-footer">
@@ -2381,10 +2912,16 @@ document.querySelectorAll('.content-card').forEach(card => {
         const fill = (pct / 100) * circ;
         el.style.strokeDasharray = fill + ' ' + circ;
       }
+      if (el.id === 'donut-dfn') {
+        const pct = 68;
+        const circ = 201;
+        const fill = (pct / 100) * circ;
+        el.style.strokeDasharray = fill + ' ' + circ;
+      }
     });
   }, { threshold: 0.4 });
 
-  document.querySelectorAll('.er-bar-fill, #donut-validity, #donut-wendy').forEach(el => observer.observe(el));
+  document.querySelectorAll('.er-bar-fill, #donut-validity, #donut-wendy, #donut-dfn').forEach(el => observer.observe(el));
 })();
 
 // Nav active zone tracking
