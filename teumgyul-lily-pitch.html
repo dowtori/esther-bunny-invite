@@ -1088,6 +1088,46 @@ body { font-family: 'Noto Sans KR', sans-serif; background: var(--stone); color:
   line-height: 1.5; word-break: keep-all;
 }
 
+/* ── DATA COLUMN VISUALIZATION ── */
+.cdp-viz { display: flex; flex-direction: column; gap: 14px; }
+.cdp-viz-item {}
+.cdp-viz-row {
+  display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 5px;
+}
+.cdp-viz-label {
+  font-family: 'DM Sans', sans-serif; font-size: 9px; font-weight: 700;
+  letter-spacing: 1.5px; text-transform: uppercase; color: var(--muted);
+}
+.cdp-viz-val {
+  font-family: 'DM Sans', sans-serif; font-size: 14px; font-weight: 700; color: var(--ink);
+}
+.cdp-viz-sub {
+  font-family: 'Noto Sans KR', sans-serif; font-size: 10px; color: var(--muted); margin-top: 4px;
+}
+.cdp-viz-bar {
+  height: 6px; background: var(--stone); border-radius: 3px; overflow: hidden; margin: 6px 0 4px;
+}
+.cdp-viz-fill {
+  height: 100%; border-radius: 3px; background: var(--pink-deep);
+}
+.cdp-viz-fill.blue { background: var(--ink); }
+.cdp-viz-compare { display: flex; gap: 10px; margin-top: 6px; }
+.cdp-viz-cmp { flex: 1; }
+.cdp-viz-cmp-label {
+  font-family: 'DM Sans', sans-serif; font-size: 9px; color: var(--muted); margin-bottom: 3px;
+}
+.cdp-viz-cmp-bar {
+  height: 5px; border-radius: 2px; overflow: hidden; background: var(--stone);
+}
+.cdp-viz-cmp-fill { height: 100%; border-radius: 2px; }
+.cdp-viz-cmp-fill.pink { background: var(--pink-deep); }
+.cdp-viz-cmp-fill.grey { background: var(--cement); }
+.cdp-viz-badge {
+  display: inline-block; font-family: 'DM Sans', sans-serif; font-size: 10px; font-weight: 700;
+  background: rgba(211,97,144,0.1); color: var(--pink-deep);
+  padding: 3px 10px; border-radius: 20px; margin-top: 6px;
+}
+
 /* ── COMPACT RIPPLE IN DATA COLUMN ── */
 .cdp-ripple {
   margin-top: 16px;
@@ -1257,7 +1297,7 @@ body { font-family: 'Noto Sans KR', sans-serif; background: var(--stone); color:
           <div class="account-metrics-grid">
             <div class="am-item">
               <div class="am-label">팔로워</div>
-              <div class="am-value">460<span class="am-unit">만</span></div>
+              <div class="am-value">614<span class="am-unit">만</span></div>
             </div>
             <div class="am-item">
               <div class="am-label">유효 팬덤</div>
@@ -1265,7 +1305,7 @@ body { font-family: 'Noto Sans KR', sans-serif; background: var(--stone); color:
             </div>
             <div class="am-item">
               <div class="am-label">평균 도달</div>
-              <div class="am-value">95<span class="am-unit">만</span></div>
+              <div class="am-value">130<span class="am-unit">만</span></div>
             </div>
             <div class="am-item">
               <div class="am-label">참여율 ER</div>
@@ -1292,7 +1332,7 @@ body { font-family: 'Noto Sans KR', sans-serif; background: var(--stone); color:
       <div class="combined-reach-bar">
         <div class="cr-left">
           <div class="cr-label">NMIXX 공식 채널 평균 도달</div>
-          <div class="cr-value">95만+</div>
+          <div class="cr-value">130만+</div>
         </div>
         <div class="cr-note">
           @nmixx_official 발행 기준.<br>
@@ -1313,7 +1353,7 @@ body { font-family: 'Noto Sans KR', sans-serif; background: var(--stone); color:
         <div class="validity-info">
           <div class="validity-pct">76.1%</div>
           <div class="validity-lbl">팔로워 유효성</div>
-          <div class="validity-sub">NMIXX 공식 계정 기준.<br>총 460만 중 실질 반응 팬덤 350만.</div>
+          <div class="validity-sub">NMIXX 공식 계정 기준.<br>총 614만 중 실질 반응 팬덤 약 468만.</div>
         </div>
       </div>
 
@@ -1447,26 +1487,28 @@ body { font-family: 'Noto Sans KR', sans-serif; background: var(--stone); color:
             </div>
           </div>
           <div class="cd-panel-data">
-            <div class="cdp-metrics">
-              <div class="cdp-metric-item">
-                <div class="cdp-metric-label">주요 도달</div>
-                <div class="cdp-metric-value">코어 팬덤</div>
-                <div class="cdp-metric-sub">950,000 노출 예상</div>
+            <div class="cdp-viz">
+              <div class="cdp-viz-item">
+                <div class="cdp-viz-row"><span class="cdp-viz-label">주요 도달</span><span class="cdp-viz-val">950,000</span></div>
+                <div class="cdp-viz-bar"><div class="cdp-viz-fill" style="width:15%"></div></div>
+                <div class="cdp-viz-sub">전체 팔로워 6,140,000 대비 약 15%</div>
               </div>
-              <div class="cdp-metric-item">
-                <div class="cdp-metric-label">발행 채널</div>
-                <div class="cdp-metric-value">@nmixx_official</div>
-                <div class="cdp-metric-sub">4,600,000 팔로워</div>
+              <div class="cdp-viz-item">
+                <div class="cdp-viz-row"><span class="cdp-viz-label">평균 참여율 (ER)</span><span class="cdp-viz-val">2.8%</span></div>
+                <div class="cdp-viz-compare">
+                  <div class="cdp-viz-cmp"><div class="cdp-viz-cmp-label">@nmixx_official</div><div class="cdp-viz-cmp-bar"><div class="cdp-viz-cmp-fill pink" style="width:100%"></div></div></div>
+                  <div class="cdp-viz-cmp"><div class="cdp-viz-cmp-label">업계 평균</div><div class="cdp-viz-cmp-bar"><div class="cdp-viz-cmp-fill grey" style="width:54%"></div></div></div>
+                </div>
+                <div class="cdp-viz-sub">업계 평균 1.5% 대비 <span class="cdp-viz-badge">1.9배</span></div>
               </div>
-              <div class="cdp-metric-item">
-                <div class="cdp-metric-label">평균 참여</div>
-                <div class="cdp-metric-value">ER 2.8%</div>
-                <div class="cdp-metric-sub">27,000건 인터랙션 예상</div>
+              <div class="cdp-viz-item">
+                <div class="cdp-viz-row"><span class="cdp-viz-label">예상 인터랙션</span><span class="cdp-viz-val">27,000건</span></div>
+                <div class="cdp-viz-bar"><div class="cdp-viz-fill" style="width:68%"></div></div>
+                <div class="cdp-viz-sub">좋아요 · 댓글 · 저장 합산</div>
               </div>
-              <div class="cdp-metric-item">
-                <div class="cdp-metric-label">콘텐츠 수명</div>
-                <div class="cdp-metric-value">피드 영구 보존</div>
-                <div class="cdp-metric-sub">게시 후 상시 노출 유지</div>
+              <div class="cdp-viz-item">
+                <div class="cdp-viz-row"><span class="cdp-viz-label">콘텐츠 수명</span><span class="cdp-viz-val">영구 보존</span></div>
+                <div class="cdp-viz-sub">피드 발행 → 상시 노출 유지</div>
               </div>
             </div>
             <div class="cdp-outcome">
@@ -1548,26 +1590,20 @@ body { font-family: 'Noto Sans KR', sans-serif; background: var(--stone); color:
             </div>
           </div>
           <div class="cd-panel-data">
-            <div class="cdp-metrics">
-              <div class="cdp-metric-item">
-                <div class="cdp-metric-label">예상 도달</div>
-                <div class="cdp-metric-value">팔로워 전체</div>
-                <div class="cdp-metric-sub">1,010,000 노출</div>
+            <div class="cdp-viz">
+              <div class="cdp-viz-item">
+                <div class="cdp-viz-row"><span class="cdp-viz-label">예상 도달</span><span class="cdp-viz-val">1,010,000</span></div>
+                <div class="cdp-viz-bar"><div class="cdp-viz-fill" style="width:16%"></div></div>
+                <div class="cdp-viz-sub">전체 팔로워 6,140,000 대비 약 16%</div>
               </div>
-              <div class="cdp-metric-item">
-                <div class="cdp-metric-label">계정 규모</div>
-                <div class="cdp-metric-value">@nmixx_official</div>
-                <div class="cdp-metric-sub">4,600,000 팔로워</div>
+              <div class="cdp-viz-item">
+                <div class="cdp-viz-row"><span class="cdp-viz-label">팔로워 도달률</span><span class="cdp-viz-val">16%</span></div>
+                <div class="cdp-viz-bar"><div class="cdp-viz-fill" style="width:16%"></div></div>
+                <div class="cdp-viz-sub">스토리 기준 업계 평균 수준</div>
               </div>
-              <div class="cdp-metric-item">
-                <div class="cdp-metric-label">팔로워 도달률</div>
-                <div class="cdp-metric-value">약 22%</div>
-                <div class="cdp-metric-sub">4,600,000 중 1,010,000 도달</div>
-              </div>
-              <div class="cdp-metric-item">
-                <div class="cdp-metric-label">노출 기간</div>
-                <div class="cdp-metric-value">24h 한정</div>
-                <div class="cdp-metric-sub">게시 후 24시간 내 집중 소비</div>
+              <div class="cdp-viz-item">
+                <div class="cdp-viz-row"><span class="cdp-viz-label">노출 기간</span><span class="cdp-viz-val">24h</span></div>
+                <div class="cdp-viz-sub">집중 소비 · 하이라이트 저장 시 상시 노출 전환</div>
               </div>
             </div>
             <div class="cdp-outcome">
@@ -2017,22 +2053,10 @@ body { font-family: 'Noto Sans KR', sans-serif; background: var(--stone); color:
         <!-- Wendy Panel A -->
         <div class="cd-panel active" id="w-panel-A">
           <div class="cd-panel-left">
-            <div class="ig-mockup">
-              <div class="ig-header">
-                <div class="ig-avatar" style="background:#222; color:#fff; font-size:8px; display:flex; align-items:center; justify-content:center;">W</div>
-                <div class="ig-user">sooya_wendy</div>
-              </div>
-              <div class="ig-media" style="height:540px; background:var(--stone); display:flex; align-items:center; justify-content:center; flex-direction:column; gap:12px;">
-                <span style="font-size:28px; opacity:0.2;">✦</span>
-                <span style="font-family:'DM Sans',sans-serif; font-size:10px; letter-spacing:2px; text-transform:uppercase; color:var(--muted);">레퍼런스 준비 중</span>
-              </div>
-              <div class="ig-actions">
-                <span class="ig-icon">🤍</span>
-                <span class="ig-icon">💬</span>
-                <span class="ig-icon">↗️</span>
-              </div>
-              <div class="ig-caption">
-                <strong>sooya_wendy</strong> 에스더버니 아뜰리에 🐰🎀
+            <div class="ig-embed-wrap">
+              <div class="ig-embed-kicker">구조 레퍼런스 — 웬디 피드</div>
+              <div class="ig-embed-single">
+                <iframe src="https://www.instagram.com/p/DDzLdbsSaW3/embed/" frameborder="0" scrolling="no" allowtransparency="true" style="width:100%; min-height:700px; border:none;"></iframe>
               </div>
             </div>
           </div>
@@ -2042,16 +2066,17 @@ body { font-family: 'Noto Sans KR', sans-serif; background: var(--stone); color:
               <span class="cdp-type-label">Instagram Feed · @sooya_wendy · 단독</span>
             </div>
             <div class="cdp-title">현장 방문 화보형 피드<br>웬디 개인 계정</div>
-            <div class="cdp-desc">에스더버니 팝업스토어를 방문한 웬디의 화보형 피드입니다. <strong>웬디 개인 계정(@sooya_wendy) 단독 발행</strong>으로, 국내 팬덤 및 대중 소비층에게 직접 노출됩니다.</div>
-            <div class="cdp-brief-section">
-              <div class="cdp-brief-header">
-                <span class="cdp-brief-label">콘텐츠 스토리보드</span>
-                <span class="cdp-brief-badge">작성 예정</span>
-              </div>
-              <div class="cdp-brief-row"><span class="cdp-brief-row-label">컨셉</span><span class="cdp-brief-row-value">— 상세 브리프 작성 중</span></div>
-              <div class="cdp-brief-row"><span class="cdp-brief-row-label">톤 & 무드</span><span class="cdp-brief-row-value">— 작성 예정</span></div>
-              <div class="cdp-brief-row"><span class="cdp-brief-row-label">키 메시지</span><span class="cdp-brief-row-value">— 작성 예정</span></div>
-              <div class="cdp-brief-row"><span class="cdp-brief-row-label">발행 타이밍</span><span class="cdp-brief-row-value">— 작성 예정</span></div>
+            <div class="sb-kicker">콘텐츠 스토리보드</div>
+            <div class="sb-meta-row">
+              <div class="sb-chip"><span class="sb-chip-key">콘셉</span><span class="sb-chip-val">웬디가 아뜰리에를 우아하게 거닐다 포착된 3컷. 릴리의 발랄함과 대비되는 클래식한 온도감.</span></div>
+              <div class="sb-chip"><span class="sb-chip-key">톤 & 무드</span><span class="sb-chip-val">우아하고 절제된. 곡선 아치 + 그레이&핑크 컬러감이 웬디 이미지와 자연스럽게 매칭.</span></div>
+              <div class="sb-chip"><span class="sb-chip-key">키 메시지</span><span class="sb-chip-val">글로벌 노출. 에스더버니 아뜰리에를 한국 방문 시 머스트고 스팟으로 포지셔닝.</span></div>
+              <div class="sb-chip"><span class="sb-chip-key">발행</span><span class="sb-chip-val">팝업 오픈 당일 촬영 → 편집·보정 후 1주 이내 발행</span></div>
+            </div>
+            <div class="sb-scenes">
+              <div class="sb-scene"><div class="sb-scene-num">S1</div><div class="sb-scene-body"><div class="sb-scene-loc">루프탑</div><div class="sb-scene-txt">에스더버니 애드벌룬 + 성수 뷰 배경 풀샷. 해외 팔로워도 반하는 비주얼 훅.</div></div></div>
+              <div class="sb-scene"><div class="sb-scene-num">S2</div><div class="sb-scene-body"><div class="sb-scene-loc">2F 패션아뜰리에 아치</div><div class="sb-scene-txt">웬디의 여성스러운 실루엣이 살아나는 미디엄샷.</div></div></div>
+              <div class="sb-scene"><div class="sb-scene-num">S3</div><div class="sb-scene-body"><div class="sb-scene-loc">3F 핑크룸 네온사인</div><div class="sb-scene-txt">"Esther Bunny" 배경. 클로즈업 or 프로필 컷.</div></div></div>
             </div>
           </div>
           <div class="cd-panel-data">
@@ -2091,16 +2116,17 @@ body { font-family: 'Noto Sans KR', sans-serif; background: var(--stone); color:
               <span class="cdp-type-label">Instagram Story · 24h · @sooya_wendy</span>
             </div>
             <div class="cdp-title">현장 스토리<br>웬디 개인 계정</div>
-            <div class="cdp-desc">팝업스토어 방문 당일, 웬디 개인 계정에서 발행되는 24시간 한정 스토리입니다. 현장의 감성을 실시간으로 전달합니다.</div>
-            <div class="cdp-brief-section">
-              <div class="cdp-brief-header">
-                <span class="cdp-brief-label">콘텐츠 스토리보드</span>
-                <span class="cdp-brief-badge">작성 예정</span>
-              </div>
-              <div class="cdp-brief-row"><span class="cdp-brief-row-label">컨셉</span><span class="cdp-brief-row-value">— 상세 브리프 작성 중</span></div>
-              <div class="cdp-brief-row"><span class="cdp-brief-row-label">톤 & 무드</span><span class="cdp-brief-row-value">— 작성 예정</span></div>
-              <div class="cdp-brief-row"><span class="cdp-brief-row-label">키 메시지</span><span class="cdp-brief-row-value">— 작성 예정</span></div>
-              <div class="cdp-brief-row"><span class="cdp-brief-row-label">발행 타이밍</span><span class="cdp-brief-row-value">— 작성 예정</span></div>
+            <div class="sb-kicker">콘텐츠 스토리보드</div>
+            <div class="sb-meta-row">
+              <div class="sb-chip"><span class="sb-chip-key">콘셉</span><span class="sb-chip-val">팝업스토어 방문 그 순간. 웬디의 감성으로 담은 현장 스케치.</span></div>
+              <div class="sb-chip"><span class="sb-chip-key">톤 & 무드</span><span class="sb-chip-val">우아하고 절제된 스토리. 웬디 특유의 감성적 분위기 유지.</span></div>
+              <div class="sb-chip"><span class="sb-chip-key">키 메시지</span><span class="sb-chip-val">지금 바로 가야 할 이유.</span></div>
+              <div class="sb-chip"><span class="sb-chip-key">발행</span><span class="sb-chip-val">방문 당일 실시간 발행 · 24시간 내 집중 소비</span></div>
+            </div>
+            <div class="sb-scenes">
+              <div class="sb-scene"><div class="sb-scene-num">S1</div><div class="sb-scene-body"><div class="sb-scene-loc">아뜰리에 입장</div><div class="sb-scene-txt">입구 + 위치 태그. 팔로워의 방문 호기심 유발.</div></div></div>
+              <div class="sb-scene"><div class="sb-scene-num">S2</div><div class="sb-scene-body"><div class="sb-scene-loc">2F / 루프탑 하이라이트</div><div class="sb-scene-txt">웬디 감성의 공간 소개. 저장 유도.</div></div></div>
+              <div class="sb-scene"><div class="sb-scene-num">S3</div><div class="sb-scene-body"><div class="sb-scene-loc">팝업 안내 + CTA</div><div class="sb-scene-txt">일정 안내 + 계정 태그로 브랜드 연결.</div></div></div>
             </div>
           </div>
           <div class="cd-panel-data">
@@ -2120,14 +2146,10 @@ body { font-family: 'Noto Sans KR', sans-serif; background: var(--stone); color:
         <!-- Wendy Panel C -->
         <div class="cd-panel" id="w-panel-C">
           <div class="cd-panel-left">
-            <div class="ig-mockup">
-              <div class="ig-header">
-                <div class="ig-avatar dfn">DFN</div>
-                <div class="ig-user">dailyfashion_news</div>
-              </div>
-              <div class="ig-media" style="height:540px; background-image: url('images/데패뉴 콘텐츠1.png'); background-size:contain; background-position:center top; background-color:var(--stone);"></div>
-              <div class="ig-caption" style="padding-top:12px;">
-                <strong>dailyfashion_news</strong> 에스더버니 팝업에 방문한 레드벨벳 웬디와의 미니 인터뷰 🎤
+            <div class="ig-embed-wrap">
+              <div class="ig-embed-kicker">구조 레퍼런스 — 데패뉴 × 웬디</div>
+              <div class="ig-embed-single">
+                <iframe src="https://www.instagram.com/reels/DWwKvKZkxl1/embed/" frameborder="0" scrolling="no" allowtransparency="true" style="width:100%; min-height:700px; border:none;"></iframe>
               </div>
             </div>
           </div>
@@ -2137,16 +2159,18 @@ body { font-family: 'Noto Sans KR', sans-serif; background: var(--stone); color:
               <span class="cdp-type-label">Instagram Reels · @dailyfashion_news · 단독</span>
             </div>
             <div class="cdp-title">현장 방문 인터뷰 릴스<br>데패뉴 단독 발행</div>
-            <div class="cdp-desc">웬디의 방문 소감과 추천 포인트를 데패뉴 특유의 스낵형 인터뷰 포맷으로 담습니다. <strong>공동작업자 없이 데패뉴 계정 단독 발행</strong>으로, 패션 고관여층과 일반 대중에게 자연스럽게 소개합니다.</div>
-            <div class="cdp-brief-section">
-              <div class="cdp-brief-header">
-                <span class="cdp-brief-label">콘텐츠 스토리보드</span>
-                <span class="cdp-brief-badge">작성 예정</span>
-              </div>
-              <div class="cdp-brief-row"><span class="cdp-brief-row-label">컨셉</span><span class="cdp-brief-row-value">— 상세 브리프 작성 중</span></div>
-              <div class="cdp-brief-row"><span class="cdp-brief-row-label">톤 & 무드</span><span class="cdp-brief-row-value">— 작성 예정</span></div>
-              <div class="cdp-brief-row"><span class="cdp-brief-row-label">키 메시지</span><span class="cdp-brief-row-value">— 작성 예정</span></div>
-              <div class="cdp-brief-row"><span class="cdp-brief-row-label">발행 타이밍</span><span class="cdp-brief-row-value">— 작성 예정</span></div>
+            <div class="sb-kicker">콘텐츠 스토리보드 · 60–90초</div>
+            <div class="sb-meta-row">
+              <div class="sb-chip"><span class="sb-chip-key">콘셉</span><span class="sb-chip-val">데패뉴 기자가 팝업 현장 취재. 공간 소개 + 웬디 인터뷰를 하나의 영상에.</span></div>
+              <div class="sb-chip"><span class="sb-chip-key">톤 & 무드</span><span class="sb-chip-val">가볍고 유쾌한 취재 톤. 광고가 아닌 콘텐츠로 소비되도록.</span></div>
+              <div class="sb-chip"><span class="sb-chip-key">키 메시지</span><span class="sb-chip-val">웬디가 머문 공간. 팔로워가 직접 가고 싶어지는 것.</span></div>
+              <div class="sb-chip"><span class="sb-chip-key">발행</span><span class="sb-chip-val">팝업 오픈 당일 촬영 → 편집 후 1주 이내 발행</span></div>
+            </div>
+            <div class="sb-scenes">
+              <div class="sb-scene"><div class="sb-scene-num">C1</div><div class="sb-scene-body"><div class="sb-scene-loc">오프닝 훅</div><div class="sb-scene-txt">"성수에 이런 공간이 생겼다고?" + 건물 외관 b-roll</div></div></div>
+              <div class="sb-scene"><div class="sb-scene-num">C2</div><div class="sb-scene-body"><div class="sb-scene-loc">공간 투어</div><div class="sb-scene-txt">데패뉴 기자 등장 + 층별 하이라이트 소개.</div></div></div>
+              <div class="sb-scene"><div class="sb-scene-num">C3</div><div class="sb-scene-body"><div class="sb-scene-loc">웬디 인터뷰</div><div class="sb-scene-txt">웬디 인사 + "가장 마음에 든 공간은?" 인터뷰.</div></div></div>
+              <div class="sb-scene"><div class="sb-scene-num">C4</div><div class="sb-scene-body"><div class="sb-scene-loc">마무리</div><div class="sb-scene-txt">웬디 카메라 향해 한 마디. 방문 유도 마무리.</div></div></div>
             </div>
           </div>
           <div class="cd-panel-data">
