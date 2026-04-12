@@ -1,0 +1,29 @@
+[틈결 성수 플래그쉽 오프닝] 초청 페이지 안내
+
+각 티어별 초청 링크입니다.
+참석 여부 응답 폼이 포함되어 있고, 응답은 구글 시트에 자동으로 쌓입니다.
+
+---
+
+1. 무가 인플루언서
+https://teumgyul.vercel.app/invitations/influencer-muga
+
+2. 5만 인플루언서
+https://teumgyul.vercel.app/invitations/influencer-5man
+
+3. 10만 인플루언서
+https://teumgyul.vercel.app/invitations/influencer-10man
+
+4. 게스트
+https://teumgyul.vercel.app/invitations/guest
+
+5. 웹매거진 미디어
+https://teumgyul.vercel.app/invitations/webmag
+
+---
+
+전체 모아보기
+https://teumgyul.vercel.app/invitations/
+
+응답 수집 시트
+https://docs.google.com/spreadsheets/d/1pmxL3G3KlJ_qRlskBn3SCUrveonBF63xB7mRQbeagdo

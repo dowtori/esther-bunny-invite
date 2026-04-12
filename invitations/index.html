@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>틈결 · Invitation Hub</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@300;400;500&family=Pretendard:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --pink: #F7A8C4;
+      --bg: #FFF8F5;
+      --accent: #E8826A;
+      --accent2: #FF85A1;
+      --ink: #2A1A14;
+      --ink60: rgba(42,26,20,.6);
+      --ink40: rgba(42,26,20,.4);
+      --ink20: rgba(42,26,20,.2);
+      --ink10: rgba(42,26,20,.1);
+      --cream: #FEF5F0;
+      --border: #EDD8CC;
+      --card: #FFFAF8;
+      --font-serif: 'Noto Serif KR', serif;
+      --font-sans: 'Pretendard', 'Apple SD Gothic Neo', sans-serif;
+      --radius: 14px;
+      --radius-sm: 8px;
+      --radius-pill: 24px;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--bg);
+      color: var(--ink);
+      font-family: var(--font-sans);
+      font-size: 15px;
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+      min-height: 100vh;
+    }
+
+    .wrap { max-width: 720px; margin: 0 auto; padding: 0 24px; }
+
+    /* Header */
+    header {
+      border-bottom: 1px solid var(--border);
+      padding: 18px 24px;
+      display: flex; align-items: baseline; gap: 12px;
+    }
+    .h-brand { font-family: var(--font-serif); font-weight: 500; font-size: 16px; color: var(--ink); letter-spacing: 0.02em; }
+    .h-tag { font-size: 11px; font-weight: 400; color: var(--ink40); letter-spacing: 0.06em; text-transform: uppercase; }
+    .h-parent { margin-left: auto; font-size: 10px; color: var(--ink40); letter-spacing: 0.08em; text-transform: uppercase; font-weight: 400; }
+
+    /* Hero */
+    .page-hero {
+      padding: 56px 0 40px;
+      border-bottom: 1px solid var(--border);
+    }
+    .page-eyebrow {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--accent); margin-bottom: 16px;
+    }
+    .page-eyebrow-dot { width: 3px; height: 3px; border-radius: 50%; background: var(--accent); display: inline-block; }
+    .page-title {
+      font-family: var(--font-serif);
+      font-size: clamp(22px, 4vw, 30px);
+      font-weight: 400; line-height: 1.4;
+      color: var(--ink); margin-bottom: 10px;
+      letter-spacing: -0.01em;
+    }
+    .page-title em { font-style: italic; color: var(--accent); }
+    .page-desc { font-size: 13px; color: var(--ink60); line-height: 1.85; }
+
+    /* Cards */
+    .cards { padding: 40px 0 80px; display: flex; flex-direction: column; gap: 16px; }
+
+    .inv-card {
+      display: block;
+      text-decoration: none;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 26px 28px;
+      position: relative;
+      overflow: hidden;
+      transition: border-color 0.18s ease, box-shadow 0.18s ease, transform 0.18s ease;
+    }
+    .inv-card::before {
+      content: '';
+      position: absolute; top: 0; left: 0;
+      width: 3px; height: 100%;
+      background: var(--accent);
+      opacity: 0;
+      transition: opacity 0.18s ease;
+    }
+    .inv-card:hover {
+      border-color: rgba(232,130,106,0.4);
+      box-shadow: 0 4px 20px rgba(232,130,106,0.1);
+      transform: translateY(-1px);
+    }
+    .inv-card:hover::before { opacity: 1; }
+
+    .inv-card-top {
+      display: flex; align-items: flex-start; justify-content: space-between; gap: 12px;
+      margin-bottom: 14px;
+    }
+    .inv-tier {
+      font-size: 10px; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--accent); background: rgba(232,130,106,0.08);
+      border: 1px solid rgba(232,130,106,0.22);
+      border-radius: var(--radius-pill); padding: 3px 12px;
+      display: inline-block;
+    }
+    .inv-arrow {
+      font-size: 16px; color: var(--ink20); flex-shrink: 0;
+      transition: color 0.18s ease, transform 0.18s ease;
+    }
+    .inv-card:hover .inv-arrow { color: var(--accent); transform: translateX(3px); }
+
+    .inv-name {
+      font-family: var(--font-serif);
+      font-size: 18px; font-weight: 400;
+      color: var(--ink); margin-bottom: 6px;
+      line-height: 1.35;
+    }
+    .inv-desc {
+      font-size: 13px; color: var(--ink60); line-height: 1.8;
+      word-break: keep-all;
+    }
+
+    .inv-meta {
+      margin-top: 16px; padding-top: 14px;
+      border-top: 1px solid var(--border);
+      display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
+    }
+    .inv-meta-pill {
+      font-size: 11px; color: var(--ink40);
+      background: var(--cream); border: 1px solid var(--border);
+      border-radius: var(--radius-pill); padding: 2px 10px;
+    }
+
+    /* Footer */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 24px;
+      text-align: center;
+      font-size: 11px; color: var(--ink40); letter-spacing: 0.04em;
+    }
+  </style>
+</head>
+<body>
+
+  <header role="banner">
+    <span class="h-brand">틈결</span>
+    <span class="h-tag">Invitation Hub</span>
+    <a href="/" class="h-parent" style="text-decoration:none;color:var(--ink40);transition:color .2s;" onmouseover="this.style.color='var(--accent)'" onmouseout="this.style.color='var(--ink40)'">← Atelier</a>
+  </header>
+
+  <main>
+    <section class="page-hero">
+      <div class="wrap">
+        <p class="page-eyebrow">
+          <span class="page-eyebrow-dot"></span>
+          Internal · Private
+        </p>
+        <h1 class="page-title">인비테이션 <em>모아보기</em></h1>
+        <p class="page-desc">틈결 성수 플래그쉽 오프닝 · 초청 페이지 모음 (2026. 5. 1 – 5. 3)</p>
+      </div>
+    </section>
+
+    <div class="wrap">
+      <div class="cards">
+
+        <a href="influencer-muga.html" class="inv-card">
+          <div class="inv-card-top">
+            <span class="inv-tier">무가 인플루언서</span>
+            <span class="inv-arrow">→</span>
+          </div>
+          <p class="inv-name">Creator Invitation · 무가</p>
+          <p class="inv-desc">협찬 제공 크리에이터 전용 초청. 프라이빗 일정 + 콘텐츠 제작 지원.</p>
+          <div class="inv-meta">
+            <span class="inv-meta-pill">influencer-muga/</span>
+            <span class="inv-meta-pill">Private Invitation</span>
+          </div>
+        </a>
+
+        <a href="influencer-5man.html" class="inv-card">
+          <div class="inv-card-top">
+            <span class="inv-tier">5만 인플루언서</span>
+            <span class="inv-arrow">→</span>
+          </div>
+          <p class="inv-name">Creator Invitation · 5만</p>
+          <p class="inv-desc">팔로워 5만 이상 크리에이터 초청. 선별된 크리에이터를 위한 프라이빗 일정.</p>
+          <div class="inv-meta">
+            <span class="inv-meta-pill">influencer-5man/</span>
+            <span class="inv-meta-pill">Private Invitation</span>
+          </div>
+        </a>
+
+        <a href="influencer-10man.html" class="inv-card">
+          <div class="inv-card-top">
+            <span class="inv-tier">10만 인플루언서</span>
+            <span class="inv-arrow">→</span>
+          </div>
+          <p class="inv-name">Creator Invitation · 10만</p>
+          <p class="inv-desc">팔로워 10만 이상 크리에이터 초청. 선별된 크리에이터를 위한 프라이빗 일정.</p>
+          <div class="inv-meta">
+            <span class="inv-meta-pill">influencer-10man/</span>
+            <span class="inv-meta-pill">Private Invitation</span>
+          </div>
+        </a>
+
+        <a href="guest.html" class="inv-card">
+          <div class="inv-card-top">
+            <span class="inv-tier">게스트</span>
+            <span class="inv-arrow">→</span>
+          </div>
+          <p class="inv-name">Guest Invitation</p>
+          <p class="inv-desc">특별히 선별된 분들을 위한 프라이빗 초청. 가장 먼저 틈결을 경험하세요.</p>
+          <div class="inv-meta">
+            <span class="inv-meta-pill">guest/</span>
+            <span class="inv-meta-pill">Private Invitation</span>
+          </div>
+        </a>
+
+        <a href="webmag.html" class="inv-card">
+          <div class="inv-card-top">
+            <span class="inv-tier">웹매거진 미디어</span>
+            <span class="inv-arrow">→</span>
+          </div>
+          <p class="inv-name">Media Invitation · 웹매거진</p>
+          <p class="inv-desc">웹매거진 미디어 단독 취재 초청. 오픈 전 단독 촬영·인터뷰 일정 제공.</p>
+          <div class="inv-meta">
+            <span class="inv-meta-pill">webmag/</span>
+            <span class="inv-meta-pill">Media Invitation</span>
+          </div>
+        </a>
+
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    © 2026 Iconic Movement · 틈결 TeumGyul · Internal Use Only
+  </footer>
+
+</body>
+</html>
