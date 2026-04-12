@@ -1,0 +1,161 @@
+{
+  "meta": {
+    "subject": "김고은 인스타그램 분석 리포트",
+    "source": "featuring.co",
+    "reportId": "6342394602",
+    "capturedAt": "2026-04-12T00:00:00.000Z",
+    "url": "https://app.featuring.co/report/instagram/6342394602",
+    "lastUpdate": "2026-04-12",
+    "note": "웬디 대신 진행 확정된 김고은 데이터. 틈결×에스더버니 캠페인 검토용."
+  },
+  "profile": {
+    "instagramHandle": "goxnniee",
+    "name": "김 고은 KIM GOEUN",
+    "contact": "mellamogonnie@gmail.com",
+    "categories": ["패션", "사진/영상"],
+    "followerRange": "100만~300만 명 미만"
+  },
+  "coreStats": {
+    "posts": 213,
+    "followers": 1450000,
+    "followersDisplay": "145만 명",
+    "following": 514,
+    "effectiveFollowers": 72000,
+    "effectiveFollowersDisplay": "7.2만 명",
+    "effectiveFollowerRatio": "낮음",
+    "similarGroupAvgEffective": 687000,
+    "similarGroupAvgEffectiveDisplay": "68.7만 명"
+  },
+  "growth": {
+    "totalGrowth": 1430000,
+    "totalGrowthDisplay": "143만 명",
+    "growthRate": "11303.7%",
+    "growthRank": "상위 0.01%",
+    "followingGrowth": 61,
+    "avgReach": 971000,
+    "avgReachDisplay": "97.1만 명"
+  },
+  "audience": {
+    "gender": {
+      "male": 54.5,
+      "female": 45.5
+    },
+    "topAgeGenderSegment": "25-34세 남성 (16.5%)",
+    "ageGroups": ["13-17", "18-24", "25-34", "35-44", "45-54", "55+"],
+    "language": {
+      "korean": 100
+    }
+  },
+  "engagement": {
+    "avgLikes": 121000,
+    "avgLikesDisplay": "12.1만 개",
+    "avgComments": 270,
+    "engagementRate": 8.4,
+    "engagementRateStatus": "높음",
+    "industryAvgEngagementRate": 4.19,
+    "topHashtags": ["#광고", "#김고은", "#최예나", "#YENA", "#YENA_CatchCatch"]
+  },
+  "content": {
+    "typeBreakdown": {
+      "feed": 79,
+      "video": 20
+    },
+    "feedPerformance": {
+      "avgLikes": 125000,
+      "avgLikesDisplay": "12.5만 개",
+      "avgLikesRank": "상위 11.31%",
+      "avgComments": 277,
+      "avgCommentsRank": "상위 64.72%"
+    },
+    "videoPerformance": {
+      "avgViews": 2700000,
+      "avgViewsDisplay": "270만 회",
+      "avgViewsRank": "상위 20.88%",
+      "avgLikes": 104000,
+      "avgLikesDisplay": "10.4만 개",
+      "avgLikesRank": "상위 31.13%",
+      "avgComments": 242,
+      "avgCommentsRank": "상위 61.18%"
+    }
+  },
+  "adAnalysis": {
+    "dataBaseDate": "2025-12-08",
+    "adContentRatio": "9.52%",
+    "adCount": 2,
+    "avgAdFrequency": "평균 3.82일 간격",
+    "mainAdCategories": {
+      "FB": 50,
+      "fashion": 50
+    },
+    "topAdPosts": [
+      {
+        "rank": 1,
+        "brand": "테라",
+        "category": "F&B",
+        "date": "2025-09-25"
+      },
+      {
+        "rank": 2,
+        "brand": "1993스튜디오",
+        "category": "패션",
+        "date": "2025-09-21"
+      }
+    ],
+    "recentAdBrands": ["바닐라코", "어그(UGG)", "키엘(Kiehl's)", "테라", "1993스튜디오"]
+  },
+  "costPrediction": {
+    "expectedFeeMin": 44650000,
+    "expectedFeeMax": 66970000,
+    "expectedFeeDisplay": "4,465만 원 ~ 6,697만 원",
+    "expectedConversionsMin": 8094,
+    "expectedConversionsMax": 54000,
+    "expectedConversionsDisplay": "8,094명 ~ 5.4만 명",
+    "expectedSalesMin": 299382298,
+    "expectedSalesMax": 548867547,
+    "expectedSalesDisplay": "약 3억 ~ 5.5억 원",
+    "expectedCPR": 57.4,
+    "expectedCPRStatus": "저렴함",
+    "benchmarkCPR": 96,
+    "currency": "KRW"
+  },
+  "similarAccounts": [
+    {
+      "handle": "idolnation_",
+      "name": "김혜수",
+      "followers": 1080000,
+      "followersDisplay": "108만 명",
+      "effectiveFollowers": 183000,
+      "effectiveFollowersDisplay": "18.3만 명"
+    },
+    {
+      "handle": "shinsiaa_",
+      "name": "신시아",
+      "followers": 1000000,
+      "followersDisplay": "100만 명",
+      "effectiveFollowers": 774000,
+      "effectiveFollowersDisplay": "77.4만 명"
+    },
+    {
+      "handle": "jj_1986_jj",
+      "name": "김재중",
+      "followers": 2630000,
+      "followersDisplay": "263만 명",
+      "effectiveFollowers": 2020000,
+      "effectiveFollowersDisplay": "202만 명"
+    },
+    {
+      "handle": "vely.mom",
+      "name": "VELYMOM 블리맘 이서영",
+      "followers": 1680000,
+      "followersDisplay": "168만 명",
+      "effectiveFollowers": 201000,
+      "effectiveFollowersDisplay": "20.1만 명"
+    },
+    {
+      "handle": "jiheonnibaek",
+      "name": "백지헌",
+      "followers": 905000,
+      "followersDisplay": "90.5만 명"
+    }
+  ]
+}
