@@ -577,12 +577,12 @@
         </div>
       </div>
 
-      <div class="deadline-box" role="note" aria-label="RSVP 마감 안내">
+      <div id="deadline-box" class="deadline-box" role="note" aria-label="RSVP 마감 안내" style="display:none">
         <p class="deadline-primary">
-          참석 확인 마감 · <strong>4월 13일(월) 오전 10시</strong>까지
+          참석 확인 마감 · <strong><span class="deadline-date"></span></strong>까지
         </p>
         <p class="deadline-recommend">
-          원활한 일정 준비를 위해, 가능하면 <em>4월 12일(일) 밤</em>까지 미리 제출해 주시면 감사하겠습니다.
+          원활한 일정 준비를 위해, 가능하면 미리 제출해 주시면 감사하겠습니다.
         </p>
       </div>
     </div>
@@ -741,6 +741,18 @@
   </footer>
 
   <script>
+    /* ── 마감일 설정 (null이면 마감 블록 숨김) ── */
+    const DEADLINE = null;
+    // 예: const DEADLINE = '4월 20일(월) 오전 10시';
+    (function() {
+      const box = document.getElementById('deadline-box');
+      if (!box) return;
+      if (DEADLINE) {
+        box.querySelector('.deadline-date').textContent = DEADLINE;
+        box.style.display = '';
+      }
+    })();
+
     /* ── Date checkbox toggle ── */
     document.querySelectorAll('.date-check-card').forEach(card => {
       card.addEventListener('click', function() {
