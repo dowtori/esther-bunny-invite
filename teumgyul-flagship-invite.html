@@ -136,8 +136,8 @@
       left: 50%;
       transform: translateX(-50%);
       width: 34%;
-      top: 14%;
-      bottom: 18%;
+      top: 18%;
+      bottom: 38%;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -232,8 +232,21 @@
     }
 
     .hero-mobile-chars img {
-      width: 48%;
-      max-width: 200px;
+      height: clamp(200px, 56vw, 300px);
+      width: auto;
+      max-width: 48%;
+      display: block;
+    }
+
+    .hero-mobile-logo {
+      display: flex;
+      justify-content: center;
+      padding: 16px 0 28px;
+      background: #F5E8DC;
+    }
+
+    .hero-mobile-logo img {
+      width: clamp(160px, 50%, 240px);
       height: auto;
       display: block;
     }
@@ -1255,7 +1268,7 @@
 
   <main>
     <section class="hero">
-      <img src="images/brand/invitation-design-preview.png" alt="Iconic Movement TeumGyul Opening 2026" class="hero-full-img">
+      <img src="images/260416PC상단수정요청(캐릭터비율).png" alt="Iconic Movement TeumGyul Opening 2026" class="hero-full-img">
       <div class="hero-overlay">
         <div class="hero-overlay-inner">
           <div class="hero-eyebrow">
@@ -1286,6 +1299,9 @@
         <div class="hero-mobile-chars">
           <img src="images/brand/invitation/transparent/char-lace-new.png" alt="">
           <img src="images/brand/invitation/transparent/char-black-dress.png" alt="">
+        </div>
+        <div class="hero-mobile-logo">
+          <img src="images/260416PC및모바일적용용로고n카피.png" alt="Esther Bunny © esther kim. All Rights Reserved">
         </div>
       </div>
     </section>
