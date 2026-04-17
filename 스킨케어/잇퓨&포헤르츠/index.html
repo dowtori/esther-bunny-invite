@@ -1,0 +1,1169 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>포헤르츠 × 잇퓨 · 스킨케어 캠페인 — SIRIAI</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.8/dist/web/variable/pretendardvariable.css"/>
+  <style>
+    :root {
+      --fh:        #3da882;
+      --fh-light:  #edf8f4;
+      --fh-pale:   #f4fbf8;
+      --fh-mid:    rgba(61,168,130,.10);
+      --fh-border: rgba(61,168,130,.24);
+
+      --it:        #b07a44;
+      --it-light:  #faf3e8;
+      --it-pale:   #fdf9f3;
+      --it-mid:    rgba(176,122,68,.10);
+      --it-border: rgba(176,122,68,.24);
+
+      --bg:     #fafaf7;
+      --cream:  #f4f0ea;
+      --card:   #ffffff;
+      --border: #e5ddd4;
+      --ink:    #1c1814;
+      --ink70:  rgba(28,24,20,.70);
+      --ink50:  rgba(28,24,20,.50);
+      --ink30:  rgba(28,24,20,.30);
+      --ink12:  rgba(28,24,20,.12);
+      --ink06:  rgba(28,24,20,.06);
+
+      --serif: 'Noto Serif KR', Georgia, serif;
+      --sans:  'Pretendard Variable', Pretendard, 'Apple SD Gothic Neo', sans-serif;
+      --r: 12px; --rs: 8px; --rp: 24px;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--bg); color: var(--ink);
+      font-family: var(--sans); font-size: 15px;
+      line-height: 1.7; -webkit-font-smoothing: antialiased;
+    }
+    .wrap { max-width: 680px; margin: 0 auto; padding: 0 24px; }
+
+    /* ── HEADER ─────────────────────────────── */
+    header {
+      position: sticky; top: 0; z-index: 300;
+      background: rgba(250,250,247,.96);
+      backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--border);
+      padding: 0 24px; height: 52px;
+      display: flex; align-items: center; gap: 10px;
+    }
+    .h-logo { font-family: var(--serif); font-size: 14px; letter-spacing: .04em; }
+    .h-dot  { width: 3px; height: 3px; border-radius: 50%; background: var(--border); flex-shrink: 0; }
+    .h-sub  { font-size: 10px; letter-spacing: .12em; text-transform: uppercase; color: var(--ink30); }
+    .h-cta  {
+      margin-left: auto; font-size: 11px; font-weight: 500; letter-spacing: .05em;
+      color: var(--fh); background: var(--fh-mid);
+      border: 1px solid var(--fh-border); border-radius: var(--rp);
+      padding: 5px 14px; text-decoration: none; transition: opacity .15s;
+    }
+    .h-cta:hover { opacity: .75; }
+
+    /* ── HERO ───────────────────────────────── */
+    .hero {
+      min-height: 520px; display: flex;
+      align-items: center; justify-content: center;
+      position: relative; overflow: hidden;
+    }
+    .hero-bg {
+      position: absolute; inset: 0;
+      background: linear-gradient(120deg, #eaf7f2 0%, #f2f9f6 40%, #fdf8f0 70%, #faf3e4 100%);
+    }
+    .hero-bg::after {
+      content: ''; position: absolute; inset: 0;
+      background: radial-gradient(ellipse 65% 55% at 50% 50%,
+        rgba(255,255,255,.75) 0%, transparent 100%);
+    }
+    .hero-content {
+      position: relative; z-index: 1;
+      text-align: center; padding: 80px 24px 88px; max-width: 540px;
+    }
+    .hero-eyebrow {
+      font-size: 10px; font-weight: 500; letter-spacing: .22em;
+      text-transform: uppercase; color: var(--ink30);
+      margin-bottom: 22px; display: block;
+    }
+    .hero-brand {
+      font-family: var(--serif);
+      font-size: clamp(36px, 8vw, 58px);
+      font-weight: 300; letter-spacing: -.02em; line-height: 1.1;
+      color: var(--ink); margin-bottom: 18px;
+    }
+    .hero-brand .x-mark { color: var(--ink30); font-weight: 300; }
+    .hero-tagline {
+      font-family: var(--serif);
+      font-size: clamp(14px, 2.5vw, 17px);
+      font-weight: 400; color: var(--ink50);
+      line-height: 1.75; letter-spacing: .01em;
+      margin-bottom: 36px; word-break: keep-all;
+    }
+    .hero-badges {
+      display: flex; align-items: center; justify-content: center;
+      gap: 10px; flex-wrap: wrap; margin-bottom: 32px;
+    }
+    .hbadge {
+      display: inline-flex; align-items: center; gap: 7px;
+      font-size: 11px; font-weight: 500; letter-spacing: .05em;
+      padding: 7px 16px; border-radius: var(--rp);
+    }
+    .hb-fh { color: var(--fh); background: var(--fh-mid); border: 1px solid var(--fh-border); }
+    .hb-it { color: var(--it); background: var(--it-mid); border: 1px solid var(--it-border); }
+    .hbadge-dot { width: 5px; height: 5px; border-radius: 50%; }
+    .hbadge-dot-fh { background: var(--fh); }
+    .hbadge-dot-it { background: var(--it); }
+    .hero-cta {
+      display: inline-block; background: var(--ink); color: #fff;
+      font-family: var(--sans); font-size: 13px; font-weight: 500;
+      letter-spacing: .04em; padding: 14px 36px;
+      border-radius: var(--rp); text-decoration: none; transition: opacity .2s;
+    }
+    .hero-cta:hover { opacity: .82; }
+
+    /* ── DIVIDER ─────────────────────────────── */
+    hr.sec { border: none; border-top: 1px solid var(--border); margin: 0; }
+
+    /* ── SECTION COMMON ──────────────────────── */
+    section { padding: 60px 0; }
+    .sec-tint-fh { background: var(--fh-pale); }
+    .sec-tint-it { background: var(--it-pale); }
+
+    .sec-label {
+      font-size: 10px; font-weight: 500;
+      letter-spacing: .18em; text-transform: uppercase; margin-bottom: 8px;
+    }
+    .sl-fh { color: var(--fh); }
+    .sl-it { color: var(--it); }
+    .sl-n  { color: var(--ink30); }
+    .sec-title {
+      font-family: var(--serif); font-size: clamp(22px, 4vw, 30px);
+      font-weight: 400; line-height: 1.35; letter-spacing: -.01em;
+      color: var(--ink); margin-bottom: 14px; word-break: keep-all;
+    }
+    .sec-body { font-size: 14px; color: var(--ink50); line-height: 1.95; word-break: keep-all; }
+
+    /* ── FORHZ IMAGE SLIDER ───────────────────── */
+    .slider-wrap {
+      position: relative; margin-top: 28px;
+      border-radius: var(--r); overflow: hidden;
+    }
+    .slider-track {
+      display: flex; overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      scroll-behavior: smooth;
+      -webkit-overflow-scrolling: touch;
+      gap: 0;
+      scrollbar-width: none;
+    }
+    .slider-track::-webkit-scrollbar { display: none; }
+    .slider-slide {
+      flex: 0 0 100%; scroll-snap-align: start;
+      aspect-ratio: 3/4;
+    }
+    .slider-slide img {
+      width: 100%; height: 100%;
+      object-fit: cover; object-position: center;
+      display: block;
+    }
+    .slider-btn {
+      position: absolute; top: 50%; transform: translateY(-50%);
+      width: 38px; height: 38px; border-radius: 50%;
+      background: rgba(255,255,255,.88); border: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer; z-index: 10;
+      box-shadow: 0 2px 10px rgba(0,0,0,.08);
+      transition: opacity .15s;
+    }
+    .slider-btn:hover { opacity: .85; }
+    .slider-btn svg { width: 14px; height: 14px; stroke: var(--ink); stroke-width: 1.8; fill: none; }
+    .sl-prev { left: 12px; }
+    .sl-next { right: 12px; }
+    .slider-dots {
+      position: absolute; bottom: 14px; left: 50%; transform: translateX(-50%);
+      display: flex; gap: 6px;
+    }
+    .sl-dot {
+      width: 6px; height: 6px; border-radius: 50%;
+      background: rgba(255,255,255,.5); transition: all .2s; cursor: pointer;
+    }
+    .sl-dot.active { background: rgba(255,255,255,.95); width: 18px; border-radius: 3px; }
+
+    /* ── ITFU BANNER ──────────────────────────── */
+    .it-banner-wrap {
+      margin-top: 28px; border-radius: var(--r); overflow: hidden;
+      line-height: 0; position: relative;
+      background: #d5e8f0; /* ITFU 이미지 배경색 — 이미지 로딩 전 색상 유지 */
+    }
+    .it-banner {
+      width: 100%;
+      aspect-ratio: 4/3;
+      object-fit: cover;
+      object-position: 78% center; /* 인물 중심 오른쪽 프레이밍 */
+      display: block;
+    }
+    @media (max-width: 600px) {
+      .it-banner {
+        aspect-ratio: 1/1;
+        object-position: right center;
+      }
+    }
+
+    /* ── GUIDE BUTTON ─────────────────────────── */
+    .guide-btn {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-size: 13px; font-weight: 500; letter-spacing: .02em;
+      padding: 12px 22px; border-radius: var(--rs);
+      border: 1.5px solid var(--border); background: var(--card);
+      cursor: pointer; transition: all .18s; margin-top: 20px;
+      font-family: var(--sans);
+    }
+    .guide-btn-fh { color: var(--fh); border-color: var(--fh-border); }
+    .guide-btn-fh:hover { background: var(--fh-mid); border-color: var(--fh); }
+    .guide-btn-it { color: var(--it); border-color: var(--it-border); }
+    .guide-btn-it:hover { background: var(--it-mid); border-color: var(--it); }
+    .guide-btn-arrow { font-size: 11px; opacity: .6; }
+
+    /* ── MODAL ────────────────────────────────── */
+    .modal-backdrop {
+      position: fixed; inset: 0; z-index: 500;
+      background: rgba(20,16,12,.55);
+      backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
+      display: flex; align-items: flex-end; justify-content: center;
+      opacity: 0; pointer-events: none; transition: opacity .3s;
+    }
+    @media (min-width: 560px) {
+      .modal-backdrop { align-items: center; }
+    }
+    .modal-backdrop.open { opacity: 1; pointer-events: all; }
+    .modal {
+      background: var(--card); width: 100%;
+      max-width: 520px; max-height: 88vh;
+      border-radius: 20px 20px 0 0;
+      overflow: hidden; display: flex; flex-direction: column;
+      transform: translateY(32px);
+      transition: transform .35s cubic-bezier(.25,.46,.45,.94);
+    }
+    @media (min-width: 560px) {
+      .modal { border-radius: 16px; max-height: 82vh; }
+    }
+    .modal-backdrop.open .modal { transform: translateY(0); }
+    .modal-handle {
+      width: 36px; height: 4px; border-radius: 2px;
+      background: var(--border); margin: 14px auto 0;
+      flex-shrink: 0;
+    }
+    @media (min-width: 560px) { .modal-handle { display: none; } }
+    .modal-head {
+      padding: 18px 20px 14px;
+      display: flex; align-items: center; justify-content: space-between;
+      border-bottom: 1px solid var(--border); flex-shrink: 0;
+    }
+    .modal-head-left { display: flex; align-items: center; gap: 10px; }
+    .modal-title { font-family: var(--serif); font-size: 17px; font-weight: 400; }
+    .modal-close {
+      width: 32px; height: 32px; border-radius: 50%;
+      background: var(--cream); border: none; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0; transition: background .15s;
+    }
+    .modal-close:hover { background: var(--border); }
+    .modal-close svg { width: 14px; height: 14px; stroke: var(--ink); stroke-width: 2; fill: none; }
+    .modal-body { overflow-y: auto; padding: 0 0 24px; flex: 1; }
+    .modal-body::-webkit-scrollbar { width: 4px; }
+    .modal-body::-webkit-scrollbar-track { background: transparent; }
+    .modal-body::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+
+    /* Modal sections */
+    .msec { padding: 18px 20px 0; }
+    .msec-label {
+      font-size: 10px; font-weight: 500; letter-spacing: .15em;
+      text-transform: uppercase; color: var(--ink30); margin-bottom: 10px;
+    }
+    .mrow {
+      display: flex; gap: 12px; padding: 10px 0;
+      border-bottom: 1px solid var(--ink06); font-size: 13px;
+    }
+    .mrow:last-child { border-bottom: none; }
+    .mk { width: 64px; flex-shrink: 0; font-size: 10px; color: var(--ink30); padding-top: 2px; }
+    .mv { color: var(--ink); line-height: 1.6; }
+    .mv small { color: var(--ink30); font-size: 11px; }
+    .mrows-box {
+      border: 1px solid var(--border); border-radius: var(--r); overflow: hidden;
+    }
+    .mrows-box .mrow { padding: 10px 14px; }
+    .mrows-box .mrow:first-child { border-top: none; }
+
+    .m-tag-row { display: flex; gap: 6px; flex-wrap: wrap; }
+    .m-htag {
+      font-size: 11px; color: var(--ink50);
+      background: var(--cream); border: 1px solid var(--border);
+      border-radius: var(--rp); padding: 4px 12px;
+    }
+    .m-notice {
+      border-radius: var(--rs); padding: 14px 16px; margin-top: 14px;
+    }
+    .m-notice-fh { background: var(--fh-mid); border: 1px solid var(--fh-border); }
+    .m-notice-it { background: var(--it-mid); border: 1px solid var(--it-border); }
+    .m-notice-label {
+      font-size: 10px; font-weight: 500; letter-spacing: .12em;
+      text-transform: uppercase; margin-bottom: 6px;
+    }
+    .m-notice-fh .m-notice-label { color: var(--fh); }
+    .m-notice-it .m-notice-label { color: var(--it); }
+    .m-notice-text { font-size: 13px; color: var(--ink50); line-height: 1.85; word-break: keep-all; }
+    .modal-foot {
+      padding: 14px 20px 20px;
+      border-top: 1px solid var(--border);
+      flex-shrink: 0;
+    }
+    .btn-modal-close {
+      width: 100%; padding: 13px; border: none; border-radius: var(--rs);
+      background: var(--ink); color: #fff;
+      font-family: var(--sans); font-size: 14px; font-weight: 500;
+      cursor: pointer; transition: opacity .15s;
+    }
+    .btn-modal-close:hover { opacity: .85; }
+
+    /* badge inline */
+    .ibadge {
+      display: inline-block; font-size: 9px; font-weight: 500; letter-spacing: .08em;
+      padding: 2px 8px; border-radius: var(--rp); vertical-align: middle;
+    }
+    .ib-fh { color: var(--fh); background: var(--fh-mid); border: 1px solid var(--fh-border); }
+    .ib-it { color: var(--it); background: var(--it-mid); border: 1px solid var(--it-border); }
+
+    /* ── INFO ROWS (section body) ─────────────── */
+    .info-rows { margin-top: 20px; }
+    .info-row {
+      display: flex; gap: 12px; padding: 10px 0;
+      border-bottom: 1px solid var(--ink12); font-size: 13px;
+    }
+    .info-row:first-child { border-top: 1px solid var(--ink12); }
+    .ik { width: 64px; flex-shrink: 0; font-size: 10px; letter-spacing: .08em; text-transform: uppercase; color: var(--ink30); padding-top: 2px; }
+    .iv { color: var(--ink); line-height: 1.55; }
+    .iv small { color: var(--ink30); font-size: 11px; }
+
+    /* ── CONDITIONS ──────────────────────────── */
+    .cond-list { list-style: none; margin-top: 24px; }
+    .cond-item {
+      display: flex; gap: 16px; align-items: flex-start;
+      padding: 16px 0; border-bottom: 1px solid var(--border);
+    }
+    .cond-item:first-child { border-top: 1px solid var(--border); }
+    .cond-icon {
+      width: 36px; height: 36px; border-radius: 50%;
+      background: var(--cream); border: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0; font-size: 15px;
+    }
+    .cond-title { font-size: 13px; font-weight: 500; margin-bottom: 4px; }
+    .cond-desc { font-size: 12px; color: var(--ink50); line-height: 1.75; word-break: keep-all; }
+
+    /* ── FORM ────────────────────────────────── */
+    .form-area { padding: 60px 0 88px; }
+    .form-sub { font-size: 14px; color: var(--ink50); line-height: 1.9; margin-bottom: 36px; word-break: keep-all; }
+
+    .steps { display: flex; margin-bottom: 36px; }
+    .si { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 5px; position: relative; }
+    .si:not(:last-child)::after {
+      content: ''; position: absolute; top: 13px;
+      left: calc(50% + 13px); right: calc(-50% + 13px);
+      height: 1px; background: var(--border); z-index: 0;
+    }
+    .si-num {
+      width: 26px; height: 26px; border-radius: 50%;
+      border: 1.5px solid var(--border); background: var(--bg);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 11px; color: var(--ink30); font-weight: 500;
+      position: relative; z-index: 1; transition: all .25s;
+    }
+    .si-lbl { font-size: 10px; color: var(--ink30); text-align: center; letter-spacing: .02em; }
+    .si.active .si-num { border-color: var(--fh); background: var(--fh); color: #fff; }
+    .si.active .si-lbl { color: var(--fh); font-weight: 500; }
+    .si.done .si-num { border-color: var(--fh); background: var(--fh-light); color: var(--fh); }
+    .si.done::after { background: var(--fh-border); }
+
+    .sp { display: none; }
+    .sp.active { display: block; }
+
+    .camp-cards { display: flex; flex-direction: column; gap: 10px; margin-bottom: 16px; }
+    .camp-card {
+      border: 1.5px solid var(--border); border-radius: var(--r);
+      background: var(--card); cursor: pointer; transition: border-color .2s, background .2s;
+    }
+    .camp-card input[type="checkbox"] { display: none; }
+    .cc-inner { display: flex; align-items: center; gap: 14px; padding: 16px 18px; }
+    .cc-chk {
+      width: 20px; height: 20px; border-radius: 5px;
+      border: 1.5px solid var(--border); flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center; transition: all .2s;
+    }
+    .camp-card.sel-fh { border-color: var(--fh); background: var(--fh-pale); }
+    .camp-card.sel-fh .cc-chk { background: var(--fh); border-color: var(--fh); }
+    .camp-card.sel-it { border-color: var(--it); background: var(--it-pale); }
+    .camp-card.sel-it .cc-chk { background: var(--it); border-color: var(--it); }
+    .cc-body { flex: 1; }
+    .cc-name { font-size: 14px; font-weight: 500; margin-bottom: 2px; }
+    .cc-meta { font-size: 12px; color: var(--ink30); }
+
+    /* Step 2 consent */
+    .consent-block {
+      border: 1px solid var(--border); border-radius: var(--r);
+      overflow: hidden; margin-bottom: 14px;
+    }
+    .consent-block.hidden { display: none; }
+    .cb-head {
+      padding: 12px 18px; display: flex; align-items: center; justify-content: space-between;
+    }
+    .cb-head-fh { background: var(--fh-mid); }
+    .cb-head-it { background: var(--it-mid); }
+    .cb-head-title { font-size: 12px; font-weight: 600; }
+    .cb-head-fh .cb-head-title { color: var(--fh); }
+    .cb-head-it .cb-head-title { color: var(--it); }
+    .cb-guide-link {
+      font-size: 11px; font-weight: 500; text-decoration: none; cursor: pointer;
+      display: flex; align-items: center; gap: 4px; border: none; background: none;
+      font-family: var(--sans); padding: 0;
+    }
+    .cb-head-fh .cb-guide-link { color: var(--fh); }
+    .cb-head-it .cb-guide-link { color: var(--it); }
+    .cb-checks {
+      padding: 14px 18px; background: var(--cream);
+      display: flex; flex-direction: column; gap: 10px;
+    }
+    .ck { display: flex; align-items: flex-start; gap: 10px; cursor: pointer; }
+    .ck input[type="checkbox"] { width: 16px; height: 16px; accent-color: var(--fh); margin-top: 2px; flex-shrink: 0; }
+    .ck span { font-size: 13px; line-height: 1.6; }
+
+    .field { display: flex; flex-direction: column; gap: 6px; margin-bottom: 18px; }
+    .field label { font-size: 13px; font-weight: 500; }
+    .req { color: var(--fh); }
+    .field input, .field select {
+      border: 1.5px solid var(--border); border-radius: var(--rs);
+      padding: 12px 14px; font-size: 14px; font-family: var(--sans);
+      background: var(--card); color: var(--ink); width: 100%;
+      transition: border-color .2s, box-shadow .2s;
+    }
+    .field input:focus, .field select:focus {
+      outline: none; border-color: var(--fh); box-shadow: 0 0 0 3px var(--fh-mid);
+    }
+    .field-hint { font-size: 11px; color: var(--ink30); }
+    .field select {
+      -webkit-appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' fill='none'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23aaa' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+      background-repeat: no-repeat; background-position: right 14px center;
+    }
+    .f2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    @media (max-width: 480px) { .f2 { grid-template-columns: 1fr; } }
+
+    .consent-box {
+      background: var(--cream); border: 1px solid var(--border);
+      border-radius: var(--r); padding: 20px 22px; margin-bottom: 18px;
+    }
+    .consent-title { font-size: 13px; font-weight: 500; margin-bottom: 12px; }
+    .consent-list { font-size: 12px; color: var(--ink50); line-height: 1.9; margin-bottom: 14px; list-style: none; }
+    .consent-checks { display: flex; flex-direction: column; gap: 10px; }
+    .sum-box {
+      background: var(--cream); border: 1px solid var(--border);
+      border-radius: var(--r); padding: 18px 20px; margin-bottom: 20px;
+    }
+    .sum-lbl { font-size: 10px; letter-spacing: .1em; text-transform: uppercase; color: var(--ink30); margin-bottom: 14px; }
+    .sum-row { display: flex; justify-content: space-between; font-size: 13px; padding: 9px 0; border-bottom: 1px solid var(--ink12); }
+    .sum-row:last-child { border-bottom: none; padding-bottom: 0; }
+    .sum-key { color: var(--ink30); }
+    .sum-val { font-weight: 500; text-align: right; max-width: 60%; }
+
+    .err { font-size: 12px; color: #c0324f; margin-top: 6px; display: none; }
+    .err.show { display: block; }
+
+    .form-nav { display: flex; gap: 12px; margin-top: 28px; }
+    .btn-p {
+      flex: 1; padding: 14px 20px; border: none; border-radius: var(--rs);
+      background: var(--fh); color: #fff;
+      font-family: var(--sans); font-size: 14px; font-weight: 500;
+      cursor: pointer; transition: opacity .15s;
+    }
+    .btn-p:hover { opacity: .85; }
+    .btn-p:disabled { opacity: .4; cursor: not-allowed; }
+    .btn-s {
+      padding: 14px 20px; border: 1.5px solid var(--border); border-radius: var(--rs);
+      background: transparent; color: var(--ink50);
+      font-family: var(--sans); font-size: 14px;
+      cursor: pointer; transition: border-color .2s;
+    }
+    .btn-s:hover { border-color: var(--ink30); }
+
+    /* ── SUCCESS ──────────────────────────────── */
+    #success { display: none; padding: 88px 0; }
+    .suc-wrap { text-align: center; max-width: 380px; margin: 0 auto; }
+    .suc-mark { font-size: 28px; color: var(--fh); margin-bottom: 20px; }
+    .suc-title { font-family: var(--serif); font-size: 26px; font-weight: 400; line-height: 1.45; margin-bottom: 14px; }
+    .suc-body { font-size: 14px; color: var(--ink50); line-height: 1.9; word-break: keep-all; }
+    .suc-badges { display: flex; align-items: center; justify-content: center; gap: 8px; margin-top: 24px; }
+
+    /* ── FOOTER ───────────────────────────────── */
+    footer { border-top: 1px solid var(--border); background: var(--cream); padding: 28px 24px; text-align: center; }
+    .f-brand { font-family: var(--serif); font-size: 14px; display: block; margin-bottom: 6px; }
+    .f-note { font-size: 11px; color: var(--ink30); line-height: 1.7; word-break: keep-all; }
+
+    /* ── ANIMATION ────────────────────────────── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(18px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .anim { opacity: 0; }
+    .anim.in { animation: fadeUp .55s ease forwards; }
+    .anim.in.d1 { animation-delay: .08s; }
+    .anim.in.d2 { animation-delay: .16s; }
+    .anim.in.d3 { animation-delay: .24s; }
+
+    @media (max-width: 540px) {
+      .hero { min-height: 440px; }
+      .hero-content { padding: 64px 20px 72px; }
+      .wrap { padding: 0 18px; }
+      section { padding: 44px 0; }
+      .form-area { padding: 44px 0 64px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── HEADER ─────────────────────────────────────── -->
+<header>
+  <span class="h-logo">SIRIAI</span>
+  <span class="h-dot"></span>
+  <span class="h-sub">Skincare Campaign</span>
+  <a class="h-cta" href="#apply">지원하기</a>
+</header>
+
+<!-- ── HERO ───────────────────────────────────────── -->
+<div class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-content">
+    <span class="hero-eyebrow anim">SIRIAI 파트너사 한정 캠페인</span>
+    <h1 class="hero-brand anim d1">
+      포헤르츠 <span class="x-mark">×</span> 잇퓨
+    </h1>
+    <p class="hero-tagline anim d1">
+      동시에 두 스킨케어 캠페인을 진행할 수 있습니다.
+    </p>
+    <div class="hero-badges anim d2">
+      <span class="hbadge hb-fh">
+        <span class="hbadge-dot hbadge-dot-fh"></span>
+        Campaign A · forhz
+      </span>
+      <span class="hbadge hb-it">
+        <span class="hbadge-dot hbadge-dot-it"></span>
+        Campaign B · ITFU
+      </span>
+    </div>
+    <a class="hero-cta anim d3" href="#apply">캠페인 살펴보고 신청하기</a>
+  </div>
+</div>
+
+<hr class="sec">
+
+<!-- ── CAMPAIGN A — forhz ─────────────────────────── -->
+<section class="sec-tint-fh" id="camp-a">
+  <div class="wrap">
+    <p class="sec-label sl-fh anim">Campaign A · forhz</p>
+    <h2 class="sec-title anim d1">포헤르츠 버블세럼</h2>
+    <p class="sec-body anim d1">
+      거품이 올라오는 그 순간, 영상이 됩니다.<br>
+      국내 최대 규모 뷰티 디바이스 브랜드 쿼드쎄라와 협업한 포헤르츠의 버블세럼이에요.
+      루틴에 자연스럽게 녹아드는 텍스처 덕분에, 과하게 연출하지 않아도 콘텐츠가 완성되는 제품이에요.
+    </p>
+
+    <!-- Image Slider -->
+    <div class="slider-wrap anim d2">
+      <div class="slider-track" id="fh-track">
+        <div class="slider-slide"><img src="../images/957eabb0f07cf7528f12497fd076e6d1.jpg" alt="포헤르츠 버블세럼 버블 연출"></div>
+        <div class="slider-slide"><img src="../images/3258e16114b616f082b5fbd8ffb19c60.jpg" alt="포헤르츠 버블세럼 단독"></div>
+        <div class="slider-slide"><img src="../images/42fbc1491d2e7e4ffc706ae927ad69b8.jpg" alt="포헤르츠 버블세럼 3병"></div>
+        <div class="slider-slide"><img src="../images/86b9595274232cd947f614461d2ef6b4.jpg" alt="쿼드쎄라 × 포헤르츠 라인업"></div>
+      </div>
+      <button class="slider-btn sl-prev" onclick="slide('fh',-1)" aria-label="이전">
+        <svg viewBox="0 0 14 14"><polyline points="9,2 4,7 9,12"/></svg>
+      </button>
+      <button class="slider-btn sl-next" onclick="slide('fh',1)" aria-label="다음">
+        <svg viewBox="0 0 14 14"><polyline points="5,2 10,7 5,12"/></svg>
+      </button>
+      <div class="slider-dots" id="fh-dots">
+        <span class="sl-dot active" onclick="slideTo('fh',0)"></span>
+        <span class="sl-dot" onclick="slideTo('fh',1)"></span>
+        <span class="sl-dot" onclick="slideTo('fh',2)"></span>
+        <span class="sl-dot" onclick="slideTo('fh',3)"></span>
+      </div>
+    </div>
+
+    <div class="info-rows anim d2">
+      <div class="info-row"><span class="ik">제품</span><span class="iv">포헤르츠 버블세럼 70ml<br><small>40,000원 상당</small></span></div>
+      <div class="info-row"><span class="ik">형식</span><span class="iv">Instagram Reels 1건</span></div>
+      <div class="info-row"><span class="ik">업로드</span><span class="iv">4월 마지막 주</span></div>
+    </div>
+
+    <button class="guide-btn guide-btn-fh anim d2" onclick="openModal('fh')">
+      캠페인 가이드 자세히 보기 <span class="guide-btn-arrow">→</span>
+    </button>
+  </div>
+</section>
+
+<hr class="sec">
+
+<!-- ── CAMPAIGN B — ITFU ──────────────────────────── -->
+<section class="sec-tint-it" id="camp-b">
+  <div class="wrap">
+    <p class="sec-label sl-it anim">Campaign B · ITFU</p>
+    <h2 class="sec-title anim d1">잇퓨 순율 라인</h2>
+    <p class="sec-body anim d1">
+      좁쌀, 요철, 피부결 고민 — 이 제품 하나로 콘텐츠가 설명돼요.<br>
+      누적 60만 개 판매를 기록한 잇퓨 순율크림과 앰플 2종을 함께 드려요.
+      실제 효능 위주의 솔직한 콘텐츠를 원해요.
+    </p>
+
+    <!-- Wide Banner Image -->
+    <div class="it-banner-wrap anim d2">
+      <img class="it-banner"
+        src="../images/5a519b730fde00b9ed58eb094364841a.png"
+        alt="잇퓨 순율 라인">
+    </div>
+
+    <div class="info-rows anim d2">
+      <div class="info-row"><span class="ik">제품</span><span class="iv">순율크림 + 순율앰플<br><small>2종 동시 제공</small></span></div>
+      <div class="info-row"><span class="ik">업로드</span><span class="iv">4/30 — 5/4</span></div>
+      <div class="info-row"><span class="ik">공동작업</span><span class="iv">@itfu_official · @itfu_global</span></div>
+    </div>
+
+    <button class="guide-btn guide-btn-it anim d2" onclick="openModal('it')">
+      캠페인 가이드 자세히 보기 <span class="guide-btn-arrow">→</span>
+    </button>
+  </div>
+</section>
+
+<hr class="sec">
+
+<!-- ── 이렇게 진행돼요 ────────────────────────────── -->
+<section>
+  <div class="wrap">
+    <p class="sec-label sl-n anim">How it works</p>
+    <h2 class="sec-title anim d1">이렇게 진행돼요</h2>
+    <ul class="cond-list">
+      <li class="cond-item anim">
+        <span class="cond-icon">📦</span>
+        <div>
+          <p class="cond-title">제품을 먼저 보내드려요</p>
+          <p class="cond-desc">선정되시면 직접 써보실 수 있도록 입력하신 주소로 제품을 보내드려요.</p>
+        </div>
+      </li>
+      <li class="cond-item anim d1">
+        <span class="cond-icon">🎬</span>
+        <div>
+          <p class="cond-title">자유롭게 콘텐츠로 담아주세요</p>
+          <p class="cond-desc">
+            <span class="ibadge ib-fh">forhz</span>&nbsp; Instagram Reels 1건 · 4월 마지막 주 업로드<br>
+            <span class="ibadge ib-it" style="margin-top:4px;display:inline-block;">ITFU</span>&nbsp; Instagram 1건 · 4/30 — 5/4 업로드
+          </p>
+        </div>
+      </li>
+      <li class="cond-item anim d2">
+        <span class="cond-icon">🔗</span>
+        <div>
+          <p class="cond-title">공동작업자 설정이 필요해요</p>
+          <p class="cond-desc">각 브랜드 공식 계정을 공동작업자로 태그해 주세요. 가이드 상세 내용은 각 캠페인 섹션에서 확인하실 수 있어요.</p>
+        </div>
+      </li>
+      <li class="cond-item anim d3">
+        <span class="cond-icon">📋</span>
+        <div>
+          <p class="cond-title">브랜드에서 콘텐츠를 공유할 수 있어요</p>
+          <p class="cond-desc">만들어주신 콘텐츠가 브랜드 공식 채널에서 공유되거나 리그램될 수 있어요. 더 많은 분들께 소개될 기회이기도 해요.</p>
+        </div>
+      </li>
+    </ul>
+  </div>
+</section>
+
+<hr class="sec">
+
+<!-- ── 지원 폼 ──────────────────────────────────────── -->
+<main id="apply" class="form-area">
+  <div class="wrap">
+    <p class="sec-label sl-fh anim">Apply Now</p>
+    <h2 class="sec-title anim d1">함께하고 싶으신가요?</h2>
+    <p class="form-sub anim d1">
+      마음에 드시는 캠페인을 골라주세요. 둘 다 신청하셔도 괜찮아요.<br>
+      선정 여부는 검토 후 개별적으로 연락드릴게요.
+    </p>
+
+    <nav class="steps anim d2">
+      <div class="si active" id="si-1"><span class="si-num">1</span><span class="si-lbl">캠페인 선택</span></div>
+      <div class="si" id="si-2"><span class="si-num">2</span><span class="si-lbl">가이드 동의</span></div>
+      <div class="si" id="si-3"><span class="si-num">3</span><span class="si-lbl">정보 입력</span></div>
+      <div class="si" id="si-4"><span class="si-num">4</span><span class="si-lbl">최종 확인</span></div>
+    </nav>
+
+    <form id="apply-form" novalidate>
+
+      <!-- Step 1 -->
+      <div class="sp active" id="sp-1">
+        <p style="font-size:13px;color:var(--ink50);margin-bottom:18px;">어떤 브랜드의 이야기를 담고 싶으신가요? 하나만 선택하셔도, 둘 다 선택하셔도 돼요.</p>
+        <div class="camp-cards">
+          <label class="camp-card" id="card-fh" onclick="toggleCamp(this,'fh')">
+            <input type="checkbox" id="c-fh">
+            <div class="cc-inner">
+              <div class="cc-chk" id="chk-fh">
+                <svg id="chksvg-fh" width="10" height="8" viewBox="0 0 10 8" fill="none" style="display:none"><path d="M1 4L3.5 6.5L9 1" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </div>
+              <div class="cc-body">
+                <p class="cc-name">포헤르츠 버블세럼 <span class="ibadge ib-fh">forhz</span></p>
+                <p class="cc-meta">버블세럼 70ml · Instagram Reels · 4월 마지막 주</p>
+              </div>
+            </div>
+          </label>
+          <label class="camp-card" id="card-it" onclick="toggleCamp(this,'it')">
+            <input type="checkbox" id="c-it">
+            <div class="cc-inner">
+              <div class="cc-chk" id="chk-it">
+                <svg id="chksvg-it" width="10" height="8" viewBox="0 0 10 8" fill="none" style="display:none"><path d="M1 4L3.5 6.5L9 1" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </div>
+              <div class="cc-body">
+                <p class="cc-name">잇퓨 순율 라인 <span class="ibadge ib-it">ITFU</span></p>
+                <p class="cc-meta">순율크림 + 앰플 2종 · Instagram · 4/30 — 5/4</p>
+              </div>
+            </div>
+          </label>
+        </div>
+        <div class="err" id="err-camp">최소 1개 이상 선택해 주세요.</div>
+        <div class="form-nav">
+          <button type="button" class="btn-p" onclick="goStep(2)">계속하기</button>
+        </div>
+      </div>
+
+      <!-- Step 2 -->
+      <div class="sp" id="sp-2">
+        <p style="font-size:13px;color:var(--ink50);margin-bottom:20px;">콘텐츠 방향을 확인하고 동의해 주세요. 가이드가 궁금하시면 아래 버튼으로 다시 볼 수 있어요.</p>
+
+        <div class="consent-block" id="gb-fh">
+          <div class="cb-head cb-head-fh">
+            <span class="cb-head-title">A — 포헤르츠 버블세럼</span>
+            <button class="cb-guide-link" onclick="openModal('fh')" type="button">
+              가이드 보기 <span>↗</span>
+            </button>
+          </div>
+          <div class="cb-checks">
+            <label class="ck"><input type="checkbox" id="ag-fh1"><span><strong>(필수)</strong> 위 가이드라인을 확인했고, 공동작업자 설정에 동의해요.</span></label>
+            <label class="ck"><input type="checkbox" id="ag-fh2"><span><strong>(필수)</strong> 제작한 콘텐츠가 브랜드 채널에 공유될 수 있음에 동의해요.</span></label>
+          </div>
+          <div class="err" id="err-fh" style="padding:0 18px 12px;">포헤르츠 필수 동의 항목을 체크해 주세요.</div>
+        </div>
+
+        <div class="consent-block hidden" id="gb-it">
+          <div class="cb-head cb-head-it">
+            <span class="cb-head-title">B — 잇퓨 순율 라인</span>
+            <button class="cb-guide-link" onclick="openModal('it')" type="button">
+              가이드 보기 <span>↗</span>
+            </button>
+          </div>
+          <div class="cb-checks">
+            <label class="ck"><input type="checkbox" id="ag-it1" style="accent-color:var(--it)"><span><strong>(필수)</strong> 위 가이드라인을 확인했고, 공동작업자 설정에 동의해요.</span></label>
+            <label class="ck"><input type="checkbox" id="ag-it2" style="accent-color:var(--it)"><span><strong>(필수)</strong> 제작한 콘텐츠가 브랜드 채널에 공유될 수 있음에 동의해요.</span></label>
+          </div>
+          <div class="err" id="err-it" style="padding:0 18px 12px;">잇퓨 필수 동의 항목을 체크해 주세요.</div>
+        </div>
+
+        <div class="form-nav">
+          <button type="button" class="btn-s" onclick="goStep(1)">이전</button>
+          <button type="button" class="btn-p" onclick="goStep(3)">계속하기</button>
+        </div>
+      </div>
+
+      <!-- Step 3 -->
+      <div class="sp" id="sp-3">
+        <div class="f2" style="margin-bottom:18px;">
+          <div class="field" style="margin-bottom:0">
+            <label for="f-name">이름<span class="req"> *</span></label>
+            <input type="text" id="f-name" autocomplete="name" placeholder="홍길동">
+          </div>
+          <div class="field" style="margin-bottom:0">
+            <label for="f-phone">연락처<span class="req"> *</span></label>
+            <input type="tel" id="f-phone" autocomplete="tel" placeholder="010-0000-0000">
+          </div>
+        </div>
+        <div class="field">
+          <label for="f-age">연령대<span class="req"> *</span></label>
+          <select id="f-age">
+            <option value="" disabled selected>선택해 주세요</option>
+            <option>10대</option><option>20~29세</option><option>30~39세</option>
+            <option>40~49세</option><option>50대 이상</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>배송 주소<span class="req"> *</span></label>
+          <input type="text" id="f-addr1" placeholder="서울특별시 강남구 테헤란로 00" style="margin-bottom:8px;">
+          <input type="text" id="f-addr2" placeholder="상세 주소 (동·호수)">
+        </div>
+        <div class="field">
+          <label for="f-insta">인스타그램<span class="req"> *</span></label>
+          <input type="text" id="f-insta" placeholder="@username">
+          <span class="field-hint">@ 포함하여 입력해 주세요</span>
+        </div>
+        <div class="field">
+          <label for="f-other">다른 채널 <span style="color:var(--ink30);font-weight:400;">(선택)</span></label>
+          <input type="text" id="f-other" placeholder="유튜브, 틱톡, 네이버 블로그, 스레드 등 운영 중인 채널이 있다면 자유롭게 적어주세요">
+          <span class="field-hint">여러 채널은 쉼표로 구분해 주세요</span>
+        </div>
+        <div class="form-nav">
+          <button type="button" class="btn-s" onclick="goStep(2)">이전</button>
+          <button type="button" class="btn-p" onclick="goStep(4)">계속하기</button>
+        </div>
+      </div>
+
+      <!-- Step 4 -->
+      <div class="sp" id="sp-4">
+        <div class="consent-box">
+          <p class="consent-title">마지막으로 아래 내용을 확인해 주세요</p>
+          <ul class="consent-list">
+            <li>· 수집 항목: 이름, 연락처, 주소, 인스타그램 계정</li>
+            <li>· 수집 목적: 크리에이터 선정 및 제품 발송</li>
+            <li>· 보유 기간: 캠페인 종료 후 30일 이내 파기</li>
+          </ul>
+          <div class="consent-checks">
+            <label class="ck"><input type="checkbox" id="con-priv"><span>개인정보 수집 및 이용에 동의해요.</span></label>
+            <label class="ck"><input type="checkbox" id="con-sec"><span>제작한 콘텐츠가 브랜드 채널에서 활용될 수 있음에 동의해요.</span></label>
+          </div>
+        </div>
+        <div class="sum-box">
+          <p class="sum-lbl">지원 내용 확인</p>
+          <div class="sum-row"><span class="sum-key">캠페인</span><span class="sum-val" id="sum-camp"></span></div>
+          <div class="sum-row"><span class="sum-key">이름</span><span class="sum-val" id="sum-name"></span></div>
+          <div class="sum-row"><span class="sum-key">연락처</span><span class="sum-val" id="sum-phone"></span></div>
+          <div class="sum-row"><span class="sum-key">인스타그램</span><span class="sum-val" id="sum-insta"></span></div>
+          <div class="sum-row"><span class="sum-key">주소</span><span class="sum-val" id="sum-addr"></span></div>
+        </div>
+        <div class="form-nav">
+          <button type="button" class="btn-s" onclick="goStep(3)">이전</button>
+          <button type="button" class="btn-p" id="btn-submit" onclick="submitForm()">지원하기</button>
+        </div>
+      </div>
+
+    </form>
+  </div>
+</main>
+
+<!-- ── SUCCESS ─────────────────────────────────────── -->
+<section id="success" style="display:none">
+  <div class="wrap">
+    <div class="suc-wrap">
+      <div class="suc-mark">✦</div>
+      <h2 class="suc-title">신청이<br>완료됐어요</h2>
+      <p class="suc-body">
+        보내주신 내용을 꼼꼼히 검토한 뒤,<br>
+        선정되시면 연락처 또는 인스타그램 DM으로 먼저 연락드릴게요.<br><br>
+        좋은 결과 있으시길 바랍니다 :)
+      </p>
+      <div class="suc-badges">
+        <span class="ibadge ib-fh" style="font-size:11px;padding:5px 14px;">forhz</span>
+        <span style="color:var(--border);">·</span>
+        <span class="ibadge ib-it" style="font-size:11px;padding:5px 14px;">ITFU</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── FOOTER ──────────────────────────────────────── -->
+<footer>
+  <div class="wrap">
+    <span class="f-brand">SIRIAI</span>
+    <span class="f-note">본 페이지는 초대된 분들에게만 공유됩니다. Campaign 2026</span>
+  </div>
+</footer>
+
+<!-- ── MODAL: forhz ────────────────────────────────── -->
+<div class="modal-backdrop" id="modal-fh" onclick="backdropClose(event,'fh')">
+  <div class="modal" role="dialog" aria-label="포헤르츠 캠페인 가이드">
+    <div class="modal-handle"></div>
+    <div class="modal-head">
+      <div class="modal-head-left">
+        <span class="ibadge ib-fh">forhz</span>
+        <span class="modal-title">포헤르츠 버블세럼 가이드</span>
+      </div>
+      <button class="modal-close" onclick="closeModal('fh')" aria-label="닫기">
+        <svg viewBox="0 0 14 14"><path d="M2 2l10 10M12 2L2 12"/></svg>
+      </button>
+    </div>
+    <div class="modal-body">
+      <div class="msec">
+        <p class="msec-label">캠페인 정보</p>
+        <div class="mrows-box">
+          <div class="mrow"><span class="mk">제품</span><span class="mv">포헤르츠 버블세럼 70ml<br><small>40,000원 상당 · FORHERTZ HYALAGEN BUBBLE SERUM</small></span></div>
+          <div class="mrow"><span class="mk">형식</span><span class="mv">Instagram Reels 1건</span></div>
+          <div class="mrow"><span class="mk">업로드</span><span class="mv">4월 마지막 주</span></div>
+          <div class="mrow"><span class="mk">공동작업</span><span class="mv">@quadthera.official<br><small>@quadthera.official_jp</small></span></div>
+        </div>
+      </div>
+
+      <div class="msec" style="margin-top:18px;">
+        <p class="msec-label">필수 해시태그</p>
+        <div class="m-tag-row">
+          <span class="m-htag">#쿼드쎄라</span>
+          <span class="m-htag">#포헤르츠</span>
+          <span class="m-htag">#포헤르츠버블세럼</span>
+          <span class="m-htag">#버블세럼</span>
+        </div>
+      </div>
+
+      <div class="msec" style="margin-top:18px;">
+        <div class="m-notice m-notice-fh">
+          <p class="m-notice-label">콘텐츠 가이드</p>
+          <p class="m-notice-text">버블 폼이 올라오는 순간만큼은 꼭 담아주세요. 나머지는 평소처럼 자연스럽게 루틴에 녹여주시면 돼요.</p>
+        </div>
+        <div class="m-notice m-notice-fh" style="margin-top:10px;">
+          <p class="m-notice-label">이런 기회도 있어요</p>
+          <p class="m-notice-text">우수 크리에이터로 선발되시면, 쿼드쎄라 고가 뷰티 디바이스와의 추가 협업 기회도 함께 드려요.</p>
+        </div>
+      </div>
+    </div>
+    <div class="modal-foot">
+      <button class="btn-modal-close" onclick="closeModal('fh')">확인했어요</button>
+    </div>
+  </div>
+</div>
+
+<!-- ── MODAL: ITFU ─────────────────────────────────── -->
+<div class="modal-backdrop" id="modal-it" onclick="backdropClose(event,'it')">
+  <div class="modal" role="dialog" aria-label="잇퓨 캠페인 가이드">
+    <div class="modal-handle"></div>
+    <div class="modal-head">
+      <div class="modal-head-left">
+        <span class="ibadge ib-it">ITFU</span>
+        <span class="modal-title">잇퓨 순율 라인 가이드</span>
+      </div>
+      <button class="modal-close" onclick="closeModal('it')" aria-label="닫기">
+        <svg viewBox="0 0 14 14"><path d="M2 2l10 10M12 2L2 12"/></svg>
+      </button>
+    </div>
+    <div class="modal-body">
+      <div class="msec">
+        <p class="msec-label">캠페인 정보</p>
+        <div class="mrows-box">
+          <div class="mrow"><span class="mk">제품</span><span class="mv">순율크림 + 순율앰플<br><small>2종 동시 제공</small></span></div>
+          <div class="mrow"><span class="mk">업로드</span><span class="mv">4월 30일 — 5월 4일</span></div>
+          <div class="mrow"><span class="mk">공동작업</span><span class="mv">@itfu_official<br><small>@itfu_global</small></span></div>
+          <div class="mrow"><span class="mk">방향</span><span class="mv">좁쌀·요철 개선 집중<br><small>프로모션 없이 제품 위주</small></span></div>
+        </div>
+      </div>
+
+      <div class="msec" style="margin-top:18px;">
+        <p class="msec-label">필수 해시태그</p>
+        <div class="m-tag-row">
+          <span class="m-htag">#잇퓨</span>
+          <span class="m-htag">#잇퓨순율크림</span>
+          <span class="m-htag">#잇퓨순율앰플</span>
+          <span class="m-htag">#피부결</span>
+          <span class="m-htag">#피부요철</span>
+          <span class="m-htag">#좁쌀</span>
+        </div>
+      </div>
+
+      <div class="msec" style="margin-top:18px;">
+        <div class="m-notice m-notice-it">
+          <p class="m-notice-label">콘텐츠 가이드</p>
+          <p class="m-notice-text">좁쌀·요철 개선에 초점을 맞춰주세요. 프로모션보다는 제품이 실제로 어떤 피부에 맞는지를 담아주시면 가장 좋아요.</p>
+        </div>
+        <div class="m-notice m-notice-it" style="margin-top:10px;">
+          <p class="m-notice-label">성분 포인트</p>
+          <p class="m-notice-text">크림: 율무·나이아신아마이드·저분자콜라겐·세라마이드<br>앰플: 율무포어·펩타이드·징크</p>
+        </div>
+        <div class="m-notice m-notice-it" style="margin-top:10px;">
+          <p class="m-notice-label">브랜드 슬로건</p>
+          <p class="m-notice-text">피부 고민과 스킨 솔루션을 잇다, 잇퓨 — 콘텐츠의 참고 방향으로 활용해 주세요.</p>
+        </div>
+      </div>
+    </div>
+    <div class="modal-foot">
+      <button class="btn-modal-close" onclick="closeModal('it')">확인했어요</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  const WEBHOOK = 'https://script.google.com/macros/s/AKfycbz-YHNYhey9EbF6vzwTEjViTbyewgVjSOyAJMVu1VP97vgB-4m-HY8rUptJcDxEQO45/exec';
+  let cur = 1;
+  const sliderIdx = { fh: 0 };
+
+  /* ── Scroll animations ── */
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+  }, { threshold: 0.08 });
+  document.querySelectorAll('.anim').forEach(el => io.observe(el));
+
+  /* ── Slider ── */
+  function slide(id, dir) {
+    const track = document.getElementById(id + '-track');
+    const count = track.children.length;
+    sliderIdx[id] = Math.max(0, Math.min(count - 1, sliderIdx[id] + dir));
+    slideTo(id, sliderIdx[id]);
+  }
+  function slideTo(id, idx) {
+    sliderIdx[id] = idx;
+    const track = document.getElementById(id + '-track');
+    track.scrollTo({ left: track.offsetWidth * idx, behavior: 'smooth' });
+    document.querySelectorAll('#' + id + '-dots .sl-dot').forEach((d, i) => {
+      d.classList.toggle('active', i === idx);
+    });
+  }
+  /* sync dots on manual scroll */
+  document.getElementById('fh-track').addEventListener('scroll', function() {
+    const idx = Math.round(this.scrollLeft / this.offsetWidth);
+    if (sliderIdx.fh !== idx) {
+      sliderIdx.fh = idx;
+      document.querySelectorAll('#fh-dots .sl-dot').forEach((d, i) => d.classList.toggle('active', i === idx));
+    }
+  });
+
+  /* ── Modal ── */
+  function openModal(brand) {
+    const el = document.getElementById('modal-' + brand);
+    el.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeModal(brand) {
+    document.getElementById('modal-' + brand).classList.remove('open');
+    document.body.style.overflow = '';
+  }
+  function backdropClose(e, brand) {
+    if (e.target === e.currentTarget) closeModal(brand);
+  }
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') {
+      ['fh','it'].forEach(b => {
+        if (document.getElementById('modal-' + b).classList.contains('open')) closeModal(b);
+      });
+    }
+  });
+
+  /* ── Campaign toggle ── */
+  function toggleCamp(el, brand) {
+    const cb = el.querySelector('input[type="checkbox"]');
+    cb.checked = !cb.checked;
+    const svg = document.getElementById('chksvg-' + brand);
+    el.classList.toggle('sel-' + brand, cb.checked);
+    svg.style.display = cb.checked ? 'block' : 'none';
+    document.getElementById('err-camp').classList.remove('show');
+  }
+
+  /* ── Step nav ── */
+  function setNav(n) {
+    [1,2,3,4].forEach(i => {
+      const el = document.getElementById('si-' + i);
+      el.classList.remove('active','done');
+      if (i < n) el.classList.add('done');
+      else if (i === n) el.classList.add('active');
+    });
+  }
+  function showStep(n) {
+    [1,2,3,4].forEach(i => document.getElementById('sp-' + i).classList.toggle('active', i === n));
+    setNav(n); cur = n;
+    document.getElementById('apply').scrollIntoView({ behavior:'smooth', block:'start' });
+  }
+
+  /* ── Validation ── */
+  function val(n) {
+    if (n === 1) {
+      const ok = document.getElementById('c-fh').checked || document.getElementById('c-it').checked;
+      document.getElementById('err-camp').classList.toggle('show', !ok);
+      return ok;
+    }
+    if (n === 2) {
+      const fh = document.getElementById('c-fh').checked;
+      const it = document.getElementById('c-it').checked;
+      let ok = true;
+      if (fh) {
+        const p = document.getElementById('ag-fh1').checked && document.getElementById('ag-fh2').checked;
+        document.getElementById('err-fh').classList.toggle('show', !p);
+        if (!p) ok = false;
+      }
+      if (it) {
+        const p = document.getElementById('ag-it1').checked && document.getElementById('ag-it2').checked;
+        document.getElementById('err-it').classList.toggle('show', !p);
+        if (!p) ok = false;
+      }
+      return ok;
+    }
+    if (n === 3) {
+      const name  = document.getElementById('f-name').value.trim();
+      const phone = document.getElementById('f-phone').value.trim();
+      const age   = document.getElementById('f-age').value;
+      const a1    = document.getElementById('f-addr1').value.trim();
+      const insta = document.getElementById('f-insta').value.trim();
+      if (!name)  { alert('이름을 입력해 주세요.'); return false; }
+      if (!phone) { alert('연락처를 입력해 주세요.'); return false; }
+      if (!age)   { alert('연령대를 선택해 주세요.'); return false; }
+      if (!a1)    { alert('배송 주소를 입력해 주세요.'); return false; }
+      if (!insta) { alert('인스타그램 계정을 입력해 주세요.'); return false; }
+      return true;
+    }
+    return true;
+  }
+
+  function fillSummary() {
+    const fh = document.getElementById('c-fh').checked;
+    const it = document.getElementById('c-it').checked;
+    document.getElementById('sum-camp').textContent =
+      [fh?'포헤르츠(forhz)':null, it?'잇퓨(ITFU)':null].filter(Boolean).join(' + ');
+    document.getElementById('sum-name').textContent  = document.getElementById('f-name').value;
+    document.getElementById('sum-phone').textContent = document.getElementById('f-phone').value;
+    document.getElementById('sum-insta').textContent = document.getElementById('f-insta').value;
+    document.getElementById('sum-addr').textContent  =
+      [document.getElementById('f-addr1').value, document.getElementById('f-addr2').value].filter(Boolean).join(' ');
+  }
+
+  function goStep(n) {
+    if (n > cur && !val(cur)) return;
+    if (n === 2) syncGuides();
+    if (n === 4) fillSummary();
+    showStep(n);
+  }
+  function syncGuides() {
+    document.getElementById('gb-fh').classList.toggle('hidden', !document.getElementById('c-fh').checked);
+    document.getElementById('gb-it').classList.toggle('hidden', !document.getElementById('c-it').checked);
+  }
+
+  /* ── Submit ── */
+  async function submitForm() {
+    if (!document.getElementById('con-priv').checked) { alert('개인정보 수집 동의를 확인해 주세요.'); return; }
+    if (!document.getElementById('con-sec').checked)  { alert('2차 활용 동의를 확인해 주세요.'); return; }
+    const btn = document.getElementById('btn-submit');
+    btn.disabled = true; btn.textContent = '제출 중...';
+    const v = id => document.getElementById(id).value;
+    const data = {
+      timestamp:    new Date().toISOString(),
+      campaigns:    [document.getElementById('c-fh').checked?'포헤르츠':null,
+                     document.getElementById('c-it').checked?'잇퓨':null].filter(Boolean).join('+'),
+      name: v('f-name'), phone: v('f-phone'), age: v('f-age'),
+      address: [v('f-addr1'),v('f-addr2')].filter(Boolean).join(' '),
+      instagram: v('f-insta'), other_channels: v('f-other'),
+      fh_guide:     document.getElementById('ag-fh1').checked?'Y':'N',
+      fh_secondary: document.getElementById('ag-fh2').checked?'Y':'N',
+      it_guide:     document.getElementById('ag-it1').checked?'Y':'N',
+      it_secondary: document.getElementById('ag-it2').checked?'Y':'N',
+    };
+    try {
+      if (WEBHOOK !== 'YOUR_GOOGLE_APPS_SCRIPT_URL_HERE')
+        await fetch(WEBHOOK, { method:'POST', body:JSON.stringify(data) });
+    } catch(e) {}
+    document.getElementById('apply').style.display = 'none';
+    const s = document.getElementById('success');
+    s.style.display = 'block';
+    s.scrollIntoView({ behavior:'smooth', block:'start' });
+  }
+</script>
+</body>
+</html>
