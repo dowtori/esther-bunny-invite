@@ -1,0 +1,18 @@
+name: Scheduled Production Deploy
+
+on:
+  schedule:
+    - cron: '0 15 17 4 *'  # 2026-04-18 00:00 KST (= 2026-04-17 15:00 UTC)
+  workflow_dispatch:        # 수동 실행 버튼 (테스트용)
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Deploy to Vercel Production
+        run: npx vercel --prod --token ${{ secrets.VERCEL_TOKEN }} --yes
+        env:
+          VERCEL_ORG_ID: team_XXpcWsfdxU2OCba1FtxpUpgg
+          VERCEL_PROJECT_ID: prj_hPC9vJZrIKe90A2fuhsbKJoHmUvz
