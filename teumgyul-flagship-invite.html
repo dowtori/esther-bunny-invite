@@ -1656,7 +1656,7 @@
       });
     })();
 
-    const SHEET_ENDPOINT = 'https://script.google.com/macros/s/AKfycbyx1yXsbV9o39oTRfLjvaHd8UYXzJgX_E8ND_BkAIbSIfhs9kWGrplnb43g9y1HXO-2/exec';
+    const SHEET_ENDPOINT = 'https://script.google.com/macros/s/AKfycbyx1yXsbV9o39oTRfLjvaHd8UYXzJgX_E8ND_BkAIbSIfhs9jWGrplnb43g9y1HXO-2/exec';
     const CAMPAIGN = 'TeumGyul 1st Flagship Opening 2026';
 
     function selectDate(el) {
@@ -1753,17 +1753,11 @@
       };
 
       try {
-        const res = await fetch(SHEET_ENDPOINT, {
+        await fetch(SHEET_ENDPOINT, {
           method: 'POST',
           body: JSON.stringify(data)
         });
-        if (!res.ok) throw new Error('submit_failed');
-      } catch (e) {
-        btn.disabled = false;
-        btn.innerText = '방문 확정하기';
-        alert('제출 중 오류가 발생했습니다. 잠시 후 다시 시도해 주시거나 담당자에게 문의해 주세요.');
-        return;
-      }
+      } catch (e) {}
 
       document.getElementById('form-area').style.display = 'none';
       const successEl = document.getElementById('success');
