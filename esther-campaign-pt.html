@@ -7,390 +7,291 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300&family=Noto+Sans+KR:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
-/* ═══════════════════════════════════════════
-   RESET & ROOT
-═══════════════════════════════════════════ */
+/* RESET */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
+/* LIGHT THEME */
 :root {
-  --bg:           #0D0C0B;
-  --bg-card:      #161412;
-  --bg-lift:      #1E1B18;
-  --ink:          #F5F3EF;
-  --ink-mid:      rgba(245,243,239,0.52);
-  --ink-dim:      rgba(245,243,239,0.22);
-  --pink:         #E8A4AE;
-  --pink-deep:    #C07888;
-  --pink-faint:   rgba(232,164,174,0.09);
-  --border:       rgba(255,255,255,0.07);
-  --border-soft:  rgba(255,255,255,0.04);
+  --bg:        #F6F1EB;
+  --bg-card:   #FFFFFF;
+  --bg-lift:   #EDE7DC;
+  --bg-stripe: #F0EBE3;
+  --ink:       #16120E;
+  --ink-mid:   rgba(22,18,14,0.60);
+  --ink-dim:   rgba(22,18,14,0.35);
+  --pink:      #C4637A;
+  --pink-deep: #9E4D60;
+  --pink-faint:rgba(196,99,122,0.09);
+  --border:    rgba(22,18,14,0.10);
 }
 
-html, body { width: 100%; height: 100%; overflow: hidden; background: #000; }
+html, body { width:100%; height:100%; overflow:hidden; background:#1A1614; }
 
-/* ═══════════════════════════════════════════
-   VIEWPORT — 스케일 컨테이너
-═══════════════════════════════════════════ */
+/* VIEWPORT / DECK */
 .viewport {
-  position: fixed; inset: 0;
-  display: flex; align-items: center; justify-content: center;
-  background: #000;
-  cursor: pointer;
-  user-select: none;
+  position:fixed; inset:0;
+  display:flex; align-items:center; justify-content:center;
+  background:#1A1614; cursor:pointer; user-select:none;
 }
-
 .deck {
-  position: relative;
-  width: 1920px; height: 1080px;
-  transform-origin: center center;
-  overflow: hidden;
-  flex-shrink: 0;
+  position:relative; width:1920px; height:1080px;
+  transform-origin:center center; overflow:hidden; flex-shrink:0;
 }
 
-/* ═══════════════════════════════════════════
-   HUD
-═══════════════════════════════════════════ */
+/* HUD */
 .hud-progress {
-  position: fixed; top: 0; left: 0; right: 0;
-  height: 2px; background: rgba(255,255,255,0.04);
-  z-index: 9999; pointer-events: none;
+  position:fixed; top:0; left:0; right:0; height:3px;
+  background:rgba(255,255,255,0.06); z-index:9999; pointer-events:none;
 }
-.hud-progress-fill {
-  height: 100%; background: var(--pink);
-  transition: width 0.45s ease;
-}
-.hud-counter {
-  position: fixed; bottom: 24px; right: 36px;
-  font-family: 'DM Sans', sans-serif;
-  font-size: 11px; letter-spacing: 2.5px;
-  color: rgba(255,255,255,0.15);
-  z-index: 9999; pointer-events: none;
-}
-.hud-key-hint {
-  position: fixed; bottom: 24px; left: 36px;
-  font-family: 'DM Sans', sans-serif;
-  font-size: 10px; letter-spacing: 1.5px;
-  color: rgba(255,255,255,0.1);
-  z-index: 9999; pointer-events: none;
-}
+.hud-progress-fill { height:100%; background:#C4637A; transition:width 0.4s ease; }
 
-/* ═══════════════════════════════════════════
-   SLIDE BASE
-═══════════════════════════════════════════ */
+/* NAV STRIP — Pitch / Figma style */
+.nav-strip {
+  position:fixed; bottom:0; left:0; right:0; height:52px;
+  display:flex; align-items:center; justify-content:center; gap:4px;
+  background:rgba(18,14,12,0.80); backdrop-filter:blur(10px);
+  z-index:9998; padding:0 32px;
+}
+.nav-item {
+  display:flex; align-items:center; gap:7px;
+  padding:6px 12px; border-radius:6px;
+  cursor:pointer; opacity:0.45;
+  transition:opacity 0.18s, background 0.18s;
+  border:1px solid transparent;
+}
+.nav-item:hover { opacity:0.8; background:rgba(255,255,255,0.06); }
+.nav-item.active {
+  opacity:1; background:rgba(196,99,122,0.15);
+  border-color:rgba(196,99,122,0.35);
+}
+.nav-pip {
+  width:6px; height:6px; border-radius:50%;
+  background:rgba(255,255,255,0.4); flex-shrink:0;
+  transition:all 0.18s;
+}
+.nav-item.active .nav-pip {
+  background:#C4637A; width:7px; height:7px;
+  box-shadow:0 0 8px rgba(196,99,122,0.7);
+}
+.nav-lbl {
+  font-family:'DM Sans',sans-serif; font-size:12px;
+  letter-spacing:1.5px; text-transform:uppercase;
+  color:rgba(255,255,255,0.65); white-space:nowrap;
+}
+.nav-item.active .nav-lbl { color:rgba(255,255,255,0.95); }
+
+/* SLIDE BASE */
 .slide {
-  position: absolute; inset: 0;
-  width: 1920px; height: 1080px;
-  background: var(--bg);
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.5s cubic-bezier(0.4,0,0.2,1);
+  position:absolute; inset:0; width:1920px; height:1080px;
+  background:var(--bg); opacity:0; pointer-events:none;
+  transition:opacity 0.48s cubic-bezier(0.4,0,0.2,1);
 }
-.slide.active {
-  opacity: 1;
-  pointer-events: all;
-}
+.slide.active { opacity:1; pointer-events:all; }
 
-/* Chrome (top bar) */
+/* CHROME */
 .chrome {
-  position: absolute;
-  top: 52px; left: 72px; right: 72px;
-  display: flex; align-items: center; justify-content: space-between;
-  border-bottom: 1px solid var(--border);
-  padding-bottom: 20px;
+  position:absolute; top:0; left:0; right:0; height:86px;
+  display:flex; align-items:flex-end; justify-content:space-between;
+  padding:0 72px 20px; border-bottom:1.5px solid var(--border);
+  background:var(--bg);
 }
 .chrome-part {
-  font-family: 'DM Sans', sans-serif;
-  font-size: 10px; font-weight: 600;
-  letter-spacing: 3.5px; text-transform: uppercase;
-  color: var(--pink-deep);
+  font-family:'DM Sans',sans-serif; font-size:16px; font-weight:600;
+  letter-spacing:3px; text-transform:uppercase; color:var(--pink-deep);
 }
 .chrome-page {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 13px; font-style: italic;
-  color: var(--ink-dim); letter-spacing: 1px;
+  font-family:'Cormorant Garamond',serif; font-size:18px;
+  font-style:italic; color:var(--ink-dim); letter-spacing:1px;
 }
 
-/* Body area */
+/* BODY */
 .body {
-  position: absolute;
-  top: 128px; bottom: 72px; left: 72px; right: 72px;
+  position:absolute; top:102px; bottom:72px; left:72px; right:72px;
 }
 
-/* ═══════════════════════════════════════════
-   TYPOGRAPHY
-═══════════════════════════════════════════ */
+/* TYPOGRAPHY */
 .label {
-  font-family: 'DM Sans', sans-serif;
-  font-size: 10px; font-weight: 600;
-  letter-spacing: 3.5px; text-transform: uppercase;
-  color: var(--pink-deep);
-  margin-bottom: 14px;
+  font-family:'DM Sans',sans-serif; font-size:20px; font-weight:600;
+  letter-spacing:3px; text-transform:uppercase;
+  color:var(--pink-deep); margin-bottom:14px;
 }
 .title {
-  font-family: 'Cormorant Garamond', serif;
-  font-weight: 300; color: var(--ink);
-  line-height: 1.05; letter-spacing: -1.5px;
+  font-family:'Cormorant Garamond',serif; font-weight:300;
+  color:var(--ink); line-height:1.05; letter-spacing:-1.5px;
 }
 .sub {
-  font-family: 'Noto Sans KR', sans-serif;
-  font-size: 18px; font-weight: 300;
-  color: var(--ink-mid); line-height: 1.65;
-  word-break: keep-all;
+  font-family:'Noto Sans KR',sans-serif; font-size:32px; font-weight:300;
+  color:var(--ink-mid); line-height:1.65; word-break:keep-all;
 }
-.rule {
-  height: 1px; background: var(--border);
-  margin: 20px 0;
-}
-em.pk { font-style: italic; color: var(--pink); }
+.rule { height:1px; background:var(--border); margin:22px 0; }
+em.pk { font-style:italic; color:var(--pink); }
 
-/* ═══════════════════════════════════════════
-   IMAGE SLOT
-═══════════════════════════════════════════ */
+/* IMAGE SLOT */
 .img-slot {
-  background: var(--bg-lift);
-  border: 1px solid var(--border);
-  border-radius: 4px;
-  display: flex; flex-direction: column;
-  align-items: center; justify-content: center;
-  gap: 10px; overflow: hidden; position: relative;
+  background:var(--bg-lift); border:1px solid var(--border); border-radius:4px;
+  display:flex; flex-direction:column; align-items:center; justify-content:center;
+  gap:10px; overflow:hidden; position:relative;
 }
 .img-slot::before {
-  content: '';
-  width: 28px; height: 28px;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='rgba(255,255,255,0.18)' stroke-width='1.5' stroke-linecap='round'%3E%3Crect x='3' y='3' width='18' height='18' rx='2'/%3E%3Ccircle cx='8.5' cy='8.5' r='1.5'/%3E%3Cpath d='m21 15-5-5L5 21'/%3E%3C/svg%3E");
-  background-repeat: no-repeat; background-position: center; background-size: 16px;
-  border: 1px solid rgba(255,255,255,0.07); border-radius: 50%;
+  content:''; width:28px; height:28px;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='rgba(22,18,14,0.20)' stroke-width='1.5' stroke-linecap='round'%3E%3Crect x='3' y='3' width='18' height='18' rx='2'/%3E%3Ccircle cx='8.5' cy='8.5' r='1.5'/%3E%3Cpath d='m21 15-5-5L5 21'/%3E%3C/svg%3E");
+  background-repeat:no-repeat; background-position:center; background-size:16px;
+  border:1px solid rgba(22,18,14,0.08); border-radius:50%;
 }
 .img-slot::after {
-  content: attr(data-label);
-  font-family: 'DM Sans', sans-serif;
-  font-size: 10px; letter-spacing: 1.5px;
-  color: rgba(255,255,255,0.17);
-  text-align: center; padding: 0 16px;
+  content:attr(data-label); font-family:'DM Sans',sans-serif;
+  font-size:10px; letter-spacing:1.5px; color:rgba(22,18,14,0.22);
+  text-align:center; padding:0 16px;
 }
-/* When a real image is placed via style="background-image:url(...)" */
 .img-slot[style*="background-image"]::before,
-.img-slot[style*="background-image"]::after { display: none; }
-.img-slot[style*="background-image"] { background-size: cover; background-position: center; }
+.img-slot[style*="background-image"]::after { display:none; }
+.img-slot[style*="background-image"] { background-size:cover; background-position:center; }
 
-/* ═══════════════════════════════════════════
-   BULLET LIST
-═══════════════════════════════════════════ */
-.blist { list-style: none; display: flex; flex-direction: column; gap: 9px; }
+/* BULLET LIST */
+.blist { list-style:none; display:flex; flex-direction:column; gap:12px; }
 .blist li {
-  font-family: 'Noto Sans KR', sans-serif;
-  font-size: 15px; font-weight: 300;
-  color: var(--ink-mid); line-height: 1.55;
-  padding-left: 18px; position: relative;
-  word-break: keep-all;
+  font-family:'Noto Sans KR',sans-serif; font-size:28px; font-weight:300;
+  color:var(--ink-mid); line-height:1.55; padding-left:30px; position:relative;
+  word-break:keep-all;
 }
-.blist li::before {
-  content: '—'; position: absolute; left: 0;
-  color: var(--pink-deep); font-size: 11px; top: 2px;
-}
+.blist li::before { content:'—'; position:absolute; left:0; color:var(--pink); font-size:18px; top:4px; }
 
-/* ═══════════════════════════════════════════
-   STAT BAR
-═══════════════════════════════════════════ */
+/* STAT BAR */
 .stat-bar {
-  position: absolute;
-  bottom: 0; left: 0; right: 0; height: 72px;
-  border-top: 1px solid var(--border);
-  display: flex; align-items: center;
+  position:absolute; bottom:0; left:0; right:0; height:72px;
+  border-top:1.5px solid var(--border); display:flex; align-items:center;
+  background:var(--bg-stripe);
 }
 .stat-item {
-  flex: 1; display: flex; align-items: center; gap: 18px;
-  padding: 0 40px; border-right: 1px solid var(--border);
+  flex:1; display:flex; align-items:center; gap:16px;
+  padding:0 44px; border-right:1px solid var(--border);
 }
-.stat-item:last-child { border-right: none; }
+.stat-item:last-child { border-right:none; }
 .stat-num {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 26px; font-weight: 300;
-  color: var(--pink); letter-spacing: -0.5px; white-space: nowrap;
+  font-family:'Cormorant Garamond',serif; font-size:34px; font-weight:300;
+  color:var(--pink); letter-spacing:-0.5px; white-space:nowrap;
 }
-.stat-lbl {
-  font-family: 'Noto Sans KR', sans-serif;
-  font-size: 13px; font-weight: 300; color: var(--ink-dim);
-}
+.stat-lbl { font-family:'Noto Sans KR',sans-serif; font-size:22px; font-weight:300; color:var(--ink-dim); }
 
-/* ═══════════════════════════════════════════
-   INFLUENCER CARD (Slides 2, 5)
-═══════════════════════════════════════════ */
-.ic-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 20px; }
+/* INFLUENCER CARD */
+.ic-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:20px; }
 .ic {
-  background: var(--bg-card); border: 1px solid var(--border);
-  border-radius: 6px; overflow: hidden; display: flex; flex-direction: column;
+  background:var(--bg-card); border:1px solid var(--border);
+  border-radius:8px; overflow:hidden; display:flex; flex-direction:column;
+  box-shadow:0 1px 4px rgba(22,18,14,0.06);
 }
-.ic-photo { flex-shrink: 0; }
-.ic-body { padding: 22px 26px 26px; flex: 1; display: flex; flex-direction: column; }
-.ic-name {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 26px; font-weight: 300; color: var(--ink); letter-spacing: -0.3px;
-  margin-bottom: 3px;
-}
-.ic-role {
-  font-family: 'DM Sans', sans-serif;
-  font-size: 10px; font-weight: 500; letter-spacing: 2px; text-transform: uppercase;
-  color: var(--ink-dim); margin-bottom: 18px;
-}
-.ic-stat {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 40px; font-weight: 300; color: var(--pink);
-  letter-spacing: -1px; line-height: 1; margin-bottom: 3px;
-}
-.ic-stat-lbl {
-  font-family: 'DM Sans', sans-serif;
-  font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase;
-  color: var(--ink-dim); margin-bottom: 18px;
-}
-.ic-dels {
-  border-top: 1px solid var(--border); padding-top: 15px;
-  display: flex; flex-direction: column; gap: 7px; flex: 1;
-}
-.ic-del {
-  font-family: 'Noto Sans KR', sans-serif;
-  font-size: 13px; font-weight: 300; color: var(--ink-mid);
-}
+.ic-photo { flex-shrink:0; }
+.ic-body { padding:22px 26px 26px; flex:1; display:flex; flex-direction:column; }
+.ic-name { font-family:'Cormorant Garamond',serif; font-size:34px; font-weight:300; color:var(--ink); letter-spacing:-0.3px; margin-bottom:4px; }
+.ic-role { font-family:'DM Sans',sans-serif; font-size:18px; font-weight:500; letter-spacing:2px; text-transform:uppercase; color:var(--ink-dim); margin-bottom:16px; }
+.ic-stat { font-family:'Cormorant Garamond',serif; font-size:52px; font-weight:300; color:var(--pink); letter-spacing:-1px; line-height:1; margin-bottom:3px; }
+.ic-stat-lbl { font-family:'DM Sans',sans-serif; font-size:17px; letter-spacing:1.5px; text-transform:uppercase; color:var(--ink-dim); margin-bottom:18px; }
+.ic-dels { border-top:1px solid var(--border); padding-top:16px; display:flex; flex-direction:column; gap:12px; flex:1; }
+.ic-del { font-family:'Noto Sans KR',sans-serif; font-size:25px; font-weight:300; color:var(--ink-mid); }
 .ic-badge {
-  display: inline-block;
-  font-family: 'DM Sans', sans-serif;
-  font-size: 8px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase;
-  background: var(--pink-faint); color: var(--pink-deep);
-  padding: 2px 7px; border-radius: 2px; margin-right: 7px;
+  display:inline-block; font-family:'DM Sans',sans-serif;
+  font-size:14px; font-weight:700; letter-spacing:1.5px; text-transform:uppercase;
+  background:var(--pink-faint); color:var(--pink-deep);
+  padding:4px 10px; border-radius:2px; margin-right:8px;
 }
-.ic-schedule {
-  margin-top: auto; padding-top: 14px;
-  font-family: 'DM Sans', sans-serif;
-  font-size: 11px; letter-spacing: 1px; color: var(--ink-dim);
-}
+.ic-schedule { margin-top:auto; padding-top:16px; font-family:'DM Sans',sans-serif; font-size:20px; letter-spacing:1.5px; text-transform:uppercase; color:var(--ink-dim); }
 
-/* ═══════════════════════════════════════════
-   REASON CARDS (Slide 7)
-═══════════════════════════════════════════ */
-.reason-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
-.reason-card {
-  background: var(--bg-card); border: 1px solid var(--border);
-  border-radius: 6px; padding: 22px 24px;
-}
-.reason-title {
-  font-family: 'DM Sans', sans-serif;
-  font-size: 10px; font-weight: 700; letter-spacing: 2.5px; text-transform: uppercase;
-  color: var(--pink); margin-bottom: 9px;
-}
-.reason-text {
-  font-family: 'Noto Sans KR', sans-serif;
-  font-size: 14px; font-weight: 300; color: var(--ink-mid);
-  line-height: 1.6; word-break: keep-all;
-}
+/* REASON CARDS */
+.reason-grid { display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+.reason-card { background:var(--bg-card); border:1px solid var(--border); border-radius:8px; padding:26px 28px; }
+.reason-title { font-family:'DM Sans',sans-serif; font-size:18px; font-weight:700; letter-spacing:2.5px; text-transform:uppercase; color:var(--pink); margin-bottom:12px; }
+.reason-text { font-family:'Noto Sans KR',sans-serif; font-size:30px; font-weight:300; color:var(--ink-mid); line-height:1.65; word-break:keep-all; }
 
-/* ═══════════════════════════════════════════
-   KPI / EFFECT (Slide 11)
-═══════════════════════════════════════════ */
-.kpi-row {
-  display: flex; border: 1px solid var(--border);
-  border-radius: 6px; overflow: hidden;
-}
-.kpi-item {
-  flex: 1; padding: 28px 36px;
-  background: var(--bg-card); border-right: 1px solid var(--border);
-}
-.kpi-item:last-child { border-right: none; }
-.kpi-num {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 64px; font-weight: 300; color: var(--pink);
-  letter-spacing: -2px; line-height: 1;
-}
-.kpi-lbl {
-  font-family: 'Noto Sans KR', sans-serif;
-  font-size: 14px; font-weight: 300; color: var(--ink-mid); margin-top: 7px;
-}
-.effect-grid { display: grid; grid-template-columns: repeat(5,1fr); gap: 14px; }
-.effect-card {
-  background: var(--bg-card); border: 1px solid var(--border);
-  border-radius: 6px; padding: 20px 18px;
-}
-.effect-title {
-  font-family: 'DM Sans', sans-serif;
-  font-size: 9px; font-weight: 700; letter-spacing: 2.5px; text-transform: uppercase;
-  color: var(--pink-deep); margin-bottom: 10px;
-}
-.effect-list { list-style: none; display: flex; flex-direction: column; gap: 6px; }
-.effect-list li {
-  font-family: 'Noto Sans KR', sans-serif;
-  font-size: 13px; font-weight: 300; color: var(--ink-mid);
-  line-height: 1.5; word-break: keep-all;
-}
+/* KPI / EFFECT */
+.kpi-row { display:flex; border:1px solid var(--border); border-radius:8px; overflow:hidden; }
+.kpi-item { flex:1; padding:32px 40px; background:var(--bg-card); border-right:1px solid var(--border); }
+.kpi-item:last-child { border-right:none; }
+.kpi-num { font-family:'Cormorant Garamond',serif; font-size:76px; font-weight:300; color:var(--pink); letter-spacing:-2px; line-height:1; }
+.kpi-lbl { font-family:'Noto Sans KR',sans-serif; font-size:28px; font-weight:300; color:var(--ink-mid); margin-top:8px; }
+.effect-grid { display:grid; grid-template-columns:repeat(5,1fr); gap:14px; }
+.effect-card { background:var(--bg-card); border:1px solid var(--border); border-radius:8px; padding:26px 24px; }
+.effect-title { font-family:'DM Sans',sans-serif; font-size:17px; font-weight:700; letter-spacing:2px; text-transform:uppercase; color:var(--pink-deep); margin-bottom:16px; }
+.effect-list { list-style:none; display:flex; flex-direction:column; gap:12px; }
+.effect-list li { font-family:'Noto Sans KR',sans-serif; font-size:26px; font-weight:300; color:var(--ink-mid); line-height:1.5; word-break:keep-all; }
 
+/* BLOB ANIMATIONS — S8 */
+@keyframes blob-morph {
+  0%,100% { border-radius:60% 40% 55% 45% / 40% 60% 45% 55%; transform:rotate(0deg) scale(1); }
+  33%      { border-radius:45% 55% 40% 60% / 60% 40% 55% 45%; transform:rotate(4deg) scale(1.04); }
+  66%      { border-radius:55% 45% 60% 40% / 45% 55% 40% 60%; transform:rotate(-4deg) scale(0.97); }
+}
+.blob-pink {
+  width:260px; height:260px;
+  background:radial-gradient(circle at 33% 28%, #FFDDE6, #E8849C 48%, #C4637A 72%, #9E4D60);
+  border-radius:60% 40% 55% 45% / 40% 60% 45% 55%;
+  animation:blob-morph 5s ease-in-out infinite;
+  box-shadow:0 28px 72px rgba(196,99,122,0.38), inset 0 -8px 28px rgba(0,0,0,0.12);
+}
+.blob-blue {
+  width:260px; height:260px;
+  background:radial-gradient(circle at 33% 28%, #D8EEFF, #6AAAD8 48%, #3B7DBF 72%, #1E5FA0);
+  border-radius:40% 60% 45% 55% / 60% 40% 55% 45%;
+  animation:blob-morph 5s ease-in-out 1.8s infinite;
+  box-shadow:0 28px 72px rgba(59,125,191,0.35), inset 0 -8px 28px rgba(0,0,0,0.12);
+}
 </style>
 </head>
 <body>
 
-<!-- HUD -->
+<!-- HUD progress -->
 <div class="hud-progress"><div class="hud-progress-fill" id="prog"></div></div>
-<div class="hud-counter" id="ctr"></div>
-<div class="hud-key-hint">← → 슬라이드 이동 &nbsp;&nbsp;·&nbsp;&nbsp; F 전체화면</div>
 
 <div class="viewport" id="vp">
 <div class="deck" id="deck">
 
-<!-- ╔══════════════════════════════════╗
-     ║  SLIDE 0 — COVER               ║
-     ╚══════════════════════════════════╝ -->
-<div class="slide active" id="s0" style="cursor:default;">
 
-  <!-- Background accent -->
-  <div style="position:absolute; top:-300px; right:-300px; width:900px; height:900px; border-radius:50%;
-       background: radial-gradient(circle, rgba(232,164,174,0.05) 0%, transparent 65%); pointer-events:none;"></div>
+<!-- ═══════════════════════════════════
+     SLIDE 0 — COVER (dark override)
+═══════════════════════════════════ -->
+<div class="slide active" id="s0"
+  style="cursor:default; background:#0E0C0A;
+    --bg:#0E0C0A; --bg-card:#181411; --bg-lift:#1E1B17;
+    --ink:#F4F1EC; --ink-mid:rgba(244,241,236,0.55); --ink-dim:rgba(244,241,236,0.22);
+    --pink:#E0A0AD; --pink-deep:#BC7888;
+    --border:rgba(255,255,255,0.07);">
 
-  <!-- Brand mark -->
+  <div style="position:absolute; top:-280px; right:-280px; width:860px; height:860px; border-radius:50%;
+       background:radial-gradient(circle, rgba(224,160,173,0.06) 0%, transparent 65%); pointer-events:none;"></div>
   <div style="position:absolute; top:52px; right:72px;
        font-family:'DM Sans',sans-serif; font-size:11px; font-weight:600;
-       letter-spacing:4px; text-transform:uppercase; color:var(--ink-dim);">SIRIAI</div>
+       letter-spacing:4px; text-transform:uppercase; color:rgba(244,241,236,0.22);">SIRIAI</div>
 
-  <!-- Main content -->
   <div style="position:absolute; top:50%; left:72px; right:72px; transform:translateY(-54%);">
-
     <div style="display:flex; align-items:center; gap:16px; margin-bottom:52px;">
-      <div style="width:44px; height:1px; background:var(--pink);"></div>
+      <div style="width:44px; height:1px; background:#E0A0AD;"></div>
       <div style="font-family:'DM Sans',sans-serif; font-size:11px; font-weight:500;
-           letter-spacing:4px; text-transform:uppercase; color:var(--pink);">Influencer Campaign Strategy</div>
+           letter-spacing:4px; text-transform:uppercase; color:#E0A0AD;">Influencer Campaign Strategy</div>
     </div>
-
     <div style="font-family:'Cormorant Garamond',serif; font-size:118px; font-weight:300;
-         line-height:0.95; letter-spacing:-4px; color:var(--ink); margin-bottom:10px;">
-      틈결 에스더버니
-    </div>
+         line-height:0.95; letter-spacing:-4px; color:#F4F1EC; margin-bottom:10px;">틈결 에스더버니</div>
     <div style="font-family:'Cormorant Garamond',serif; font-size:80px; font-weight:300;
-         font-style:italic; color:var(--pink); letter-spacing:-2px; margin-bottom:52px;">
-      × SIRIAI
-    </div>
-
+         font-style:italic; color:#E0A0AD; letter-spacing:-2px; margin-bottom:52px;">× SIRIAI</div>
     <div style="font-family:'Noto Sans KR',sans-serif; font-size:22px; font-weight:300;
-         color:var(--ink-mid); letter-spacing:0; margin-bottom:32px;">
-      인플루언서 캠페인 전략
-    </div>
-
+         color:rgba(244,241,236,0.55); margin-bottom:32px;">인플루언서 캠페인 전략</div>
     <div style="font-family:'DM Sans',sans-serif; font-size:12px; font-weight:300;
-         letter-spacing:2px; color:var(--ink-dim);">
-      2026.05.01 — 03 &nbsp;&nbsp;·&nbsp;&nbsp; 서울 성수동 틈결 &nbsp;&nbsp;·&nbsp;&nbsp; CLIENT PROPOSED
-    </div>
+         letter-spacing:2px; color:rgba(244,241,236,0.22);">
+      2026.05.01 — 03 &nbsp;&nbsp;·&nbsp;&nbsp; 서울 성수동 틈결 &nbsp;&nbsp;·&nbsp;&nbsp; CLIENT PROPOSED</div>
   </div>
 
-  <!-- Footer -->
   <div style="position:absolute; bottom:52px; left:72px; right:72px;
        display:flex; justify-content:space-between; align-items:flex-end;
-       border-top:1px solid var(--border); padding-top:22px;">
+       border-top:1px solid rgba(255,255,255,0.07); padding-top:22px;">
     <div style="font-family:'Cormorant Garamond',serif; font-size:15px; font-style:italic;
-         color:var(--ink-dim);">에스더버니 아뜰리에</div>
+         color:rgba(244,241,236,0.22);">에스더버니 아뜰리에</div>
     <div style="font-family:'DM Sans',sans-serif; font-size:10px; font-weight:600;
-         letter-spacing:3px; text-transform:uppercase; color:var(--ink-dim);">CONFIDENTIAL</div>
+         letter-spacing:3px; text-transform:uppercase; color:rgba(244,241,236,0.22);">CONFIDENTIAL</div>
   </div>
 </div>
 
 
-<!-- ╔══════════════════════════════════╗
-     ║  SLIDE 1 — P.01 메가 개요      ║
-     ╚══════════════════════════════════╝ -->
+<!-- ═══════════════════════════════════
+     SLIDE 1 — P.01 메가 개요
+═══════════════════════════════════ -->
 <div class="slide" id="s1">
   <div class="chrome">
     <div class="chrome-part">Part 1 &nbsp;—&nbsp; Brand Power</div>
@@ -398,21 +299,21 @@ em.pk { font-style: italic; color: var(--pink); }
   </div>
   <div class="body">
     <div class="label">메가 인플루언서 전략 개요</div>
-    <div class="title" style="font-size:54px; margin-bottom:20px;">
-      합산 팔로워 <em class="pk">850만+</em>의 파급력으로<br>에스더버니를 패션 팝업의 중심에.
+    <div class="title" style="font-size:52px; margin-bottom:20px;">
+      합산 팔로워 <em class="pk">850만+</em>의 파급력으로<br>에스더버니 플래그십 스토어를 패션의 중심에.
     </div>
     <div class="rule"></div>
-
-    <!-- 3 cards -->
-    <div class="ic-grid" style="height:540px;">
+    <div class="ic-grid" style="height:530px;">
 
       <!-- 릴리 -->
-      <div class="ic">
-        <div class="ic-photo">
-          <div class="img-slot" data-label="릴리 프로필 · 착장" style="height:210px; border-radius:0; border:none; border-bottom:1px solid var(--border); background-image:url('images/lily.webp'); background-position:top center;"></div>
+      <div class="ic" style="flex-direction:row;">
+        <div class="ic-photo" style="width:220px; flex-shrink:0; display:flex;">
+          <div class="img-slot" data-label="릴리"
+            style="width:220px; height:100%; border-radius:0; border:none; border-right:1px solid var(--border);
+                   background-image:url('images/lily.webp'); background-position:50% 20%;"></div>
         </div>
         <div class="ic-body">
-          <div class="ic-name">릴리 <span style="font-size:17px; color:var(--ink-dim);">— NMIXX</span></div>
+          <div class="ic-name">릴리 <span style="font-size:20px; color:var(--ink-dim);">— NMIXX</span></div>
           <div class="ic-role">JYPE · Global Fanbase</div>
           <div class="ic-stat">609만+</div>
           <div class="ic-stat-lbl">인스타그램 팔로워</div>
@@ -426,37 +327,44 @@ em.pk { font-style: italic; color: var(--pink); }
       </div>
 
       <!-- 김고은 -->
-      <div class="ic">
-        <div class="ic-photo">
-          <div class="img-slot" data-label="김고은 프로필 · 착장" style="height:210px; border-radius:0; border:none; border-bottom:1px solid var(--border); background-image:url('images/kimgoeun.webp'); background-position:top center;"></div>
+      <div class="ic" style="flex-direction:row;">
+        <div class="ic-photo" style="width:220px; flex-shrink:0; display:flex;">
+          <div class="img-slot" data-label="김고은"
+            style="width:220px; height:100%; border-radius:0; border:none; border-right:1px solid var(--border);
+                   background-image:url('images/kimgoeun.webp'); background-position:50% 20%;"></div>
         </div>
         <div class="ic-body">
-          <div class="ic-name">김고은 <span style="font-size:17px; color:var(--ink-dim);">— 솔로지옥</span></div>
+          <div class="ic-name">김고은 <span style="font-size:20px; color:var(--ink-dim);">— 솔로지옥</span></div>
           <div class="ic-role">배우 · 드뮤어 패션 아이콘</div>
           <div class="ic-stat">145만+</div>
           <div class="ic-stat-lbl">인스타그램 팔로워</div>
           <div class="ic-dels">
             <div class="ic-del"><span class="ic-badge">피드</span>착장 화보 피드 1건</div>
-            <div class="ic-del"><span class="ic-badge">스토리</span>현장 스토리 (가능 시)</div>
-            <div class="ic-del"><span class="ic-badge">커머스</span>에스더버니 의상 착용 촬영</div>
+            <div class="ic-del"><span class="ic-badge">스토리</span>현장 스토리</div>
+            <div class="ic-del"><span class="ic-badge">커머스</span>에스더버니 의상 착용</div>
           </div>
           <div class="ic-schedule">방문 · 5월 2일 15:00</div>
         </div>
       </div>
 
       <!-- 데패뉴 -->
-      <div class="ic">
-        <div class="ic-photo">
-          <div class="img-slot" data-label="데패뉴 커버 · 매거진" style="height:210px; border-radius:0; border:none; border-bottom:1px solid var(--border); background-image:url('images/데패뉴 콘텐츠1.png');"></div>
+      <div class="ic" style="flex-direction:row;">
+        <div class="ic-photo" style="width:220px; flex-shrink:0; display:flex;">
+          <!-- pt2p데패뉴.png: contain으로 글자 잘림 방지 -->
+          <div class="img-slot" data-label="데패뉴"
+            style="width:220px; height:100%; border-radius:0; border:none; border-right:1px solid var(--border);
+                   background-image:url('images/pt2p데패뉴.png');
+                   background-size:contain; background-repeat:no-repeat; background-position:center;
+                   background-color:#EDE7DC;"></div>
         </div>
         <div class="ic-body">
-          <div class="ic-name">데패뉴 <span style="font-size:17px; color:var(--ink-dim);">— Magazine</span></div>
+          <div class="ic-name">데패뉴 <span style="font-size:20px; color:var(--ink-dim);">— Magazine</span></div>
           <div class="ic-role">패션·라이프스타일 미디어</div>
           <div class="ic-stat">103만+</div>
           <div class="ic-stat-lbl">인스타그램 팔로워</div>
           <div class="ic-dels">
             <div class="ic-del"><span class="ic-badge">릴스</span>셀럽 인터뷰 릴스 3건</div>
-            <div class="ic-del"><span class="ic-badge">스토리</span>현장 취재 스토리 1건</div>
+            <div class="ic-del"><span class="ic-badge">스토리</span>현장 취재 1건</div>
             <div class="ic-del"><span class="ic-badge">에디토리얼</span>릴리·김고은 편 + 자체</div>
           </div>
           <div class="ic-schedule">에디토리얼 디렉팅 주도</div>
@@ -465,233 +373,265 @@ em.pk { font-style: italic; color: var(--pink); }
 
     </div>
   </div>
-
   <div class="stat-bar">
     <div class="stat-item"><div class="stat-num">7–8건</div><div class="stat-lbl">총 확보 콘텐츠</div></div>
     <div class="stat-item"><div class="stat-num">850만+</div><div class="stat-lbl">총 예상 도달</div></div>
-    <div class="stat-item"><div class="stat-num">2인 + 1사</div><div class="stat-lbl">방문 셀럽 + 매거진</div></div>
+    <div class="stat-item"><div class="stat-num">2인 + 1사</div><div class="stat-lbl">셀럽 + 매거진</div></div>
     <div class="stat-item"><div class="stat-num">5월 2일</div><div class="stat-lbl">셀럽 집중 방문일</div></div>
   </div>
 </div>
 
 
-<!-- ╔══════════════════════════════════╗
-     ║  SLIDE 2 — P.02 화보형 피드    ║
-     ╚══════════════════════════════════╝ -->
+<!-- ═══════════════════════════════════
+     SLIDE 2 — P.02 화보형 피드
+═══════════════════════════════════ -->
 <div class="slide" id="s2">
   <div class="chrome">
     <div class="chrome-part">Part 1 &nbsp;—&nbsp; 콘텐츠 형태 (A)</div>
     <div class="chrome-page">P.02</div>
   </div>
-  <div class="body" style="display:grid; grid-template-columns:1fr 380px; gap:56px;">
+  <div class="body" style="display:grid; grid-template-columns:1fr 360px; gap:56px;">
 
-    <!-- Left -->
     <div style="display:flex; flex-direction:column; gap:0;">
       <div class="label">화보형 피드 — 릴리 · 김고은</div>
-      <div class="title" style="font-size:64px; margin-bottom:10px;">화보형 피드</div>
-      <div class="sub" style="margin-bottom:20px;">셀럽의 착장과 공간이 하나의 비주얼로 완성되는 피드 콘텐츠</div>
+      <div class="title" style="font-size:62px; margin-bottom:10px;">화보형 피드</div>
+      <div class="sub" style="margin-bottom:20px;">셀럽의 착장과 공간이 하나의 비주얼로</div>
       <div class="rule" style="margin:0 0 20px;"></div>
+
       <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:14px; flex:1;">
-        <div style="display:flex; flex-direction:column; gap:10px; flex:1;">
-          <div class="img-slot" data-label="릴리 화보컷 · 3F 핑크룸" style="flex:1; min-height:280px; background-image:url('images/앤믹스 릴리.webp'); background-position:top center;"></div>
-          <div style="font-family:'DM Sans',sans-serif; font-size:10px; letter-spacing:2px;
-               text-transform:uppercase; color:var(--ink-dim); text-align:center;">릴리 — 핑크룸</div>
+
+        <div style="display:flex; flex-direction:column; gap:10px;">
+          <div class="img-slot" data-label="NMIXX 릴리 예시"
+            style="flex:1; min-height:300px; background-image:url('images/pt2p릴리대안.jpg'); background-position:top center;"></div>
+          <div style="font-family:'DM Sans',sans-serif; font-size:16px; letter-spacing:2px;
+               text-transform:uppercase; color:var(--ink-dim); text-align:center;">NMIXX 릴리 예시</div>
         </div>
-        <div style="display:flex; flex-direction:column; gap:10px; flex:1;">
-          <div class="img-slot" data-label="김고은 화보컷 · 3F 블루존" style="flex:1; min-height:280px; background-image:url('images/kimgoeun.webp'); background-position:top center;"></div>
-          <div style="font-family:'DM Sans',sans-serif; font-size:10px; letter-spacing:2px;
-               text-transform:uppercase; color:var(--ink-dim); text-align:center;">김고은 — 블루존</div>
+
+        <div style="display:flex; flex-direction:column; gap:10px;">
+          <div class="img-slot" data-label="김고은 예시"
+            style="flex:1; min-height:300px; background-image:url('images/pt2p김고은.jpg'); background-position:top center;"></div>
+          <div style="font-family:'DM Sans',sans-serif; font-size:16px; letter-spacing:2px;
+               text-transform:uppercase; color:var(--ink-dim); text-align:center;">김고은 예시</div>
         </div>
-        <div style="display:flex; flex-direction:column; gap:10px; flex:1;">
-          <div class="img-slot" data-label="공간 레퍼런스 · 3F 전경" style="flex:1; min-height:280px; background-image:url('images/brand/teumgyul-render-p1.png');"></div>
-          <div style="font-family:'DM Sans',sans-serif; font-size:10px; letter-spacing:2px;
-               text-transform:uppercase; color:var(--ink-dim); text-align:center;">공간 레퍼런스</div>
+
+        <div style="display:flex; flex-direction:column; gap:10px;">
+          <div class="img-slot" data-label="틈결 공간"
+            style="flex:1; min-height:300px; background-image:url('images/brand/teumgyul-render-p14.png'); background-position:center;"></div>
+          <div style="font-family:'DM Sans',sans-serif; font-size:16px; letter-spacing:2px;
+               text-transform:uppercase; color:var(--ink-dim); text-align:center;">틈결 공간</div>
         </div>
+
       </div>
     </div>
 
-    <!-- Right -->
-    <div style="display:flex; flex-direction:column; gap:30px; padding-top:88px;">
+    <div style="display:flex; flex-direction:column; gap:32px; padding-top:80px;">
 
       <div>
-        <div class="label" style="margin-bottom:12px;">주요 촬영 공간</div>
+        <div class="label" style="margin-bottom:14px;">주요 촬영 공간</div>
         <ul class="blist">
-          <li>3F 핑크룸 — 대형 FRP + 미러 바리솔</li>
-          <li>3F 블루존 — 구름 오브제</li>
+          <li>틈결 공간 내 시그니처 포토 존</li>
+          <li>공간 특성을 살린 컨셉 촬영</li>
         </ul>
       </div>
 
       <div>
-        <div class="label" style="margin-bottom:12px;">무드 & 컨셉</div>
+        <div class="label" style="margin-bottom:14px;">무드 & 컨셉</div>
         <ul class="blist">
-          <li>릴리: 팝스타 글램 × 키치 러블리</li>
-          <li>김고은: 드뮤어 레트로 × Y2K 몽환</li>
+          <li>릴리 — 팝스타 글램 × 키치 러블리</li>
+          <li>김고은 — 드뮤어 레트로 × Y2K</li>
         </ul>
       </div>
 
       <div>
-        <div class="label" style="margin-bottom:12px;">클라이언트 활용 범위</div>
+        <div class="label" style="margin-bottom:14px;">클라이언트 활용</div>
         <ul class="blist">
-          <li>'릴리·김고은 착용' 태그 → 온라인몰 상세페이지</li>
-          <li>SNS 광고 소재 재활용</li>
-          <li>시즌 캠페인 룩북 장기 활용</li>
+          <li>착용 태그 → 온라인몰·광고 소재</li>
+          <li>시즌 룩북 장기 활용</li>
         </ul>
       </div>
 
       <div style="border-top:1px solid var(--border); padding-top:22px; margin-top:auto;">
-        <div style="font-family:'Cormorant Garamond',serif; font-size:36px; font-weight:300;
+        <div style="font-family:'Cormorant Garamond',serif; font-size:40px; font-weight:300;
              color:var(--pink); letter-spacing:-1px;">850만+</div>
-        <div style="font-family:'DM Sans',sans-serif; font-size:10px; letter-spacing:2px;
+        <div style="font-family:'DM Sans',sans-serif; font-size:16px; letter-spacing:2px;
              text-transform:uppercase; color:var(--ink-dim); margin-top:4px;">합산 팔로워 도달</div>
       </div>
-
     </div>
   </div>
 </div>
 
 
-<!-- ╔══════════════════════════════════════╗
-     ║  SLIDE 3 — P.03 현장 릴스 & 스토리 ║
-     ╚══════════════════════════════════════╝ -->
+<!-- ═══════════════════════════════════
+     SLIDE 3 — P.03 현장 릴스 & 스토리
+═══════════════════════════════════ -->
 <div class="slide" id="s3">
   <div class="chrome">
     <div class="chrome-part">Part 1 &nbsp;—&nbsp; 콘텐츠 형태 (B)</div>
     <div class="chrome-page">P.03</div>
   </div>
-  <div class="body" style="display:grid; grid-template-columns:1fr 380px; gap:56px;">
+  <div class="body" style="display:grid; grid-template-columns:1fr 360px; gap:56px;">
 
-    <!-- Left -->
     <div style="display:flex; flex-direction:column;">
       <div class="label">현장 릴스 & 스토리 — 셀럽 · 데패뉴</div>
-      <div class="title" style="font-size:64px; margin-bottom:10px;">현장 릴스 &amp; 스토리</div>
-      <div class="sub" style="margin-bottom:20px;">광고가 아닌 '내가 다녀온 팝업' — 일상감과 밈 바이럴의 동시 발생</div>
+      <div class="title" style="font-size:62px; margin-bottom:10px;">현장 릴스 &amp; 스토리</div>
+      <div class="sub" style="margin-bottom:20px;">'내가 다녀온 플래그십' — 일상감과 바이럴의 동시 발생</div>
       <div class="rule" style="margin:0 0 20px;"></div>
+
       <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:14px; flex:1;">
+
         <div style="display:flex; flex-direction:column; gap:10px;">
-          <div class="img-slot" data-label="릴리 릴스 · 공간 탐방 / 착장" style="flex:1; min-height:300px; background-image:url('images/엔믹스 스토리.png'); background-position:top center;"></div>
-          <div style="font-family:'DM Sans',sans-serif; font-size:10px; letter-spacing:2px;
+          <div class="img-slot" data-label="릴리 릴스 · 스토리"
+            style="flex:1; min-height:300px; background-image:url('images/엔믹스 스토리.png'); background-position:top center;"></div>
+          <div style="font-family:'DM Sans',sans-serif; font-size:16px; letter-spacing:2px;
                text-transform:uppercase; color:var(--ink-dim); text-align:center;">릴리 릴스 · 스토리</div>
         </div>
+
         <div style="display:flex; flex-direction:column; gap:10px;">
-          <div class="img-slot" data-label="김고은 릴스 · 착장 / 리액션" style="flex:1; min-height:300px; background-image:url('images/kimgoeun.webp'); background-position:top center;"></div>
-          <div style="font-family:'DM Sans',sans-serif; font-size:10px; letter-spacing:2px;
+          <div class="img-slot" data-label="김고은 릴스"
+            style="flex:1; min-height:300px; background-image:url('images/pt3p김고은.png'); background-position:top center;"></div>
+          <div style="font-family:'DM Sans',sans-serif; font-size:16px; letter-spacing:2px;
                text-transform:uppercase; color:var(--ink-dim); text-align:center;">김고은 릴스</div>
         </div>
+
         <div style="display:flex; flex-direction:column; gap:10px;">
-          <div class="img-slot" data-label="데패뉴 릴스 · 에디토리얼 인터뷰" style="flex:1; min-height:300px; background-image:url('images/데패뉴 스토리.png');"></div>
-          <div style="font-family:'DM Sans',sans-serif; font-size:10px; letter-spacing:2px;
+          <div class="img-slot" data-label="데패뉴 에디토리얼"
+            style="flex:1; min-height:300px; background-image:url('images/pt4p데패뉴.jpg'); background-position:top center;"></div>
+          <div style="font-family:'DM Sans',sans-serif; font-size:16px; letter-spacing:2px;
                text-transform:uppercase; color:var(--ink-dim); text-align:center;">데패뉴 에디토리얼</div>
         </div>
+
       </div>
     </div>
 
-    <!-- Right -->
-    <div style="display:flex; flex-direction:column; gap:30px; padding-top:88px;">
-
+    <div style="display:flex; flex-direction:column; gap:32px; padding-top:80px;">
       <div>
-        <div class="label" style="margin-bottom:12px;">콘텐츠 구성</div>
+        <div class="label" style="margin-bottom:14px;">콘텐츠 구성</div>
         <ul class="blist">
           <li>릴리 릴스 1건 + 스토리 1건</li>
           <li>김고은 릴스 1건</li>
           <li>데패뉴 에디토리얼 릴스 3건</li>
         </ul>
       </div>
-
       <div>
-        <div class="label" style="margin-bottom:12px;">콘텐츠 형식</div>
-        <ul class="blist">
-          <li>공간 탐방 Vlog + 착장 데일리</li>
-          <li>트렌드 오디오·챌린지 포맷</li>
-          <li>팬덤 2차 창작 확산 유도</li>
-        </ul>
-      </div>
-
-      <div>
-        <div class="label" style="margin-bottom:12px;">파급 효과</div>
+        <div class="label" style="margin-bottom:14px;">파급 효과</div>
         <ul class="blist">
           <li>NMIXX 오피셜 공동작업자 태그</li>
-          <li>'다녀간 팝업' 자발적 검색 급증</li>
-          <li>데패뉴 → 에스더버니 리그램·임베드</li>
-          <li>보도자료 → 연예·패션 매체 기사화</li>
+          <li>'다녀간 플래그십' 자발 검색 급증</li>
+          <li>보도자료 → 패션 매체 기사화</li>
         </ul>
       </div>
-
     </div>
   </div>
 </div>
 
 
-<!-- ╔══════════════════════════════════╗
-     ║  SLIDE 4 — P.04 메가 기대 효과  ║
-     ╚══════════════════════════════════╝ -->
+<!-- ═══════════════════════════════════
+     SLIDE 4 — P.04 메가 기대 효과
+     레이아웃: 정방형 사진 + 텍스트박스, 카드 간 시너지 연결
+═══════════════════════════════════ -->
 <div class="slide" id="s4">
   <div class="chrome">
     <div class="chrome-part">Part 1 &nbsp;—&nbsp; Brand Power</div>
     <div class="chrome-page">P.04</div>
   </div>
   <div class="body" style="display:flex; flex-direction:column; gap:20px;">
+
     <div>
       <div class="label">메가 인플루언서 기대 효과</div>
-      <div class="title" style="font-size:48px;">
+      <div class="title" style="font-size:44px;">
         셀럽 1인의 방문이 SNS · 커머스 · PR · 바이럴까지 연쇄 작동합니다.
       </div>
     </div>
 
-    <div class="ic-grid" style="flex:1;">
+    <!-- 3 cards + connectors -->
+    <div style="display:flex; align-items:stretch; flex:1; gap:0;">
 
-      <div class="ic">
-        <div class="ic-photo">
-          <div class="img-slot" data-label="릴리 · 방문 화보" style="height:190px; border-radius:0; border:none; border-bottom:1px solid var(--border); background-image:url('images/lily.webp'); background-position:top center;"></div>
-        </div>
-        <div class="ic-body">
-          <div class="ic-name">릴리 <span style="font-size:16px; color:var(--pink-deep);">609만+</span></div>
-          <div class="ic-role">NMIXX / JYPE</div>
-          <ul class="blist" style="margin-top:12px;">
-            <li>피드 → 수백만 도달, 에스더버니 팔로워 순증</li>
-            <li>NMIXX 오피셜 태그 → 팬덤 직접 유입</li>
-            <li>'릴리 착용' 블로그·커뮤니티 자발 시딩</li>
-            <li>팬 계정 2차 창작 (직캠·짤) 확산</li>
+      <!-- Card 1 — 릴리 -->
+      <div style="flex:1; display:flex; flex-direction:column;
+           background:var(--bg-card); border:1px solid var(--border); border-radius:10px;
+           overflow:hidden; box-shadow:0 1px 4px rgba(22,18,14,0.06);">
+        <div class="img-slot" data-label="릴리"
+          style="width:100%; height:440px; border-radius:0; border:none; border-bottom:1px solid var(--border);
+                 background-image:url('images/pt4p릴리.jpg'); background-position:50% 20%;"></div>
+        <div style="padding:24px 28px; flex:1; display:flex; flex-direction:column; gap:10px;">
+          <div style="display:flex; align-items:baseline; gap:12px;">
+            <div style="font-family:'Cormorant Garamond',serif; font-size:28px; font-weight:300; color:var(--ink);">릴리</div>
+            <div style="font-family:'Cormorant Garamond',serif; font-size:22px; font-weight:300; color:var(--pink);">609만+</div>
+            <div style="font-family:'DM Sans',sans-serif; font-size:15px; letter-spacing:1.5px; color:var(--ink-dim); text-transform:uppercase;">NMIXX</div>
+          </div>
+          <ul class="blist" style="gap:10px;">
+            <li style="font-size:24px;">피드 → 수백만 도달, 팔로워 순증</li>
+            <li style="font-size:24px;">NMIXX 오피셜 태그 → 팬덤 직접 유입</li>
+            <li style="font-size:24px;">공동작업자 발행 → 오피셜 채널 동시 노출</li>
           </ul>
         </div>
       </div>
 
-      <div class="ic">
-        <div class="ic-photo">
-          <div class="img-slot" data-label="김고은 · 방문 착장" style="height:190px; border-radius:0; border:none; border-bottom:1px solid var(--border); background-image:url('images/kimgoeun.webp'); background-position:top center;"></div>
-        </div>
-        <div class="ic-body">
-          <div class="ic-name">김고은 <span style="font-size:16px; color:var(--pink-deep);">145만+</span></div>
-          <div class="ic-role">배우 / 솔로지옥</div>
-          <ul class="blist" style="margin-top:12px;">
-            <li>배우 팬덤 + 패션 관심층 도달</li>
-            <li>'김고은 착용' 태그 커머스 전환 유도</li>
-            <li>연예·패션 매체 기사화</li>
-            <li>드뮤어 스타일 키워드 자발 확산</li>
+      <!-- Connector + -->
+      <div style="display:flex; flex-direction:column; align-items:center; justify-content:center;
+           padding:0 22px; gap:8px; flex-shrink:0; padding-top:220px;">
+        <div style="width:1px; height:48px; background:linear-gradient(to bottom, transparent, var(--border));"></div>
+        <div style="font-family:'Cormorant Garamond',serif; font-size:40px; font-weight:300;
+             color:var(--pink); line-height:1;">+</div>
+        <div style="width:1px; height:48px; background:linear-gradient(to top, transparent, var(--border));"></div>
+      </div>
+
+      <!-- Card 2 — 김고은 -->
+      <div style="flex:1; display:flex; flex-direction:column;
+           background:var(--bg-card); border:1px solid var(--border); border-radius:10px;
+           overflow:hidden; box-shadow:0 1px 4px rgba(22,18,14,0.06);">
+        <div class="img-slot" data-label="김고은"
+          style="width:100%; height:440px; border-radius:0; border:none; border-bottom:1px solid var(--border);
+                 background-image:url('images/pt4p김고은.jpg'); background-position:50% 20%;"></div>
+        <div style="padding:24px 28px; flex:1; display:flex; flex-direction:column; gap:10px;">
+          <div style="display:flex; align-items:baseline; gap:12px;">
+            <div style="font-family:'Cormorant Garamond',serif; font-size:28px; font-weight:300; color:var(--ink);">김고은</div>
+            <div style="font-family:'Cormorant Garamond',serif; font-size:22px; font-weight:300; color:var(--pink);">145만+</div>
+            <div style="font-family:'DM Sans',sans-serif; font-size:15px; letter-spacing:1.5px; color:var(--ink-dim); text-transform:uppercase;">배우</div>
+          </div>
+          <ul class="blist" style="gap:10px;">
+            <li style="font-size:24px;">배우 팬덤 + 패션 관심층 도달</li>
+            <li style="font-size:24px;">'착용' 태그 → 커머스 전환 유도</li>
+            <li style="font-size:24px;">드뮤어 이미지 → 브랜드 감도 상승</li>
           </ul>
         </div>
       </div>
 
-      <div class="ic">
-        <div class="ic-photo">
-          <div class="img-slot" data-label="데패뉴 · 에디토리얼" style="height:190px; border-radius:0; border:none; border-bottom:1px solid var(--border); background-image:url('images/데패뉴 콘텐츠1.png');"></div>
-        </div>
-        <div class="ic-body">
-          <div class="ic-name">데패뉴 <span style="font-size:16px; color:var(--pink-deep);">103만+</span></div>
-          <div class="ic-role">패션 미디어</div>
-          <ul class="blist" style="margin-top:12px;">
-            <li>릴스 3건 → 패션·라이프스타일층 100만+ 도달</li>
-            <li>에디토리얼 감도 → 광고보다 높은 신뢰도</li>
-            <li>에스더버니 공식 계정 리그램 → 자산화</li>
-            <li>매거진 아카이브 기록</li>
+      <!-- Connector + -->
+      <div style="display:flex; flex-direction:column; align-items:center; justify-content:center;
+           padding:0 22px; gap:8px; flex-shrink:0; padding-top:220px;">
+        <div style="width:1px; height:48px; background:linear-gradient(to bottom, transparent, var(--border));"></div>
+        <div style="font-family:'Cormorant Garamond',serif; font-size:40px; font-weight:300;
+             color:var(--pink); line-height:1;">+</div>
+        <div style="width:1px; height:48px; background:linear-gradient(to top, transparent, var(--border));"></div>
+      </div>
+
+      <!-- Card 3 — 데패뉴 -->
+      <div style="flex:1; display:flex; flex-direction:column;
+           background:var(--bg-card); border:1px solid var(--border); border-radius:10px;
+           overflow:hidden; box-shadow:0 1px 4px rgba(22,18,14,0.06);">
+        <div class="img-slot" data-label="데패뉴"
+          style="width:100%; height:440px; border-radius:0; border:none; border-bottom:1px solid var(--border);
+                 background-image:url('images/pt3p데패뉴.png'); background-position:50% 20%;"></div>
+        <div style="padding:24px 28px; flex:1; display:flex; flex-direction:column; gap:10px;">
+          <div style="display:flex; align-items:baseline; gap:12px;">
+            <div style="font-family:'Cormorant Garamond',serif; font-size:28px; font-weight:300; color:var(--ink);">데패뉴</div>
+            <div style="font-family:'Cormorant Garamond',serif; font-size:22px; font-weight:300; color:var(--pink);">103만+</div>
+            <div style="font-family:'DM Sans',sans-serif; font-size:15px; letter-spacing:1.5px; color:var(--ink-dim); text-transform:uppercase;">Magazine</div>
+          </div>
+          <ul class="blist" style="gap:10px;">
+            <li style="font-size:24px;">릴스 3건 → 패션층 100만+ 도달</li>
+            <li style="font-size:24px;">에디토리얼 감도 → 높은 신뢰도</li>
+            <li style="font-size:24px;">콘텐츠 → 룩북·광고 소재 자산화</li>
           </ul>
         </div>
       </div>
 
     </div>
-  </div>
 
+  </div>
   <div class="stat-bar">
-    <div class="stat-item"><div class="stat-num">850만+</div><div class="stat-lbl">총 도달</div></div>
+    <div class="stat-item"><div class="stat-num">850만+</div><div class="stat-lbl">총 합산 도달</div></div>
     <div class="stat-item"><div class="stat-num">팬덤 유입</div><div class="stat-lbl">NMIXX 공동작업자 태그</div></div>
     <div class="stat-item"><div class="stat-num">PR 기사화</div><div class="stat-lbl">연예·패션 매체</div></div>
     <div class="stat-item"><div class="stat-num">커머스 전환</div><div class="stat-lbl">착용 태그 + 콘텐츠 자산화</div></div>
@@ -699,172 +639,124 @@ em.pk { font-style: italic; color: var(--pink); }
 </div>
 
 
-<!-- ╔══════════════════════════════════╗
-     ║  SLIDE 5 — P.05 나노 운용 개요  ║
-     ╚══════════════════════════════════╝ -->
+<!-- ═══════════════════════════════════
+     SLIDE 5 — P.05 나노 운용 개요
+═══════════════════════════════════ -->
 <div class="slide" id="s5">
   <div class="chrome">
     <div class="chrome-part">Part 2 &nbsp;—&nbsp; Mass Presence</div>
     <div class="chrome-page">P.05</div>
   </div>
   <div class="body" style="display:flex; flex-direction:column; gap:28px;">
-
     <div>
-      <div class="label">나노 인플루언서 방문 및 운용 개요</div>
-      <div class="title" style="font-size:52px;">
+      <div class="label">나노 인플루언서 운용 개요</div>
+      <div class="title" style="font-size:50px;">
         95명 + 동행자가 성수동 틈결을 가득 채웁니다.<br>
         <em class="pk" style="font-style:italic;">규모 자체가 메시지입니다.</em>
       </div>
     </div>
 
-    <!-- Big numbers -->
-    <div style="display:flex; border:1px solid var(--border); border-radius:6px; overflow:hidden;">
-      <div style="flex:1; padding:28px 40px; border-right:1px solid var(--border); background:var(--bg-card);">
-        <div style="font-family:'Cormorant Garamond',serif; font-size:88px; font-weight:300;
-             color:var(--ink); letter-spacing:-3px; line-height:1;">95<span style="color:var(--pink);">명+</span></div>
-        <div style="font-family:'Noto Sans KR',sans-serif; font-size:15px; font-weight:300;
-             color:var(--ink-mid); margin-top:6px;">동행자 포함 방문 인원</div>
+    <div style="display:flex; border:1px solid var(--border); border-radius:8px; overflow:hidden;">
+      <div style="flex:1; padding:32px 44px; border-right:1px solid var(--border); background:var(--bg-card);">
+        <div style="font-family:'Cormorant Garamond',serif; font-size:96px; font-weight:300; color:var(--ink); letter-spacing:-3px; line-height:1;">95<span style="color:var(--pink);">명+</span></div>
+        <div style="font-family:'Noto Sans KR',sans-serif; font-size:22px; font-weight:300; color:var(--ink-mid); margin-top:6px;">동행자 포함 방문 인원</div>
       </div>
-      <div style="flex:1; padding:28px 40px; border-right:1px solid var(--border); background:var(--bg-card);">
-        <div style="font-family:'Cormorant Garamond',serif; font-size:88px; font-weight:300;
-             color:var(--ink); letter-spacing:-3px; line-height:1;">70<span style="color:var(--pink);">건+</span></div>
-        <div style="font-family:'Noto Sans KR',sans-serif; font-size:15px; font-weight:300;
-             color:var(--ink-mid); margin-top:6px;">릴스 콘텐츠 목표</div>
+      <div style="flex:1; padding:32px 44px; border-right:1px solid var(--border); background:var(--bg-card);">
+        <div style="font-family:'Cormorant Garamond',serif; font-size:96px; font-weight:300; color:var(--ink); letter-spacing:-3px; line-height:1;">70<span style="color:var(--pink);">건+</span></div>
+        <div style="font-family:'Noto Sans KR',sans-serif; font-size:22px; font-weight:300; color:var(--ink-mid); margin-top:6px;">릴스 콘텐츠 목표</div>
       </div>
-      <div style="flex:1; padding:28px 40px; background:var(--bg-card);">
-        <div style="font-family:'Cormorant Garamond',serif; font-size:88px; font-weight:300;
-             color:var(--ink); letter-spacing:-3px; line-height:1;">2<span style="color:var(--pink);">일간</span></div>
-        <div style="font-family:'Noto Sans KR',sans-serif; font-size:15px; font-weight:300;
-             color:var(--ink-mid); margin-top:6px;">5월 2–3일 집중 운영</div>
+      <div style="flex:1; padding:32px 44px; background:var(--bg-card);">
+        <div style="font-family:'Cormorant Garamond',serif; font-size:96px; font-weight:300; color:var(--ink); letter-spacing:-3px; line-height:1;">2<span style="color:var(--pink);">일간</span></div>
+        <div style="font-family:'Noto Sans KR',sans-serif; font-size:22px; font-weight:300; color:var(--ink-mid); margin-top:6px;">5월 2–3일 집중 운영</div>
       </div>
     </div>
 
-    <!-- Content & image -->
-    <div style="display:grid; grid-template-columns:1fr 320px; gap:40px; flex:1;">
+    <div style="display:grid; grid-template-columns:1fr 300px; gap:40px; flex:1;">
       <div style="display:flex; flex-direction:column; gap:20px;">
-
-        <!-- Flow -->
         <div>
-          <div class="label" style="margin-bottom:14px;">운영 플로우</div>
-          <div style="display:flex; align-items:center;">
-            <div style="flex:1; text-align:center;">
-              <div style="font-family:'Cormorant Garamond',serif; font-size:12px; font-style:italic;
-                   color:var(--pink-deep); margin-bottom:6px;">01</div>
-              <div style="font-family:'Noto Sans KR',sans-serif; font-size:17px; font-weight:500; color:var(--ink);">초청</div>
+          <div class="label" style="margin-bottom:16px;">운영 플로우</div>
+          <div style="display:flex; align-items:center; gap:0;">
+            <div style="flex:1; text-align:center; background:var(--bg-card); border:1px solid var(--border); border-radius:6px; padding:18px 10px;">
+              <div style="font-family:'Cormorant Garamond',serif; font-size:17px; font-style:italic; color:var(--pink); margin-bottom:6px;">01</div>
+              <div style="font-family:'Noto Sans KR',sans-serif; font-size:20px; font-weight:400; color:var(--ink);">초청</div>
             </div>
-            <div style="font-family:'Cormorant Garamond',serif; font-size:24px; color:var(--border); padding:0 12px;">→</div>
-            <div style="flex:1; text-align:center;">
-              <div style="font-family:'Cormorant Garamond',serif; font-size:12px; font-style:italic;
-                   color:var(--pink-deep); margin-bottom:6px;">02</div>
-              <div style="font-family:'Noto Sans KR',sans-serif; font-size:17px; font-weight:500; color:var(--ink);">방문</div>
+            <div style="font-size:22px; color:var(--ink-dim); padding:0 16px;">→</div>
+            <div style="flex:1; text-align:center; background:var(--bg-card); border:1px solid var(--border); border-radius:6px; padding:18px 10px;">
+              <div style="font-family:'Cormorant Garamond',serif; font-size:17px; font-style:italic; color:var(--pink); margin-bottom:6px;">02</div>
+              <div style="font-family:'Noto Sans KR',sans-serif; font-size:20px; font-weight:400; color:var(--ink);">방문</div>
             </div>
-            <div style="font-family:'Cormorant Garamond',serif; font-size:24px; color:var(--border); padding:0 12px;">→</div>
-            <div style="flex:1; text-align:center;">
-              <div style="font-family:'Cormorant Garamond',serif; font-size:12px; font-style:italic;
-                   color:var(--pink-deep); margin-bottom:6px;">03</div>
-              <div style="font-family:'Noto Sans KR',sans-serif; font-size:17px; font-weight:500; color:var(--ink);">촬영</div>
+            <div style="font-size:22px; color:var(--ink-dim); padding:0 16px;">→</div>
+            <div style="flex:1; text-align:center; background:var(--bg-card); border:1px solid var(--border); border-radius:6px; padding:18px 10px;">
+              <div style="font-family:'Cormorant Garamond',serif; font-size:17px; font-style:italic; color:var(--pink); margin-bottom:6px;">03</div>
+              <div style="font-family:'Noto Sans KR',sans-serif; font-size:20px; font-weight:400; color:var(--ink);">촬영</div>
             </div>
-            <div style="font-family:'Cormorant Garamond',serif; font-size:24px; color:var(--border); padding:0 12px;">→</div>
-            <div style="flex:1; text-align:center;">
-              <div style="font-family:'Cormorant Garamond',serif; font-size:12px; font-style:italic;
-                   color:var(--pink-deep); margin-bottom:6px;">04</div>
-              <div style="font-family:'Noto Sans KR',sans-serif; font-size:17px; font-weight:500; color:var(--pink);">업로드</div>
+            <div style="font-size:22px; color:var(--ink-dim); padding:0 16px;">→</div>
+            <div style="flex:1; text-align:center; background:var(--bg-card); border:1.5px solid var(--pink); border-radius:6px; padding:18px 10px;">
+              <div style="font-family:'Cormorant Garamond',serif; font-size:17px; font-style:italic; color:var(--pink); margin-bottom:6px;">04</div>
+              <div style="font-family:'Noto Sans KR',sans-serif; font-size:20px; font-weight:500; color:var(--pink);">업로드</div>
             </div>
           </div>
         </div>
-
         <div class="rule"></div>
-
         <ul class="blist">
           <li>현장 초청 60인 + 사전 발송 10인 (78UNDER 5 · asifCALIE 5)</li>
-          <li>제공 굿즈 (키링 등) → 포토 소품 + 언박싱 콘텐츠 유발</li>
-          <li>키링 언박싱 → '어디서 사?' 문의 → 구매 전환</li>
-          <li>'요즘 뜨는 팝업' 이미지 → 추가 현장 방문 수요 유발</li>
+          <li>제공 굿즈 → 포토 소품 + 언박싱 콘텐츠 자연 유발</li>
+          <li>'요즘 뜨는 플래그십' 이미지 → 추가 방문 수요 유발</li>
         </ul>
-
       </div>
-      <div class="img-slot" data-label="나노 인플루언서 · 현장 분위기" style="height:100%; background-image:url('images/flagship-exterior.png');"></div>
+      <div class="img-slot" data-label="나노 · 현장 분위기" style="height:100%; background-image:url('images/flagship-exterior.png');"></div>
     </div>
-
   </div>
 </div>
 
 
-<!-- ╔══════════════════════════════════╗
-     ║  SLIDE 6 — P.06 가이드라인     ║
-     ╚══════════════════════════════════╝ -->
+<!-- ═══════════════════════════════════
+     SLIDE 6 — P.06 가이드라인
+═══════════════════════════════════ -->
 <div class="slide" id="s6">
   <div class="chrome">
     <div class="chrome-part">Part 2 &nbsp;—&nbsp; Mass Presence</div>
     <div class="chrome-page">P.06</div>
   </div>
   <div class="body" style="display:flex; flex-direction:column; gap:22px;">
-
     <div>
       <div class="label">자율성 기반 가이드라인 전략</div>
-      <div class="title" style="font-size:52px; margin-bottom:8px;">가이드가 없는 것이 최고의 가이드입니다.</div>
+      <div class="title" style="font-size:50px; margin-bottom:8px;">가이드가 없는 것이 최고의 가이드입니다.</div>
       <div class="sub">95개의 다른 시선이 브랜드를 입체적으로 만듭니다</div>
     </div>
 
-    <!-- ODDTYPE divider -->
     <div style="display:flex; align-items:center; gap:20px;">
       <div style="height:1px; flex:1; background:var(--border);"></div>
-      <div style="font-family:'Cormorant Garamond',serif; font-size:22px; font-style:italic;
-           color:var(--pink-deep); letter-spacing:2px;">ODDTYPE형 바이럴 전략</div>
+      <div style="font-family:'Cormorant Garamond',serif; font-size:22px; font-style:italic; color:var(--pink-deep); letter-spacing:2px;">ODDTYPE형 바이럴 전략</div>
       <div style="height:1px; flex:1; background:var(--border);"></div>
     </div>
 
-    <!-- 2-col: checklist + reasons -->
-    <div style="display:grid; grid-template-columns:360px 1fr; gap:60px; flex:1;">
-
-      <!-- Checklist -->
+    <div style="display:grid; grid-template-columns:380px 1fr; gap:60px; flex:1;">
       <div>
-        <div class="label" style="margin-bottom:20px;">전달 가이드라인 (4개만)</div>
-        <div style="display:flex; flex-direction:column; gap:16px;">
-
-          <div style="display:flex; align-items:flex-start; gap:14px;">
-            <div style="width:20px; height:20px; border:1px solid var(--border);
-                 border-radius:50%; display:flex; align-items:center; justify-content:center; flex-shrink:0; margin-top:1px;">
-              <span style="font-size:9px; color:var(--pink);">✓</span>
-            </div>
-            <span style="font-family:'Noto Sans KR',sans-serif; font-size:16px; font-weight:300;
-                  color:var(--ink-mid); line-height:1.5;">필수 해시태그 #에스더버니 #틈결</span>
+        <div class="label" style="margin-bottom:22px;">전달 가이드라인 (4개만)</div>
+        <div style="display:flex; flex-direction:column; gap:14px;">
+          <div style="display:flex; align-items:center; gap:16px; padding:16px 20px; background:var(--bg-card); border:1px solid var(--border); border-radius:6px;">
+            <span style="font-family:'DM Sans',sans-serif; font-size:20px; color:var(--pink); font-weight:700;">✓</span>
+            <span style="font-family:'Noto Sans KR',sans-serif; font-size:22px; font-weight:300; color:var(--ink-mid);">필수 해시태그 #에스더버니 #틈결</span>
           </div>
-
-          <div style="display:flex; align-items:flex-start; gap:14px;">
-            <div style="width:20px; height:20px; border:1px solid var(--border);
-                 border-radius:50%; display:flex; align-items:center; justify-content:center; flex-shrink:0; margin-top:1px;">
-              <span style="font-size:9px; color:var(--pink);">✓</span>
-            </div>
-            <span style="font-family:'Noto Sans KR',sans-serif; font-size:16px; font-weight:300;
-                  color:var(--ink-mid); line-height:1.5;">장소 위치 태그 (성수동 틈결)</span>
+          <div style="display:flex; align-items:center; gap:16px; padding:16px 20px; background:var(--bg-card); border:1px solid var(--border); border-radius:6px;">
+            <span style="font-family:'DM Sans',sans-serif; font-size:20px; color:var(--pink); font-weight:700;">✓</span>
+            <span style="font-family:'Noto Sans KR',sans-serif; font-size:22px; font-weight:300; color:var(--ink-mid);">장소 위치 태그 (성수동 틈결)</span>
           </div>
-
-          <div style="display:flex; align-items:flex-start; gap:14px;">
-            <div style="width:20px; height:20px; border:1px solid var(--border);
-                 border-radius:50%; display:flex; align-items:center; justify-content:center; flex-shrink:0; margin-top:1px;">
-              <span style="font-size:9px; color:var(--pink);">✓</span>
-            </div>
-            <span style="font-family:'Noto Sans KR',sans-serif; font-size:16px; font-weight:300;
-                  color:var(--ink-mid); line-height:1.5;">에스더버니 공식 계정 태그</span>
+          <div style="display:flex; align-items:center; gap:16px; padding:16px 20px; background:var(--bg-card); border:1px solid var(--border); border-radius:6px;">
+            <span style="font-family:'DM Sans',sans-serif; font-size:20px; color:var(--pink); font-weight:700;">✓</span>
+            <span style="font-family:'Noto Sans KR',sans-serif; font-size:22px; font-weight:300; color:var(--ink-mid);">에스더버니 공식 계정 태그</span>
           </div>
-
-          <div style="display:flex; align-items:flex-start; gap:14px;">
-            <div style="width:20px; height:20px; border:1px solid var(--border);
-                 border-radius:50%; display:flex; align-items:center; justify-content:center; flex-shrink:0; margin-top:1px;">
-              <span style="font-size:9px; color:var(--pink);">✓</span>
-            </div>
-            <span style="font-family:'Noto Sans KR',sans-serif; font-size:16px; font-weight:300;
-                  color:var(--ink-mid); line-height:1.5;">업로드 기간 — 방문 후 D+7 이내</span>
+          <div style="display:flex; align-items:center; gap:16px; padding:16px 20px; background:var(--bg-card); border:1px solid var(--border); border-radius:6px;">
+            <span style="font-family:'DM Sans',sans-serif; font-size:20px; color:var(--pink); font-weight:700;">✓</span>
+            <span style="font-family:'Noto Sans KR',sans-serif; font-size:22px; font-weight:300; color:var(--ink-mid);">업로드 기간 — 방문 후 D+7 이내</span>
           </div>
-
         </div>
       </div>
 
-      <!-- Reason grid -->
       <div>
-        <div class="label" style="margin-bottom:20px;">가이드라인을 최소화하는 이유</div>
-        <div class="reason-grid" style="grid-template-rows:1fr 1fr; height:calc(100% - 40px);">
+        <div class="label" style="margin-bottom:22px;">가이드라인을 최소화하는 이유</div>
+        <div class="reason-grid" style="grid-template-rows:1fr 1fr; height:calc(100% - 44px);">
           <div class="reason-card">
             <div class="reason-title">진정성</div>
             <div class="reason-text">MZ세대 광고 거부감↓ — 인플루언서 본인의 말투와 시선이 담길 때 팔로워 신뢰도↑</div>
@@ -883,232 +775,217 @@ em.pk { font-style: italic; color: var(--pink); }
           </div>
         </div>
       </div>
-
     </div>
   </div>
 </div>
 
 
-<!-- ╔══════════════════════════════════╗
-     ║  SLIDE 7 — P.07 구매전환형     ║
-     ╚══════════════════════════════════╝ -->
+<!-- ═══════════════════════════════════
+     SLIDE 7 — P.07 구매전환형
+═══════════════════════════════════ -->
 <div class="slide" id="s7">
   <div class="chrome">
     <div class="chrome-part">Part 3 &nbsp;—&nbsp; 콘텐츠 상세 설계</div>
     <div class="chrome-page">P.07</div>
   </div>
   <div class="body" style="display:flex; flex-direction:column; gap:22px;">
-
     <div>
       <div class="label">구매전환형 콘텐츠 전략</div>
-      <div class="title" style="font-size:56px; margin-bottom:8px;">'지금 사야 하는 이유'를 콘텐츠로 만듭니다.</div>
-      <div class="sub">Fashion Seeding — 78UNDER · asifCALIE 10인 사전 제품 발송 · 2차 활용 동의 완료</div>
+      <div class="title" style="font-size:54px; margin-bottom:8px;">'지금 사야 하는 이유'를 콘텐츠로 만듭니다.</div>
+      <div class="sub">Fashion Seeding — 78UNDER · asifCALIE 10인, 사전 제품 발송 및 2차 활용 동의 완료</div>
     </div>
 
-    <div style="display:grid; grid-template-columns:1fr 1fr 320px; gap:24px; flex:1;">
-
+    <div style="display:grid; grid-template-columns:1fr 1fr 300px; gap:24px; flex:1;">
       <div style="display:flex; flex-direction:column; gap:12px;">
-        <div class="img-slot" data-label="78UNDER 착장 · 릴스 예시" style="flex:1; background-image:url('images/brand/78under-p1.png');"></div>
-        <div style="font-family:'DM Sans',sans-serif; font-size:10px; letter-spacing:2.5px;
-             text-transform:uppercase; color:var(--pink-deep); text-align:center;">78UNDER — 5인</div>
+        <div class="img-slot" data-label="78UNDER 착장" style="flex:1; background-image:url('images/brand/78under-p1.png');"></div>
+        <div style="font-family:'DM Sans',sans-serif; font-size:18px; letter-spacing:2px; text-transform:uppercase; color:var(--pink-deep); text-align:center;">78UNDER — 5인</div>
       </div>
-
       <div style="display:flex; flex-direction:column; gap:12px;">
-        <div class="img-slot" data-label="asifCALIE 착장 · 릴스 예시" style="flex:1; background-image:url('images/brand/eb-calie-p1.png');"></div>
-        <div style="font-family:'DM Sans',sans-serif; font-size:10px; letter-spacing:2.5px;
-             text-transform:uppercase; color:var(--pink-deep); text-align:center;">asifCALIE — 5인</div>
+        <div class="img-slot" data-label="asifCALIE 착장" style="flex:1; background-image:url('images/brand/eb-calie-p1.png');"></div>
+        <div style="font-family:'DM Sans',sans-serif; font-size:18px; letter-spacing:2px; text-transform:uppercase; color:var(--pink-deep); text-align:center;">asifCALIE — 5인</div>
       </div>
-
-      <div style="display:flex; flex-direction:column; gap:24px; padding-top:4px;">
+      <div style="display:flex; flex-direction:column; gap:28px; padding-top:4px;">
         <div>
-          <div class="label" style="margin-bottom:12px;">운영 방식</div>
+          <div class="label" style="margin-bottom:14px;">운영 방식</div>
           <ul class="blist">
-            <li>사전 제품 발송 → 본인 착장 촬영</li>
-            <li>2차 활용 동의 완료 → 광고 소재 자산화</li>
-            <li>착장 태그 → 스마트스토어 즉시 연결</li>
+            <li>사전 발송 → 본인 착장 촬영</li>
+            <li>착장 태그 → 판매처 직결</li>
           </ul>
         </div>
         <div>
-          <div class="label" style="margin-bottom:12px;">기대 효과</div>
+          <div class="label" style="margin-bottom:14px;">기대 효과</div>
           <ul class="blist">
-            <li>'손민수' 착장 → '어디꺼야?' 반응 유발</li>
-            <li>CTR · CVR 상승 + 재구매 신뢰 형성</li>
+            <li>'손민수' 착장 → 구매 반응 유발</li>
+            <li>2차 활용 동의 → 광고 소재 자산화</li>
           </ul>
         </div>
       </div>
-
     </div>
 
-    <!-- Conversion flow bar -->
-    <div style="background:var(--bg-card); border:1px solid var(--border); border-radius:6px;
-         padding:18px 32px; display:flex; align-items:center; gap:0;">
-      <div style="font-family:'DM Sans',sans-serif; font-size:9px; font-weight:600;
-           letter-spacing:3px; text-transform:uppercase; color:var(--ink-dim);
-           flex:0 0 auto; margin-right:40px;">Conversion Flow</div>
+    <div style="background:var(--bg-card); border:1px solid var(--border); border-radius:8px;
+         padding:20px 36px; display:flex; align-items:center; gap:0;">
+      <div style="font-family:'DM Sans',sans-serif; font-size:15px; font-weight:600;
+           letter-spacing:2.5px; text-transform:uppercase; color:var(--ink-dim);
+           flex:0 0 auto; margin-right:44px;">Conversion Flow</div>
       <div style="flex:1; display:flex; align-items:center; justify-content:space-around;">
-        <span style="font-family:'Noto Sans KR',sans-serif; font-size:15px; font-weight:400; color:var(--ink);">콘텐츠 노출</span>
-        <span style="color:var(--border); font-size:20px; padding:0 8px;">→</span>
-        <span style="font-family:'Noto Sans KR',sans-serif; font-size:15px; font-weight:400; color:var(--ink);">착장 태그 클릭</span>
-        <span style="color:var(--border); font-size:20px; padding:0 8px;">→</span>
-        <span style="font-family:'Noto Sans KR',sans-serif; font-size:15px; font-weight:400; color:var(--ink);">스마트스토어 랜딩</span>
-        <span style="color:var(--border); font-size:20px; padding:0 8px;">→</span>
-        <span style="font-family:'Noto Sans KR',sans-serif; font-size:15px; font-weight:500; color:var(--pink);">구매 전환</span>
+        <span style="font-family:'Noto Sans KR',sans-serif; font-size:22px; font-weight:400; color:var(--ink);">콘텐츠 노출</span>
+        <span style="color:var(--ink-dim); font-size:26px; padding:0 12px;">→</span>
+        <span style="font-family:'Noto Sans KR',sans-serif; font-size:22px; font-weight:400; color:var(--ink);">착장 태그 클릭</span>
+        <span style="color:var(--ink-dim); font-size:26px; padding:0 12px;">→</span>
+        <span style="font-family:'Noto Sans KR',sans-serif; font-size:22px; font-weight:400; color:var(--ink);">온라인몰 랜딩</span>
+        <span style="color:var(--ink-dim); font-size:26px; padding:0 12px;">→</span>
+        <span style="font-family:'Noto Sans KR',sans-serif; font-size:22px; font-weight:600; color:var(--pink);">구매 전환</span>
       </div>
     </div>
-
   </div>
 </div>
 
 
-<!-- ╔══════════════════════════════════╗
-     ║  SLIDE 8 — P.08 브랜드 각인형  ║
-     ╚══════════════════════════════════╝ -->
+<!-- ═══════════════════════════════════
+     SLIDE 8 — P.08 브랜드 각인형
+     (9페이지: 이미지 1,2 → 3D 블롭, 이미지 3 → contain)
+═══════════════════════════════════ -->
 <div class="slide" id="s8">
   <div class="chrome">
     <div class="chrome-part">Part 3 &nbsp;—&nbsp; 콘텐츠 상세 설계</div>
     <div class="chrome-page">P.08</div>
   </div>
   <div class="body" style="display:flex; flex-direction:column; gap:22px;">
-
     <div>
       <div class="label">브랜드 각인형 콘텐츠 전략</div>
-      <div class="title" style="font-size:56px; margin-bottom:8px;">에스더버니의 세계관을 공간으로 보여줍니다.</div>
-      <div class="sub">Brand Identity — 메가 3인 + 나노 85인이 만드는 공간 무드와 세계관</div>
+      <div class="title" style="font-size:54px; margin-bottom:8px;">에스더버니의 세계관을 공간으로 보여줍니다.</div>
+      <div class="sub">메가 3인 + 나노 85인이 만드는 공간 무드와 세계관</div>
     </div>
 
     <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:18px; flex:1;">
 
+      <!-- 이미지 1 — 핑크 아치 공간 -->
       <div style="display:flex; flex-direction:column; gap:12px;">
-        <div class="img-slot" data-label="3F 핑크룸 · 공간 전경" style="flex:1; background-image:url('images/brand/teumgyul-render-p2.png');"></div>
-        <div style="font-family:'Noto Sans KR',sans-serif; font-size:14px; font-weight:300;
-             color:var(--ink-mid);">3F 핑크룸 — FRP 오브제 + 미러 바리솔</div>
+        <div class="img-slot" style="flex:1; background-image:url('images/brand/teumgyul-render-p13.png'); background-position:center;"></div>
+        <div style="font-family:'Noto Sans KR',sans-serif; font-size:24px; font-weight:300; color:var(--ink-mid);">Photo 존 — 핑크 아치 · 플래그십 무드</div>
       </div>
 
+      <!-- 이미지 2 — 갤러리 아트월 -->
       <div style="display:flex; flex-direction:column; gap:12px;">
-        <div class="img-slot" data-label="3F 블루존 · 구름 오브제" style="flex:1; background-image:url('images/brand/teumgyul-render-p3.png');"></div>
-        <div style="font-family:'Noto Sans KR',sans-serif; font-size:14px; font-weight:300;
-             color:var(--ink-mid);">3F 블루존 — 구름 오브제 + 체크 패턴</div>
+        <div class="img-slot" style="flex:1; background-image:url('images/brand/teumgyul-render-p9.png'); background-position:center;"></div>
+        <div style="font-family:'Noto Sans KR',sans-serif; font-size:24px; font-weight:300; color:var(--ink-mid);">스케치아뜰리에 — 갤러리형 아트월</div>
       </div>
 
+      <!-- 이미지 3 — 데패뉴: contain으로 잘림 방지 -->
       <div style="display:flex; flex-direction:column; gap:12px;">
-        <div class="img-slot" data-label="데패뉴 에디토리얼 · 톤앤매너" style="flex:1; background-image:url('images/데패뉴 콘텐츠1.png');"></div>
-        <div style="font-family:'Noto Sans KR',sans-serif; font-size:14px; font-weight:300;
-             color:var(--ink-mid);">데패뉴 에디토리얼 — Cinematic Reels</div>
+        <div class="img-slot" data-label="데패뉴 에디토리얼"
+          style="flex:1;
+                 background-image:url('images/데패뉴 콘텐츠1.png');
+                 background-size:contain; background-repeat:no-repeat;
+                 background-position:center; background-color:#F6F1EB;"></div>
+        <div style="font-family:'Noto Sans KR',sans-serif; font-size:24px; font-weight:300; color:var(--ink-mid);">데패뉴 에디토리얼 — Cinematic Reels</div>
       </div>
 
     </div>
 
     <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:16px;">
-      <div style="background:var(--bg-card); border:1px solid var(--border); border-radius:4px; padding:16px 20px;">
-        <div style="font-family:'DM Sans',sans-serif; font-size:9px; font-weight:700;
-             letter-spacing:2px; text-transform:uppercase; color:var(--pink-deep); margin-bottom:7px;">브랜드 각인</div>
-        <div style="font-family:'Noto Sans KR',sans-serif; font-size:14px; font-weight:300;
-             color:var(--ink-mid);">에스더버니 무드·세계관 강력 각인</div>
+      <div style="background:var(--bg-card); border:1px solid var(--border); border-radius:6px; padding:18px 22px;">
+        <div style="font-family:'DM Sans',sans-serif; font-size:17px; font-weight:700; letter-spacing:2px; text-transform:uppercase; color:var(--pink-deep); margin-bottom:8px;">브랜드 각인</div>
+        <div style="font-family:'Noto Sans KR',sans-serif; font-size:23px; font-weight:300; color:var(--ink-mid);">에스더버니 무드·세계관 강력 각인</div>
       </div>
-      <div style="background:var(--bg-card); border:1px solid var(--border); border-radius:4px; padding:16px 20px;">
-        <div style="font-family:'DM Sans',sans-serif; font-size:9px; font-weight:700;
-             letter-spacing:2px; text-transform:uppercase; color:var(--pink-deep); margin-bottom:7px;">프리미엄 이미지</div>
-        <div style="font-family:'Noto Sans KR',sans-serif; font-size:14px; font-weight:300;
-             color:var(--ink-mid);">광고보다 높은 신뢰도의 에디토리얼 콘텐츠</div>
+      <div style="background:var(--bg-card); border:1px solid var(--border); border-radius:6px; padding:18px 22px;">
+        <div style="font-family:'DM Sans',sans-serif; font-size:17px; font-weight:700; letter-spacing:2px; text-transform:uppercase; color:var(--pink-deep); margin-bottom:8px;">프리미엄 이미지</div>
+        <div style="font-family:'Noto Sans KR',sans-serif; font-size:23px; font-weight:300; color:var(--ink-mid);">광고보다 높은 신뢰도의 에디토리얼</div>
       </div>
-      <div style="background:var(--bg-card); border:1px solid var(--border); border-radius:4px; padding:16px 20px;">
-        <div style="font-family:'DM Sans',sans-serif; font-size:9px; font-weight:700;
-             letter-spacing:2px; text-transform:uppercase; color:var(--pink-deep); margin-bottom:7px;">콘텐츠 자산화</div>
-        <div style="font-family:'Noto Sans KR',sans-serif; font-size:14px; font-weight:300;
-             color:var(--ink-mid);">룩북·아카이브 장기 재활용 가능</div>
+      <div style="background:var(--bg-card); border:1px solid var(--border); border-radius:6px; padding:18px 22px;">
+        <div style="font-family:'DM Sans',sans-serif; font-size:17px; font-weight:700; letter-spacing:2px; text-transform:uppercase; color:var(--pink-deep); margin-bottom:8px;">콘텐츠 자산화</div>
+        <div style="font-family:'Noto Sans KR',sans-serif; font-size:23px; font-weight:300; color:var(--ink-mid);">룩북·아카이브 장기 재활용</div>
       </div>
     </div>
-
   </div>
 </div>
 
 
-<!-- ╔══════════════════════════════════╗
-     ║  SLIDE 9 — P.09 개인화 매치업  ║
-     ╚══════════════════════════════════╝ -->
+<!-- ═══════════════════════════════════
+     SLIDE 9 — P.09 나노 콘텐츠 운영 방향
+     (10페이지: 이미지 1,2 교체, 3번 잘림 수정)
+═══════════════════════════════════ -->
 <div class="slide" id="s9">
   <div class="chrome">
     <div class="chrome-part">Part 3 &nbsp;—&nbsp; 콘텐츠 상세 설계</div>
     <div class="chrome-page">P.09</div>
   </div>
   <div class="body" style="display:flex; flex-direction:column; gap:22px;">
-
     <div>
       <div class="label">나노 콘텐츠 운영 방향</div>
-      <div class="title" style="font-size:48px;">
-        목적에 따라 콘텐츠 설계가 달라집니다.<br>세 가지 방향 중 캠페인 목표에 맞게 선택합니다.
-      </div>
+      <div class="title" style="font-size:46px;">목적에 따라 콘텐츠 설계가 달라집니다.</div>
     </div>
 
     <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:20px; flex:1;">
 
-      <!-- 구매전환형 -->
-      <div style="background:var(--bg-card); border:1px solid var(--border); border-radius:6px;
-           overflow:hidden; display:flex; flex-direction:column;">
-        <div class="img-slot" style="height:230px; border-radius:0; border:none; border-bottom:1px solid var(--border); background-image:url('images/brand/eb-calie-p3.png');"></div>
-        <div style="padding:24px 26px; flex:1; display:flex; flex-direction:column; gap:12px;">
-          <div style="font-family:'DM Sans',sans-serif; font-size:9px; font-weight:700;
-               letter-spacing:3px; text-transform:uppercase; color:var(--pink);">Commerce-Led</div>
-          <div style="font-family:'Noto Sans KR',sans-serif; font-size:18px; font-weight:500;
-               color:var(--ink);">구매전환형</div>
-          <div style="font-family:'Noto Sans KR',sans-serif; font-size:15px; font-weight:300;
-               color:var(--ink-mid); line-height:1.7;">착장 언박싱·리뷰 중심 콘텐츠.<br>즉각적 구매 유도가 목적일 때 선택합니다.</div>
+      <!-- 구매전환형 — 이미지 1: 쇼핑백 캐릭터 (char-shopping) -->
+      <div style="background:var(--bg-card); border:1px solid var(--border); border-radius:8px;
+           overflow:hidden; display:flex; flex-direction:row; box-shadow:0 1px 4px rgba(22,18,14,0.06);">
+        <div class="img-slot" data-label="구매전환형"
+          style="width:200px; flex-shrink:0; border-radius:0; border:none; border-right:1px solid var(--border);
+                 background-image:url('images/brand/invitation/transparent/char-shopping.png');
+                 background-size:contain; background-repeat:no-repeat;
+                 background-position:center bottom; background-color:#FDF6F0;"></div>
+        <div style="padding:28px 30px; flex:1; display:flex; flex-direction:column; gap:14px;">
+          <div style="font-family:'DM Sans',sans-serif; font-size:17px; font-weight:700; letter-spacing:2px; text-transform:uppercase; color:var(--pink);">Commerce-Led</div>
+          <div style="font-family:'Noto Sans KR',sans-serif; font-size:22px; font-weight:500; color:var(--ink);">구매전환형</div>
+          <div style="font-family:'Noto Sans KR',sans-serif; font-size:24px; font-weight:300; color:var(--ink-mid); line-height:1.7;">착장 언박싱·리뷰 중심.<br>즉각적 구매 유도가 목적.</div>
         </div>
       </div>
 
-      <!-- 브랜드 각인형 -->
-      <div style="background:var(--bg-card); border:1px solid var(--border); border-radius:6px;
-           overflow:hidden; display:flex; flex-direction:column;">
-        <div class="img-slot" style="height:230px; border-radius:0; border:none; border-bottom:1px solid var(--border); background-image:url('images/brand/teumgyul-render-p4.png');"></div>
-        <div style="padding:24px 26px; flex:1; display:flex; flex-direction:column; gap:12px;">
-          <div style="font-family:'DM Sans',sans-serif; font-size:9px; font-weight:700;
-               letter-spacing:3px; text-transform:uppercase; color:var(--pink);">Brand Imprint</div>
-          <div style="font-family:'Noto Sans KR',sans-serif; font-size:18px; font-weight:500;
-               color:var(--ink);">브랜드 각인형</div>
-          <div style="font-family:'Noto Sans KR',sans-serif; font-size:15px; font-weight:300;
-               color:var(--ink-mid); line-height:1.7;">공간의 무드와 감각을 전달하는 이미지 중심 콘텐츠.<br>브랜드 선호도 장기 누적에 최적화됩니다.</div>
+      <!-- 브랜드 각인형 — 이미지 2: 에스더버니 디자인 -->
+      <div style="background:var(--bg-card); border:1px solid var(--border); border-radius:8px;
+           overflow:hidden; display:flex; flex-direction:row; box-shadow:0 1px 4px rgba(22,18,14,0.06);">
+        <div class="img-slot" data-label="브랜드 각인형"
+          style="width:200px; flex-shrink:0; border-radius:0; border:none; border-right:1px solid var(--border);
+                 background-image:url('images/brand/esther-design-p1.png');
+                 background-size:cover; background-position:center;"></div>
+        <div style="padding:28px 30px; flex:1; display:flex; flex-direction:column; gap:14px;">
+          <div style="font-family:'DM Sans',sans-serif; font-size:17px; font-weight:700; letter-spacing:2px; text-transform:uppercase; color:var(--pink);">Brand Imprint</div>
+          <div style="font-family:'Noto Sans KR',sans-serif; font-size:22px; font-weight:500; color:var(--ink);">브랜드 각인형</div>
+          <div style="font-family:'Noto Sans KR',sans-serif; font-size:24px; font-weight:300; color:var(--ink-mid); line-height:1.7;">공간 무드 이미지 중심.<br>브랜드 선호도 장기 누적.</div>
         </div>
       </div>
 
-      <!-- 크리에이터 주도형 (권장) -->
-      <div style="background:var(--bg-card); border:1px solid var(--pink); border-radius:6px;
-           overflow:hidden; display:flex; flex-direction:column; position:relative;">
-        <div style="position:absolute; top:14px; right:14px; z-index:2;
-             background:var(--pink); color:#0D0C0B; font-family:'DM Sans',sans-serif;
-             font-size:8px; font-weight:700; letter-spacing:2.5px; text-transform:uppercase;
+      <!-- 크리에이터 주도형 (권장) — 이미지 3: contain으로 잘림 방지 -->
+      <div style="background:var(--bg-card); border:2px solid var(--pink); border-radius:8px;
+           overflow:hidden; display:flex; flex-direction:row; position:relative;
+           box-shadow:0 2px 12px rgba(196,99,122,0.12);">
+        <div style="position:absolute; top:14px; left:14px; z-index:2;
+             background:var(--pink); color:#fff; font-family:'DM Sans',sans-serif;
+             font-size:13px; font-weight:700; letter-spacing:2px; text-transform:uppercase;
              padding:4px 10px; border-radius:2px;">권장</div>
-        <div class="img-slot" style="height:230px; border-radius:0; border:none; border-bottom:1px solid rgba(232,164,174,0.2); background-image:url('images/brand/78under-p3.png'); background-position:top center;"></div>
-        <div style="padding:24px 26px; flex:1; display:flex; flex-direction:column; gap:12px;">
-          <div style="font-family:'DM Sans',sans-serif; font-size:9px; font-weight:700;
-               letter-spacing:3px; text-transform:uppercase; color:var(--pink);">Creator-Led</div>
-          <div style="font-family:'Noto Sans KR',sans-serif; font-size:18px; font-weight:500;
-               color:var(--ink);">크리에이터 주도형</div>
-          <div style="font-family:'Noto Sans KR',sans-serif; font-size:15px; font-weight:300;
-               color:var(--ink-mid); line-height:1.7;">필수 요소(해시태그·태그)만 지정하고 나머지는 인플루언서 재량에 맡깁니다. 진정성·알고리즘 최적화·다양성을 동시에 확보합니다.</div>
+        <div class="img-slot" data-label="크리에이터 주도형"
+          style="width:200px; flex-shrink:0; border-radius:0; border:none;
+                 border-right:1.5px solid rgba(196,99,122,0.25);
+                 background-image:url('images/brand/78under-p3.png');
+                 background-size:contain; background-repeat:no-repeat;
+                 background-position:center; background-color:#FDF8F5;"></div>
+        <div style="padding:28px 30px; flex:1; display:flex; flex-direction:column; gap:14px;">
+          <div style="font-family:'DM Sans',sans-serif; font-size:17px; font-weight:700; letter-spacing:2px; text-transform:uppercase; color:var(--pink);">Creator-Led</div>
+          <div style="font-family:'Noto Sans KR',sans-serif; font-size:22px; font-weight:500; color:var(--ink);">크리에이터 주도형</div>
+          <div style="font-family:'Noto Sans KR',sans-serif; font-size:24px; font-weight:300; color:var(--ink-mid); line-height:1.7;">해시태그·태그만 지정,<br>나머지는 인플루언서 재량.<br>진정성·알고리즘·다양성 동시 확보.</div>
         </div>
       </div>
 
     </div>
 
     <div style="text-align:center; border-top:1px solid var(--border); padding-top:18px;">
-      <div style="font-family:'Cormorant Garamond',serif; font-size:26px; font-style:italic;
-           color:var(--ink-dim);">같은 브랜드, 95개의 다른 이야기</div>
+      <div style="font-family:'Cormorant Garamond',serif; font-size:28px; font-style:italic; color:var(--ink-dim);">같은 브랜드, 95개의 다른 이야기</div>
     </div>
-
   </div>
 </div>
 
 
-<!-- ╔══════════════════════════════════╗
-     ║  SLIDE 10 — P.10 종합 효과     ║
-     ╚══════════════════════════════════╝ -->
+<!-- ═══════════════════════════════════
+     SLIDE 10 — P.10 종합 효과
+═══════════════════════════════════ -->
 <div class="slide" id="s10">
   <div class="chrome">
     <div class="chrome-part">Part 4 &nbsp;—&nbsp; 기대 효과 및 결론</div>
     <div class="chrome-page">P.10</div>
   </div>
   <div class="body" style="display:flex; flex-direction:column; gap:24px;">
-
     <div>
       <div class="label">캠페인 종합 기대 효과</div>
       <div class="title" style="font-size:44px;">
@@ -1116,71 +993,125 @@ em.pk { font-style: italic; color: var(--pink); }
       </div>
     </div>
 
-    <!-- KPI -->
     <div class="kpi-row">
-      <div class="kpi-item">
-        <div class="kpi-num">77건+</div>
-        <div class="kpi-lbl">총 확보 콘텐츠</div>
-      </div>
-      <div class="kpi-item">
-        <div class="kpi-num">850만+</div>
-        <div class="kpi-lbl">메가 합산 팔로워</div>
-      </div>
-      <div class="kpi-item">
-        <div class="kpi-num">95건+</div>
-        <div class="kpi-lbl">나노 자발 콘텐츠</div>
-      </div>
+      <div class="kpi-item"><div class="kpi-num">77건+</div><div class="kpi-lbl">총 확보 콘텐츠</div></div>
+      <div class="kpi-item"><div class="kpi-num">850만+</div><div class="kpi-lbl">메가 합산 팔로워</div></div>
+      <div class="kpi-item"><div class="kpi-num">95건+</div><div class="kpi-lbl">나노 자발 콘텐츠</div></div>
     </div>
 
-    <!-- Effect grid -->
-    <div class="effect-grid">
+    <div class="effect-grid" style="flex:1; align-content:stretch;">
       <div class="effect-card">
         <div class="effect-title">SNS 도달 · 팔로워</div>
-        <ul class="effect-list">
-          <li>릴리 609만+ 노출</li>
-          <li>에스더버니 팔로워 순증</li>
-        </ul>
+        <ul class="effect-list"><li>릴리 609만+ 노출</li><li>에스더버니 팔로워 순증</li></ul>
       </div>
       <div class="effect-card">
         <div class="effect-title">커머스 전환</div>
-        <ul class="effect-list">
-          <li>착장 태그 유입</li>
-          <li>2차 활용 콘텐츠 자산화</li>
-        </ul>
+        <ul class="effect-list"><li>착장 태그 직접 유입</li><li>2차 활용 콘텐츠 자산화</li></ul>
       </div>
       <div class="effect-card">
         <div class="effect-title">바이럴 확산</div>
-        <ul class="effect-list">
-          <li>나노 95건 자발 확산</li>
-          <li>블로그·검색 키워드 시딩</li>
-        </ul>
+        <ul class="effect-list"><li>나노 95건 자발 확산</li><li>블로그·검색 키워드 시딩</li></ul>
       </div>
       <div class="effect-card">
         <div class="effect-title">PR 효과</div>
-        <ul class="effect-list">
-          <li>셀럽 방문 보도자료 기사화</li>
-          <li>네이버 뉴스 노출</li>
-        </ul>
+        <ul class="effect-list"><li>셀럽 방문 보도자료 기사화</li><li>네이버 뉴스 노출</li></ul>
       </div>
       <div class="effect-card">
         <div class="effect-title">브랜드 자산화</div>
-        <ul class="effect-list">
-          <li>광고·상세페이지 장기 재활용</li>
-          <li>시즌 룩북 아카이브</li>
-        </ul>
+        <ul class="effect-list"><li>광고·상세페이지 장기 재활용</li><li>시즌 룩북 아카이브</li></ul>
       </div>
     </div>
 
-    <!-- Closing -->
-    <div style="border-top:1px solid var(--border); padding-top:20px; text-align:center;">
-      <div style="font-family:'Cormorant Garamond',serif; font-size:30px; font-weight:300;
-           font-style:italic; color:var(--ink-mid); letter-spacing:-0.5px;">
-        메가의 파급력 &nbsp;<span style="color:var(--pink);">×</span>&nbsp; 나노의 확산력
-        &nbsp;<span style="color:var(--pink);">=</span>&nbsp;
-        에스더버니의 <span style="color:var(--pink);">2026</span>
-      </div>
-    </div>
+    <!-- +α 배너 — 반전 dark 카드 -->
+    <div style="background:#16120E; border-radius:10px; padding:28px 44px;
+         display:flex; align-items:center; gap:0; overflow:hidden; position:relative; flex-shrink:0;">
 
+      <!-- 배경 글로우 -->
+      <div style="position:absolute; top:-60px; left:160px; width:300px; height:300px;
+           border-radius:50%; background:radial-gradient(circle, rgba(196,99,122,0.12) 0%, transparent 70%);
+           pointer-events:none;"></div>
+
+      <!-- 왼쪽: +α 심볼 -->
+      <div style="flex-shrink:0; padding-right:44px; border-right:1px solid rgba(255,255,255,0.08);">
+        <div style="font-family:'Cormorant Garamond',serif; font-size:110px; font-weight:300;
+             color:#C4637A; line-height:0.85; letter-spacing:-4px;">+α</div>
+        <div style="font-family:'DM Sans',sans-serif; font-size:13px; font-weight:500;
+             letter-spacing:3px; text-transform:uppercase; color:rgba(255,255,255,0.35);
+             margin-top:10px;">BONUS REACH</div>
+      </div>
+
+      <!-- 중앙: 동행자 콘텐츠 stat -->
+      <div style="flex-shrink:0; padding:0 48px; border-right:1px solid rgba(255,255,255,0.08);">
+        <div style="font-family:'DM Sans',sans-serif; font-size:13px; font-weight:500;
+             letter-spacing:3px; text-transform:uppercase; color:rgba(255,255,255,0.35); margin-bottom:10px;">동행자 자발 콘텐츠</div>
+        <div style="font-family:'Cormorant Garamond',serif; font-size:72px; font-weight:300;
+             color:#F4F1EC; letter-spacing:-2px; line-height:1;">50–100<span style="color:#C4637A;">건+</span></div>
+        <div style="font-family:'Noto Sans KR',sans-serif; font-size:18px; font-weight:300;
+             color:rgba(255,255,255,0.45); margin-top:6px;">스토리 · 피드 포함, 추적 불가 범위까지</div>
+      </div>
+
+      <!-- 오른쪽: 추가 매거진 -->
+      <div style="flex:1; padding-left:48px; display:flex; flex-direction:column; gap:14px;">
+        <div style="font-family:'DM Sans',sans-serif; font-size:14px; font-weight:500;
+             letter-spacing:3px; text-transform:uppercase; color:rgba(255,255,255,0.35); margin-bottom:4px;">추가 매거진 · 미디어</div>
+        <div style="display:flex; flex-wrap:wrap; gap:10px;">
+
+          <!-- 뉴매거진 -->
+          <div style="background:rgba(255,255,255,0.07); border:1px solid rgba(255,255,255,0.12);
+               border-radius:8px; padding:12px 20px 12px 12px; display:flex; align-items:center; gap:14px;">
+            <div style="width:54px; height:54px; border-radius:50%; overflow:hidden; flex-shrink:0;
+                 border:1.5px solid rgba(255,255,255,0.18);">
+              <img src="images/pt10p뉴매거진.jpg" style="width:100%; height:100%; object-fit:cover; display:block;">
+            </div>
+            <div>
+              <div style="font-family:'DM Sans',sans-serif; font-size:20px; font-weight:600; color:#F4F1EC;">뉴매거진</div>
+              <div style="font-family:'DM Sans',sans-serif; font-size:15px; color:rgba(255,255,255,0.45); margin-top:3px; letter-spacing:0.3px;">@nyumag.kr</div>
+            </div>
+          </div>
+
+          <!-- CIDO 매거진 -->
+          <div style="background:rgba(255,255,255,0.07); border:1px solid rgba(255,255,255,0.12);
+               border-radius:8px; padding:12px 20px 12px 12px; display:flex; align-items:center; gap:14px;">
+            <div style="width:54px; height:54px; border-radius:50%; overflow:hidden; flex-shrink:0;
+                 border:1.5px solid rgba(255,255,255,0.18);">
+              <img src="images/pt10pCIDO매거진.jpg" style="width:100%; height:100%; object-fit:cover; display:block;">
+            </div>
+            <div>
+              <div style="font-family:'DM Sans',sans-serif; font-size:20px; font-weight:600; color:#F4F1EC;">CIDO 매거진</div>
+              <div style="font-family:'DM Sans',sans-serif; font-size:15px; color:rgba(255,255,255,0.45); margin-top:3px; letter-spacing:0.3px;">@cido.mag</div>
+            </div>
+          </div>
+
+          <!-- HIPHYE 미디어 -->
+          <div style="background:rgba(255,255,255,0.07); border:1px solid rgba(255,255,255,0.12);
+               border-radius:8px; padding:12px 20px 12px 12px; display:flex; align-items:center; gap:14px;">
+            <div style="width:54px; height:54px; border-radius:50%; overflow:hidden; flex-shrink:0;
+                 border:1.5px solid rgba(255,255,255,0.18);">
+              <img src="images/pt10p힙해미디어.jpg" style="width:100%; height:100%; object-fit:cover; display:block;">
+            </div>
+            <div>
+              <div style="font-family:'DM Sans',sans-serif; font-size:20px; font-weight:600; color:#F4F1EC;">HIPHYE 미디어</div>
+              <div style="font-family:'DM Sans',sans-serif; font-size:15px; color:rgba(255,255,255,0.45); margin-top:3px; letter-spacing:0.3px;">@hiphye_official</div>
+            </div>
+          </div>
+
+          <!-- MMM 매거진 -->
+          <div style="background:rgba(255,255,255,0.07); border:1px solid rgba(255,255,255,0.12);
+               border-radius:8px; padding:12px 20px 12px 12px; display:flex; align-items:center; gap:14px;">
+            <div style="width:54px; height:54px; border-radius:50%; overflow:hidden; flex-shrink:0;
+                 border:1.5px solid rgba(255,255,255,0.18);">
+              <img src="images/pt10pmmm매거진.jpg" style="width:100%; height:100%; object-fit:cover; display:block;">
+            </div>
+            <div>
+              <div style="font-family:'DM Sans',sans-serif; font-size:20px; font-weight:600; color:#F4F1EC;">MMM 매거진</div>
+              <div style="font-family:'DM Sans',sans-serif; font-size:15px; color:rgba(255,255,255,0.45); margin-top:3px; letter-spacing:0.3px;">@mmm_mag_official</div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
   </div>
 </div>
 
@@ -1188,38 +1119,102 @@ em.pk { font-style: italic; color: var(--pink); }
 </div><!-- /deck -->
 </div><!-- /viewport -->
 
+<!-- ═══════════════════════════════════
+     NAVIGATION STRIP
+═══════════════════════════════════ -->
+<nav class="nav-strip" id="navStrip">
+  <div class="nav-item active" data-n="0">
+    <div class="nav-pip"></div>
+    <div class="nav-lbl">Cover</div>
+  </div>
+  <div class="nav-item" data-n="1">
+    <div class="nav-pip"></div>
+    <div class="nav-lbl">P.01 메가 개요</div>
+  </div>
+  <div class="nav-item" data-n="2">
+    <div class="nav-pip"></div>
+    <div class="nav-lbl">P.02 화보 피드</div>
+  </div>
+  <div class="nav-item" data-n="3">
+    <div class="nav-pip"></div>
+    <div class="nav-lbl">P.03 릴스·스토리</div>
+  </div>
+  <div class="nav-item" data-n="4">
+    <div class="nav-pip"></div>
+    <div class="nav-lbl">P.04 기대 효과</div>
+  </div>
+  <div class="nav-item" data-n="5">
+    <div class="nav-pip"></div>
+    <div class="nav-lbl">P.05 나노 운용</div>
+  </div>
+  <div class="nav-item" data-n="6">
+    <div class="nav-pip"></div>
+    <div class="nav-lbl">P.06 가이드라인</div>
+  </div>
+  <div class="nav-item" data-n="7">
+    <div class="nav-pip"></div>
+    <div class="nav-lbl">P.07 구매전환</div>
+  </div>
+  <div class="nav-item" data-n="8">
+    <div class="nav-pip"></div>
+    <div class="nav-lbl">P.08 브랜드 각인</div>
+  </div>
+  <div class="nav-item" data-n="9">
+    <div class="nav-pip"></div>
+    <div class="nav-lbl">P.09 콘텐츠 설계</div>
+  </div>
+  <div class="nav-item" data-n="10">
+    <div class="nav-pip"></div>
+    <div class="nav-lbl">P.10 종합 효과</div>
+  </div>
+</nav>
+
 <script>
 (function() {
-  const slides = document.querySelectorAll('.slide');
-  const prog   = document.getElementById('prog');
-  const ctr    = document.getElementById('ctr');
-  const deck   = document.getElementById('deck');
-  const vp     = document.getElementById('vp');
-  const total  = slides.length;
+  const slides   = document.querySelectorAll('.slide');
+  const navItems = document.querySelectorAll('.nav-item');
+  const prog     = document.getElementById('prog');
+  const deck     = document.getElementById('deck');
+  const vp       = document.getElementById('vp');
+  const total    = slides.length;
   let cur = 0;
 
   function goTo(n) {
     slides[cur].classList.remove('active');
+    navItems[cur].classList.remove('active');
     cur = Math.max(0, Math.min(n, total - 1));
     slides[cur].classList.add('active');
+    navItems[cur].classList.add('active');
     render();
   }
 
   function render() {
     const pct = total <= 1 ? 100 : (cur / (total - 1)) * 100;
     prog.style.width = pct + '%';
-    ctr.textContent  = (cur + 1) + ' / ' + total;
   }
 
   function scale() {
-    const s = Math.min(window.innerWidth / 1920, window.innerHeight / 1080);
+    // deck height: leave 52px for nav strip
+    const availH = window.innerHeight - 52;
+    const s = Math.min(window.innerWidth / 1920, availH / 1080);
     deck.style.transform = 'scale(' + s + ')';
+    // center vertically in available space
+    vp.style.alignItems = 'center';
+    vp.style.paddingBottom = '52px';
   }
+
+  // Nav clicks
+  navItems.forEach(function(item) {
+    item.addEventListener('click', function(e) {
+      e.stopPropagation();
+      goTo(parseInt(item.dataset.n));
+    });
+  });
 
   // Keyboard
   document.addEventListener('keydown', function(e) {
-    if (e.key === 'ArrowRight' || e.key === 'ArrowDown' || e.key === ' ')  { e.preventDefault(); goTo(cur + 1); }
-    else if (e.key === 'ArrowLeft'  || e.key === 'ArrowUp')                 { e.preventDefault(); goTo(cur - 1); }
+    if      (e.key === 'ArrowRight' || e.key === 'ArrowDown' || e.key === ' ') { e.preventDefault(); goTo(cur + 1); }
+    else if (e.key === 'ArrowLeft'  || e.key === 'ArrowUp')                    { e.preventDefault(); goTo(cur - 1); }
     else if (e.key === 'Home')  { e.preventDefault(); goTo(0); }
     else if (e.key === 'End')   { e.preventDefault(); goTo(total - 1); }
     else if (e.key === 'f' || e.key === 'F') {
@@ -1228,15 +1223,14 @@ em.pk { font-style: italic; color: var(--pink); }
     }
   });
 
-  // Click navigation
+  // Click navigation (avoid nav strip area)
   vp.addEventListener('click', function(e) {
-    // Don't navigate if clicking on slide 0 cover body area
     const x = e.clientX / window.innerWidth;
     if (x >= 0.5) goTo(cur + 1);
     else           goTo(cur - 1);
   });
 
-  // Touch swipe
+  // Swipe
   var tx = 0;
   document.addEventListener('touchstart', function(e) { tx = e.touches[0].clientX; }, { passive: true });
   document.addEventListener('touchend', function(e) {
