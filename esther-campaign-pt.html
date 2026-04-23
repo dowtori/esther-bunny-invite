@@ -429,8 +429,8 @@ em.pk { font-style:italic; color:var(--pink); }
   <!-- 클릭 오버레이 — backdrop 클릭 시 닫힘, pointer-events:auto -->
   <div id="s11-overlay" style="position:absolute;inset:0;z-index:30;display:none;align-items:center;justify-content:center;">
     <div onclick="window.s11close();event.stopPropagation();" style="position:absolute;inset:0;background:rgba(22,18,14,0.38);backdrop-filter:blur(2px);"></div>
-    <div id="s11-preview" style="position:relative;width:1320px;background:#FDFBF8;border-radius:20px;box-shadow:0 40px 100px rgba(0,0,0,0.32);display:flex;overflow:hidden;max-height:680px;animation:s11fadeIn 0.18s ease;">
-      <button onclick="window.s11close();event.stopPropagation();" style="position:absolute;top:16px;right:18px;z-index:10;width:36px;height:36px;border-radius:50%;border:none;background:rgba(22,18,14,0.10);color:#333;font-size:16px;cursor:pointer;line-height:1;">✕</button>
+    <div id="s11-preview" style="position:relative;width:1720px;height:880px;background:#FDFBF8;border-radius:24px;box-shadow:0 40px 120px rgba(0,0,0,0.36);display:flex;overflow:hidden;animation:s11fadeIn 0.18s ease;">
+      <button onclick="window.s11close();event.stopPropagation();" style="position:absolute;top:20px;right:24px;z-index:10;width:44px;height:44px;border-radius:50%;border:none;background:rgba(22,18,14,0.10);color:#333;font-size:20px;cursor:pointer;line-height:1;">✕</button>
     </div>
   </div>
   <style>@keyframes s11fadeIn{from{opacity:0;transform:scale(0.96)}to{opacity:1;transform:scale(1)}}</style>
@@ -1605,7 +1605,7 @@ em.pk { font-style:italic; color:var(--pink); }
     var starStr = function(n, color) {
       var s = '';
       for (var j = 1; j <= 5; j++)
-        s += '<span style="color:' + (j <= n ? color : 'rgba(22,18,14,0.15)') + ';font-size:14px;">★</span>';
+        s += '<span style="color:' + (j <= n ? color : 'rgba(22,18,14,0.15)') + ';font-size:20px;">★</span>';
       return s;
     };
 
@@ -1624,55 +1624,55 @@ em.pk { font-style:italic; color:var(--pink); }
     var existing = preview.querySelector('button');
     preview.innerHTML =
       /* 왼쪽: 렌더 이미지 */
-      '<div style="width:460px;flex-shrink:0;background-image:url(\'' + c.img + '\');background-size:cover;background-position:center;position:relative;">'
+      '<div style="width:620px;flex-shrink:0;background-image:url(\'' + c.img + '\');background-size:cover;background-position:center;position:relative;">'
         + '<div style="position:absolute;inset:0;background:linear-gradient(to right,transparent 55%,rgba(22,18,14,0.08));"></div>'
-        + '<div style="position:absolute;bottom:24px;left:24px;">'
-          + '<span style="font-family:\'DM Sans\',sans-serif;font-size:15px;font-weight:700;letter-spacing:3px;padding:6px 16px;border-radius:6px;background:rgba(22,18,14,0.52);color:#fff;backdrop-filter:blur(6px);">' + c.floor + '</span>'
+        + '<div style="position:absolute;bottom:32px;left:32px;">'
+          + '<span style="font-family:\'DM Sans\',sans-serif;font-size:18px;font-weight:700;letter-spacing:3px;padding:8px 20px;border-radius:8px;background:rgba(22,18,14,0.52);color:#fff;backdrop-filter:blur(6px);">' + c.floor + '</span>'
         + '</div>'
       + '</div>'
       /* 오른쪽 */
-      + '<div style="flex:1;padding:40px 48px 36px 36px;display:flex;flex-direction:column;gap:18px;overflow:hidden;">'
+      + '<div style="flex:1;padding:52px 60px 48px 48px;display:flex;flex-direction:column;gap:22px;overflow:hidden;">'
         /* 타이틀 */
-        + '<div style="font-family:\'Pretendard Variable\',\'Pretendard\',sans-serif;font-size:22px;font-weight:700;color:var(--ink);line-height:1.3;padding-right:44px;">' + c.title + '</div>'
+        + '<div style="font-family:\'Pretendard Variable\',\'Pretendard\',sans-serif;font-size:28px;font-weight:700;color:var(--ink);line-height:1.3;padding-right:50px;">' + c.title + '</div>'
         /* Hook phrase — 핵심 헤드라인 */
-        + '<div style="font-family:\'Cormorant Garamond\',serif;font-size:32px;font-weight:500;font-style:italic;color:var(--ink);line-height:1.35;border-left:4px solid ' + c.floorColor + ';padding-left:18px;">' + c.hook + '</div>'
+        + '<div style="font-family:\'Cormorant Garamond\',serif;font-size:44px;font-weight:500;font-style:italic;color:var(--ink);line-height:1.3;border-left:5px solid ' + c.floorColor + ';padding-left:22px;">' + c.hook + '</div>'
         + '<div style="height:1px;background:rgba(22,18,14,0.08);flex-shrink:0;"></div>'
         /* 무드 + 앵글 */
-        + '<div style="display:flex;flex-direction:column;gap:10px;flex-shrink:0;">'
-          + '<div style="display:flex;gap:14px;">'
-            + '<span style="font-family:\'DM Sans\',sans-serif;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--ink-dim);white-space:nowrap;padding-top:3px;min-width:36px;">무드</span>'
-            + '<span style="font-family:\'Pretendard Variable\',\'Pretendard\',sans-serif;font-size:15px;color:var(--ink-mid);line-height:1.55;">' + c.mood + '</span>'
+        + '<div style="display:flex;flex-direction:column;gap:12px;flex-shrink:0;">'
+          + '<div style="display:flex;gap:16px;">'
+            + '<span style="font-family:\'DM Sans\',sans-serif;font-size:13px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--ink-dim);white-space:nowrap;padding-top:3px;min-width:44px;">무드</span>'
+            + '<span style="font-family:\'Pretendard Variable\',\'Pretendard\',sans-serif;font-size:18px;color:var(--ink-mid);line-height:1.55;">' + c.mood + '</span>'
           + '</div>'
-          + '<div style="display:flex;gap:14px;">'
-            + '<span style="font-family:\'DM Sans\',sans-serif;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--ink-dim);white-space:nowrap;padding-top:3px;min-width:36px;">앵글</span>'
-            + '<span style="font-family:\'Pretendard Variable\',\'Pretendard\',sans-serif;font-size:15px;color:var(--ink-mid);line-height:1.55;">' + c.angle + '</span>'
+          + '<div style="display:flex;gap:16px;">'
+            + '<span style="font-family:\'DM Sans\',sans-serif;font-size:13px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--ink-dim);white-space:nowrap;padding-top:3px;min-width:44px;">앵글</span>'
+            + '<span style="font-family:\'Pretendard Variable\',\'Pretendard\',sans-serif;font-size:18px;color:var(--ink-mid);line-height:1.55;">' + c.angle + '</span>'
           + '</div>'
         + '</div>'
         /* 키워드 칩 */
-        + '<div style="display:flex;flex-wrap:wrap;gap:8px;flex-shrink:0;">'
+        + '<div style="display:flex;flex-wrap:wrap;gap:9px;flex-shrink:0;">'
           + c.keywords.map(function(k) {
-              return '<span style="font-family:\'DM Sans\',sans-serif;font-size:13px;padding:5px 14px;border-radius:5px;background:rgba(22,18,14,0.05);color:var(--ink);border:1px solid rgba(22,18,14,0.11);">' + k + '</span>';
+              return '<span style="font-family:\'DM Sans\',sans-serif;font-size:15px;padding:6px 18px;border-radius:6px;background:rgba(22,18,14,0.05);color:var(--ink);border:1px solid rgba(22,18,14,0.11);">' + k + '</span>';
             }).join('')
         + '</div>'
         + '<div style="height:1px;background:rgba(22,18,14,0.08);flex-shrink:0;"></div>'
         /* 셀럽 핏 + 선택 버튼 */
-        + '<div style="display:flex;gap:18px;align-items:flex-start;flex-shrink:0;">'
+        + '<div style="display:flex;gap:22px;align-items:flex-start;flex-shrink:0;">'
           + '<div style="flex:1;">'
-            + '<div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;">'
-              + '<span style="font-family:\'DM Sans\',sans-serif;font-size:13px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:#C4637A;">릴리</span>'
+            + '<div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;">'
+              + '<span style="font-family:\'DM Sans\',sans-serif;font-size:16px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:#C4637A;">릴리</span>'
               + starStr(c.lily, '#C4637A')
             + '</div>'
-            + '<div style="font-family:\'Pretendard Variable\',\'Pretendard\',sans-serif;font-size:14px;color:var(--ink-mid);line-height:1.55;margin-bottom:12px;">' + c.lilyNote + '</div>'
-            + '<button onclick="window.s11toggle(' + i + ',\'lily\');window.s11open(' + i + ');event.stopPropagation();" style="width:100%;padding:11px 0;border-radius:8px;font-family:\'DM Sans\',sans-serif;font-size:13px;font-weight:700;letter-spacing:2px;text-transform:uppercase;cursor:pointer;' + lBtnStyle + '">' + (lRank || '+ 릴리 추가') + '</button>'
+            + '<div style="font-family:\'Pretendard Variable\',\'Pretendard\',sans-serif;font-size:17px;color:var(--ink-mid);line-height:1.55;margin-bottom:16px;">' + c.lilyNote + '</div>'
+            + '<button onclick="window.s11toggle(' + i + ',\'lily\');window.s11open(' + i + ');event.stopPropagation();" style="width:100%;padding:15px 0;border-radius:10px;font-family:\'DM Sans\',sans-serif;font-size:15px;font-weight:700;letter-spacing:2px;text-transform:uppercase;cursor:pointer;' + lBtnStyle + '">' + (lRank || '+ 릴리 추가') + '</button>'
           + '</div>'
           + '<div style="width:1px;background:rgba(22,18,14,0.08);flex-shrink:0;align-self:stretch;"></div>'
           + '<div style="flex:1;">'
-            + '<div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;">'
-              + '<span style="font-family:\'DM Sans\',sans-serif;font-size:13px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:#4678B9;">김고은</span>'
+            + '<div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;">'
+              + '<span style="font-family:\'DM Sans\',sans-serif;font-size:16px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:#4678B9;">김고은</span>'
               + starStr(c.goeun, '#4678B9')
             + '</div>'
-            + '<div style="font-family:\'Pretendard Variable\',\'Pretendard\',sans-serif;font-size:14px;color:var(--ink-mid);line-height:1.55;margin-bottom:12px;">' + c.goeunNote + '</div>'
-            + '<button onclick="window.s11toggle(' + i + ',\'goeun\');window.s11open(' + i + ');event.stopPropagation();" style="width:100%;padding:11px 0;border-radius:8px;font-family:\'DM Sans\',sans-serif;font-size:13px;font-weight:700;letter-spacing:2px;text-transform:uppercase;cursor:pointer;' + gBtnStyle + '">' + (gRank || '+ 김고은 추가') + '</button>'
+            + '<div style="font-family:\'Pretendard Variable\',\'Pretendard\',sans-serif;font-size:17px;color:var(--ink-mid);line-height:1.55;margin-bottom:16px;">' + c.goeunNote + '</div>'
+            + '<button onclick="window.s11toggle(' + i + ',\'goeun\');window.s11open(' + i + ');event.stopPropagation();" style="width:100%;padding:15px 0;border-radius:10px;font-family:\'DM Sans\',sans-serif;font-size:15px;font-weight:700;letter-spacing:2px;text-transform:uppercase;cursor:pointer;' + gBtnStyle + '">' + (gRank || '+ 김고은 추가') + '</button>'
           + '</div>'
         + '</div>'
       + '</div>';
@@ -1680,7 +1680,7 @@ em.pk { font-style:italic; color:var(--pink); }
     /* ✕ 버튼 복원 */
     var closeBtn = document.createElement('button');
     closeBtn.innerHTML = '✕';
-    closeBtn.setAttribute('style','position:absolute;top:16px;right:18px;z-index:10;width:36px;height:36px;border-radius:50%;border:none;background:rgba(22,18,14,0.10);color:#333;font-size:16px;cursor:pointer;line-height:1;');
+    closeBtn.setAttribute('style','position:absolute;top:20px;right:24px;z-index:10;width:44px;height:44px;border-radius:50%;border:none;background:rgba(22,18,14,0.10);color:#333;font-size:20px;cursor:pointer;line-height:1;');
     closeBtn.onclick = function(e) { window.s11close(); e.stopPropagation(); };
     preview.appendChild(closeBtn);
   }
