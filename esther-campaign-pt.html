@@ -317,7 +317,7 @@ em.pk { font-style:italic; color:var(--pink); }
         <div class="ic-photo" style="width:220px; flex-shrink:0; display:flex;">
           <div class="img-slot" data-label="릴리"
             style="width:220px; height:100%; border-radius:0; border:none; border-right:1px solid var(--border);
-                   background-image:url('images/lily.webp'); background-position:25% 20%;"></div>
+                   background-image:url('images/lily.webp'); background-position:40% 20%;"></div>
         </div>
         <div class="ic-body">
           <div class="ic-name">릴리 <span style="font-size:20px; color:var(--ink-dim);">— NMIXX</span></div>
@@ -338,7 +338,7 @@ em.pk { font-style:italic; color:var(--pink); }
         <div class="ic-photo" style="width:220px; flex-shrink:0; display:flex;">
           <div class="img-slot" data-label="김고은"
             style="width:220px; height:100%; border-radius:0; border:none; border-right:1px solid var(--border);
-                   background-image:url('images/kimgoeun.webp'); background-position:25% 20%;"></div>
+                   background-image:url('images/kimgoeun.webp'); background-position:75% 10%;"></div>
         </div>
         <div class="ic-body">
           <div class="ic-name">김고은 <span style="font-size:20px; color:var(--ink-dim);">— 솔로지옥</span></div>
@@ -410,13 +410,13 @@ em.pk { font-style:italic; color:var(--pink); }
           <div style="width:8px; height:8px; border-radius:50%; background:#C4637A;"></div>
           <span style="font-family:'DM Sans',sans-serif; font-size:13px; font-weight:600; letter-spacing:2.5px; text-transform:uppercase; color:#C4637A;">릴리</span>
           <span id="s11-lily-count" style="font-family:'Cormorant Garamond',serif; font-size:30px; font-weight:300; color:#C4637A; line-height:1; min-width:14px; text-align:right;">0</span>
-          <span style="font-family:'DM Sans',sans-serif; font-size:12px; color:var(--ink-dim);">/ 4</span>
+          <span style="font-family:'DM Sans',sans-serif; font-size:12px; color:var(--ink-dim);">/ 5</span>
         </div>
         <div style="display:flex; align-items:center; gap:8px; padding:9px 20px; border-radius:8px; background:rgba(70,120,185,0.07); border:1.5px solid rgba(70,120,185,0.22);">
           <div style="width:8px; height:8px; border-radius:50%; background:#4678B9;"></div>
           <span style="font-family:'DM Sans',sans-serif; font-size:13px; font-weight:600; letter-spacing:2.5px; text-transform:uppercase; color:#4678B9;">김고은</span>
           <span id="s11-goeun-count" style="font-family:'Cormorant Garamond',serif; font-size:30px; font-weight:300; color:#4678B9; line-height:1; min-width:14px; text-align:right;">0</span>
-          <span style="font-family:'DM Sans',sans-serif; font-size:12px; color:var(--ink-dim);">/ 4</span>
+          <span style="font-family:'DM Sans',sans-serif; font-size:12px; color:var(--ink-dim);">/ 5</span>
         </div>
       </div>
     </div>
@@ -1319,12 +1319,60 @@ em.pk { font-style:italic; color:var(--pink); }
     { floor:'RT',  floorColor:'#4678B9', title:'루프탑 · 애드벌룬',         tags:['#오픈컷','#스카이라인'],   loc:'ROOFTOP',                   desc:'스케일감 · 언론 썸네일 1순위',       lily:4, goeun:5, link:'간접',   img:'images/brand/render_p75.jpeg'  }
   ];
 
-  var state = CUTS.map(function() { return { lily: false, goeun: false }; });
+  /* 선택 순서 배열 (index = 순위) — 최대 5개 */
+  var MAX = 5;
+  var lilyOrder  = [];   /* card indices in click order */
+  var goeunOrder = [];
+
+  var RANK_LABELS = ['1순위','2순위','3순위','예비','예비'];
+  var RANK_SHORT  = ['1','2','3','예','예'];
+  /* 1→3순위: 진한색, 예비: 회색 */
+  var LILY_COLORS  = ['#C4637A','#CF849B','#DAA4BB','#A8A8A8','#A8A8A8'];
+  var GOEUN_COLORS = ['#4678B9','#6898C9','#8AB4D8','#A8A8A8','#A8A8A8'];
+
+  function getRank(order, i) { return order.indexOf(i); /* -1 = 미선택 */ }
+
+  function bookmark(who, rank) {
+    if (rank === -1) return '';
+    var color = who === 'lily' ? LILY_COLORS[rank] : GOEUN_COLORS[rank];
+    var label = RANK_SHORT[rank];
+    var side  = who === 'lily' ? 'left:7px;' : 'right:7px;';
+    /* 책갈피 shape: 직사각형 + 하단 V자 컷 */
+    return '<div style="position:absolute;top:0;' + side
+      + 'width:22px;height:38px;background:' + color + ';'
+      + 'clip-path:polygon(0 0,100% 0,100% 100%,50% 83%,0 100%);'
+      + 'display:flex;align-items:flex-start;justify-content:center;padding-top:5px;z-index:5;">'
+      + '<span style="font-family:\'DM Sans\',sans-serif;font-size:9px;font-weight:800;color:#fff;line-height:1;">' + label + '</span>'
+      + '</div>';
+  }
+
+  function cardStyle(lr, gr) {
+    var ls = lr !== -1, gs = gr !== -1;
+    if (!ls && !gs) return { bg:'#FFFFFF', border:'1px solid rgba(22,18,14,0.10)', shadow:'0 1px 3px rgba(22,18,14,0.06)' };
+    var best = Math.min(ls ? lr : 99, gs ? gr : 99);
+    var intensity = best === 0 ? '0.07' : best === 1 ? '0.05' : best === 2 ? '0.04' : '0.02';
+    var glow      = best === 0 ? '0.18' : best === 1 ? '0.11' : best === 2 ? '0.07' : '0.04';
+    if (ls && gs) {
+      return {
+        bg:     'linear-gradient(135deg,rgba(196,99,122,' + intensity + ') 0%,rgba(70,120,185,' + intensity + ') 100%)',
+        border: best === 0 ? '1.5px solid transparent' : '1px solid rgba(130,110,130,0.20)',
+        shadow: best === 0
+          ? '0 0 0 1.5px #C4637A,0 0 0 3px #4678B9,0 4px 20px rgba(0,0,0,0.09)'
+          : '0 2px 12px rgba(0,0,0,0.07)'
+      };
+    }
+    var rgba = ls ? '196,99,122' : '70,120,185';
+    return {
+      bg:     'rgba(' + rgba + ',' + intensity + ')',
+      border: '1.5px solid rgba(' + rgba + ',0.40)',
+      shadow: '0 2px 14px rgba(' + rgba + ',' + glow + ')'
+    };
+  }
 
   function stars(n, color) {
     var s = '';
-    for (var i = 1; i <= 5; i++) {
-      s += '<span style="color:' + (i <= n ? color : 'rgba(22,18,14,0.15)') + ';font-size:12px;">★</span>';
+    for (var j = 1; j <= 5; j++) {
+      s += '<span style="color:' + (j <= n ? color : 'rgba(22,18,14,0.15)') + ';font-size:12px;">★</span>';
     }
     return s;
   }
@@ -1337,7 +1385,6 @@ em.pk { font-style:italic; color:var(--pink); }
 
   function floorBadge(c) {
     var fc = c.floorColor;
-    /* 투명도 hex 계산: color + 1A(10%), 33(20%), 40(25%) */
     var bg = fc + '1A', bd = fc + '40';
     return '<span style="font-family:\'DM Sans\',sans-serif;font-size:11px;font-weight:700;letter-spacing:2px;'
       + 'color:' + fc + ';background:' + bg + ';border:1px solid ' + bd + ';'
@@ -1348,28 +1395,26 @@ em.pk { font-style:italic; color:var(--pink); }
     var grid = document.getElementById('s11-grid');
     if (!grid) return;
     grid.innerHTML = CUTS.map(function(c, i) {
-      var sel = state[i];
-      var both = sel.lily && sel.goeun;
-      var bg     = both ? 'linear-gradient(135deg,rgba(196,99,122,0.05) 0%,rgba(70,120,185,0.05) 100%)'
-                 : sel.lily  ? 'rgba(196,99,122,0.04)'
-                 : sel.goeun ? 'rgba(70,120,185,0.04)'
-                 : '#FFFFFF';
-      var border = both ? '1px solid transparent'
-                 : sel.lily  ? '1.5px solid rgba(196,99,122,0.45)'
-                 : sel.goeun ? '1.5px solid rgba(70,120,185,0.45)'
-                 : '1px solid rgba(22,18,14,0.10)';
-      var shadow = both ? '0 0 0 1.5px #C4637A,0 0 0 3px #4678B9,0 2px 16px rgba(0,0,0,0.07)'
-                 : sel.lily  ? '0 2px 12px rgba(196,99,122,0.12)'
-                 : sel.goeun ? '0 2px 12px rgba(70,120,185,0.12)'
-                 : '0 1px 3px rgba(22,18,14,0.06)';
-      var lBtn = sel.lily
-        ? 'background:#C4637A;color:#fff;border:1.5px solid #C4637A;'
+      var lr = getRank(lilyOrder,  i);
+      var gr = getRank(goeunOrder, i);
+      var cs = cardStyle(lr, gr);
+
+      /* 버튼 — 선택됐으면 순위 텍스트, 아니면 "+ 이름" */
+      var lLabel = lr !== -1 ? RANK_LABELS[lr] : '+ 릴리';
+      var gLabel = gr !== -1 ? RANK_LABELS[gr] : '+ 김고은';
+      var lColor = lr !== -1 ? LILY_COLORS[lr]  : null;
+      var gColor = gr !== -1 ? GOEUN_COLORS[gr] : null;
+      var lBtn = lColor
+        ? 'background:' + lColor + ';color:#fff;border:1.5px solid ' + lColor + ';'
         : 'background:transparent;color:#C4637A;border:1.5px solid rgba(196,99,122,0.30);';
-      var gBtn = sel.goeun
-        ? 'background:#4678B9;color:#fff;border:1.5px solid #4678B9;'
+      var gBtn = gColor
+        ? 'background:' + gColor + ';color:#fff;border:1.5px solid ' + gColor + ';'
         : 'background:transparent;color:#4678B9;border:1.5px solid rgba(70,120,185,0.30);';
 
-      return '<div style="background:' + bg + ';border:' + border + ';border-radius:8px;box-shadow:' + shadow + ';display:flex;flex-direction:column;overflow:hidden;">'
+      return '<div style="position:relative;background:' + cs.bg + ';border:' + cs.border + ';border-radius:8px;box-shadow:' + cs.shadow + ';display:flex;flex-direction:column;overflow:hidden;">'
+        /* 책갈피 */
+        + bookmark('lily',  lr)
+        + bookmark('goeun', gr)
         /* 상단: 층 뱃지 + 제목 */
         + '<div style="padding:8px 12px 6px;display:flex;align-items:center;gap:7px;flex-shrink:0;">'
           + floorBadge(c)
@@ -1380,7 +1425,7 @@ em.pk { font-style:italic; color:var(--pink); }
           + '<div style="font-family:\'Pretendard Variable\',\'Pretendard\',sans-serif;font-size:11px;font-weight:400;color:var(--ink-mid);line-height:1.45;word-break:keep-all;flex:1;">' + c.desc + '</div>'
           + '<span style="font-family:\'DM Sans\',sans-serif;font-size:9px;letter-spacing:1px;padding:2px 6px;border-radius:3px;white-space:nowrap;flex-shrink:0;' + linkStyle(c.link) + '">' + c.link + '</span>'
         + '</div>'
-        /* 중앙 이미지 (크게) */
+        /* 중앙 이미지 */
         + '<div style="margin:0 10px 8px;border-radius:6px;overflow:hidden;flex:1;min-height:90px;background-image:url(\'' + c.img + '\');background-size:cover;background-position:center top;"></div>'
         /* 태그 */
         + '<div style="padding:0 12px 6px;display:flex;gap:4px;flex-wrap:wrap;flex-shrink:0;">'
@@ -1402,17 +1447,23 @@ em.pk { font-style:italic; color:var(--pink); }
         + '</div>'
         /* 토글 버튼 */
         + '<div style="padding:6px 10px;display:flex;gap:6px;flex-shrink:0;">'
-          + '<button onclick="window.s11toggle(' + i + ',\'lily\');event.stopPropagation();" style="flex:1;padding:4px 0;border-radius:5px;font-family:\'DM Sans\',sans-serif;font-size:10px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;cursor:pointer;' + lBtn + '">릴리</button>'
-          + '<button onclick="window.s11toggle(' + i + ',\'goeun\');event.stopPropagation();" style="flex:1;padding:4px 0;border-radius:5px;font-family:\'DM Sans\',sans-serif;font-size:10px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;cursor:pointer;' + gBtn + '">김고은</button>'
+          + '<button onclick="window.s11toggle(' + i + ',\'lily\');event.stopPropagation();" style="flex:1;padding:4px 0;border-radius:5px;font-family:\'DM Sans\',sans-serif;font-size:10px;font-weight:600;letter-spacing:1px;cursor:pointer;' + lBtn + '">' + lLabel + '</button>'
+          + '<button onclick="window.s11toggle(' + i + ',\'goeun\');event.stopPropagation();" style="flex:1;padding:4px 0;border-radius:5px;font-family:\'DM Sans\',sans-serif;font-size:10px;font-weight:600;letter-spacing:1px;cursor:pointer;' + gBtn + '">' + gLabel + '</button>'
         + '</div>'
       + '</div>';
     }).join('');
   }
 
   window.s11toggle = function(i, who) {
-    state[i][who] = !state[i][who];
-    document.getElementById('s11-lily-count').textContent  = state.filter(function(s){ return s.lily;  }).length;
-    document.getElementById('s11-goeun-count').textContent = state.filter(function(s){ return s.goeun; }).length;
+    var order = who === 'lily' ? lilyOrder : goeunOrder;
+    var idx = order.indexOf(i);
+    if (idx !== -1) {
+      order.splice(idx, 1);          /* 재클릭 → 선택 해제 */
+    } else if (order.length < MAX) {
+      order.push(i);                  /* 새 선택 → 다음 순위로 추가 */
+    }
+    document.getElementById('s11-lily-count').textContent  = lilyOrder.length;
+    document.getElementById('s11-goeun-count').textContent = goeunOrder.length;
     renderGrid();
   };
 
