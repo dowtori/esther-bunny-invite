@@ -1373,8 +1373,9 @@ em.pk { font-style:italic; color:var(--pink); }
   var RANK_LABELS = ['1순위','2순위','3순위','예비','예비'];
   var RANK_SHORT  = ['1','2','3','예','예'];
   /* 1→3순위: 진한색, 예비: 회색 */
-  var LILY_COLORS  = ['#C4637A','#CF849B','#DAA4BB','#A8A8A8','#A8A8A8'];
-  var GOEUN_COLORS = ['#4678B9','#6898C9','#8AB4D8','#A8A8A8','#A8A8A8'];
+  /* 색은 누구의 책갈피인지만 표현 — 순위 구분 없이 단일 색상 */
+  var LILY_COLORS  = ['#C4637A','#C4637A','#C4637A','#C4637A','#C4637A'];
+  var GOEUN_COLORS = ['#4678B9','#4678B9','#4678B9','#4678B9','#4678B9'];
 
   function getRank(order, i) { return order.indexOf(i); /* -1 = 미선택 */ }
 
@@ -1395,23 +1396,18 @@ em.pk { font-style:italic; color:var(--pink); }
   function cardStyle(lr, gr) {
     var ls = lr !== -1, gs = gr !== -1;
     if (!ls && !gs) return { bg:'#FFFFFF', border:'1px solid rgba(22,18,14,0.10)', shadow:'0 1px 3px rgba(22,18,14,0.06)' };
-    var best = Math.min(ls ? lr : 99, gs ? gr : 99);
-    var intensity = best === 0 ? '0.07' : best === 1 ? '0.05' : best === 2 ? '0.04' : '0.02';
-    var glow      = best === 0 ? '0.18' : best === 1 ? '0.11' : best === 2 ? '0.07' : '0.04';
     if (ls && gs) {
       return {
-        bg:     'linear-gradient(135deg,rgba(196,99,122,' + intensity + ') 0%,rgba(70,120,185,' + intensity + ') 100%)',
-        border: best === 0 ? '1.5px solid transparent' : '1px solid rgba(130,110,130,0.20)',
-        shadow: best === 0
-          ? '0 0 0 1.5px #C4637A,0 0 0 3px #4678B9,0 4px 20px rgba(0,0,0,0.09)'
-          : '0 2px 12px rgba(0,0,0,0.07)'
+        bg:     'linear-gradient(135deg,rgba(196,99,122,0.06) 0%,rgba(70,120,185,0.06) 100%)',
+        border: '1.5px solid transparent',
+        shadow: '0 0 0 1.5px #C4637A,0 0 0 3px #4678B9,0 4px 20px rgba(0,0,0,0.09)'
       };
     }
     var rgba = ls ? '196,99,122' : '70,120,185';
     return {
-      bg:     'rgba(' + rgba + ',' + intensity + ')',
+      bg:     'rgba(' + rgba + ',0.05)',
       border: '1.5px solid rgba(' + rgba + ',0.40)',
-      shadow: '0 2px 14px rgba(' + rgba + ',' + glow + ')'
+      shadow: '0 2px 14px rgba(' + rgba + ',0.14)'
     };
   }
 
