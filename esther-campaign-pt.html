@@ -11,7 +11,8 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://teumgyul.vercel.app/images/siriai-og.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300&family=Noto+Sans+KR:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css">
 <style>
 /* RESET */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -126,7 +127,7 @@ html, body { width:100%; height:100%; overflow:hidden; background:#1A1614; }
   color:var(--ink); line-height:1.05; letter-spacing:-1.5px;
 }
 .sub {
-  font-family:'Noto Sans KR',sans-serif; font-size:32px; font-weight:300;
+  font-family:'Pretendard Variable','Pretendard',sans-serif; font-size:32px; font-weight:400;
   color:var(--ink-mid); line-height:1.65; word-break:keep-all;
 }
 .rule { height:1px; background:var(--border); margin:22px 0; }
@@ -156,7 +157,7 @@ em.pk { font-style:italic; color:var(--pink); }
 /* BULLET LIST */
 .blist { list-style:none; display:flex; flex-direction:column; gap:12px; }
 .blist li {
-  font-family:'Noto Sans KR',sans-serif; font-size:28px; font-weight:300;
+  font-family:'Pretendard Variable','Pretendard',sans-serif; font-size:28px; font-weight:400;
   color:var(--ink-mid); line-height:1.55; padding-left:30px; position:relative;
   word-break:keep-all;
 }
@@ -177,7 +178,7 @@ em.pk { font-style:italic; color:var(--pink); }
   font-family:'Cormorant Garamond',serif; font-size:34px; font-weight:300;
   color:var(--pink); letter-spacing:-0.5px; white-space:nowrap;
 }
-.stat-lbl { font-family:'Noto Sans KR',sans-serif; font-size:22px; font-weight:300; color:var(--ink-dim); }
+.stat-lbl { font-family:'Pretendard Variable','Pretendard',sans-serif; font-size:22px; font-weight:400; color:var(--ink-dim); }
 
 /* INFLUENCER CARD */
 .ic-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:20px; }
@@ -193,7 +194,7 @@ em.pk { font-style:italic; color:var(--pink); }
 .ic-stat { font-family:'Cormorant Garamond',serif; font-size:52px; font-weight:300; color:var(--pink); letter-spacing:-1px; line-height:1; margin-bottom:3px; }
 .ic-stat-lbl { font-family:'DM Sans',sans-serif; font-size:17px; letter-spacing:1.5px; text-transform:uppercase; color:var(--ink-dim); margin-bottom:18px; }
 .ic-dels { border-top:1px solid var(--border); padding-top:16px; display:flex; flex-direction:column; gap:12px; flex:1; }
-.ic-del { font-family:'Noto Sans KR',sans-serif; font-size:25px; font-weight:300; color:var(--ink-mid); }
+.ic-del { font-family:'Pretendard Variable','Pretendard',sans-serif; font-size:25px; font-weight:400; color:var(--ink-mid); }
 .ic-badge {
   display:inline-block; font-family:'DM Sans',sans-serif;
   font-size:14px; font-weight:700; letter-spacing:1.5px; text-transform:uppercase;
@@ -206,19 +207,19 @@ em.pk { font-style:italic; color:var(--pink); }
 .reason-grid { display:grid; grid-template-columns:1fr 1fr; gap:14px; }
 .reason-card { background:var(--bg-card); border:1px solid var(--border); border-radius:8px; padding:26px 28px; }
 .reason-title { font-family:'DM Sans',sans-serif; font-size:18px; font-weight:700; letter-spacing:2.5px; text-transform:uppercase; color:var(--pink); margin-bottom:12px; }
-.reason-text { font-family:'Noto Sans KR',sans-serif; font-size:30px; font-weight:300; color:var(--ink-mid); line-height:1.65; word-break:keep-all; }
+.reason-text { font-family:'Pretendard Variable','Pretendard',sans-serif; font-size:30px; font-weight:400; color:var(--ink-mid); line-height:1.65; word-break:keep-all; }
 
 /* KPI / EFFECT */
 .kpi-row { display:flex; border:1px solid var(--border); border-radius:8px; overflow:hidden; }
 .kpi-item { flex:1; padding:32px 40px; background:var(--bg-card); border-right:1px solid var(--border); }
 .kpi-item:last-child { border-right:none; }
 .kpi-num { font-family:'Cormorant Garamond',serif; font-size:76px; font-weight:300; color:var(--pink); letter-spacing:-2px; line-height:1; }
-.kpi-lbl { font-family:'Noto Sans KR',sans-serif; font-size:28px; font-weight:300; color:var(--ink-mid); margin-top:8px; }
+.kpi-lbl { font-family:'Pretendard Variable','Pretendard',sans-serif; font-size:28px; font-weight:400; color:var(--ink-mid); margin-top:8px; }
 .effect-grid { display:grid; grid-template-columns:repeat(5,1fr); gap:14px; }
 .effect-card { background:var(--bg-card); border:1px solid var(--border); border-radius:8px; padding:26px 24px; }
 .effect-title { font-family:'DM Sans',sans-serif; font-size:17px; font-weight:700; letter-spacing:2px; text-transform:uppercase; color:var(--pink-deep); margin-bottom:16px; }
 .effect-list { list-style:none; display:flex; flex-direction:column; gap:12px; }
-.effect-list li { font-family:'Noto Sans KR',sans-serif; font-size:26px; font-weight:300; color:var(--ink-mid); line-height:1.5; word-break:keep-all; }
+.effect-list li { font-family:'Pretendard Variable','Pretendard',sans-serif; font-size:26px; font-weight:400; color:var(--ink-mid); line-height:1.5; word-break:keep-all; }
 
 /* BLOB ANIMATIONS — S8 */
 @keyframes blob-morph {
@@ -277,7 +278,7 @@ em.pk { font-style:italic; color:var(--pink); }
          line-height:0.95; letter-spacing:-4px; color:#F4F1EC; margin-bottom:10px;">틈결 에스더버니</div>
     <div style="font-family:'Cormorant Garamond',serif; font-size:80px; font-weight:300;
          font-style:italic; color:#E0A0AD; letter-spacing:-2px; margin-bottom:52px;">× SIRIAI</div>
-    <div style="font-family:'Noto Sans KR',sans-serif; font-size:22px; font-weight:300;
+    <div style="font-family:'Pretendard Variable','Pretendard',sans-serif; font-size:22px; font-weight:300;
          color:rgba(244,241,236,0.55); margin-bottom:32px;">인플루언서 캠페인 전략</div>
     <div style="font-family:'DM Sans',sans-serif; font-size:12px; font-weight:300;
          letter-spacing:2px; color:rgba(244,241,236,0.22);">
@@ -316,7 +317,7 @@ em.pk { font-style:italic; color:var(--pink); }
         <div class="ic-photo" style="width:220px; flex-shrink:0; display:flex;">
           <div class="img-slot" data-label="릴리"
             style="width:220px; height:100%; border-radius:0; border:none; border-right:1px solid var(--border);
-                   background-image:url('images/lily.webp'); background-position:50% 20%;"></div>
+                   background-image:url('images/lily.webp'); background-position:25% 20%;"></div>
         </div>
         <div class="ic-body">
           <div class="ic-name">릴리 <span style="font-size:20px; color:var(--ink-dim);">— NMIXX</span></div>
@@ -324,7 +325,7 @@ em.pk { font-style:italic; color:var(--pink); }
           <div class="ic-stat">609만+</div>
           <div class="ic-stat-lbl">인스타그램 팔로워</div>
           <div class="ic-dels">
-            <div class="ic-del"><span class="ic-badge">피드</span>화보형 피드 1건</div>
+            <div class="ic-del"><span class="ic-badge">피드</span>화보 피드 1건</div>
             <div class="ic-del"><span class="ic-badge">스토리</span>현장 스토리 1건</div>
             <div class="ic-del"><span class="ic-badge">공동작업자</span>NMIXX 오피셜 발행</div>
           </div>
@@ -337,7 +338,7 @@ em.pk { font-style:italic; color:var(--pink); }
         <div class="ic-photo" style="width:220px; flex-shrink:0; display:flex;">
           <div class="img-slot" data-label="김고은"
             style="width:220px; height:100%; border-radius:0; border:none; border-right:1px solid var(--border);
-                   background-image:url('images/kimgoeun.webp'); background-position:50% 20%;"></div>
+                   background-image:url('images/kimgoeun.webp'); background-position:25% 20%;"></div>
         </div>
         <div class="ic-body">
           <div class="ic-name">김고은 <span style="font-size:20px; color:var(--ink-dim);">— 솔로지옥</span></div>
@@ -345,8 +346,8 @@ em.pk { font-style:italic; color:var(--pink); }
           <div class="ic-stat">145만+</div>
           <div class="ic-stat-lbl">인스타그램 팔로워</div>
           <div class="ic-dels">
-            <div class="ic-del"><span class="ic-badge">피드</span>착장 화보 피드 1건</div>
-            <div class="ic-del"><span class="ic-badge">스토리</span>현장 스토리</div>
+            <div class="ic-del"><span class="ic-badge">피드</span>화보 피드 1건</div>
+            <div class="ic-del"><span class="ic-badge">스토리</span>현장 스토리 +α 가능</div>
             <div class="ic-del"><span class="ic-badge">커머스</span>에스더버니 의상 착용</div>
           </div>
           <div class="ic-schedule">방문 · 5월 2일 15:00</div>
@@ -369,7 +370,7 @@ em.pk { font-style:italic; color:var(--pink); }
           <div class="ic-stat">103만+</div>
           <div class="ic-stat-lbl">인스타그램 팔로워</div>
           <div class="ic-dels">
-            <div class="ic-del"><span class="ic-badge">릴스</span>셀럽 인터뷰 릴스 3건</div>
+            <div class="ic-del"><span class="ic-badge">릴스</span>릴스 총 3건</div>
             <div class="ic-del"><span class="ic-badge">스토리</span>현장 취재 1건</div>
             <div class="ic-del"><span class="ic-badge">에디토리얼</span>릴리·김고은 편 + 자체</div>
           </div>
@@ -515,7 +516,7 @@ em.pk { font-style:italic; color:var(--pink); }
         <ul class="blist">
           <li>릴리 릴스 1건 + 스토리 1건</li>
           <li>김고은 릴스 1건</li>
-          <li>데패뉴 에디토리얼 릴스 3건</li>
+          <li>데패뉴 에디토리얼 릴스 3건 + 스토리 1건</li>
         </ul>
       </div>
       <div>
@@ -593,10 +594,10 @@ em.pk { font-style:italic; color:var(--pink); }
           <div style="display:flex; align-items:baseline; gap:12px;">
             <div style="font-family:'Cormorant Garamond',serif; font-size:28px; font-weight:300; color:var(--ink);">김고은</div>
             <div style="font-family:'Cormorant Garamond',serif; font-size:22px; font-weight:300; color:var(--pink);">145만+</div>
-            <div style="font-family:'DM Sans',sans-serif; font-size:15px; letter-spacing:1.5px; color:var(--ink-dim); text-transform:uppercase;">배우</div>
+            <div style="font-family:'DM Sans',sans-serif; font-size:15px; letter-spacing:1.5px; color:var(--ink-dim); text-transform:uppercase;">인플루언서</div>
           </div>
           <ul class="blist" style="gap:10px;">
-            <li style="font-size:24px;">배우 팬덤 + 패션 관심층 도달</li>
+            <li style="font-size:24px;">인플루언서 팬덤 + 패션 관심층 도달</li>
             <li style="font-size:24px;">'착용' 태그 → 커머스 전환 유도</li>
             <li style="font-size:24px;">드뮤어 이미지 → 브랜드 감도 상승</li>
           </ul>
@@ -628,7 +629,7 @@ em.pk { font-style:italic; color:var(--pink); }
           <ul class="blist" style="gap:10px;">
             <li style="font-size:24px;">릴스 3건 → 패션층 100만+ 도달</li>
             <li style="font-size:24px;">에디토리얼 감도 → 높은 신뢰도</li>
-            <li style="font-size:24px;">콘텐츠 → 룩북·광고 소재 자산화</li>
+            <li style="font-size:24px;">콘텐츠 → 간접 자산화 및 브랜딩에 활용</li>
           </ul>
         </div>
       </div>
@@ -665,15 +666,15 @@ em.pk { font-style:italic; color:var(--pink); }
     <div style="display:flex; border:1px solid var(--border); border-radius:8px; overflow:hidden;">
       <div style="flex:1; padding:32px 44px; border-right:1px solid var(--border); background:var(--bg-card);">
         <div style="font-family:'Cormorant Garamond',serif; font-size:96px; font-weight:300; color:var(--ink); letter-spacing:-3px; line-height:1;">95<span style="color:var(--pink);">명+</span></div>
-        <div style="font-family:'Noto Sans KR',sans-serif; font-size:22px; font-weight:300; color:var(--ink-mid); margin-top:6px;">동행자 포함 방문 인원</div>
+        <div style="font-family:'Pretendard Variable','Pretendard',sans-serif; font-size:22px; font-weight:300; color:var(--ink-mid); margin-top:6px;">동행자 포함 방문 인원</div>
       </div>
       <div style="flex:1; padding:32px 44px; border-right:1px solid var(--border); background:var(--bg-card);">
         <div style="font-family:'Cormorant Garamond',serif; font-size:96px; font-weight:300; color:var(--ink); letter-spacing:-3px; line-height:1;">70<span style="color:var(--pink);">건+</span></div>
-        <div style="font-family:'Noto Sans KR',sans-serif; font-size:22px; font-weight:300; color:var(--ink-mid); margin-top:6px;">릴스 콘텐츠 목표</div>
+        <div style="font-family:'Pretendard Variable','Pretendard',sans-serif; font-size:22px; font-weight:300; color:var(--ink-mid); margin-top:6px;">릴스 콘텐츠 목표</div>
       </div>
       <div style="flex:1; padding:32px 44px; background:var(--bg-card);">
-        <div style="font-family:'Cormorant Garamond',serif; font-size:96px; font-weight:300; color:var(--ink); letter-spacing:-3px; line-height:1;">2<span style="color:var(--pink);">일간</span></div>
-        <div style="font-family:'Noto Sans KR',sans-serif; font-size:22px; font-weight:300; color:var(--ink-mid); margin-top:6px;">5월 2–3일 집중 운영</div>
+        <div style="font-family:'Cormorant Garamond',serif; font-size:96px; font-weight:300; color:var(--ink); letter-spacing:-3px; line-height:1;">3<span style="color:var(--pink);">일간</span></div>
+        <div style="font-family:'Pretendard Variable','Pretendard',sans-serif; font-size:22px; font-weight:300; color:var(--ink-mid); margin-top:6px;">5월 1–3일 운영</div>
       </div>
     </div>
 
@@ -684,28 +685,28 @@ em.pk { font-style:italic; color:var(--pink); }
           <div style="display:flex; align-items:center; gap:0;">
             <div style="flex:1; text-align:center; background:var(--bg-card); border:1px solid var(--border); border-radius:6px; padding:18px 10px;">
               <div style="font-family:'Cormorant Garamond',serif; font-size:17px; font-style:italic; color:var(--pink); margin-bottom:6px;">01</div>
-              <div style="font-family:'Noto Sans KR',sans-serif; font-size:20px; font-weight:400; color:var(--ink);">초청</div>
+              <div style="font-family:'Pretendard Variable','Pretendard',sans-serif; font-size:20px; font-weight:400; color:var(--ink);">초청</div>
             </div>
             <div style="font-size:22px; color:var(--ink-dim); padding:0 16px;">→</div>
             <div style="flex:1; text-align:center; background:var(--bg-card); border:1px solid var(--border); border-radius:6px; padding:18px 10px;">
               <div style="font-family:'Cormorant Garamond',serif; font-size:17px; font-style:italic; color:var(--pink); margin-bottom:6px;">02</div>
-              <div style="font-family:'Noto Sans KR',sans-serif; font-size:20px; font-weight:400; color:var(--ink);">방문</div>
+              <div style="font-family:'Pretendard Variable','Pretendard',sans-serif; font-size:20px; font-weight:400; color:var(--ink);">방문</div>
             </div>
             <div style="font-size:22px; color:var(--ink-dim); padding:0 16px;">→</div>
             <div style="flex:1; text-align:center; background:var(--bg-card); border:1px solid var(--border); border-radius:6px; padding:18px 10px;">
               <div style="font-family:'Cormorant Garamond',serif; font-size:17px; font-style:italic; color:var(--pink); margin-bottom:6px;">03</div>
-              <div style="font-family:'Noto Sans KR',sans-serif; font-size:20px; font-weight:400; color:var(--ink);">촬영</div>
+              <div style="font-family:'Pretendard Variable','Pretendard',sans-serif; font-size:20px; font-weight:400; color:var(--ink);">촬영</div>
             </div>
             <div style="font-size:22px; color:var(--ink-dim); padding:0 16px;">→</div>
             <div style="flex:1; text-align:center; background:var(--bg-card); border:1.5px solid var(--pink); border-radius:6px; padding:18px 10px;">
               <div style="font-family:'Cormorant Garamond',serif; font-size:17px; font-style:italic; color:var(--pink); margin-bottom:6px;">04</div>
-              <div style="font-family:'Noto Sans KR',sans-serif; font-size:20px; font-weight:500; color:var(--pink);">업로드</div>
+              <div style="font-family:'Pretendard Variable','Pretendard',sans-serif; font-size:20px; font-weight:500; color:var(--pink);">업로드</div>
             </div>
           </div>
         </div>
         <div class="rule"></div>
         <ul class="blist">
-          <li>현장 초청 60인 + 사전 발송 10인 (78UNDER 5 · asifCALIE 5)</li>
+          <li>현장 초청 60인 + 사전 발송 10인 (SEVEN EIGHT UNDER 5 · asif CALIE 5)</li>
           <li>제공 굿즈 → 포토 소품 + 언박싱 콘텐츠 자연 유발</li>
           <li>'요즘 뜨는 플래그십' 이미지 → 추가 방문 수요 유발</li>
         </ul>
@@ -743,19 +744,19 @@ em.pk { font-style:italic; color:var(--pink); }
         <div style="display:flex; flex-direction:column; gap:14px;">
           <div style="display:flex; align-items:center; gap:16px; padding:16px 20px; background:var(--bg-card); border:1px solid var(--border); border-radius:6px;">
             <span style="font-family:'DM Sans',sans-serif; font-size:20px; color:var(--pink); font-weight:700;">✓</span>
-            <span style="font-family:'Noto Sans KR',sans-serif; font-size:22px; font-weight:300; color:var(--ink-mid);">필수 해시태그 #에스더버니 #틈결</span>
+            <span style="font-family:'Pretendard Variable','Pretendard',sans-serif; font-size:22px; font-weight:300; color:var(--ink-mid);">필수 해시태그 #에스더버니 #틈결</span>
           </div>
           <div style="display:flex; align-items:center; gap:16px; padding:16px 20px; background:var(--bg-card); border:1px solid var(--border); border-radius:6px;">
             <span style="font-family:'DM Sans',sans-serif; font-size:20px; color:var(--pink); font-weight:700;">✓</span>
-            <span style="font-family:'Noto Sans KR',sans-serif; font-size:22px; font-weight:300; color:var(--ink-mid);">장소 위치 태그 (성수동 틈결)</span>
+            <span style="font-family:'Pretendard Variable','Pretendard',sans-serif; font-size:22px; font-weight:300; color:var(--ink-mid);">장소 위치 태그 (성수동 틈결)</span>
           </div>
           <div style="display:flex; align-items:center; gap:16px; padding:16px 20px; background:var(--bg-card); border:1px solid var(--border); border-radius:6px;">
             <span style="font-family:'DM Sans',sans-serif; font-size:20px; color:var(--pink); font-weight:700;">✓</span>
-            <span style="font-family:'Noto Sans KR',sans-serif; font-size:22px; font-weight:300; color:var(--ink-mid);">에스더버니 공식 계정 태그</span>
+            <span style="font-family:'Pretendard Variable','Pretendard',sans-serif; font-size:22px; font-weight:300; color:var(--ink-mid);">에스더버니 공식 계정 태그</span>
           </div>
           <div style="display:flex; align-items:center; gap:16px; padding:16px 20px; background:var(--bg-card); border:1px solid var(--border); border-radius:6px;">
             <span style="font-family:'DM Sans',sans-serif; font-size:20px; color:var(--pink); font-weight:700;">✓</span>
-            <span style="font-family:'Noto Sans KR',sans-serif; font-size:22px; font-weight:300; color:var(--ink-mid);">업로드 기간 — 방문 후 D+7 이내</span>
+            <span style="font-family:'Pretendard Variable','Pretendard',sans-serif; font-size:22px; font-weight:300; color:var(--ink-mid);">업로드 기간 — 방문 후 D+7 이내</span>
           </div>
         </div>
       </div>
@@ -798,17 +799,17 @@ em.pk { font-style:italic; color:var(--pink); }
     <div>
       <div class="label">구매전환형 콘텐츠 전략</div>
       <div class="title" style="font-size:54px; margin-bottom:8px;">'지금 사야 하는 이유'를 콘텐츠로 만듭니다.</div>
-      <div class="sub">Fashion Seeding — 78UNDER · asifCALIE 10인, 사전 제품 발송 및 2차 활용 동의 완료</div>
+      <div class="sub">Fashion Seeding — SEVEN EIGHT UNDER · asif CALIE 10인, 사전 제품 발송 및 2차 활용 동의 완료</div>
     </div>
 
     <div style="display:grid; grid-template-columns:1fr 1fr 300px; gap:24px; flex:1;">
       <div style="display:flex; flex-direction:column; gap:12px;">
         <div class="img-slot" data-label="78UNDER 착장" style="flex:1; background-image:url('images/brand/78under-p1.png');"></div>
-        <div style="font-family:'DM Sans',sans-serif; font-size:18px; letter-spacing:2px; text-transform:uppercase; color:var(--pink-deep); text-align:center;">78UNDER — 5인</div>
+        <div style="font-family:'DM Sans',sans-serif; font-size:18px; letter-spacing:2px; text-transform:uppercase; color:var(--pink-deep); text-align:center;">SEVEN EIGHT UNDER — 5인</div>
       </div>
       <div style="display:flex; flex-direction:column; gap:12px;">
         <div class="img-slot" data-label="asifCALIE 착장" style="flex:1; background-image:url('images/brand/eb-calie-p1.png');"></div>
-        <div style="font-family:'DM Sans',sans-serif; font-size:18px; letter-spacing:2px; text-transform:uppercase; color:var(--pink-deep); text-align:center;">asifCALIE — 5인</div>
+        <div style="font-family:'DM Sans',sans-serif; font-size:18px; letter-spacing:2px; text-transform:uppercase; color:var(--pink-deep); text-align:center;">asif CALIE — 5인</div>
       </div>
       <div style="display:flex; flex-direction:column; gap:28px; padding-top:4px;">
         <div>
@@ -834,13 +835,13 @@ em.pk { font-style:italic; color:var(--pink); }
            letter-spacing:2.5px; text-transform:uppercase; color:var(--ink-dim);
            flex:0 0 auto; margin-right:44px;">Conversion Flow</div>
       <div style="flex:1; display:flex; align-items:center; justify-content:space-around;">
-        <span style="font-family:'Noto Sans KR',sans-serif; font-size:22px; font-weight:400; color:var(--ink);">콘텐츠 노출</span>
+        <span style="font-family:'Pretendard Variable','Pretendard',sans-serif; font-size:22px; font-weight:400; color:var(--ink);">콘텐츠 노출</span>
         <span style="color:var(--ink-dim); font-size:26px; padding:0 12px;">→</span>
-        <span style="font-family:'Noto Sans KR',sans-serif; font-size:22px; font-weight:400; color:var(--ink);">착장 태그 클릭</span>
+        <span style="font-family:'Pretendard Variable','Pretendard',sans-serif; font-size:22px; font-weight:400; color:var(--ink);">착장 태그 클릭</span>
         <span style="color:var(--ink-dim); font-size:26px; padding:0 12px;">→</span>
-        <span style="font-family:'Noto Sans KR',sans-serif; font-size:22px; font-weight:400; color:var(--ink);">온라인몰 랜딩</span>
+        <span style="font-family:'Pretendard Variable','Pretendard',sans-serif; font-size:22px; font-weight:400; color:var(--ink);">온라인몰 랜딩</span>
         <span style="color:var(--ink-dim); font-size:26px; padding:0 12px;">→</span>
-        <span style="font-family:'Noto Sans KR',sans-serif; font-size:22px; font-weight:600; color:var(--pink);">구매 전환</span>
+        <span style="font-family:'Pretendard Variable','Pretendard',sans-serif; font-size:22px; font-weight:600; color:var(--pink);">구매 전환</span>
       </div>
     </div>
   </div>
@@ -849,7 +850,6 @@ em.pk { font-style:italic; color:var(--pink); }
 
 <!-- ═══════════════════════════════════
      SLIDE 8 — P.08 브랜드 각인형
-     (9페이지: 이미지 1,2 → 3D 블롭, 이미지 3 → contain)
 ═══════════════════════════════════ -->
 <div class="slide" id="s8">
   <div class="chrome">
@@ -860,21 +860,21 @@ em.pk { font-style:italic; color:var(--pink); }
     <div>
       <div class="label">브랜드 각인형 콘텐츠 전략</div>
       <div class="title" style="font-size:54px; margin-bottom:8px;">에스더버니의 세계관을 공간으로 보여줍니다.</div>
-      <div class="sub">메가 3인 + 나노 85인이 만드는 공간 무드와 세계관</div>
+      <div class="sub">메가 3인 + 나노 95인이 만드는 공간 무드와 세계관</div>
     </div>
 
     <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:18px; flex:1;">
 
-      <!-- 이미지 1 — 핑크 아치 공간 -->
+      <!-- 이미지 1 — 핑크룸 공간 -->
       <div style="display:flex; flex-direction:column; gap:12px;">
-        <div class="img-slot" style="flex:1; background-image:url('images/brand/teumgyul-render-p13.png'); background-position:center;"></div>
-        <div style="font-family:'Noto Sans KR',sans-serif; font-size:24px; font-weight:300; color:var(--ink-mid);">Photo 존 — 핑크 아치 · 플래그십 무드</div>
+        <div class="img-slot" style="flex:1; background-image:url('images/brand/pink-room.png'); background-position:center top;"></div>
+        <div style="font-family:'Pretendard Variable','Pretendard',sans-serif; font-size:24px; font-weight:400; color:var(--ink-mid);">버니의 원더랜드 — 핑크룸 · 3F</div>
       </div>
 
-      <!-- 이미지 2 — 갤러리 아트월 -->
+      <!-- 이미지 2 — 블루룸 공간 -->
       <div style="display:flex; flex-direction:column; gap:12px;">
-        <div class="img-slot" style="flex:1; background-image:url('images/brand/teumgyul-render-p9.png'); background-position:center;"></div>
-        <div style="font-family:'Noto Sans KR',sans-serif; font-size:24px; font-weight:300; color:var(--ink-mid);">스케치아뜰리에 — 갤러리형 아트월</div>
+        <div class="img-slot" style="flex:1; background-image:url('images/brand/blue-room.png'); background-position:center top;"></div>
+        <div style="font-family:'Pretendard Variable','Pretendard',sans-serif; font-size:24px; font-weight:400; color:var(--ink-mid);">클라우드 존 — 블루룸 · 3F</div>
       </div>
 
       <!-- 이미지 3 — 데패뉴: contain으로 잘림 방지 -->
@@ -884,7 +884,7 @@ em.pk { font-style:italic; color:var(--pink); }
                  background-image:url('images/데패뉴 콘텐츠1.png');
                  background-size:contain; background-repeat:no-repeat;
                  background-position:center; background-color:#F6F1EB;"></div>
-        <div style="font-family:'Noto Sans KR',sans-serif; font-size:24px; font-weight:300; color:var(--ink-mid);">데패뉴 에디토리얼 — Cinematic Reels</div>
+        <div style="font-family:'Pretendard Variable','Pretendard',sans-serif; font-size:24px; font-weight:300; color:var(--ink-mid);">데패뉴 에디토리얼 — Cinematic Reels</div>
       </div>
 
     </div>
@@ -892,15 +892,15 @@ em.pk { font-style:italic; color:var(--pink); }
     <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:16px;">
       <div style="background:var(--bg-card); border:1px solid var(--border); border-radius:6px; padding:18px 22px;">
         <div style="font-family:'DM Sans',sans-serif; font-size:17px; font-weight:700; letter-spacing:2px; text-transform:uppercase; color:var(--pink-deep); margin-bottom:8px;">브랜드 각인</div>
-        <div style="font-family:'Noto Sans KR',sans-serif; font-size:23px; font-weight:300; color:var(--ink-mid);">에스더버니 무드·세계관 강력 각인</div>
+        <div style="font-family:'Pretendard Variable','Pretendard',sans-serif; font-size:23px; font-weight:300; color:var(--ink-mid);">에스더버니 무드·세계관 강력 각인</div>
       </div>
       <div style="background:var(--bg-card); border:1px solid var(--border); border-radius:6px; padding:18px 22px;">
         <div style="font-family:'DM Sans',sans-serif; font-size:17px; font-weight:700; letter-spacing:2px; text-transform:uppercase; color:var(--pink-deep); margin-bottom:8px;">프리미엄 이미지</div>
-        <div style="font-family:'Noto Sans KR',sans-serif; font-size:23px; font-weight:300; color:var(--ink-mid);">광고보다 높은 신뢰도의 에디토리얼</div>
+        <div style="font-family:'Pretendard Variable','Pretendard',sans-serif; font-size:23px; font-weight:300; color:var(--ink-mid);">광고보다 높은 신뢰도의 에디토리얼</div>
       </div>
       <div style="background:var(--bg-card); border:1px solid var(--border); border-radius:6px; padding:18px 22px;">
         <div style="font-family:'DM Sans',sans-serif; font-size:17px; font-weight:700; letter-spacing:2px; text-transform:uppercase; color:var(--pink-deep); margin-bottom:8px;">콘텐츠 자산화</div>
-        <div style="font-family:'Noto Sans KR',sans-serif; font-size:23px; font-weight:300; color:var(--ink-mid);">룩북·아카이브 장기 재활용</div>
+        <div style="font-family:'Pretendard Variable','Pretendard',sans-serif; font-size:23px; font-weight:300; color:var(--ink-mid);">룩북·아카이브 장기 재활용</div>
       </div>
     </div>
   </div>
@@ -934,8 +934,8 @@ em.pk { font-style:italic; color:var(--pink); }
                  background-position:center bottom; background-color:#FDF6F0;"></div>
         <div style="padding:28px 30px; flex:1; display:flex; flex-direction:column; gap:14px;">
           <div style="font-family:'DM Sans',sans-serif; font-size:17px; font-weight:700; letter-spacing:2px; text-transform:uppercase; color:var(--pink);">Commerce-Led</div>
-          <div style="font-family:'Noto Sans KR',sans-serif; font-size:22px; font-weight:500; color:var(--ink);">구매전환형</div>
-          <div style="font-family:'Noto Sans KR',sans-serif; font-size:24px; font-weight:300; color:var(--ink-mid); line-height:1.7;">착장 언박싱·리뷰 중심.<br>즉각적 구매 유도가 목적.</div>
+          <div style="font-family:'Pretendard Variable','Pretendard',sans-serif; font-size:22px; font-weight:500; color:var(--ink);">구매전환형</div>
+          <div style="font-family:'Pretendard Variable','Pretendard',sans-serif; font-size:24px; font-weight:300; color:var(--ink-mid); line-height:1.7;">착장 언박싱·리뷰 중심.<br>즉각적 구매 유도가 목적.</div>
         </div>
       </div>
 
@@ -948,8 +948,8 @@ em.pk { font-style:italic; color:var(--pink); }
                  background-size:cover; background-position:center;"></div>
         <div style="padding:28px 30px; flex:1; display:flex; flex-direction:column; gap:14px;">
           <div style="font-family:'DM Sans',sans-serif; font-size:17px; font-weight:700; letter-spacing:2px; text-transform:uppercase; color:var(--pink);">Brand Imprint</div>
-          <div style="font-family:'Noto Sans KR',sans-serif; font-size:22px; font-weight:500; color:var(--ink);">브랜드 각인형</div>
-          <div style="font-family:'Noto Sans KR',sans-serif; font-size:24px; font-weight:300; color:var(--ink-mid); line-height:1.7;">공간 무드 이미지 중심.<br>브랜드 선호도 장기 누적.</div>
+          <div style="font-family:'Pretendard Variable','Pretendard',sans-serif; font-size:22px; font-weight:500; color:var(--ink);">브랜드 각인형</div>
+          <div style="font-family:'Pretendard Variable','Pretendard',sans-serif; font-size:24px; font-weight:300; color:var(--ink-mid); line-height:1.7;">공간 무드 이미지 중심.<br>브랜드 선호도 장기 누적.</div>
         </div>
       </div>
 
@@ -969,8 +969,8 @@ em.pk { font-style:italic; color:var(--pink); }
                  background-position:center; background-color:#FDF8F5;"></div>
         <div style="padding:28px 30px; flex:1; display:flex; flex-direction:column; gap:14px;">
           <div style="font-family:'DM Sans',sans-serif; font-size:17px; font-weight:700; letter-spacing:2px; text-transform:uppercase; color:var(--pink);">Creator-Led</div>
-          <div style="font-family:'Noto Sans KR',sans-serif; font-size:22px; font-weight:500; color:var(--ink);">크리에이터 주도형</div>
-          <div style="font-family:'Noto Sans KR',sans-serif; font-size:24px; font-weight:300; color:var(--ink-mid); line-height:1.7;">해시태그·태그만 지정,<br>나머지는 인플루언서 재량.<br>진정성·알고리즘·다양성 동시 확보.</div>
+          <div style="font-family:'Pretendard Variable','Pretendard',sans-serif; font-size:22px; font-weight:500; color:var(--ink);">크리에이터 주도형</div>
+          <div style="font-family:'Pretendard Variable','Pretendard',sans-serif; font-size:24px; font-weight:300; color:var(--ink-mid); line-height:1.7;">해시태그·태그만 지정,<br>나머지는 인플루언서 재량.<br>진정성·알고리즘·다양성 동시 확보.</div>
         </div>
       </div>
 
@@ -1008,7 +1008,7 @@ em.pk { font-style:italic; color:var(--pink); }
     <div class="effect-grid" style="flex:1; align-content:stretch;">
       <div class="effect-card">
         <div class="effect-title">SNS 도달 · 팔로워</div>
-        <ul class="effect-list"><li>릴리 609만+ 노출</li><li>에스더버니 팔로워 순증</li></ul>
+        <ul class="effect-list"><li>총 800만+ 노출 기대</li><li>에스더버니 신규 팔로워 증가</li></ul>
       </div>
       <div class="effect-card">
         <div class="effect-title">커머스 전환</div>
@@ -1052,7 +1052,7 @@ em.pk { font-style:italic; color:var(--pink); }
              letter-spacing:3px; text-transform:uppercase; color:rgba(255,255,255,0.35); margin-bottom:10px;">동행자 자발 콘텐츠</div>
         <div style="font-family:'Cormorant Garamond',serif; font-size:72px; font-weight:300;
              color:#F4F1EC; letter-spacing:-2px; line-height:1;">50–100<span style="color:#C4637A;">건+</span></div>
-        <div style="font-family:'Noto Sans KR',sans-serif; font-size:18px; font-weight:300;
+        <div style="font-family:'Pretendard Variable','Pretendard',sans-serif; font-size:18px; font-weight:300;
              color:rgba(255,255,255,0.45); margin-top:6px;">스토리 · 피드 포함, 추적 불가 범위까지</div>
       </div>
 
