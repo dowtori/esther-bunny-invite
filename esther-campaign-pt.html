@@ -1297,19 +1297,26 @@ em.pk { font-style:italic; color:var(--pink); }
 <script>
 /* ── S11: 피드 컷 기획 인터랙션 ───────────────────────────── */
 (function() {
+  /* 층별 정렬: B1F → 1F → 2F → 3F 핑크룸 → 3F 블루존 → RT */
   var CUTS = [
-    { n:'01', title:'핑크룸 · 대형 FRP 토끼', tags:['#메인컷','#브랜드각인'],   loc:'3F 핑크룸',    desc:'FRP 정면 · 브랜드 각인 최강컷',      lily:5, goeun:3, link:'가능'   },
-    { n:'02', title:'2F 행거 앞 쇼핑컷',       tags:['#패션컷','#커머스전환'],   loc:'2F 아뜰리에',  desc:'쇼퍼 연출 · 커머스 직결 트리거',     lily:4, goeun:5, link:'최우선' },
-    { n:'03', title:'핑크룸 · 하트 쿠션 포옹', tags:['#감성컷','#커머스전환'],   loc:'3F 핑크룸',    desc:'하트 포옹 · DM·댓글 유도 최적',      lily:4, goeun:5, link:'가능'   },
-    { n:'04', title:'블루존 · 구름 오브제',     tags:['#화보컷','#아카이브용'],   loc:'3F 블루존',    desc:'에디토리얼 · 양인 공통 최적컷',      lily:5, goeun:5, link:'간접'   },
-    { n:'05', title:'블루존 · Bunny 네온사인',  tags:['#바이럴컷','#스토리용'],   loc:'3F 블루존',    desc:'숏폼 썸네일 · Z세대 바이럴',         lily:5, goeun:3, link:'가능'   },
-    { n:'06', title:'2F MD존 · 제품 디테일',    tags:['#시퀀스컷','#릴스용'],     loc:'2F MD존',      desc:'클로즈업 · 구매결정 트리거',         lily:4, goeun:5, link:'최우선' },
-    { n:'07', title:'핑크룸 · 체커 바닥 롱샷', tags:['#패션컷','#커머스최우선'], loc:'3F 핑크룸',    desc:'전신 풀샷 · 링크태그 1순위컷',       lily:4, goeun:5, link:'최우선' },
-    { n:'08', title:'핑크룸 · FRP 세트컷',      tags:['#셀프포토','#친근감'],     loc:'3F 핑크룸',    desc:'캐릭터 하이파이브 · 팬 밈화',        lily:4, goeun:2, link:'간접'   },
-    { n:'09', title:'루프탑 · 애드벌룬',        tags:['#오픈컷','#스카이라인'],   loc:'루프탑',       desc:'스케일감 · 언론 썸네일 1순위',       lily:4, goeun:5, link:'간접'   },
-    { n:'10', title:'B1F 아뜰리에 · 책상',      tags:['#스토리컷','#브랜드서사'], loc:'B1F 아뜰리에', desc:'작업 중 버니 · 세계관 마무리컷',     lily:3, goeun:5, link:'간접'   },
-    { n:'1F-A', title:'1F 입장 컷 · 쇼룸 오픈샷',   tags:['#오프닝컷','#시퀀스'],     loc:'1F 버니의 쇼룸', desc:'입장 서사 · 전신 착장 커머스 최대', lily:4, goeun:5, link:'최우선' },
-    { n:'1F-B', title:'1F 쇼룸 집기 앞 · 제품 발견', tags:['#패션컷','#커머스전환'],   loc:'1F 버니의 쇼룸', desc:'제품 발견 서사 · 쇼룸 큐레이션 강화', lily:4, goeun:5, link:'최우선' }
+    /* B1F */
+    { floor:'B1F', floorColor:'#5C5450', title:'아뜰리에 · 책상',         tags:['#스토리컷','#브랜드서사'], loc:'B1F 버니의 스케치 아뜰리에', desc:'작업 중 버니 · 세계관 마무리컷',     lily:3, goeun:5, link:'간접',   img:'images/brand/render_p8.jpeg'   },
+    /* 1F */
+    { floor:'1F',  floorColor:'#6B7280', title:'입장 컷 · 쇼룸 오픈샷',   tags:['#오프닝컷','#시퀀스'],     loc:'1F 버니의 쇼룸',            desc:'입장 서사 · 전신 착장 커머스 최대', lily:4, goeun:5, link:'최우선', img:'images/brand/render_p25.jpeg'  },
+    { floor:'1F',  floorColor:'#6B7280', title:'쇼룸 집기 앞 · 제품 발견', tags:['#패션컷','#커머스전환'],   loc:'1F 버니의 쇼룸',            desc:'제품 발견 서사 · 쇼룸 큐레이션 강화', lily:4, goeun:5, link:'최우선', img:'images/brand/render_p29.jpeg'  },
+    /* 2F */
+    { floor:'2F',  floorColor:'#9E4D60', title:'행거 앞 · 쇼핑컷',         tags:['#패션컷','#커머스전환'],   loc:'2F 버니의 패션 아뜰리에',   desc:'쇼퍼 연출 · 커머스 직결 트리거',     lily:4, goeun:5, link:'최우선', img:'images/brand/render_p48.jpeg'  },
+    { floor:'2F',  floorColor:'#9E4D60', title:'MD존 · 제품 디테일',        tags:['#시퀀스컷','#릴스용'],     loc:'2F MD존',                   desc:'클로즈업 · 구매결정 트리거',         lily:4, goeun:5, link:'최우선', img:'images/brand/render_p50.jpeg'  },
+    /* 3F 핑크룸 */
+    { floor:'3F',  floorColor:'#C4637A', title:'핑크룸 · 대형 FRP 토끼',   tags:['#메인컷','#브랜드각인'],   loc:'3F 핑크룸',                 desc:'FRP 정면 · 브랜드 각인 최강컷',      lily:5, goeun:3, link:'가능',   img:'images/brand/render_p59.png'   },
+    { floor:'3F',  floorColor:'#C4637A', title:'핑크룸 · 하트 쿠션 포옹',  tags:['#감성컷','#커머스전환'],   loc:'3F 핑크룸',                 desc:'하트 포옹 · DM·댓글 유도 최적',      lily:4, goeun:5, link:'가능',   img:'images/brand/render_p60.png'   },
+    { floor:'3F',  floorColor:'#C4637A', title:'핑크룸 · 체커 바닥 롱샷',  tags:['#패션컷','#커머스최우선'], loc:'3F 핑크룸',                 desc:'전신 풀샷 · 링크태그 1순위컷',       lily:4, goeun:5, link:'최우선', img:'images/brand/render_p63.png'   },
+    { floor:'3F',  floorColor:'#C4637A', title:'핑크룸 · FRP 세트컷',       tags:['#셀프포토','#친근감'],     loc:'3F 핑크룸',                 desc:'캐릭터 하이파이브 · 팬 밈화',        lily:4, goeun:2, link:'간접',   img:'images/brand/render_p57.png'   },
+    /* 3F 블루존 */
+    { floor:'3F',  floorColor:'#C4637A', title:'블루존 · 구름 오브제',      tags:['#화보컷','#아카이브용'],   loc:'3F 블루존',                 desc:'에디토리얼 · 양인 공통 최적컷',      lily:5, goeun:5, link:'간접',   img:'images/brand/render_p65.png'   },
+    { floor:'3F',  floorColor:'#C4637A', title:'블루존 · Bunny 네온사인',   tags:['#바이럴컷','#스토리용'],   loc:'3F 블루존',                 desc:'숏폼 썸네일 · Z세대 바이럴',         lily:5, goeun:3, link:'가능',   img:'images/brand/render_p66.png'   },
+    /* RT */
+    { floor:'RT',  floorColor:'#4678B9', title:'루프탑 · 애드벌룬',         tags:['#오픈컷','#스카이라인'],   loc:'ROOFTOP',                   desc:'스케일감 · 언론 썸네일 1순위',       lily:4, goeun:5, link:'간접',   img:'images/brand/render_p75.jpeg'  }
   ];
 
   var state = CUTS.map(function() { return { lily: false, goeun: false }; });
@@ -1328,24 +1335,33 @@ em.pk { font-style:italic; color:var(--pink); }
     return 'background:rgba(22,18,14,0.03);color:rgba(22,18,14,0.32);border:1px solid rgba(22,18,14,0.07);';
   }
 
+  function floorBadge(c) {
+    var fc = c.floorColor;
+    /* 투명도 hex 계산: color + 1A(10%), 33(20%), 40(25%) */
+    var bg = fc + '1A', bd = fc + '40';
+    return '<span style="font-family:\'DM Sans\',sans-serif;font-size:11px;font-weight:700;letter-spacing:2px;'
+      + 'color:' + fc + ';background:' + bg + ';border:1px solid ' + bd + ';'
+      + 'padding:2px 8px;border-radius:4px;white-space:nowrap;">' + c.floor + '</span>';
+  }
+
   function renderGrid() {
     var grid = document.getElementById('s11-grid');
     if (!grid) return;
     grid.innerHTML = CUTS.map(function(c, i) {
       var sel = state[i];
       var both = sel.lily && sel.goeun;
-      var bg     = both ? 'linear-gradient(135deg,rgba(196,99,122,0.06) 0%,rgba(70,120,185,0.06) 100%)'
-                 : sel.lily  ? 'rgba(196,99,122,0.05)'
-                 : sel.goeun ? 'rgba(70,120,185,0.05)'
+      var bg     = both ? 'linear-gradient(135deg,rgba(196,99,122,0.05) 0%,rgba(70,120,185,0.05) 100%)'
+                 : sel.lily  ? 'rgba(196,99,122,0.04)'
+                 : sel.goeun ? 'rgba(70,120,185,0.04)'
                  : '#FFFFFF';
       var border = both ? '1px solid transparent'
                  : sel.lily  ? '1.5px solid rgba(196,99,122,0.45)'
                  : sel.goeun ? '1.5px solid rgba(70,120,185,0.45)'
                  : '1px solid rgba(22,18,14,0.10)';
-      var shadow = both ? '0 0 0 1.5px #C4637A, 0 0 0 3px #4678B9, 0 2px 16px rgba(0,0,0,0.07)'
+      var shadow = both ? '0 0 0 1.5px #C4637A,0 0 0 3px #4678B9,0 2px 16px rgba(0,0,0,0.07)'
                  : sel.lily  ? '0 2px 12px rgba(196,99,122,0.12)'
                  : sel.goeun ? '0 2px 12px rgba(70,120,185,0.12)'
-                 : '0 1px 4px rgba(22,18,14,0.05)';
+                 : '0 1px 3px rgba(22,18,14,0.06)';
       var lBtn = sel.lily
         ? 'background:#C4637A;color:#fff;border:1.5px solid #C4637A;'
         : 'background:transparent;color:#C4637A;border:1.5px solid rgba(196,99,122,0.30);';
@@ -1354,40 +1370,43 @@ em.pk { font-style:italic; color:var(--pink); }
         : 'background:transparent;color:#4678B9;border:1.5px solid rgba(70,120,185,0.30);';
 
       return '<div style="background:' + bg + ';border:' + border + ';border-radius:8px;box-shadow:' + shadow + ';display:flex;flex-direction:column;overflow:hidden;">'
-        /* 상단: 번호 + 제목 + 태그 */
-        + '<div style="padding:13px 15px 9px;border-bottom:1px solid rgba(22,18,14,0.07);display:flex;align-items:flex-start;justify-content:space-between;">'
-          + '<div style="display:flex;flex-direction:column;gap:4px;">'
-            + '<div style="font-family:\'Cormorant Garamond\',serif;font-size:32px;font-weight:300;color:var(--ink);line-height:1;letter-spacing:-0.5px;">' + c.n + '</div>'
-            + '<div style="font-family:\'Pretendard Variable\',\'Pretendard\',sans-serif;font-size:13px;font-weight:500;color:var(--ink);line-height:1.35;word-break:keep-all;">' + c.title + '</div>'
+        /* 이미지 썸네일 */
+        + '<div style="height:90px;flex-shrink:0;background-image:url(\'' + c.img + '\');background-size:cover;background-position:center;position:relative;">'
+          + '<div style="position:absolute;inset:0;background:linear-gradient(to bottom,transparent 40%,rgba(22,18,14,0.35) 100%);"></div>'
+        + '</div>'
+        /* 층 뱃지 + 제목 + 태그 */
+        + '<div style="padding:9px 13px 8px;border-bottom:1px solid rgba(22,18,14,0.07);display:flex;align-items:flex-start;justify-content:space-between;gap:6px;">'
+          + '<div style="display:flex;flex-direction:column;gap:5px;min-width:0;">'
+            + floorBadge(c)
+            + '<div style="font-family:\'Pretendard Variable\',\'Pretendard\',sans-serif;font-size:12px;font-weight:600;color:var(--ink);line-height:1.35;word-break:keep-all;">' + c.title + '</div>'
           + '</div>'
-          + '<div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px;margin-top:2px;">'
+          + '<div style="display:flex;flex-direction:column;align-items:flex-end;gap:3px;flex-shrink:0;">'
             + c.tags.map(function(t) {
-                return '<span style="font-family:\'DM Sans\',sans-serif;font-size:10px;letter-spacing:0.3px;color:var(--pink-deep);background:var(--pink-faint);padding:2px 7px;border-radius:3px;white-space:nowrap;">' + t + '</span>';
+                return '<span style="font-family:\'DM Sans\',sans-serif;font-size:9px;letter-spacing:0.2px;color:var(--pink-deep);background:var(--pink-faint);padding:1px 6px;border-radius:3px;white-space:nowrap;">' + t + '</span>';
               }).join('')
           + '</div>'
         + '</div>'
-        /* 중단: 공간 + 설명 + 링크 */
-        + '<div style="padding:9px 15px;flex:1;display:flex;flex-direction:column;gap:6px;">'
-          + '<div style="font-family:\'DM Sans\',sans-serif;font-size:10px;font-weight:500;letter-spacing:2px;text-transform:uppercase;color:var(--ink-dim);">' + c.loc + '</div>'
-          + '<div style="font-family:\'Pretendard Variable\',\'Pretendard\',sans-serif;font-size:13px;font-weight:400;color:var(--ink-mid);line-height:1.5;word-break:keep-all;flex:1;">' + c.desc + '</div>'
-          + '<div><span style="font-family:\'DM Sans\',sans-serif;font-size:10px;letter-spacing:1px;padding:2px 8px;border-radius:3px;' + linkStyle(c.link) + '">' + c.link + '</span></div>'
+        /* 설명 + 링크 */
+        + '<div style="padding:7px 13px;flex:1;display:flex;flex-direction:column;gap:5px;">'
+          + '<div style="font-family:\'Pretendard Variable\',\'Pretendard\',sans-serif;font-size:12px;font-weight:400;color:var(--ink-mid);line-height:1.5;word-break:keep-all;flex:1;">' + c.desc + '</div>'
+          + '<div><span style="font-family:\'DM Sans\',sans-serif;font-size:9px;letter-spacing:1px;padding:2px 7px;border-radius:3px;' + linkStyle(c.link) + '">' + c.link + '</span></div>'
         + '</div>'
         /* 별점 */
-        + '<div style="padding:7px 15px;border-top:1px solid rgba(22,18,14,0.07);border-bottom:1px solid rgba(22,18,14,0.07);display:flex;align-items:center;gap:12px;">'
-          + '<div style="flex:1;display:flex;align-items:center;gap:5px;">'
-            + '<span style="font-family:\'DM Sans\',sans-serif;font-size:10px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:#C4637A;white-space:nowrap;">릴리</span>'
+        + '<div style="padding:6px 13px;border-top:1px solid rgba(22,18,14,0.07);border-bottom:1px solid rgba(22,18,14,0.07);display:flex;align-items:center;gap:10px;">'
+          + '<div style="flex:1;display:flex;align-items:center;gap:4px;">'
+            + '<span style="font-family:\'DM Sans\',sans-serif;font-size:9px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:#C4637A;white-space:nowrap;">릴리</span>'
             + stars(c.lily, '#C4637A')
           + '</div>'
-          + '<div style="width:1px;height:14px;background:rgba(22,18,14,0.08);flex-shrink:0;"></div>'
-          + '<div style="flex:1;display:flex;align-items:center;gap:5px;">'
-            + '<span style="font-family:\'DM Sans\',sans-serif;font-size:10px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:#4678B9;white-space:nowrap;">김고은</span>'
+          + '<div style="width:1px;height:12px;background:rgba(22,18,14,0.08);flex-shrink:0;"></div>'
+          + '<div style="flex:1;display:flex;align-items:center;gap:4px;">'
+            + '<span style="font-family:\'DM Sans\',sans-serif;font-size:9px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:#4678B9;white-space:nowrap;">김고은</span>'
             + stars(c.goeun, '#4678B9')
           + '</div>'
         + '</div>'
         /* 토글 버튼 */
-        + '<div style="padding:7px 11px;display:flex;gap:7px;">'
-          + '<button onclick="window.s11toggle(' + i + ',\'lily\');event.stopPropagation();" style="flex:1;padding:5px 0;border-radius:5px;font-family:\'DM Sans\',sans-serif;font-size:11px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;cursor:pointer;' + lBtn + '">릴리</button>'
-          + '<button onclick="window.s11toggle(' + i + ',\'goeun\');event.stopPropagation();" style="flex:1;padding:5px 0;border-radius:5px;font-family:\'DM Sans\',sans-serif;font-size:11px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;cursor:pointer;' + gBtn + '">김고은</button>'
+        + '<div style="padding:6px 10px;display:flex;gap:6px;">'
+          + '<button onclick="window.s11toggle(' + i + ',\'lily\');event.stopPropagation();" style="flex:1;padding:4px 0;border-radius:5px;font-family:\'DM Sans\',sans-serif;font-size:10px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;cursor:pointer;' + lBtn + '">릴리</button>'
+          + '<button onclick="window.s11toggle(' + i + ',\'goeun\');event.stopPropagation();" style="flex:1;padding:4px 0;border-radius:5px;font-family:\'DM Sans\',sans-serif;font-size:10px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;cursor:pointer;' + gBtn + '">김고은</button>'
         + '</div>'
       + '</div>';
     }).join('');

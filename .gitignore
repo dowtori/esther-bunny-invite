@@ -1,4 +1,25 @@
 # Local Netlify folder
 .netlify
 
+# Vercel
 .vercel
+
+# 환경변수 — 절대 커밋 금지 (Vercel 토큰 등 민감 정보 포함)
+.env
+.env.local
+.env*.local
+
+# Claude Code 세션 데이터
+.claude/
+
+# 별도 레포로 분리된 프로젝트
+keepintouch/
+
+# 작업용 임시·내부 파일
+gitlog_parsed.txt
+work_transfer_context.md
+incident_report.md
+cash/
+
+# Python 빌드 스크립트
+*.py
