@@ -425,6 +425,12 @@ em.pk { font-style:italic; color:var(--pink); }
     <div id="s11-grid" style="display:grid; grid-template-columns:repeat(6,1fr); grid-template-rows:1fr 1fr; gap:11px; flex:1;"></div>
 
   </div>
+
+  <!-- 호버 오버레이 (pointer-events:none → 카드 인터랙션 그대로 유지) -->
+  <div id="s11-overlay" style="position:absolute;inset:0;z-index:30;display:flex;align-items:center;justify-content:center;pointer-events:none;opacity:0;transition:opacity 0.18s ease;">
+    <div style="position:absolute;inset:0;background:rgba(22,18,14,0.36);backdrop-filter:blur(2px);"></div>
+    <div id="s11-preview" style="position:relative;width:860px;background:#FDFBF8;border-radius:16px;box-shadow:0 32px 80px rgba(0,0,0,0.30);display:flex;overflow:hidden;max-height:480px;"></div>
+  </div>
 </div>
 
 
@@ -1346,23 +1352,107 @@ em.pk { font-style:italic; color:var(--pink); }
   /* 층별 정렬: B1F → 1F → 2F → 3F 핑크룸 → 3F 블루존 → RT */
   var CUTS = [
     /* B1F */
-    { floor:'B1F', floorColor:'#5C5450', title:'아뜰리에 · 책상',         tags:['#스토리컷','#브랜드서사'], loc:'B1F 버니의 스케치 아뜰리에', desc:'작업 중 버니 · 세계관 마무리컷',     lily:3, goeun:5, link:'간접',   img:'images/brand/render_p8.jpeg'   },
+    { floor:'B1F', floorColor:'#5C5450', title:'아뜰리에 · 책상',
+      tags:['#스토리컷','#브랜드서사'], loc:'B1F 버니의 스케치 아뜰리에', desc:'작업 중 버니 · 세계관 마무리컷', lily:3, goeun:5, link:'간접',
+      img:'images/brand/render_p8.jpeg', cardImg:null,
+      hook:'버니 = 아티스트 세계관을 셀럽이 직접 대변',
+      mood:'작업 중인 버니 컨셉 · 스케치·도구를 만지는 장면',
+      angle:'클로즈업 or 미디움샷 / 낮은 조명, 무드감',
+      keywords:['아티스트 아뜰리에','무드 조명','브랜드 스토리','손·표정 디테일','클로즈업'],
+      lilyNote:'활동적 이미지와 다소 결 다름', goeunNote:'배우의 집중하는 표정 서사' },
     /* 1F */
-    { floor:'1F',  floorColor:'#6B7280', title:'입장 컷 · 쇼룸 오픈샷',   tags:['#오프닝컷','#시퀀스'],     loc:'1F 버니의 쇼룸',            desc:'입장 서사 · 전신 착장 커머스 최대', lily:4, goeun:5, link:'최우선', img:'images/brand/render_p25.jpeg'  },
-    { floor:'1F',  floorColor:'#6B7280', title:'쇼룸 집기 앞 · 제품 발견', tags:['#패션컷','#커머스전환'],   loc:'1F 버니의 쇼룸',            desc:'제품 발견 서사 · 쇼룸 큐레이션 강화', lily:4, goeun:5, link:'최우선', img:'images/brand/render_p29.jpeg'  },
+    { floor:'1F',  floorColor:'#6B7280', title:'입장 컷 · 쇼룸 오픈샷',
+      tags:['#오프닝컷','#시퀀스'], loc:'1F 버니의 쇼룸', desc:'입장 서사 · 전신 착장 커머스 최대', lily:4, goeun:5, link:'최우선',
+      img:'images/brand/render_p25.jpeg', cardImg:'images/pt1.5p카드2번김고은.jpg',
+      hook:'팝업 방문 서사의 시작 — 전신 착장 커머스 정보량 최대',
+      mood:'문을 열고 들어서는 순간 · 정측면 / 뒷모습 → 반측면 전환 시퀀스',
+      angle:'미디움샷 · 아이레벨 / 입구 프레임이 셀럽을 감싸는 정면 구도',
+      keywords:['입장 시퀀스','쇼룸 오프닝','전신 풀샷','아우터','커머스 전환'],
+      lilyNote:'사복 일상 컷 톤', goeunNote:'배우의 입장 서사 특유의 아우라' },
+    { floor:'1F',  floorColor:'#6B7280', title:'쇼룸 집기 앞 · 제품 발견',
+      tags:['#패션컷','#커머스전환'], loc:'1F 버니의 쇼룸', desc:'제품 발견 서사 · 쇼룸 큐레이션 강화', lily:4, goeun:5, link:'최우선',
+      img:'images/brand/render_p29.jpeg', cardImg:null,
+      hook:'셀럽이 직접 발견하는 서사 — 친근감 + 커머스 유도',
+      mood:'진열된 제품을 살펴보는 자연스러운 사이드 컷 / 시선은 제품 또는 반측면',
+      angle:'미디움샷 · 45도 사이드 / 집기의 직선 라인이 프레임 그리드 역할',
+      keywords:['큐레이션 쇼룸','제품 발견','사이드컷','집기 그리드','액세서리 디테일'],
+      lilyNote:'제품 리뷰 톤 팬 친화', goeunNote:'섬세한 시선 처리와 정적 무드' },
     /* 2F */
-    { floor:'2F',  floorColor:'#9E4D60', title:'행거 앞 · 쇼핑컷',         tags:['#패션컷','#커머스전환'],   loc:'2F 버니의 패션 아뜰리에',   desc:'쇼퍼 연출 · 커머스 직결 트리거',     lily:4, goeun:5, link:'최우선', img:'images/brand/render_p48.jpeg'  },
-    { floor:'2F',  floorColor:'#9E4D60', title:'MD존 · 제품 디테일',        tags:['#시퀀스컷','#릴스용'],     loc:'2F MD존',                   desc:'클로즈업 · 구매결정 트리거',         lily:4, goeun:5, link:'최우선', img:'images/brand/render_p50.jpeg'  },
+    { floor:'2F',  floorColor:'#9E4D60', title:'행거 앞 · 쇼핑컷',
+      tags:['#패션컷','#커머스전환'], loc:'2F 버니의 패션 아뜰리에', desc:'쇼퍼 연출 · 커머스 직결 트리거', lily:4, goeun:5, link:'최우선',
+      img:'images/brand/render_p48.jpeg', cardImg:'images/pt1.5p카드4번릴리.webp',
+      hook:'실제로 살 수 있는 공간 — 쇼핑 서사가 구매 전환 직접 자극',
+      mood:'옷을 고르는 듯한 자연스러운 쇼퍼 연출 / 시선은 옷·행거 또는 반측면',
+      angle:'미디움샷 · 아이레벨 / 행거의 곡선 라인이 프레임 가이드 역할',
+      keywords:['쇼퍼 서사','곡선형 행거','아뜰리에','컬러 대비','커머스 전환'],
+      lilyNote:'K-pop 멤버의 일상 사복 코드로 재해석', goeunNote:'자연스러운 서사감이 쇼핑 컷에 이상적' },
+    { floor:'2F',  floorColor:'#9E4D60', title:'MD존 · 제품 디테일',
+      tags:['#시퀀스컷','#릴스용'], loc:'2F MD존', desc:'클로즈업 · 구매결정 트리거', lily:4, goeun:5, link:'최우선',
+      img:'images/brand/render_p50.jpeg', cardImg:null,
+      hook:'제품 디테일 클로즈업 = 구매 결정 트리거',
+      mood:'제품을 만지거나 들어 올리는 디테일 컷 / 발견 순간의 표정',
+      angle:'클로즈업 (50~85mm) · 손·제품·FRP 캐릭터가 삼각 구도',
+      keywords:['제품 발견','클로즈업','손 디테일','삼각 구도','릴스 인서트'],
+      lilyNote:'자연스러운 제품 리뷰 톤으로 팬 친화', goeunNote:'손·표정 디테일 장악력' },
     /* 3F 핑크룸 */
-    { floor:'3F',  floorColor:'#C4637A', title:'핑크룸 · 대형 FRP 토끼',   tags:['#메인컷','#브랜드각인'],   loc:'3F 핑크룸',                 desc:'FRP 정면 · 브랜드 각인 최강컷',      lily:5, goeun:3, link:'가능',   img:'images/brand/render_p59.png'   },
-    { floor:'3F',  floorColor:'#C4637A', title:'핑크룸 · 하트 쿠션 포옹',  tags:['#감성컷','#커머스전환'],   loc:'3F 핑크룸',                 desc:'하트 포옹 · DM·댓글 유도 최적',      lily:4, goeun:5, link:'가능',   img:'images/brand/render_p60.png'   },
-    { floor:'3F',  floorColor:'#C4637A', title:'핑크룸 · 체커 바닥 롱샷',  tags:['#패션컷','#커머스최우선'], loc:'3F 핑크룸',                 desc:'전신 풀샷 · 링크태그 1순위컷',       lily:4, goeun:5, link:'최우선', img:'images/brand/render_p63.png'   },
-    { floor:'3F',  floorColor:'#C4637A', title:'핑크룸 · FRP 세트컷',       tags:['#셀프포토','#친근감'],     loc:'3F 핑크룸',                 desc:'캐릭터 하이파이브 · 팬 밈화',        lily:4, goeun:2, link:'간접',   img:'images/brand/render_p57.png'   },
+    { floor:'3F',  floorColor:'#C4637A', title:'핑크룸 · 대형 FRP 토끼',
+      tags:['#메인컷','#브랜드각인'], loc:'3F 핑크룸', desc:'FRP 정면 · 브랜드 각인 최강컷', lily:5, goeun:3, link:'가능',
+      img:'images/brand/render_p59.png', cardImg:null,
+      hook:'브랜드 로고 없이도 에스더버니 즉시 식별 — 팬아트·짤 최다 파생',
+      mood:'페이시 + 키치 러블리 / 토끼 옆에 기대거나 포옹 자세로 캐릭터와 동일선상',
+      angle:'정면 · 아이레벨 · 셀럽과 FRP가 한 프레임에 대칭 (24~35mm)',
+      keywords:['키치 러블리','핑크룸','대형 FRP','대칭 구도','브랜드 각인'],
+      lilyNote:'러블리 무드가 본인 컬러와 맞음', goeunNote:'본인 성향과 다소 이질적, 서브컷 권장' },
+    { floor:'3F',  floorColor:'#C4637A', title:'핑크룸 · 하트 쿠션 포옹',
+      tags:['#감성컷','#커머스전환'], loc:'3F 핑크룸', desc:'하트 포옹 · DM·댓글 유도 최적', lily:4, goeun:5, link:'가능',
+      img:'images/brand/render_p60.png', cardImg:null,
+      hook:"'어디서 살 수 있어요?' DM·댓글 유도 최적 — 좋아요 전환율 최고",
+      mood:'하트를 끌어안거나 기대앉은 반측면 / 시선은 카메라 또는 먼 곳',
+      angle:'아이레벨 · 정측면 45도 / 하트 쿠션과 셀럽 상반신이 3:7 비율',
+      keywords:['하트 포옹','러블리 감성','톤온톤','반측면','댓글 유도'],
+      lilyNote:'기본 무드와 오버랩, 임팩트는 상대적으로 낮음', goeunNote:'드뮤어 × 러블리 반전 매력 최강 발현' },
+    { floor:'3F',  floorColor:'#C4637A', title:'핑크룸 · 체커 바닥 롱샷',
+      tags:['#패션컷','#커머스최우선'], loc:'3F 핑크룸', desc:'전신 풀샷 · 링크태그 1순위컷', lily:4, goeun:5, link:'최우선',
+      img:'images/brand/render_p63.png', cardImg:null,
+      hook:"'셀럽 착용 OOO' 태그 삽입 최적 — 온라인몰 썸네일 재활용 1순위",
+      mood:'패션지 화보 느낌의 정적 룩북 / 체커 패턴이 그리드 레이아웃 역할',
+      angle:'하이앵글 또는 아이레벨 롱샷 / 전신 풀샷 · 5:4 비율',
+      keywords:['화보 룩북','체커 패턴','전신 풀샷','메인 커머스컷','5:4 비율'],
+      lilyNote:'K-pop 화보 스타일로 재해석', goeunNote:'무신사·W매거진 계열 화보 경력으로 앵글 장악력 압도' },
+    { floor:'3F',  floorColor:'#C4637A', title:'핑크룸 · FRP 세트컷',
+      tags:['#셀프포토','#친근감'], loc:'3F 핑크룸', desc:'캐릭터 하이파이브 · 팬 밈화', lily:4, goeun:2, link:'간접',
+      img:'images/brand/render_p57.png', cardImg:'images/pt1.5p카드9번김고은.jpg',
+      hook:"'○○이 친구 생김' 밈화 기대 — 팬 댓글·스토리 재활용 최적",
+      mood:"캐릭터와 키 맞춰 서 있거나 하이파이브 / '친구' 같은 컨셉",
+      angle:'아이레벨 정면 / 셀럽과 캐릭터 둘 다 풀샷',
+      keywords:['친구 컨셉','등신대 FRP','유머 코드','밈화','팬 친화'],
+      lilyNote:'팬 친화 콘텐츠로 잘 맞음', goeunNote:'캐릭터와의 밈 코드 이질적' },
     /* 3F 블루존 */
-    { floor:'3F',  floorColor:'#C4637A', title:'블루존 · 구름 오브제',      tags:['#화보컷','#아카이브용'],   loc:'3F 블루존',                 desc:'에디토리얼 · 양인 공통 최적컷',      lily:5, goeun:5, link:'간접',   img:'images/brand/render_p65.png'   },
-    { floor:'3F',  floorColor:'#C4637A', title:'블루존 · Bunny 네온사인',   tags:['#바이럴컷','#스토리용'],   loc:'3F 블루존',                 desc:'숏폼 썸네일 · Z세대 바이럴',         lily:5, goeun:3, link:'가능',   img:'images/brand/render_p66.png'   },
+    { floor:'3F',  floorColor:'#C4637A', title:'블루존 · 구름 오브제',
+      tags:['#화보컷','#아카이브용'], loc:'3F 블루존', desc:'에디토리얼 · 양인 공통 최적컷', lily:5, goeun:5, link:'간접',
+      img:'images/brand/render_p65.png', cardImg:null,
+      hook:'광고 느낌 없는 최고의 에디토리얼 컷 — 공식 계정 리그램·룩북 장기 활용',
+      mood:'하늘 위를 걷는 듯한 꿈결 무드 / 정적인 화보 느낌 · 움직임 최소화',
+      angle:'아이레벨 · 중망원(50~85mm) / 구름 오브제가 전경·후경에 배치된 레이어샷',
+      keywords:['꿈결 무드','구름 레이어샷','에디토리얼','블루존','화보 아카이브'],
+      lilyNote:'각자 다른 해석으로 분리된 무드 확보', goeunNote:'두 셀럽 모두 가장 잘 어울리는 화보 컷' },
+    { floor:'3F',  floorColor:'#C4637A', title:'블루존 · Bunny 네온사인',
+      tags:['#바이럴컷','#스토리용'], loc:'3F 블루존', desc:'숏폼 썸네일 · Z세대 바이럴', lily:5, goeun:3, link:'가능',
+      img:'images/brand/render_p66.png', cardImg:'images/pt1.5p카드11번릴리.webp',
+      hook:"'Bunny' 텍스트가 해시태그 없이도 발견성 확보 — Z세대 바이럴 최적",
+      mood:'사다리에 한 발 걸친 장난스러운 포즈 / 조명으로 셀럽 얼굴에 컬러 드리움',
+      angle:'로우앵글 · 세로 크롭 / 조명이 함께 프레이밍되는 위치 필수',
+      keywords:['네온사인','장난스러운 포즈','컬러 반사','로우앵글','Z세대 바이럴'],
+      lilyNote:'숏폼·바이럴 친화력 최고', goeunNote:'톤이 다소 캐주얼해 본인 콘셉트에 덜 맞음' },
     /* RT */
-    { floor:'RT',  floorColor:'#4678B9', title:'루프탑 · 애드벌룬',         tags:['#오픈컷','#스카이라인'],   loc:'ROOFTOP',                   desc:'스케일감 · 언론 썸네일 1순위',       lily:4, goeun:5, link:'간접',   img:'images/brand/render_p75.jpeg'  }
+    { floor:'RT',  floorColor:'#4678B9', title:'루프탑 · 애드벌룬',
+      tags:['#오픈컷','#스카이라인'], loc:'ROOFTOP', desc:'스케일감 · 언론 썸네일 1순위', lily:4, goeun:5, link:'간접',
+      img:'images/brand/render_p75.jpeg', cardImg:null,
+      hook:'팝업 스케일감 최대 전달 — 기사·언론 썸네일 1순위, 성수 핫플 검색 유입',
+      mood:'개방감 · 하늘 배경 / 팝업 전체를 상징하는 랜드마크 컷',
+      angle:'로우앵글 · 애드벌룬과 셀럽이 하늘 배경에 함께 / 광각 권장',
+      keywords:['루프탑','스카이라인','애드벌룬','자연광','랜드마크컷'],
+      lilyNote:'K-pop 뮤비 스틸 느낌', goeunNote:'배우 화보 감성과 하늘 배경 조화' }
   ];
 
   /* 선택 순서 배열 (index = 순위) — 최대 5개 */
@@ -1453,7 +1543,7 @@ em.pk { font-style:italic; color:var(--pink); }
         ? 'background:' + gColor + ';color:#fff;border:1.5px solid ' + gColor + ';'
         : 'background:transparent;color:#4678B9;border:1.5px solid rgba(70,120,185,0.30);';
 
-      return '<div style="position:relative;background:' + cs.bg + ';border:' + cs.border + ';border-radius:8px;box-shadow:' + cs.shadow + ';display:flex;flex-direction:column;overflow:hidden;">'
+      return '<div onmouseenter="window.s11hover(' + i + ');" style="position:relative;background:' + cs.bg + ';border:' + cs.border + ';border-radius:8px;box-shadow:' + cs.shadow + ';display:flex;flex-direction:column;overflow:hidden;cursor:default;">'
         /* 책갈피 */
         + bookmark('lily',  lr)
         + bookmark('goeun', gr)
@@ -1467,8 +1557,8 @@ em.pk { font-style:italic; color:var(--pink); }
           + '<div style="font-family:\'Pretendard Variable\',\'Pretendard\',sans-serif;font-size:11px;font-weight:400;color:var(--ink-mid);line-height:1.45;word-break:keep-all;flex:1;">' + c.desc + '</div>'
           + '<span style="font-family:\'DM Sans\',sans-serif;font-size:9px;letter-spacing:1px;padding:2px 6px;border-radius:3px;white-space:nowrap;flex-shrink:0;' + linkStyle(c.link) + '">' + c.link + '</span>'
         + '</div>'
-        /* 중앙 이미지 */
-        + '<div style="margin:0 10px 8px;border-radius:6px;overflow:hidden;flex:1;min-height:90px;background-image:url(\'' + c.img + '\');background-size:cover;background-position:center top;"></div>'
+        /* 중앙 이미지 — cardImg(인물) 우선, 없으면 render */
+        + '<div style="margin:0 10px 8px;border-radius:6px;overflow:hidden;flex:1;min-height:90px;background-image:url(\'' + (c.cardImg || c.img) + '\');background-size:cover;background-position:center top;"></div>'
         /* 태그 */
         + '<div style="padding:0 12px 6px;display:flex;gap:4px;flex-wrap:wrap;flex-shrink:0;">'
           + c.tags.map(function(t) {
@@ -1495,6 +1585,93 @@ em.pk { font-style:italic; color:var(--pink); }
       + '</div>';
     }).join('');
   }
+
+  /* ── 호버 오버레이 ── */
+  var hoverTimer = null;
+
+  window.s11hover = function(i) {
+    clearTimeout(hoverTimer);
+    var c = CUTS[i];
+    var overlay = document.getElementById('s11-overlay');
+    var preview = document.getElementById('s11-preview');
+    if (!overlay || !preview) return;
+
+    var starStr = function(n, color) {
+      var s = '';
+      for (var j = 1; j <= 5; j++)
+        s += '<span style="color:' + (j <= n ? color : 'rgba(22,18,14,0.15)') + ';font-size:14px;">★</span>';
+      return s;
+    };
+
+    preview.innerHTML =
+      /* 왼쪽: 렌더 이미지 (공간 컨텍스트) */
+      '<div style="width:280px;flex-shrink:0;background-image:url(\'' + c.img + '\');background-size:cover;background-position:center;position:relative;">'
+        + '<div style="position:absolute;inset:0;background:linear-gradient(to right,transparent 55%,rgba(22,18,14,0.12));"></div>'
+        /* 층 뱃지 */
+        + '<div style="position:absolute;bottom:16px;left:16px;">'
+          + '<span style="font-family:\'DM Sans\',sans-serif;font-size:12px;font-weight:700;letter-spacing:2.5px;padding:4px 12px;border-radius:5px;background:rgba(22,18,14,0.55);color:#fff;backdrop-filter:blur(4px);">' + c.floor + '</span>'
+        + '</div>'
+      + '</div>'
+      /* 오른쪽: 콘텐츠 상세 */
+      + '<div style="flex:1;padding:26px 28px;display:flex;flex-direction:column;gap:12px;overflow:hidden;">'
+        /* 타이틀 */
+        + '<div style="font-family:\'Pretendard Variable\',\'Pretendard\',sans-serif;font-size:15px;font-weight:700;color:var(--ink);line-height:1.3;">' + c.title + '</div>'
+        /* Hook phrase */
+        + '<div style="font-family:\'Cormorant Garamond\',serif;font-size:20px;font-weight:500;font-style:italic;color:var(--ink);line-height:1.4;border-left:3px solid ' + c.floorColor + ';padding-left:14px;">'
+          + c.hook
+        + '</div>'
+        + '<div style="height:1px;background:rgba(22,18,14,0.07);flex-shrink:0;"></div>'
+        /* 무드 + 앵글 */
+        + '<div style="display:flex;flex-direction:column;gap:7px;flex-shrink:0;">'
+          + '<div style="display:flex;gap:10px;">'
+            + '<span style="font-family:\'DM Sans\',sans-serif;font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--ink-dim);white-space:nowrap;padding-top:2px;min-width:28px;">무드</span>'
+            + '<span style="font-family:\'Pretendard Variable\',\'Pretendard\',sans-serif;font-size:12px;color:var(--ink-mid);line-height:1.5;">' + c.mood + '</span>'
+          + '</div>'
+          + '<div style="display:flex;gap:10px;">'
+            + '<span style="font-family:\'DM Sans\',sans-serif;font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--ink-dim);white-space:nowrap;padding-top:2px;min-width:28px;">앵글</span>'
+            + '<span style="font-family:\'Pretendard Variable\',\'Pretendard\',sans-serif;font-size:12px;color:var(--ink-mid);line-height:1.5;">' + c.angle + '</span>'
+          + '</div>'
+        + '</div>'
+        /* 키워드 칩 */
+        + '<div style="display:flex;flex-wrap:wrap;gap:6px;flex-shrink:0;">'
+          + c.keywords.map(function(k) {
+              return '<span style="font-family:\'DM Sans\',sans-serif;font-size:10px;padding:3px 10px;border-radius:4px;background:rgba(22,18,14,0.05);color:var(--ink);border:1px solid rgba(22,18,14,0.10);">' + k + '</span>';
+            }).join('')
+        + '</div>'
+        + '<div style="height:1px;background:rgba(22,18,14,0.07);flex-shrink:0;"></div>'
+        /* 셀럽 핏 */
+        + '<div style="display:flex;gap:16px;flex-shrink:0;">'
+          + '<div style="flex:1;">'
+            + '<div style="display:flex;align-items:center;gap:6px;margin-bottom:4px;">'
+              + '<span style="font-family:\'DM Sans\',sans-serif;font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#C4637A;">릴리</span>'
+              + starStr(c.lily, '#C4637A')
+            + '</div>'
+            + '<div style="font-family:\'Pretendard Variable\',\'Pretendard\',sans-serif;font-size:11px;color:var(--ink-mid);line-height:1.5;">' + c.lilyNote + '</div>'
+          + '</div>'
+          + '<div style="width:1px;background:rgba(22,18,14,0.08);flex-shrink:0;"></div>'
+          + '<div style="flex:1;">'
+            + '<div style="display:flex;align-items:center;gap:6px;margin-bottom:4px;">'
+              + '<span style="font-family:\'DM Sans\',sans-serif;font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#4678B9;">김고은</span>'
+              + starStr(c.goeun, '#4678B9')
+            + '</div>'
+            + '<div style="font-family:\'Pretendard Variable\',\'Pretendard\',sans-serif;font-size:11px;color:var(--ink-mid);line-height:1.5;">' + c.goeunNote + '</div>'
+          + '</div>'
+        + '</div>'
+      + '</div>';
+
+    overlay.style.opacity = '1';
+  };
+
+  /* 그리드 영역 벗어나면 오버레이 닫기 (딜레이로 카드 간 이동 시 깜빡임 방지) */
+  document.getElementById('s11-grid').addEventListener('mouseleave', function() {
+    hoverTimer = setTimeout(function() {
+      var overlay = document.getElementById('s11-overlay');
+      if (overlay) overlay.style.opacity = '0';
+    }, 120);
+  });
+  document.getElementById('s11-grid').addEventListener('mouseenter', function() {
+    clearTimeout(hoverTimer);
+  });
 
   window.s11toggle = function(i, who) {
     var order = who === 'lily' ? lilyOrder : goeunOrder;
@@ -1629,17 +1806,23 @@ em.pk { font-style:italic; color:var(--pink); }
     var selectedStyle = 'background:' + baseColor + ';color:#fff;border:2px solid ' + baseColor + ';';
     var unselStyle    = 'background:transparent;color:' + baseColor + ';border:2px solid rgba(' + baseRgba + ',0.30);';
 
+    var imgFile = who === 'lily' ? 'images/1.5b릴리.webp' : 'images/1.5b김고은.webp';
+
     return '<div style="background:#fff;border:1.5px solid rgba(' + baseRgba + ',0.22);border-radius:12px;'
       + 'box-shadow:0 2px 16px rgba(' + baseRgba + ',0.08);display:flex;flex-direction:column;overflow:hidden;height:100%;">'
-      /* 헤더 */
-      + '<div style="padding:16px 20px 12px;border-bottom:1px solid rgba(22,18,14,0.07);display:flex;align-items:center;justify-content:space-between;">'
-        + '<div>'
-          + '<div style="font-family:\'Cormorant Garamond\',serif;font-size:22px;font-weight:600;color:' + baseColor + ';line-height:1;">' + d.name + '</div>'
-          + '<div style="font-family:\'DM Sans\',sans-serif;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--ink-dim);margin-top:2px;">' + d.nameEn + '</div>'
-        + '</div>'
-        + '<div style="font-family:\'DM Sans\',sans-serif;font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;'
-          + 'padding:5px 12px;border-radius:20px;background:rgba(' + baseRgba + ',0.08);color:' + baseColor + ';">'
-          + '태그 ' + d.limit + '개 한도'
+      /* 이미지 헤더 (시원시원하게) */
+      + '<div style="position:relative;height:200px;flex-shrink:0;background-image:url(\'' + imgFile + '\');background-size:cover;background-position:center 15%;">'
+        + '<div style="position:absolute;inset:0;background:linear-gradient(to bottom,transparent 30%,rgba(22,18,14,0.55) 100%);"></div>'
+        /* 이름 + 소속 (이미지 하단 오버레이) */
+        + '<div style="position:absolute;bottom:0;left:0;right:0;padding:14px 20px;display:flex;align-items:flex-end;justify-content:space-between;">'
+          + '<div>'
+            + '<div style="font-family:\'Cormorant Garamond\',serif;font-size:28px;font-weight:600;color:#fff;line-height:1;text-shadow:0 1px 8px rgba(0,0,0,0.3);">' + d.name + '</div>'
+            + '<div style="font-family:\'DM Sans\',sans-serif;font-size:11px;letter-spacing:2.5px;text-transform:uppercase;color:rgba(255,255,255,0.75);margin-top:3px;">' + d.nameEn + '</div>'
+          + '</div>'
+          + '<div style="font-family:\'DM Sans\',sans-serif;font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;'
+            + 'padding:5px 12px;border-radius:20px;background:rgba(255,255,255,0.18);color:#fff;border:1px solid rgba(255,255,255,0.35);backdrop-filter:blur(6px);">'
+            + '태그 ' + d.limit + '개 한도'
+          + '</div>'
         + '</div>'
       + '</div>'
       /* A/B 토글 */
