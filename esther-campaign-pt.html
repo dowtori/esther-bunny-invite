@@ -426,11 +426,14 @@ em.pk { font-style:italic; color:var(--pink); }
 
   </div>
 
-  <!-- 호버 오버레이 (pointer-events:none → 카드 인터랙션 그대로 유지) -->
-  <div id="s11-overlay" style="position:absolute;inset:0;z-index:30;display:flex;align-items:center;justify-content:center;pointer-events:none;opacity:0;transition:opacity 0.18s ease;">
-    <div style="position:absolute;inset:0;background:rgba(22,18,14,0.36);backdrop-filter:blur(2px);"></div>
-    <div id="s11-preview" style="position:relative;width:860px;background:#FDFBF8;border-radius:16px;box-shadow:0 32px 80px rgba(0,0,0,0.30);display:flex;overflow:hidden;max-height:480px;"></div>
+  <!-- 클릭 오버레이 — backdrop 클릭 시 닫힘, pointer-events:auto -->
+  <div id="s11-overlay" style="position:absolute;inset:0;z-index:30;display:none;align-items:center;justify-content:center;">
+    <div onclick="window.s11close();event.stopPropagation();" style="position:absolute;inset:0;background:rgba(22,18,14,0.38);backdrop-filter:blur(2px);"></div>
+    <div id="s11-preview" style="position:relative;width:880px;background:#FDFBF8;border-radius:16px;box-shadow:0 32px 80px rgba(0,0,0,0.30);display:flex;overflow:hidden;max-height:500px;animation:s11fadeIn 0.18s ease;">
+      <button onclick="window.s11close();event.stopPropagation();" style="position:absolute;top:12px;right:14px;z-index:10;width:28px;height:28px;border-radius:50%;border:none;background:rgba(22,18,14,0.10);color:#333;font-size:14px;cursor:pointer;line-height:1;">✕</button>
+    </div>
   </div>
+  <style>@keyframes s11fadeIn{from{opacity:0;transform:scale(0.96)}to{opacity:1;transform:scale(1)}}</style>
 </div>
 
 
@@ -1543,7 +1546,7 @@ em.pk { font-style:italic; color:var(--pink); }
         ? 'background:' + gColor + ';color:#fff;border:1.5px solid ' + gColor + ';'
         : 'background:transparent;color:#4678B9;border:1.5px solid rgba(70,120,185,0.30);';
 
-      return '<div onmouseenter="window.s11hover(' + i + ');" style="position:relative;background:' + cs.bg + ';border:' + cs.border + ';border-radius:8px;box-shadow:' + cs.shadow + ';display:flex;flex-direction:column;overflow:hidden;cursor:default;">'
+      return '<div style="position:relative;background:' + cs.bg + ';border:' + cs.border + ';border-radius:8px;box-shadow:' + cs.shadow + ';display:flex;flex-direction:column;overflow:hidden;">'
         /* 책갈피 */
         + bookmark('lily',  lr)
         + bookmark('goeun', gr)
@@ -1557,8 +1560,11 @@ em.pk { font-style:italic; color:var(--pink); }
           + '<div style="font-family:\'Pretendard Variable\',\'Pretendard\',sans-serif;font-size:11px;font-weight:400;color:var(--ink-mid);line-height:1.45;word-break:keep-all;flex:1;">' + c.desc + '</div>'
           + '<span style="font-family:\'DM Sans\',sans-serif;font-size:9px;letter-spacing:1px;padding:2px 6px;border-radius:3px;white-space:nowrap;flex-shrink:0;' + linkStyle(c.link) + '">' + c.link + '</span>'
         + '</div>'
-        /* 중앙 이미지 — cardImg(인물) 우선, 없으면 render */
-        + '<div style="margin:0 10px 8px;border-radius:6px;overflow:hidden;flex:1;min-height:90px;background-image:url(\'' + (c.cardImg || c.img) + '\');background-size:cover;background-position:center top;"></div>'
+        /* 중앙 이미지 — 클릭 시 상세 오버레이 열림 */
+        + '<div onclick="window.s11open(' + i + ');event.stopPropagation();" style="margin:0 10px 8px;border-radius:6px;overflow:hidden;flex:1;min-height:90px;cursor:pointer;position:relative;background-image:url(\'' + (c.cardImg || c.img) + '\');background-size:cover;background-position:center top;">'
+          + '<div style="position:absolute;inset:0;background:rgba(22,18,14,0);transition:background 0.15s;" onmouseenter="this.style.background=\'rgba(22,18,14,0.12)\'" onmouseleave="this.style.background=\'rgba(22,18,14,0)\'"></div>'
+          + '<div style="position:absolute;bottom:6px;right:8px;font-family:\'DM Sans\',sans-serif;font-size:9px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,0.80);background:rgba(22,18,14,0.35);padding:2px 7px;border-radius:3px;pointer-events:none;">상세 보기</div>'
+        + '</div>'
         /* 태그 */
         + '<div style="padding:0 12px 6px;display:flex;gap:4px;flex-wrap:wrap;flex-shrink:0;">'
           + c.tags.map(function(t) {
@@ -1586,15 +1592,15 @@ em.pk { font-style:italic; color:var(--pink); }
     }).join('');
   }
 
-  /* ── 호버 오버레이 ── */
-  var hoverTimer = null;
+  /* ── 클릭 오버레이 ── */
+  var s11curIdx = null;
 
-  window.s11hover = function(i) {
-    clearTimeout(hoverTimer);
+  function s11renderOverlay(i) {
     var c = CUTS[i];
-    var overlay = document.getElementById('s11-overlay');
+    var lr = getRank(lilyOrder,  i);
+    var gr = getRank(goeunOrder, i);
     var preview = document.getElementById('s11-preview');
-    if (!overlay || !preview) return;
+    if (!preview) return;
 
     var starStr = function(n, color) {
       var s = '';
@@ -1603,25 +1609,32 @@ em.pk { font-style:italic; color:var(--pink); }
       return s;
     };
 
+    var lRank = lr !== -1 ? RANK_LABELS[lr] : null;
+    var gRank = gr !== -1 ? RANK_LABELS[gr] : null;
+    var lColor = lr !== -1 ? LILY_COLORS[lr]  : null;
+    var gColor = gr !== -1 ? GOEUN_COLORS[gr] : null;
+    var lBtnStyle = lColor
+      ? 'background:' + lColor + ';color:#fff;border:1.5px solid ' + lColor + ';'
+      : 'background:transparent;color:#C4637A;border:1.5px solid rgba(196,99,122,0.35);';
+    var gBtnStyle = gColor
+      ? 'background:' + gColor + ';color:#fff;border:1.5px solid ' + gColor + ';'
+      : 'background:transparent;color:#4678B9;border:1.5px solid rgba(70,120,185,0.35);';
+
+    /* ✕ 버튼은 HTML에 이미 있으므로 innerHTML 은 나머지만 */
+    var existing = preview.querySelector('button');
     preview.innerHTML =
-      /* 왼쪽: 렌더 이미지 (공간 컨텍스트) */
-      '<div style="width:280px;flex-shrink:0;background-image:url(\'' + c.img + '\');background-size:cover;background-position:center;position:relative;">'
-        + '<div style="position:absolute;inset:0;background:linear-gradient(to right,transparent 55%,rgba(22,18,14,0.12));"></div>'
-        /* 층 뱃지 */
+      /* 왼쪽: 렌더 이미지 */
+      '<div style="width:300px;flex-shrink:0;background-image:url(\'' + c.img + '\');background-size:cover;background-position:center;position:relative;">'
+        + '<div style="position:absolute;inset:0;background:linear-gradient(to right,transparent 50%,rgba(22,18,14,0.10));"></div>'
         + '<div style="position:absolute;bottom:16px;left:16px;">'
-          + '<span style="font-family:\'DM Sans\',sans-serif;font-size:12px;font-weight:700;letter-spacing:2.5px;padding:4px 12px;border-radius:5px;background:rgba(22,18,14,0.55);color:#fff;backdrop-filter:blur(4px);">' + c.floor + '</span>'
+          + '<span style="font-family:\'DM Sans\',sans-serif;font-size:12px;font-weight:700;letter-spacing:2.5px;padding:4px 12px;border-radius:5px;background:rgba(22,18,14,0.50);color:#fff;backdrop-filter:blur(4px);">' + c.floor + '</span>'
         + '</div>'
       + '</div>'
-      /* 오른쪽: 콘텐츠 상세 */
-      + '<div style="flex:1;padding:26px 28px;display:flex;flex-direction:column;gap:12px;overflow:hidden;">'
-        /* 타이틀 */
-        + '<div style="font-family:\'Pretendard Variable\',\'Pretendard\',sans-serif;font-size:15px;font-weight:700;color:var(--ink);line-height:1.3;">' + c.title + '</div>'
-        /* Hook phrase */
-        + '<div style="font-family:\'Cormorant Garamond\',serif;font-size:20px;font-weight:500;font-style:italic;color:var(--ink);line-height:1.4;border-left:3px solid ' + c.floorColor + ';padding-left:14px;">'
-          + c.hook
-        + '</div>'
+      /* 오른쪽 */
+      + '<div style="flex:1;padding:28px 36px 24px 28px;display:flex;flex-direction:column;gap:13px;overflow:hidden;">'
+        + '<div style="font-family:\'Pretendard Variable\',\'Pretendard\',sans-serif;font-size:15px;font-weight:700;color:var(--ink);line-height:1.3;padding-right:32px;">' + c.title + '</div>'
+        + '<div style="font-family:\'Cormorant Garamond\',serif;font-size:21px;font-weight:500;font-style:italic;color:var(--ink);line-height:1.4;border-left:3px solid ' + c.floorColor + ';padding-left:14px;">' + c.hook + '</div>'
         + '<div style="height:1px;background:rgba(22,18,14,0.07);flex-shrink:0;"></div>'
-        /* 무드 + 앵글 */
         + '<div style="display:flex;flex-direction:column;gap:7px;flex-shrink:0;">'
           + '<div style="display:flex;gap:10px;">'
             + '<span style="font-family:\'DM Sans\',sans-serif;font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--ink-dim);white-space:nowrap;padding-top:2px;min-width:28px;">무드</span>'
@@ -1632,46 +1645,55 @@ em.pk { font-style:italic; color:var(--pink); }
             + '<span style="font-family:\'Pretendard Variable\',\'Pretendard\',sans-serif;font-size:12px;color:var(--ink-mid);line-height:1.5;">' + c.angle + '</span>'
           + '</div>'
         + '</div>'
-        /* 키워드 칩 */
         + '<div style="display:flex;flex-wrap:wrap;gap:6px;flex-shrink:0;">'
           + c.keywords.map(function(k) {
               return '<span style="font-family:\'DM Sans\',sans-serif;font-size:10px;padding:3px 10px;border-radius:4px;background:rgba(22,18,14,0.05);color:var(--ink);border:1px solid rgba(22,18,14,0.10);">' + k + '</span>';
             }).join('')
         + '</div>'
         + '<div style="height:1px;background:rgba(22,18,14,0.07);flex-shrink:0;"></div>'
-        /* 셀럽 핏 */
-        + '<div style="display:flex;gap:16px;flex-shrink:0;">'
+        /* 셀럽 핏 + 선택 버튼 */
+        + '<div style="display:flex;gap:12px;align-items:flex-start;flex-shrink:0;">'
           + '<div style="flex:1;">'
             + '<div style="display:flex;align-items:center;gap:6px;margin-bottom:4px;">'
               + '<span style="font-family:\'DM Sans\',sans-serif;font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#C4637A;">릴리</span>'
               + starStr(c.lily, '#C4637A')
             + '</div>'
-            + '<div style="font-family:\'Pretendard Variable\',\'Pretendard\',sans-serif;font-size:11px;color:var(--ink-mid);line-height:1.5;">' + c.lilyNote + '</div>'
+            + '<div style="font-family:\'Pretendard Variable\',\'Pretendard\',sans-serif;font-size:11px;color:var(--ink-mid);line-height:1.5;margin-bottom:8px;">' + c.lilyNote + '</div>'
+            + '<button onclick="window.s11toggle(' + i + ',\'lily\');window.s11open(' + i + ');event.stopPropagation();" style="width:100%;padding:7px 0;border-radius:6px;font-family:\'DM Sans\',sans-serif;font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;cursor:pointer;' + lBtnStyle + '">' + (lRank || '+ 릴리 추가') + '</button>'
           + '</div>'
-          + '<div style="width:1px;background:rgba(22,18,14,0.08);flex-shrink:0;"></div>'
+          + '<div style="width:1px;background:rgba(22,18,14,0.08);flex-shrink:0;align-self:stretch;"></div>'
           + '<div style="flex:1;">'
             + '<div style="display:flex;align-items:center;gap:6px;margin-bottom:4px;">'
               + '<span style="font-family:\'DM Sans\',sans-serif;font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#4678B9;">김고은</span>'
               + starStr(c.goeun, '#4678B9')
             + '</div>'
-            + '<div style="font-family:\'Pretendard Variable\',\'Pretendard\',sans-serif;font-size:11px;color:var(--ink-mid);line-height:1.5;">' + c.goeunNote + '</div>'
+            + '<div style="font-family:\'Pretendard Variable\',\'Pretendard\',sans-serif;font-size:11px;color:var(--ink-mid);line-height:1.5;margin-bottom:8px;">' + c.goeunNote + '</div>'
+            + '<button onclick="window.s11toggle(' + i + ',\'goeun\');window.s11open(' + i + ');event.stopPropagation();" style="width:100%;padding:7px 0;border-radius:6px;font-family:\'DM Sans\',sans-serif;font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;cursor:pointer;' + gBtnStyle + '">' + (gRank || '+ 김고은 추가') + '</button>'
           + '</div>'
         + '</div>'
       + '</div>';
 
-    overlay.style.opacity = '1';
+    /* ✕ 버튼 복원 */
+    var closeBtn = document.createElement('button');
+    closeBtn.innerHTML = '✕';
+    closeBtn.setAttribute('style','position:absolute;top:12px;right:14px;z-index:10;width:28px;height:28px;border-radius:50%;border:none;background:rgba(22,18,14,0.10);color:#333;font-size:14px;cursor:pointer;line-height:1;');
+    closeBtn.onclick = function(e) { window.s11close(); e.stopPropagation(); };
+    preview.appendChild(closeBtn);
+  }
+
+  window.s11open = function(i) {
+    s11curIdx = i;
+    var overlay = document.getElementById('s11-overlay');
+    if (!overlay) return;
+    overlay.style.display = 'flex';
+    s11renderOverlay(i);
   };
 
-  /* 그리드 영역 벗어나면 오버레이 닫기 (딜레이로 카드 간 이동 시 깜빡임 방지) */
-  document.getElementById('s11-grid').addEventListener('mouseleave', function() {
-    hoverTimer = setTimeout(function() {
-      var overlay = document.getElementById('s11-overlay');
-      if (overlay) overlay.style.opacity = '0';
-    }, 120);
-  });
-  document.getElementById('s11-grid').addEventListener('mouseenter', function() {
-    clearTimeout(hoverTimer);
-  });
+  window.s11close = function() {
+    var overlay = document.getElementById('s11-overlay');
+    if (overlay) overlay.style.display = 'none';
+    s11curIdx = null;
+  };
 
   window.s11toggle = function(i, who) {
     var order = who === 'lily' ? lilyOrder : goeunOrder;
@@ -1809,45 +1831,46 @@ em.pk { font-style:italic; color:var(--pink); }
     var imgFile = who === 'lily' ? 'images/1.5b릴리.webp' : 'images/1.5b김고은.webp';
 
     return '<div style="background:#fff;border:1.5px solid rgba(' + baseRgba + ',0.22);border-radius:12px;'
-      + 'box-shadow:0 2px 16px rgba(' + baseRgba + ',0.08);display:flex;flex-direction:column;overflow:hidden;height:100%;">'
-      /* 이미지 헤더 (시원시원하게) */
-      + '<div style="position:relative;height:200px;flex-shrink:0;background-image:url(\'' + imgFile + '\');background-size:cover;background-position:center 15%;">'
-        + '<div style="position:absolute;inset:0;background:linear-gradient(to bottom,transparent 30%,rgba(22,18,14,0.55) 100%);"></div>'
-        /* 이름 + 소속 (이미지 하단 오버레이) */
-        + '<div style="position:absolute;bottom:0;left:0;right:0;padding:14px 20px;display:flex;align-items:flex-end;justify-content:space-between;">'
-          + '<div>'
-            + '<div style="font-family:\'Cormorant Garamond\',serif;font-size:28px;font-weight:600;color:#fff;line-height:1;text-shadow:0 1px 8px rgba(0,0,0,0.3);">' + d.name + '</div>'
-            + '<div style="font-family:\'DM Sans\',sans-serif;font-size:11px;letter-spacing:2.5px;text-transform:uppercase;color:rgba(255,255,255,0.75);margin-top:3px;">' + d.nameEn + '</div>'
-          + '</div>'
-          + '<div style="font-family:\'DM Sans\',sans-serif;font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;'
-            + 'padding:5px 12px;border-radius:20px;background:rgba(255,255,255,0.18);color:#fff;border:1px solid rgba(255,255,255,0.35);backdrop-filter:blur(6px);">'
-            + '태그 ' + d.limit + '개 한도'
-          + '</div>'
+      + 'box-shadow:0 2px 16px rgba(' + baseRgba + ',0.08);display:flex;flex-direction:row;overflow:hidden;height:100%;">'
+
+      /* ── 좌: 인물 이미지 (세로 전체) ── */
+      + '<div style="position:relative;width:220px;flex-shrink:0;background-image:url(\'' + imgFile + '\');background-size:cover;background-position:center 10%;">'
+        + '<div style="position:absolute;inset:0;background:linear-gradient(to right,transparent 60%,rgba(22,18,14,0.08));"></div>'
+        + '<div style="position:absolute;bottom:0;left:0;right:0;padding:16px 18px;background:linear-gradient(to top,rgba(22,18,14,0.60) 0%,transparent 100%);">'
+          + '<div style="font-family:\'Cormorant Garamond\',serif;font-size:30px;font-weight:600;color:#fff;line-height:1;text-shadow:0 1px 8px rgba(0,0,0,0.3);">' + d.name + '</div>'
+          + '<div style="font-family:\'DM Sans\',sans-serif;font-size:10px;letter-spacing:2.5px;text-transform:uppercase;color:rgba(255,255,255,0.72);margin-top:4px;">' + d.nameEn + '</div>'
         + '</div>'
       + '</div>'
-      /* A/B 토글 */
-      + '<div style="padding:14px 20px 10px;display:flex;gap:10px;flex-shrink:0;">'
-        + '<button onclick="window.s12plan(\'' + who + '\',\'A\');event.stopPropagation();" '
-          + 'style="flex:1;padding:9px 0;border-radius:7px;font-family:\'DM Sans\',sans-serif;font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;cursor:pointer;' + (p === 'A' ? selectedStyle : unselStyle) + '">'
-          + 'A안 — 에스더버니'
-        + '</button>'
-        + '<button onclick="window.s12plan(\'' + who + '\',\'B\');event.stopPropagation();" '
-          + 'style="flex:1;padding:9px 0;border-radius:7px;font-family:\'DM Sans\',sans-serif;font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;cursor:pointer;' + (p === 'B' ? selectedStyle : unselStyle) + '">'
-          + 'B안 — 틈결'
-        + '</button>'
-      + '</div>'
-      /* 선택 안내 */
-      + '<div style="padding:0 20px 12px;font-family:\'Pretendard Variable\',\'Pretendard\',sans-serif;font-size:12px;color:var(--ink-dim);flex-shrink:0;">'
-        + d[p + '_rule']
-      + '</div>'
-      /* 태그 미리보기 */
-      + '<div style="padding:12px 20px;flex:1;display:flex;flex-direction:column;">'
-        + '<div style="font-family:\'DM Sans\',sans-serif;font-size:10px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:var(--ink-dim);margin-bottom:10px;">캡션 태그 구성</div>'
-        + '<div style="display:flex;flex-wrap:wrap;gap:8px;align-content:flex-start;">'
-          + baseTags.map(chip).join('')
+
+      /* ── 우: 콘텐츠 ── */
+      + '<div style="flex:1;display:flex;flex-direction:column;min-width:0;">'
+        /* 상단: 한도 뱃지 + A/B 토글 */
+        + '<div style="padding:16px 18px 10px;display:flex;flex-direction:column;gap:10px;flex-shrink:0;border-bottom:1px solid rgba(22,18,14,0.07);">'
+          + '<div style="display:flex;align-items:center;justify-content:space-between;">'
+            + '<div style="font-family:\'DM Sans\',sans-serif;font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--ink-dim);">태그 ' + d.limit + '개 한도</div>'
+            + '<div style="font-family:\'Pretendard Variable\',\'Pretendard\',sans-serif;font-size:11px;color:var(--ink-dim);">' + d[p + '_rule'] + '</div>'
+          + '</div>'
+          + '<div style="display:flex;gap:8px;">'
+            + '<button onclick="window.s12plan(\'' + who + '\',\'A\');event.stopPropagation();" '
+              + 'style="flex:1;padding:8px 0;border-radius:7px;font-family:\'DM Sans\',sans-serif;font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;cursor:pointer;' + (p === 'A' ? selectedStyle : unselStyle) + '">'
+              + 'A안 — 에스더버니'
+            + '</button>'
+            + '<button onclick="window.s12plan(\'' + who + '\',\'B\');event.stopPropagation();" '
+              + 'style="flex:1;padding:8px 0;border-radius:7px;font-family:\'DM Sans\',sans-serif;font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;cursor:pointer;' + (p === 'B' ? selectedStyle : unselStyle) + '">'
+              + 'B안 — 틈결'
+            + '</button>'
+          + '</div>'
         + '</div>'
-        + brandBlock
+        /* 태그 미리보기 */
+        + '<div style="padding:14px 18px;flex:1;display:flex;flex-direction:column;gap:10px;overflow:hidden;">'
+          + '<div style="font-family:\'DM Sans\',sans-serif;font-size:10px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:var(--ink-dim);">캡션 태그 구성</div>'
+          + '<div style="display:flex;flex-wrap:wrap;gap:8px;align-content:flex-start;">'
+            + baseTags.map(chip).join('')
+          + '</div>'
+          + brandBlock
+        + '</div>'
       + '</div>'
+
     + '</div>';
   }
 
