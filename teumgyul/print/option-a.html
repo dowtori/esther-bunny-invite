@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Print Option A — 타이포그래픽 에디토리얼</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500&family=Noto+Serif+KR:wght@300;400&display=swap" rel="stylesheet">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  background: #e8e0d8;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  min-height: 100vh;
+  padding: 40px 20px 60px;
+  font-family: 'Noto Sans KR', sans-serif;
+}
+
+.print-btn {
+  margin-bottom: 24px;
+  padding: 10px 28px;
+  background: #2A1A14;
+  color: #FFF8F5;
+  border: none;
+  border-radius: 4px;
+  font-size: 13px;
+  font-family: inherit;
+  cursor: pointer;
+  letter-spacing: .04em;
+}
+
+/* A4 */
+.page {
+  width: 210mm;
+  height: 297mm;
+  background: #FFF8F5;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+/* 배경 워터마크 타입 */
+.bg-type {
+  position: absolute;
+  bottom: -10mm;
+  left: -8mm;
+  right: -8mm;
+  font-family: 'Noto Sans KR', sans-serif;
+  font-weight: 300;
+  font-size: 38mm;
+  line-height: 1;
+  color: rgba(42,26,20,.055);
+  letter-spacing: -.02em;
+  white-space: nowrap;
+  pointer-events: none;
+  user-select: none;
+}
+
+/* 상단 */
+.top {
+  padding: 18mm 16mm 0;
+}
+
+.brand-line {
+  font-size: 8.5pt;
+  font-weight: 400;
+  letter-spacing: .22em;
+  text-transform: uppercase;
+  color: rgba(42,26,20,.38);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.brand-line::after {
+  content: '';
+  flex: 1;
+  height: 0.3pt;
+  background: rgba(42,26,20,.15);
+}
+
+/* 중앙 콘텐츠 */
+.center {
+  padding: 0 16mm;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 6mm;
+}
+
+.event-title {
+  font-family: 'Noto Serif KR', serif;
+  font-weight: 300;
+  font-size: 26pt;
+  color: #2A1A14;
+  letter-spacing: -.01em;
+  line-height: 1.2;
+}
+
+.event-sub {
+  font-size: 9pt;
+  font-weight: 300;
+  color: rgba(42,26,20,.45);
+  letter-spacing: .14em;
+  text-transform: uppercase;
+}
+
+.divider {
+  width: 12mm;
+  height: 0.4pt;
+  background: rgba(42,26,20,.2);
+  margin: 1mm 0;
+}
+
+.date-loc {
+  font-size: 8.5pt;
+  font-weight: 300;
+  color: rgba(42,26,20,.5);
+  letter-spacing: .06em;
+  line-height: 1.8;
+}
+
+/* 하단 */
+.bottom {
+  padding: 0 16mm 14mm;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+}
+
+.handle-block {
+  display: flex;
+  flex-direction: column;
+  gap: 2mm;
+}
+
+.handle-label {
+  font-size: 7pt;
+  color: rgba(42,26,20,.3);
+  letter-spacing: .18em;
+  text-transform: uppercase;
+}
+
+.handle {
+  font-size: 13pt;
+  font-weight: 400;
+  color: #2A1A14;
+  letter-spacing: .02em;
+}
+
+.qr-block {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2mm;
+}
+
+.qr-label {
+  font-size: 6.5pt;
+  color: rgba(42,26,20,.3);
+  letter-spacing: .12em;
+  text-transform: uppercase;
+}
+
+canvas#qr-a {
+  display: block;
+}
+
+@media print {
+  body { background: none; padding: 0; margin: 0; }
+  .print-btn { display: none; }
+  .page { box-shadow: none; margin: 0; }
+  @page { size: A4; margin: 0; }
+}
+</style>
+</head>
+<body>
+
+<button class="print-btn" onclick="window.print()">인쇄하기</button>
+
+<div class="page">
+
+  <!-- 배경 워터마크 -->
+  <div class="bg-type">@teumgyul_official</div>
+
+  <!-- 상단 브랜드 라인 -->
+  <div class="top">
+    <div class="brand-line">Iconic Movement &nbsp;×&nbsp; Esther Bunny</div>
+  </div>
+
+  <!-- 중앙 -->
+  <div class="center">
+    <div class="event-sub">Flagship Opening</div>
+    <div class="event-title">틈결</div>
+    <div class="divider"></div>
+    <div class="date-loc">
+      2026. 5. 1 — 5. 3<br>
+      성수, 서울
+    </div>
+  </div>
+
+  <!-- 하단 -->
+  <div class="bottom">
+    <div class="handle-block">
+      <span class="handle-label">Follow the moment</span>
+      <span class="handle">@teumgyul_official</span>
+    </div>
+    <div class="qr-block">
+      <canvas id="qr-a"></canvas>
+      <span class="qr-label">Check-in</span>
+    </div>
+  </div>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.4/build/qrcode.min.js"></script>
+<script>
+QRCode.toCanvas(document.getElementById('qr-a'),
+  'https://teumgyul.vercel.app/teumgyul/',
+  { width: 84, margin: 2, color: { dark: '#2A1A14', light: '#FFF8F5' } }
+);
+</script>
+</body>
+</html>

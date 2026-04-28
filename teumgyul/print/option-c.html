@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Print Option C — 다크 갤러리</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500&family=Noto+Serif+KR:wght@200;300&display=swap" rel="stylesheet">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  background: #111;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100vh;
+  padding: 40px 20px 60px;
+  font-family: 'Noto Sans KR', sans-serif;
+}
+
+.print-btn {
+  margin-bottom: 24px;
+  padding: 10px 28px;
+  background: #F5EDE4;
+  color: #1A1008;
+  border: none;
+  border-radius: 4px;
+  font-size: 13px;
+  font-family: inherit;
+  cursor: pointer;
+  letter-spacing: .04em;
+}
+
+/* A4 */
+.page {
+  width: 210mm;
+  height: 297mm;
+  background: #1A1008;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 14mm 16mm;
+  position: relative;
+  overflow: hidden;
+}
+
+/* 배경 대형 넘버 */
+.bg-year {
+  position: absolute;
+  bottom: -18mm;
+  right: -4mm;
+  font-family: 'Noto Serif KR', serif;
+  font-weight: 200;
+  font-size: 88mm;
+  line-height: 1;
+  color: rgba(245,237,228,.028);
+  letter-spacing: -.03em;
+  pointer-events: none;
+  user-select: none;
+}
+
+/* 상단 */
+.top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.top-left {
+  display: flex;
+  flex-direction: column;
+  gap: 2mm;
+}
+
+.top-tag {
+  font-size: 7pt;
+  letter-spacing: .22em;
+  text-transform: uppercase;
+  color: rgba(245,237,228,.3);
+  font-weight: 300;
+}
+
+.top-brand {
+  font-size: 8pt;
+  letter-spacing: .14em;
+  color: rgba(245,237,228,.55);
+  font-weight: 300;
+}
+
+.top-rule {
+  width: 0.3pt;
+  height: 14mm;
+  background: rgba(245,237,228,.12);
+  margin-top: 2mm;
+}
+
+/* 중앙 */
+.center {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5mm;
+  padding: 8mm 0;
+}
+
+.main-ko {
+  font-family: 'Noto Serif KR', serif;
+  font-weight: 200;
+  font-size: 72pt;
+  color: #F5EDE4;
+  letter-spacing: .04em;
+  line-height: 1;
+}
+
+.sub-en {
+  font-size: 9.5pt;
+  letter-spacing: .28em;
+  text-transform: uppercase;
+  color: rgba(245,237,228,.35);
+  font-weight: 300;
+}
+
+.accent-line {
+  width: 8mm;
+  height: 1pt;
+  background: #E8826A;
+  border-radius: 1pt;
+}
+
+.date-info {
+  font-size: 9pt;
+  color: rgba(245,237,228,.4);
+  letter-spacing: .1em;
+  line-height: 2;
+  font-weight: 300;
+}
+
+.handle-large {
+  font-size: 15pt;
+  font-weight: 400;
+  color: #F5EDE4;
+  letter-spacing: .04em;
+  margin-top: 2mm;
+}
+
+/* 하단 */
+.bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+
+.bottom-left {
+  display: flex;
+  flex-direction: column;
+  gap: 2.5mm;
+}
+
+.collab-mark {
+  font-size: 7pt;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: rgba(245,237,228,.22);
+  font-weight: 300;
+}
+
+.esther {
+  font-size: 10pt;
+  color: #E8826A;
+  letter-spacing: .14em;
+  font-weight: 300;
+}
+
+.qr-block {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2.5mm;
+}
+
+.qr-wrap {
+  padding: 4mm;
+  background: #F5EDE4;
+}
+
+canvas#qr-c { display: block; }
+
+.qr-cap {
+  font-size: 6pt;
+  color: rgba(245,237,228,.22);
+  letter-spacing: .18em;
+  text-transform: uppercase;
+}
+
+@media print {
+  body { background: none; padding: 0; }
+  .print-btn { display: none; }
+  .page { box-shadow: none; }
+  @page { size: A4; margin: 0; }
+}
+</style>
+</head>
+<body>
+
+<button class="print-btn" onclick="window.print()">인쇄하기</button>
+
+<div class="page">
+
+  <div class="bg-year">2026</div>
+
+  <div class="top">
+    <div class="top-left">
+      <div class="top-tag">Opening Exhibition</div>
+      <div class="top-brand">Iconic Movement × Esther Bunny</div>
+    </div>
+    <div class="top-rule"></div>
+  </div>
+
+  <div class="center">
+    <div class="sub-en">Flagship</div>
+    <div class="main-ko">틈결</div>
+    <div class="accent-line"></div>
+    <div class="date-info">
+      2026. 5. 1 — 5. 3<br>
+      성수, 서울
+    </div>
+    <div class="handle-large">@teumgyul_official</div>
+  </div>
+
+  <div class="bottom">
+    <div class="bottom-left">
+      <div class="collab-mark">In collaboration with</div>
+      <div class="esther">Esther Bunny</div>
+    </div>
+    <div class="qr-block">
+      <div class="qr-wrap">
+        <canvas id="qr-c"></canvas>
+      </div>
+      <div class="qr-cap">Check-in</div>
+    </div>
+  </div>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.4/build/qrcode.min.js"></script>
+<script>
+QRCode.toCanvas(document.getElementById('qr-c'),
+  'https://teumgyul.vercel.app/teumgyul/',
+  { width: 88, margin: 2, color: { dark: '#1A1008', light: '#F5EDE4' } }
+);
+</script>
+</body>
+</html>
