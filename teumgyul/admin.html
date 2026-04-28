@@ -353,6 +353,32 @@
       cursor: pointer; text-decoration: underline; padding: 4px 0;
     }
 
+    /* 수동 체크인 섹션 */
+    .checkin-manual-section {
+      margin-top: 12px;
+      background: var(--success-bg);
+      border: 1px solid rgba(106,158,122,.3);
+      border-radius: var(--radius-sm);
+      padding: 14px 16px;
+      display: none;
+    }
+    .checkin-manual-section.visible { display: block; }
+    .checkin-manual-label {
+      font-size: 11px; color: var(--success); letter-spacing: 0.06em;
+      text-transform: uppercase; font-weight: 500; margin-bottom: 10px;
+    }
+    .btn-checkin-manual {
+      width: 100%; height: 44px;
+      background: var(--success);
+      border: none;
+      border-radius: var(--radius-pill);
+      font-size: 14px; font-weight: 500; font-family: inherit;
+      color: #fff; cursor: pointer;
+      transition: opacity 0.15s, transform 0.1s;
+    }
+    .btn-checkin-manual:active { transform: scale(0.98); }
+    .btn-checkin-manual:disabled { opacity: 0.4; cursor: not-allowed; }
+
     /* 체크인 취소 섹션 */
     .checkin-cancel-section {
       margin-top: 12px;
@@ -482,6 +508,12 @@
       <span class="modal-row-value" id="modal-companion"></span>
     </div>
 
+    <!-- 수동 체크인 섹션 (미도착 시에만 표시) -->
+    <div class="checkin-manual-section" id="checkin-manual-section">
+      <p class="checkin-manual-label">Staff · 수동 체크인</p>
+      <button class="btn-checkin-manual" id="btn-checkin-manual">입장 처리하기</button>
+    </div>
+
     <!-- 체크인 취소 섹션 (입장완료 시에만 표시) -->
     <div class="checkin-cancel-section" id="checkin-cancel-section">
       <button class="btn-checkin-cancel" id="btn-checkin-cancel">체크인 취소하기</button>
@@ -521,6 +553,14 @@
   <script src="./api.js"></script>
   <script>
     const ADMIN_PASSWORD = '0000';
+
+    function getEventDay() {
+      const d = new Date(), m = d.getMonth() + 1, day = d.getDate();
+      if (m === 5 && day === 1) return 1;
+      if (m === 5 && day === 2) return 2;
+      if (m === 5 && day === 3) return 3;
+      return 1; // 행사 외 날짜는 1일차로 처리
+    }
 
     // ── 유틸 ──────────────────────────────
     function extractHandle(url) {
@@ -598,6 +638,12 @@
         companionRow.style.display = 'none';
       }
 
+      // 수동 체크인 섹션 (미도착인 경우만)
+      const manualSection = document.getElementById('checkin-manual-section');
+      manualSection.classList.toggle('visible', !g.is_checked_in);
+      document.getElementById('btn-checkin-manual').textContent = '입장 처리하기';
+      document.getElementById('btn-checkin-manual').disabled = false;
+
       // 체크인 취소 섹션 (입장완료인 경우만)
       const cancelSection = document.getElementById('checkin-cancel-section');
       cancelSection.classList.toggle('visible', !!g.is_checked_in);
@@ -641,6 +687,41 @@
     }
 
     document.getElementById('modal-backdrop').addEventListener('click', closeModal);
+
+    // ── 수동 체크인 ──────────────────────
+    document.getElementById('btn-checkin-manual').addEventListener('click', async () => {
+      if (!modalGuest) return;
+      if (!confirm(`${modalGuest.name}님을 입장 처리할까요?`)) return;
+
+      const btn = document.getElementById('btn-checkin-manual');
+      btn.disabled = true;
+      btn.textContent = '처리 중...';
+
+      try {
+        const result = await API.checkin(modalGuest.row_id, getEventDay());
+        if (result.success || result.already_checked_in) {
+          const now = new Date().toISOString();
+          modalGuest.is_checked_in = true;
+          modalGuest.checked_in_at = result.checked_in_at || now;
+          modalGuest.actual_day    = getEventDay();
+          // 모달 상태 갱신
+          document.getElementById('modal-status').textContent = '입장 완료';
+          document.getElementById('modal-status').className   = 'modal-row-value done';
+          document.getElementById('modal-time').textContent   = formatTime(modalGuest.checked_in_at);
+          document.getElementById('modal-time-row').style.display = 'flex';
+          const dayLabel = { 1: '5월 1일', 2: '5월 2일', 3: '5월 3일' };
+          document.getElementById('modal-day').textContent = dayLabel[modalGuest.actual_day] || '';
+          document.getElementById('modal-day-row').style.display = 'flex';
+          document.getElementById('checkin-manual-section').classList.remove('visible');
+          document.getElementById('checkin-cancel-section').classList.add('visible');
+          renderKakaoSection(modalGuest);
+          renderList();
+        }
+      } catch {
+        btn.disabled = false;
+        btn.textContent = '입장 처리하기';
+      }
+    });
 
     // ── 체크인 취소 ──────────────────────
     document.getElementById('btn-checkin-cancel').addEventListener('click', async () => {
