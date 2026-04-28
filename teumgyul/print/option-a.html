@@ -84,23 +84,38 @@ body {
   background: rgba(42,26,20,.15);
 }
 
-/* 중앙 콘텐츠 */
+/* 중앙 콘텐츠 — 2컬럼 */
 .center {
   padding: 0 16mm;
   flex: 1;
   display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 14mm;
+}
+
+.center-left {
+  flex: 1;
+  display: flex;
   flex-direction: column;
-  justify-content: center;
-  gap: 6mm;
+  gap: 5mm;
+}
+
+.center-right {
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3mm;
 }
 
 .event-title {
   font-family: 'Noto Serif KR', serif;
   font-weight: 300;
-  font-size: 26pt;
+  font-size: 34pt;
   color: #2A1A14;
   letter-spacing: -.01em;
-  line-height: 1.2;
+  line-height: 1.15;
 }
 
 .event-sub {
@@ -126,39 +141,12 @@ body {
   line-height: 1.8;
 }
 
-/* 하단 */
-.bottom {
-  padding: 0 16mm 14mm;
-  display: flex;
-  align-items: flex-end;
-  justify-content: space-between;
-}
-
-.handle-block {
-  display: flex;
-  flex-direction: column;
-  gap: 2mm;
-}
-
-.handle-label {
-  font-size: 7pt;
-  color: rgba(42,26,20,.3);
-  letter-spacing: .18em;
-  text-transform: uppercase;
-}
-
-.handle {
-  font-size: 13pt;
+.handle-display {
+  font-size: 12pt;
   font-weight: 400;
   color: #2A1A14;
-  letter-spacing: .02em;
-}
-
-.qr-block {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 3mm;
+  letter-spacing: .04em;
+  margin-top: 1mm;
 }
 
 .qr-label {
@@ -170,21 +158,26 @@ body {
 
 img.qr-img {
   display: block;
-  width: 38mm;
-  height: 38mm;
-}
-
-.qr-area {
-  display: flex;
-  align-items: center;
-  gap: 6mm;
-  margin-top: 4mm;
+  width: 50mm;
+  height: 50mm;
 }
 
 img.keyring-img {
   display: block;
-  width: 32mm;
+  width: 42mm;
   height: auto;
+}
+
+/* 하단 */
+.bottom {
+  padding: 0 16mm 14mm;
+}
+
+.collab-credit {
+  font-size: 7pt;
+  color: rgba(42,26,20,.22);
+  letter-spacing: .18em;
+  text-transform: uppercase;
 }
 
 @media print {
@@ -211,26 +204,25 @@ img.keyring-img {
 
   <!-- 중앙 -->
   <div class="center">
-    <div class="event-sub">Flagship Opening</div>
-    <div class="event-title">틈결</div>
-    <div class="divider"></div>
-    <div class="date-loc">
-      2026. 5. 1 — 5. 3<br>
-      성수, 서울
+    <div class="center-left">
+      <div class="event-sub">Flagship Opening</div>
+      <div class="event-title">틈결</div>
+      <div class="divider"></div>
+      <div class="date-loc">
+        2026. 5. 1 — 5. 3<br>
+        성수, 서울
+      </div>
+      <div class="handle-display">@teumgyul_official</div>
     </div>
-    <div class="qr-block">
+    <div class="center-right">
       <img class="qr-img" src="data:image/png;base64,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" alt="QR">
       <span class="qr-label">Check-in</span>
       <img class="keyring-img" src="/images/키링_left.png" alt="">
     </div>
   </div>
 
-  <!-- 하단 -->
   <div class="bottom">
-    <div class="handle-block">
-      <span class="handle-label">Follow the moment</span>
-      <span class="handle">@teumgyul_official</span>
-    </div>
+    <span class="collab-credit">Iconic Movement × Esther Bunny</span>
   </div>
 
 </div>
