@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>틈결 × ESTHER BUNNY · Check-in</title>
+  <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
+  <style>
+    :root {
+      --bg: #FFF8F5;
+      --ink: #2A1A14;
+      --ink40: rgba(42,26,20,.4);
+      --accent: #E8826A;
+      --border: #EDD8CC;
+      --pink: #F7A8C4;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html, body {
+      height: 100%;
+      background: var(--bg);
+      color: var(--ink);
+      font-family: 'Pretendard', 'Apple SD Gothic Neo', sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    body {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      padding: 40px 24px;
+    }
+
+    .brand {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 5px;
+      margin-bottom: 40px;
+    }
+
+    .brand-main {
+      font-size: 14px;
+      font-weight: 600;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--ink);
+    }
+
+    .brand-cross {
+      font-size: 10px;
+      font-weight: 400;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--ink40);
+    }
+
+    .qr-wrap {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 28px;
+      padding: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 6px 40px rgba(42,26,20,.07);
+    }
+
+    .instruction {
+      margin-top: 28px;
+      font-size: 14px;
+      color: var(--ink40);
+      letter-spacing: 0.02em;
+      text-align: center;
+      line-height: 1.6;
+    }
+
+    .event-info {
+      margin-top: 36px;
+      padding-top: 28px;
+      border-top: 1px solid var(--border);
+      text-align: center;
+      width: 100%;
+      max-width: 320px;
+    }
+
+    .event-name {
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 0.04em;
+      color: var(--ink);
+      margin-bottom: 5px;
+    }
+
+    .event-date {
+      font-size: 12px;
+      color: var(--ink40);
+      letter-spacing: 0.06em;
+    }
+
+    .wake-status {
+      position: fixed;
+      bottom: 16px;
+      right: 16px;
+      font-size: 10px;
+      color: var(--ink40);
+      letter-spacing: 0.04em;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="brand">
+    <p class="brand-main">TEUMGYUL</p>
+    <p class="brand-cross">× Esther Bunny · 1st Flagship</p>
+  </div>
+
+  <div class="qr-wrap">
+    <div id="qr-canvas"></div>
+  </div>
+
+  <p class="instruction">핸드폰 카메라로 QR을 스캔해 주세요</p>
+
+  <div class="event-info">
+    <p class="event-name">성수 플래그십 스토어</p>
+    <p class="event-date">2026 · 5.1 – 5.3</p>
+  </div>
+
+  <p class="wake-status" id="wake-status"></p>
+
+  <script>
+    // 현재 디렉토리 기준으로 confirm URL 자동 생성
+    const dir = window.location.pathname.replace(/\/[^/]*$/, '');
+    const confirmUrl = window.location.origin + dir + '/confirm';
+
+    new QRCode(document.getElementById('qr-canvas'), {
+      text: confirmUrl,
+      width: 260,
+      height: 260,
+      colorDark: '#2A1A14',
+      colorLight: '#FFFFFF',
+      correctLevel: QRCode.CorrectLevel.M,
+    });
+
+    // WakeLock — 화면 꺼짐 방지
+    async function requestWakeLock() {
+      try {
+        const wl = await navigator.wakeLock.request('screen');
+        document.getElementById('wake-status').textContent = '● 화면 유지 중';
+        wl.addEventListener('release', () => {
+          document.getElementById('wake-status').textContent = '';
+        });
+      } catch (e) {}
+    }
+
+    document.addEventListener('visibilitychange', () => {
+      if (document.visibilityState === 'visible') requestWakeLock();
+    });
+
+    requestWakeLock();
+  </script>
+</body>
+</html>

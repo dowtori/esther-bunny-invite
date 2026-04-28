@@ -1,0 +1,882 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>틈결 × ESTHER BUNNY · Admin</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #FFF8F5;
+      --ink: #2A1A14;
+      --ink60: rgba(42,26,20,.6);
+      --ink40: rgba(42,26,20,.4);
+      --ink20: rgba(42,26,20,.2);
+      --ink10: rgba(42,26,20,.1);
+      --accent: #E8826A;
+      --accent-light: #FBE9E2;
+      --border: #EDD8CC;
+      --card: #FFFAF8;
+      --success: #6A9E7A;
+      --success-bg: #EEF5F1;
+      --kakao: #F9D934;
+      --kakao-dark: #3A2B00;
+      --kakao-sent: #6A9E7A;
+      --radius: 12px;
+      --radius-sm: 8px;
+      --radius-pill: 28px;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { -webkit-text-size-adjust: 100%; }
+    body {
+      background: var(--bg);
+      color: var(--ink);
+      font-family: 'Noto Sans KR', 'Apple SD Gothic Neo', sans-serif;
+      font-size: 14px;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      min-height: 100vh;
+    }
+
+    /* ── PIN 게이트 ── */
+    #gate {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 40px 24px;
+    }
+    .gate-brand {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--ink40);
+      margin-bottom: 40px;
+    }
+
+    .pin-dots { display: flex; gap: 14px; margin-bottom: 24px; }
+    .pin-dot {
+      width: 14px; height: 14px;
+      border-radius: 50%;
+      border: 2px solid var(--border);
+      background: transparent;
+      transition: background 0.15s, border-color 0.15s;
+    }
+    .pin-dot.filled { background: var(--ink); border-color: var(--ink); }
+    .pin-dot.error  { background: var(--accent); border-color: var(--accent); }
+
+    .gate-input {
+      position: absolute; opacity: 0;
+      width: 1px; height: 1px;
+      pointer-events: none;
+    }
+    .gate-error { font-size: 12px; color: var(--accent); min-height: 18px; text-align: center; }
+
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      20%       { transform: translateX(-8px); }
+      40%       { transform: translateX(8px); }
+      60%       { transform: translateX(-6px); }
+      80%       { transform: translateX(6px); }
+    }
+    .pin-dots.shake { animation: shake 0.4s ease; }
+
+    /* ── 메인 ── */
+    #app { display: none; }
+
+    header {
+      position: sticky; top: 0; z-index: 10;
+      background: var(--bg);
+      border-bottom: 1px solid var(--border);
+      padding: 14px 20px;
+    }
+    .header-row {
+      display: flex; align-items: center;
+      justify-content: space-between;
+      margin-bottom: 12px;
+    }
+    .h-brand { font-size: 12px; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; }
+    .h-sub   { font-size: 11px; color: var(--ink40); margin-left: 6px; }
+    .btn-refresh {
+      background: none;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-pill);
+      padding: 5px 14px;
+      font-size: 12px; font-family: inherit;
+      color: var(--ink60); cursor: pointer;
+      transition: border-color 0.15s, color 0.15s;
+    }
+    .btn-refresh:hover { border-color: var(--accent); color: var(--accent); }
+    .btn-refresh:disabled { opacity: 0.5; cursor: not-allowed; }
+
+    /* ── 검색 ── */
+    .search-wrap { position: relative; }
+    .search-input {
+      width: 100%; height: 40px;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-pill);
+      padding: 0 16px 0 38px;
+      font-size: 14px; font-family: inherit; color: var(--ink);
+      outline: none; transition: border-color 0.15s;
+      -webkit-appearance: none;
+    }
+    .search-input:focus { border-color: var(--accent); }
+    .search-icon {
+      position: absolute; left: 12px; top: 50%;
+      transform: translateY(-50%); pointer-events: none;
+    }
+
+    /* ── 탭 ── */
+    .tabs {
+      display: flex; gap: 6px;
+      padding: 12px 20px 0;
+      overflow-x: auto; -webkit-overflow-scrolling: touch; scrollbar-width: none;
+    }
+    .tabs::-webkit-scrollbar { display: none; }
+    .tab {
+      flex-shrink: 0; background: none;
+      border: 1px solid var(--border); border-radius: var(--radius-pill);
+      padding: 5px 14px; font-size: 12px; font-family: inherit;
+      color: var(--ink60); cursor: pointer; transition: all 0.15s;
+    }
+    .tab.active { background: var(--ink); border-color: var(--ink); color: #fff; }
+    /* 카카오 필터 탭 */
+    .tab.kakao-filter {
+      border-color: var(--kakao);
+      color: var(--kakao-dark);
+      background: rgba(249,217,52,.12);
+    }
+    .tab.kakao-filter.active {
+      background: var(--kakao);
+      border-color: var(--kakao);
+      color: var(--kakao-dark);
+    }
+
+    /* ── 통계 ── */
+    .stats { display: flex; gap: 8px; padding: 12px 20px; }
+    .stat-pill {
+      flex: 1; background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 10px 12px; text-align: center;
+    }
+    .stat-num { font-size: 20px; font-weight: 500; line-height: 1.2; }
+    .stat-num.checked { color: var(--success); }
+    .stat-num.kakao   { color: var(--kakao-dark); }
+    .stat-label { font-size: 10px; color: var(--ink40); letter-spacing: 0.04em; margin-top: 2px; }
+
+    /* ── 카카오 발송률 바 ── */
+    .kakao-bar-wrap {
+      margin: 0 20px 4px;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 10px 14px;
+      display: none;
+    }
+    .kakao-bar-wrap.visible { display: block; }
+    .kakao-bar-header {
+      display: flex; justify-content: space-between; align-items: center;
+      margin-bottom: 8px;
+    }
+    .kakao-bar-label { font-size: 11px; color: var(--ink40); letter-spacing: 0.04em; }
+    .kakao-bar-count { font-size: 12px; font-weight: 500; color: var(--kakao-dark); }
+    .kakao-bar-track {
+      height: 5px; background: var(--border);
+      border-radius: 3px; overflow: hidden;
+    }
+    .kakao-bar-fill {
+      height: 100%; background: var(--kakao);
+      border-radius: 3px;
+      transition: width 0.4s ease;
+    }
+
+    /* ── 목록 ── */
+    .list { padding: 0 20px 80px; display: flex; flex-direction: column; }
+    .empty { text-align: center; padding: 60px 0; color: var(--ink40); font-size: 13px; }
+
+    .guest-row {
+      display: flex; align-items: center; gap: 12px;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 14px 16px;
+      margin-bottom: 6px; cursor: pointer;
+      transition: border-color 0.15s;
+    }
+    .guest-row:hover { border-color: rgba(42,26,20,.25); }
+    .guest-row.is-checked { border-left: 3px solid var(--success); }
+
+    .guest-info { flex: 1; min-width: 0; }
+    .guest-name { font-size: 15px; font-weight: 500; margin-bottom: 2px; }
+    .guest-time { font-size: 11px; color: var(--ink40); }
+    .guest-companion { font-size: 11px; color: var(--ink60); margin-top: 3px; }
+    .companion-dot {
+      display: inline-block; width: 6px; height: 6px;
+      border-radius: 50%; margin-right: 4px; vertical-align: middle;
+    }
+    .companion-dot.checked { background: var(--success); }
+    .companion-dot.pending { background: var(--border); }
+
+    /* 카드 우측 뱃지 영역 */
+    .guest-badges { display: flex; flex-direction: column; align-items: flex-end; gap: 6px; flex-shrink: 0; }
+
+    .status-pill {
+      font-size: 11px; font-weight: 500;
+      padding: 4px 10px; border-radius: var(--radius-pill); letter-spacing: 0.04em;
+    }
+    .status-pill.done    { background: var(--success-bg); color: var(--success); }
+    .status-pill.pending { background: var(--ink10); color: var(--ink40); }
+
+    /* 카카오 뱃지 */
+    .kakao-badge {
+      display: flex; align-items: center; gap: 4px;
+      font-size: 10px; font-weight: 500;
+      padding: 3px 8px; border-radius: var(--radius-pill);
+      letter-spacing: 0.04em;
+    }
+    .kakao-badge .dot {
+      width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0;
+    }
+    .kakao-badge.unsent {
+      background: rgba(249,217,52,.2);
+      color: var(--kakao-dark);
+    }
+    .kakao-badge.unsent .dot { background: var(--kakao); }
+    .kakao-badge.sent {
+      background: var(--success-bg);
+      color: var(--success);
+    }
+    .kakao-badge.sent .dot { background: var(--success); }
+
+    /* ── 모달 ── */
+    .modal-backdrop {
+      display: none; position: fixed; inset: 0;
+      background: rgba(42,26,20,.4); z-index: 100; backdrop-filter: blur(2px);
+    }
+    .modal-backdrop.open { display: block; }
+    .modal-sheet {
+      position: fixed; bottom: 0; left: 0; right: 0;
+      background: var(--bg);
+      border-radius: 20px 20px 0 0;
+      padding: 28px 24px 48px;
+      z-index: 101;
+      transform: translateY(100%);
+      transition: transform 0.28s cubic-bezier(.32,.72,0,1);
+      max-height: 85vh; overflow-y: auto;
+    }
+    .modal-sheet.open { transform: translateY(0); }
+    .modal-handle {
+      width: 36px; height: 4px; background: var(--border);
+      border-radius: 2px; margin: 0 auto 24px;
+    }
+    .modal-profile { display: flex; align-items: center; gap: 16px; margin-bottom: 20px; }
+    .modal-avatar {
+      width: 72px; height: 72px; border-radius: 50%;
+      object-fit: cover; border: 2px solid var(--border);
+      background: var(--accent-light); flex-shrink: 0;
+    }
+    .modal-avatar-ph {
+      width: 72px; height: 72px; border-radius: 50%;
+      background: var(--accent-light);
+      display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+    }
+    .modal-name { font-size: 20px; font-weight: 500; margin-bottom: 4px; }
+    .modal-insta { font-size: 13px; color: var(--accent); text-decoration: none; }
+    .modal-insta:hover { text-decoration: underline; }
+    .modal-divider { border: none; border-top: 1px solid var(--border); margin: 16px 0; }
+    .modal-row {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 9px 0; font-size: 14px; border-bottom: 1px solid var(--border);
+    }
+    .modal-row:last-child { border-bottom: none; }
+    .modal-row-label { color: var(--ink40); flex-shrink: 0; }
+    .modal-row-value { color: var(--ink); font-weight: 500; text-align: right; }
+    .modal-row-value.done    { color: var(--success); }
+    .modal-row-value.pending { color: var(--ink40); font-weight: 400; }
+
+    /* 카카오 섹션 */
+    .kakao-section {
+      margin-top: 16px;
+      background: rgba(249,217,52,.1);
+      border: 1px solid rgba(249,217,52,.5);
+      border-radius: var(--radius-sm);
+      padding: 14px 16px;
+    }
+    .kakao-section-label {
+      font-size: 11px; font-weight: 500;
+      letter-spacing: 0.08em; text-transform: uppercase;
+      color: var(--kakao-dark); opacity: 0.6;
+      margin-bottom: 10px;
+    }
+    .kakao-status-row {
+      display: flex; align-items: center;
+      justify-content: space-between;
+    }
+    .kakao-status-text {
+      font-size: 13px; color: var(--ink60);
+      display: flex; align-items: center; gap: 6px;
+    }
+    .kakao-status-text .dot {
+      width: 8px; height: 8px; border-radius: 50%;
+    }
+    .kakao-status-text.unsent .dot { background: var(--kakao); }
+    .kakao-status-text.sent   .dot { background: var(--success); }
+    .kakao-status-text.sent   { color: var(--success); }
+    .kakao-sent-time { font-size: 11px; color: var(--ink40); margin-top: 4px; }
+
+    /* 카카오 발송 완료 버튼 */
+    .btn-kakao-mark {
+      background: var(--kakao);
+      color: var(--kakao-dark);
+      border: none; border-radius: var(--radius-pill);
+      padding: 8px 16px;
+      font-size: 12px; font-weight: 500; font-family: inherit;
+      cursor: pointer; letter-spacing: 0.04em;
+      transition: opacity 0.15s, transform 0.1s;
+      white-space: nowrap;
+    }
+    .btn-kakao-mark:active { transform: scale(0.97); }
+    .btn-kakao-mark:disabled { opacity: 0.5; cursor: not-allowed; }
+
+    /* 취소 링크 */
+    .btn-kakao-undo {
+      background: none; border: none;
+      font-size: 11px; color: var(--ink40); font-family: inherit;
+      cursor: pointer; text-decoration: underline; padding: 4px 0;
+    }
+
+    /* 로딩 */
+    #loading { display: flex; align-items: center; justify-content: center; padding: 60px; }
+    .spinner {
+      width: 24px; height: 24px;
+      border: 2px solid var(--border);
+      border-top-color: var(--accent);
+      border-radius: 50%; animation: spin 0.7s linear infinite;
+    }
+    .spinner-sm {
+      display: inline-block; width: 14px; height: 14px;
+      border: 2px solid rgba(58,43,0,.2);
+      border-top-color: var(--kakao-dark);
+      border-radius: 50%; animation: spin 0.7s linear infinite;
+      vertical-align: middle;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+  </style>
+</head>
+<body>
+
+  <!-- PIN 게이트 -->
+  <div id="gate" onclick="document.getElementById('gate-input').focus()">
+    <p class="gate-brand">TEUMGYUL × ESTHER BUNNY · Admin</p>
+    <div class="pin-dots" id="pin-dots">
+      <div class="pin-dot" id="dot-0"></div>
+      <div class="pin-dot" id="dot-1"></div>
+      <div class="pin-dot" id="dot-2"></div>
+      <div class="pin-dot" id="dot-3"></div>
+    </div>
+    <p class="gate-error" id="gate-error"></p>
+    <input class="gate-input" type="tel" id="gate-input"
+           maxlength="4" inputmode="numeric" autocomplete="off">
+  </div>
+
+  <!-- 메인 앱 -->
+  <div id="app">
+    <header>
+      <div class="header-row">
+        <div>
+          <span class="h-brand">TEUMGYUL</span>
+          <span class="h-sub">어드민</span>
+        </div>
+        <button class="btn-refresh" id="btn-refresh">새로고침</button>
+      </div>
+      <div class="search-wrap">
+        <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none"
+             stroke="rgba(42,26,20,.4)" stroke-width="2" stroke-linecap="round">
+          <circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+        </svg>
+        <input class="search-input" type="search" id="search-input" placeholder="이름 검색">
+      </div>
+    </header>
+
+    <div class="tabs" id="tabs"></div>
+    <div class="stats" id="stats"></div>
+    <div class="kakao-bar-wrap" id="kakao-bar-wrap">
+      <div class="kakao-bar-header">
+        <span class="kakao-bar-label">KAKAO 발송 현황</span>
+        <span class="kakao-bar-count" id="kakao-bar-count">0 / 0</span>
+      </div>
+      <div class="kakao-bar-track">
+        <div class="kakao-bar-fill" id="kakao-bar-fill" style="width:0%"></div>
+      </div>
+    </div>
+    <div id="loading"><div class="spinner"></div></div>
+    <div class="list" id="list" style="display:none"></div>
+  </div>
+
+  <!-- 게스트 상세 모달 -->
+  <div class="modal-backdrop" id="modal-backdrop"></div>
+  <div class="modal-sheet" id="modal-sheet">
+    <div class="modal-handle"></div>
+
+    <!-- 프로필 -->
+    <div class="modal-profile">
+      <img class="modal-avatar" id="modal-avatar" src="" alt=""
+           onerror="this.style.display='none';document.getElementById('modal-avatar-ph').style.display='flex'">
+      <div class="modal-avatar-ph" id="modal-avatar-ph" style="display:none">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#2A1A14" stroke-width="1.5" opacity=".4">
+          <circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/>
+        </svg>
+      </div>
+      <div>
+        <p class="modal-name" id="modal-name"></p>
+        <a class="modal-insta" id="modal-insta" href="#" target="_blank"></a>
+      </div>
+    </div>
+
+    <hr class="modal-divider">
+
+    <!-- 상세 정보 -->
+    <div class="modal-row">
+      <span class="modal-row-label">입장 상태</span>
+      <span class="modal-row-value" id="modal-status"></span>
+    </div>
+    <div class="modal-row" id="modal-time-row">
+      <span class="modal-row-label">입장 시각</span>
+      <span class="modal-row-value" id="modal-time"></span>
+    </div>
+    <div class="modal-row" id="modal-day-row">
+      <span class="modal-row-label">방문일</span>
+      <span class="modal-row-value" id="modal-day"></span>
+    </div>
+    <div class="modal-row" id="modal-companion-row">
+      <span class="modal-row-label">동행인</span>
+      <span class="modal-row-value" id="modal-companion"></span>
+    </div>
+
+    <!-- 카카오 발송 섹션 (입장완료 시에만 표시) -->
+    <div class="kakao-section" id="kakao-section" style="display:none">
+      <p class="kakao-section-label">Kakao 발송</p>
+
+      <!-- 미발송 상태 -->
+      <div id="kakao-unsent" style="display:none">
+        <div class="kakao-status-row">
+          <span class="kakao-status-text unsent">
+            <span class="dot"></span>
+            발송 전
+          </span>
+          <button class="btn-kakao-mark" id="btn-kakao-mark">발송 완료 표시</button>
+        </div>
+      </div>
+
+      <!-- 발송 완료 상태 -->
+      <div id="kakao-sent" style="display:none">
+        <div class="kakao-status-row">
+          <div>
+            <div class="kakao-status-text sent">
+              <span class="dot"></span>
+              발송 완료
+            </div>
+            <div class="kakao-sent-time" id="kakao-sent-time"></div>
+          </div>
+          <button class="btn-kakao-undo" id="btn-kakao-undo">취소</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="./api.js"></script>
+  <script>
+    const ADMIN_PASSWORD = '0902';
+
+    // ── 유틸 ──────────────────────────────
+    function extractHandle(url) {
+      if (!url) return '';
+      const m = url.match(/instagram\.com\/([^/?#]+)/);
+      return m ? '@' + m[1] : url;
+    }
+
+    function formatTime(raw) {
+      if (!raw) return '';
+      try {
+        const d = new Date(raw);
+        return d.toLocaleString('ko-KR', { month: 'numeric', day: 'numeric', hour: '2-digit', minute: '2-digit' });
+      } catch { return ''; }
+    }
+
+    // ── 모달 ──────────────────────────────
+    let modalGuest = null;   // 현재 모달에 열린 게스트 (allGuests 내 객체 참조)
+
+    function openModal(g) {
+      modalGuest = g;
+
+      // 아바타
+      const avatar   = document.getElementById('modal-avatar');
+      const avatarPh = document.getElementById('modal-avatar-ph');
+      avatar.style.display = 'block';
+      avatarPh.style.display = 'none';
+      avatar.src = `./profiles/${g.id}.jpg`;
+
+      // 이름 / 인스타
+      document.getElementById('modal-name').textContent = g.name;
+      const instaEl = document.getElementById('modal-insta');
+      const handle  = extractHandle(g.instagram);
+      if (handle) {
+        instaEl.textContent = handle;
+        instaEl.href = g.instagram.startsWith('http') ? g.instagram : 'https://instagram.com/' + handle.replace('@','');
+        instaEl.style.display = 'block';
+      } else {
+        instaEl.style.display = 'none';
+      }
+
+      // 입장 상태
+      const statusEl = document.getElementById('modal-status');
+      statusEl.textContent  = g.is_checked_in ? '입장 완료' : '미도착';
+      statusEl.className    = 'modal-row-value ' + (g.is_checked_in ? 'done' : 'pending');
+
+      // 입장 시각
+      const timeRow = document.getElementById('modal-time-row');
+      if (g.checked_in_at) {
+        document.getElementById('modal-time').textContent = formatTime(g.checked_in_at);
+        timeRow.style.display = 'flex';
+      } else {
+        timeRow.style.display = 'none';
+      }
+
+      // 방문일
+      const dayRow = document.getElementById('modal-day-row');
+      if (g.actual_day) {
+        const dayLabel = { 1: '5월 1일', 2: '5월 2일', 3: '5월 3일' };
+        document.getElementById('modal-day').textContent = dayLabel[g.actual_day] || g.actual_day + '일차';
+        dayRow.style.display = 'flex';
+      } else {
+        dayRow.style.display = 'none';
+      }
+
+      // 동행인
+      const companionRow = document.getElementById('modal-companion-row');
+      if (g.companion_name) {
+        const cStatus = g.companion_is_checked_in ? ' · 입장 완료' : ' · 미도착';
+        const companionEl = document.getElementById('modal-companion');
+        companionEl.textContent = g.companion_name + cStatus;
+        companionEl.className = 'modal-row-value ' + (g.companion_is_checked_in ? 'done' : 'pending');
+        companionRow.style.display = 'flex';
+      } else {
+        companionRow.style.display = 'none';
+      }
+
+      // 카카오 섹션 (입장완료인 경우만)
+      renderKakaoSection(g);
+
+      document.getElementById('modal-backdrop').classList.add('open');
+      document.getElementById('modal-sheet').classList.add('open');
+    }
+
+    function renderKakaoSection(g) {
+      const section  = document.getElementById('kakao-section');
+      const unsentEl = document.getElementById('kakao-unsent');
+      const sentEl   = document.getElementById('kakao-sent');
+
+      if (!g.is_checked_in) {
+        section.style.display = 'none';
+        return;
+      }
+
+      section.style.display = 'block';
+
+      if (g.kakao_sent) {
+        unsentEl.style.display = 'none';
+        sentEl.style.display   = 'block';
+        document.getElementById('kakao-sent-time').textContent =
+          g.kakao_sent_at ? formatTime(g.kakao_sent_at) + ' 발송' : '';
+      } else {
+        unsentEl.style.display = 'block';
+        sentEl.style.display   = 'none';
+      }
+    }
+
+    function closeModal() {
+      document.getElementById('modal-backdrop').classList.remove('open');
+      document.getElementById('modal-sheet').classList.remove('open');
+      modalGuest = null;
+    }
+
+    document.getElementById('modal-backdrop').addEventListener('click', closeModal);
+
+    // ── 카카오 발송 완료 표시 ──────────────
+    document.getElementById('btn-kakao-mark').addEventListener('click', async () => {
+      if (!modalGuest) return;
+      const btn = document.getElementById('btn-kakao-mark');
+      btn.disabled = true;
+      btn.innerHTML = '<span class="spinner-sm"></span>';
+
+      try {
+        await API.kakaoMark(modalGuest.row_id, true);
+        // 로컬 상태 업데이트 (재로드 없이 즉시 반영)
+        const now = new Date().toISOString();
+        modalGuest.kakao_sent    = true;
+        modalGuest.kakao_sent_at = now;
+        renderKakaoSection(modalGuest);
+        renderList();           // 목록 카드 뱃지도 갱신
+        updateKakaoBar();
+      } catch {
+        // 실패 시 원상복구
+        renderKakaoSection(modalGuest);
+      } finally {
+        btn.disabled = false;
+        btn.textContent = '발송 완료 표시';
+      }
+    });
+
+    // ── 카카오 발송 취소 ──────────────────
+    document.getElementById('btn-kakao-undo').addEventListener('click', async () => {
+      if (!modalGuest) return;
+      const btn = document.getElementById('btn-kakao-undo');
+      btn.disabled = true;
+
+      try {
+        await API.kakaoMark(modalGuest.row_id, false);
+        modalGuest.kakao_sent    = false;
+        modalGuest.kakao_sent_at = null;
+        renderKakaoSection(modalGuest);
+        renderList();
+        updateKakaoBar();
+      } catch {}
+      finally {
+        btn.disabled = false;
+      }
+    });
+
+    // ── PIN 게이트 ──────────────────────
+    const gateInput = document.getElementById('gate-input');
+    const gateError = document.getElementById('gate-error');
+    const pinDots   = document.getElementById('pin-dots');
+
+    window.addEventListener('load', () => setTimeout(() => gateInput.focus(), 100));
+
+    function updateDots(val) {
+      for (let i = 0; i < 4; i++) {
+        const dot = document.getElementById('dot-' + i);
+        dot.classList.toggle('filled', i < val.length);
+        dot.classList.remove('error');
+      }
+    }
+
+    gateInput.addEventListener('input', () => {
+      const val = gateInput.value.replace(/\D/g, '').slice(0, 4);
+      gateInput.value = val;
+      gateError.textContent = '';
+      updateDots(val);
+
+      if (val.length === 4) {
+        if (val === ADMIN_PASSWORD) {
+          document.getElementById('gate').style.display = 'none';
+          document.getElementById('app').style.display  = 'block';
+          loadData();
+        } else {
+          for (let i = 0; i < 4; i++) document.getElementById('dot-' + i).classList.add('error');
+          pinDots.classList.add('shake');
+          gateError.textContent = '비밀번호가 올바르지 않습니다';
+          setTimeout(() => {
+            pinDots.classList.remove('shake');
+            gateInput.value = '';
+            updateDots('');
+            gateError.textContent = '';
+          }, 800);
+        }
+      }
+    });
+
+    // ── 상태 ──────────────────────────────
+    let allGuests   = [];
+    let activeTab   = '전체';
+    let searchQuery = '';
+
+    // ── 데이터 로드 ───────────────────────
+    async function loadData() {
+      const loading = document.getElementById('loading');
+      const list    = document.getElementById('list');
+      loading.style.display = 'flex';
+      list.style.display    = 'none';
+
+      try {
+        const res = await API.list();
+        allGuests = res.guests || [];
+        buildTabs();
+        render();
+      } catch {
+        document.getElementById('list').innerHTML =
+          '<p class="empty">데이터를 불러오지 못했습니다.<br>새로고침을 눌러주세요.</p>';
+      } finally {
+        loading.style.display = 'none';
+        list.style.display    = 'flex';
+      }
+    }
+
+    document.getElementById('btn-refresh').addEventListener('click', async () => {
+      const btn = document.getElementById('btn-refresh');
+      btn.disabled = true;
+      btn.textContent = '불러오는 중...';
+      await loadData();
+      btn.disabled = false;
+      btn.textContent = '새로고침';
+    });
+
+    document.getElementById('search-input').addEventListener('input', e => {
+      searchQuery = e.target.value.trim();
+      render();
+    });
+
+    // ── 탭: 날짜 + 카카오 미발송 필터 ──────
+    function buildTabs() {
+      const tabEl   = document.getElementById('tabs');
+      const tabList = ['전체', '5/1', '5/2', '5/3', '카카오 미발송'];
+      activeTab = '전체';
+
+      tabEl.innerHTML = tabList.map(t => {
+        const isKakao = t === '카카오 미발송';
+        return `<button class="tab ${t === activeTab ? 'active' : ''} ${isKakao ? 'kakao-filter' : ''}" data-tab="${t}">${t}</button>`;
+      }).join('');
+
+      tabEl.querySelectorAll('.tab').forEach(btn => {
+        btn.addEventListener('click', () => {
+          activeTab = btn.dataset.tab;
+          tabEl.querySelectorAll('.tab').forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          render();
+        });
+      });
+    }
+
+    function filterGuests() {
+      let list = allGuests;
+
+      if (activeTab === '카카오 미발송') {
+        list = list.filter(g => g.is_checked_in && !g.kakao_sent);
+      } else if (activeTab !== '전체') {
+        const [m, d] = activeTab.split('/').map(Number);
+        list = list.filter(g => {
+          if (!g.checked_in_at) return false;
+          const dt = new Date(g.checked_in_at);
+          return (dt.getMonth() + 1 === m) && (dt.getDate() === d);
+        });
+      }
+
+      if (searchQuery) {
+        const q = searchQuery.toLowerCase();
+        list = list.filter(g => g.name.toLowerCase().includes(q));
+      }
+
+      return list;
+    }
+
+    // ── 카카오 발송률 바 ─────────────────
+    function updateKakaoBar() {
+      const checkedGuests = allGuests.filter(g => g.is_checked_in);
+      const sentCount     = checkedGuests.filter(g => g.kakao_sent).length;
+      const total         = checkedGuests.length;
+
+      const wrap = document.getElementById('kakao-bar-wrap');
+      if (total === 0) { wrap.classList.remove('visible'); return; }
+
+      wrap.classList.add('visible');
+      document.getElementById('kakao-bar-count').textContent = `${sentCount} / ${total}`;
+      document.getElementById('kakao-bar-fill').style.width  = `${Math.round(sentCount / total * 100)}%`;
+    }
+
+    // ── 렌더 ─────────────────────────────
+    function render() {
+      renderStats();
+      updateKakaoBar();
+      renderList();
+    }
+
+    function renderStats() {
+      const filtered  = filterGuests();
+      const checkedIn = filtered.filter(g => g.is_checked_in).length;
+      const total     = filtered.length;
+      const kakaoSent = filtered.filter(g => g.is_checked_in && g.kakao_sent).length;
+
+      document.getElementById('stats').innerHTML = `
+        <div class="stat-pill">
+          <div class="stat-num">${total}</div>
+          <div class="stat-label">전체</div>
+        </div>
+        <div class="stat-pill">
+          <div class="stat-num checked">${checkedIn}</div>
+          <div class="stat-label">입장 완료</div>
+        </div>
+        <div class="stat-pill">
+          <div class="stat-num">${total - checkedIn}</div>
+          <div class="stat-label">미도착</div>
+        </div>
+        <div class="stat-pill">
+          <div class="stat-num kakao">${kakaoSent}</div>
+          <div class="stat-label">카카오</div>
+        </div>
+      `;
+    }
+
+    function renderList() {
+      const filtered = filterGuests();
+      const sorted   = [...filtered].sort((a, b) => {
+        // 입장완료 + 카카오미발송을 최상단으로 (액션 필요)
+        const aPriority = a.is_checked_in && !a.kakao_sent ? 0 : a.is_checked_in ? 1 : 2;
+        const bPriority = b.is_checked_in && !b.kakao_sent ? 0 : b.is_checked_in ? 1 : 2;
+        if (aPriority !== bPriority) return aPriority - bPriority;
+        return a.name.localeCompare(b.name, 'ko');
+      });
+
+      if (sorted.length === 0) {
+        document.getElementById('list').innerHTML = '<p class="empty">해당하는 게스트가 없습니다</p>';
+        return;
+      }
+
+      document.getElementById('list').innerHTML = sorted.map((g, idx) => {
+        const companionHtml = g.companion_name ? `
+          <p class="guest-companion">
+            <span class="companion-dot ${g.companion_is_checked_in ? 'checked' : 'pending'}"></span>
+            동행 ${g.companion_name}${g.companion_is_checked_in ? ' · 입장 완료' : ' · 미도착'}
+          </p>` : '';
+
+        // 카카오 뱃지 (입장완료인 경우만)
+        const kakaoBadge = g.is_checked_in
+          ? `<span class="kakao-badge ${g.kakao_sent ? 'sent' : 'unsent'}">
+               <span class="dot"></span>
+               ${g.kakao_sent ? '카카오 완료' : '카카오 미발송'}
+             </span>`
+          : '';
+
+        return `
+          <div class="guest-row ${g.is_checked_in ? 'is-checked' : ''}" data-idx="${idx}">
+            <div class="guest-info">
+              <p class="guest-name">${g.name}</p>
+              ${g.is_checked_in
+                ? `<p class="guest-time">${formatTime(g.checked_in_at)}</p>`
+                : '<p class="guest-time">—</p>'}
+              ${companionHtml}
+            </div>
+            <div class="guest-badges">
+              <span class="status-pill ${g.is_checked_in ? 'done' : 'pending'}">
+                ${g.is_checked_in ? '입장 완료' : '미도착'}
+              </span>
+              ${kakaoBadge}
+            </div>
+          </div>`;
+      }).join('');
+
+      // 클릭 → 모달
+      document.querySelectorAll('.guest-row').forEach(row => {
+        row.addEventListener('click', () => openModal(sorted[Number(row.dataset.idx)]));
+      });
+    }
+  </script>
+</body>
+</html>
