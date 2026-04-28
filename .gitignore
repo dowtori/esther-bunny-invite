@@ -23,3 +23,10 @@ cash/
 
 # Python 빌드 스크립트
 *.py
+
+# 프로필 사진 원본 (배포용은 teumgyul/profiles/ 사용)
+teumgyul/profile_pics/
+
+# 게스트 DB 원본 (민감 정보)
+teumgyul/guests_db.csv
+teumgyul/guests_db.xlsx

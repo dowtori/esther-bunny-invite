@@ -147,11 +147,12 @@ function checkinCancel(params) {
   const rowId = parseInt(params.row_id, 10);
   const sheet = SpreadsheetApp.openById(SHEET_ID).getSheetByName(GUESTS_SHEET);
 
-  sheet.getRange(rowId, COL.IS_CHECKED_IN  + 1).setValue(false);
-  sheet.getRange(rowId, COL.CHECKED_IN_AT  + 1).setValue('');
-  sheet.getRange(rowId, COL.ACTUAL_DAY     + 1).setValue('');
-  sheet.getRange(rowId, COL.KAKAO_SENT     + 1).setValue(false);
-  sheet.getRange(rowId, COL.KAKAO_SENT_AT  + 1).setValue('');
+  sheet.getRange(rowId, COL.IS_CHECKED_IN      + 1).setValue(false);
+  sheet.getRange(rowId, COL.CHECKED_IN_AT      + 1).setValue('');
+  sheet.getRange(rowId, COL.ACTUAL_DAY         + 1).setValue('');
+  sheet.getRange(rowId, COL.COMPANION_IS_CHECKED + 1).setValue(false);
+  sheet.getRange(rowId, COL.KAKAO_SENT         + 1).setValue(false);
+  sheet.getRange(rowId, COL.KAKAO_SENT_AT      + 1).setValue('');
 
   return { success: true };
 }

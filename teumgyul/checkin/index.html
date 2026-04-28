@@ -130,6 +130,16 @@
       color: var(--kakao-dark); background: rgba(249,217,52,0.15);
       border-color: rgba(249,217,52,0.5);
     }
+    .inv-tier.tier-sheets {
+      color: #2d6a4f; background: rgba(45,106,79,0.08);
+      border-color: rgba(45,106,79,0.22);
+    }
+    .inv-card.sheets-card::before { background: #34a853; }
+    .inv-card.sheets-card:hover {
+      border-color: rgba(52,168,83,0.4);
+      box-shadow: 0 4px 20px rgba(52,168,83,0.1);
+    }
+    .inv-card.sheets-card:hover .inv-arrow { color: #34a853; }
     .inv-arrow {
       font-size: 16px; color: var(--ink20); flex-shrink: 0;
       transition: color 0.18s ease, transform 0.18s ease;
@@ -225,7 +235,21 @@
           <div class="inv-meta">
             <span class="inv-meta-pill">teumgyul/admin</span>
             <span class="inv-meta-pill">카카오 발송 추적</span>
-            <span class="inv-meta-pill">PIN 0902</span>
+            <span class="inv-meta-pill">PIN 0000</span>
+          </div>
+        </a>
+
+        <a href="https://docs.google.com/spreadsheets/d/1RkmLnQlYDpXeCF9666879xBJexe5uppRKwFN1jGYFqc/edit?gid=0#gid=0" class="inv-card sheets-card" target="_blank" rel="noopener">
+          <div class="inv-card-top">
+            <span class="inv-tier tier-sheets">Google Sheets</span>
+            <span class="inv-arrow">↗</span>
+          </div>
+          <p class="inv-name">게스트 DB</p>
+          <p class="inv-desc">체크인 원본 데이터. guests 시트(명단), checkins 시트(입장 로그). 직접 수정 시 데이터 정합성에 주의.</p>
+          <div class="inv-meta">
+            <span class="inv-meta-pill">guests</span>
+            <span class="inv-meta-pill">checkins</span>
+            <span class="inv-meta-pill">85명</span>
           </div>
         </a>
 
