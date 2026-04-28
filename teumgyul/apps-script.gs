@@ -14,20 +14,21 @@ const CHECKINS_SHEET = 'checkins';
 
 // ──────────────────────────────────────────────────────────────
 // [guests 시트 컬럼 인덱스] 0-based
-// 순서: id | name | phone_last4 | phone | instagram |
-//        invite_day | is_checked_in | checked_in_at |
-//        companion_name | companion_is_checked_in | actual_day |
-//        kakao_sent | kakao_sent_at
+// 실제 DB 순서:
+// id | name | phone_last4 | phone | status |
+// is_checked_in | checked_in_at | 비고(instagram) |
+// companion_name | companion_is_checked_in | actual_day |
+// kakao_sent | kakao_sent_at
 // ──────────────────────────────────────────────────────────────
 const COL = {
   ID:                    0,
   NAME:                  1,
   PHONE_LAST4:           2,
   PHONE:                 3,
-  INSTAGRAM:             4,
-  INVITE_DAY:            5,
-  IS_CHECKED_IN:         6,
-  CHECKED_IN_AT:         7,
+  STATUS:                4,  // '선정' 등 상태값
+  IS_CHECKED_IN:         5,
+  CHECKED_IN_AT:         6,
+  INSTAGRAM:             7,  // 비고(계정링크) 컬럼
   COMPANION_NAME:        8,
   COMPANION_IS_CHECKED:  9,
   ACTUAL_DAY:            10,
@@ -46,6 +47,7 @@ function doGet(e) {
     if      (action === 'lookup')          result = lookup(e.parameter);
     else if (action === 'checkin')         result = checkin(e.parameter);
     else if (action === 'checkin_companion') result = checkinCompanion(e.parameter);
+    else if (action === 'checkin_cancel')  result = checkinCancel(e.parameter);
     else if (action === 'kakao_mark')      result = kakaoMark(e.parameter);
     else if (action === 'list')            result = listGuests();
     else                                   result = { error: 'unknown_action' };
@@ -139,6 +141,22 @@ function checkinCompanion(params) {
 }
 
 // ──────────────────────────────────────────────────────────────
+// checkinCancel — 체크인 취소 (초기화)
+// ──────────────────────────────────────────────────────────────
+function checkinCancel(params) {
+  const rowId = parseInt(params.row_id, 10);
+  const sheet = SpreadsheetApp.openById(SHEET_ID).getSheetByName(GUESTS_SHEET);
+
+  sheet.getRange(rowId, COL.IS_CHECKED_IN  + 1).setValue(false);
+  sheet.getRange(rowId, COL.CHECKED_IN_AT  + 1).setValue('');
+  sheet.getRange(rowId, COL.ACTUAL_DAY     + 1).setValue('');
+  sheet.getRange(rowId, COL.KAKAO_SENT     + 1).setValue(false);
+  sheet.getRange(rowId, COL.KAKAO_SENT_AT  + 1).setValue('');
+
+  return { success: true };
+}
+
+// ──────────────────────────────────────────────────────────────
 // kakaoMark — 카카오 발송 상태 수동 업데이트
 // ──────────────────────────────────────────────────────────────
 function kakaoMark(params) {
@@ -187,7 +205,10 @@ function listGuests() {
 // 헬퍼
 // ──────────────────────────────────────────────────────────────
 function toBool(val) {
-  return val === true || String(val).toUpperCase() === 'TRUE';
+  if (val === true  || val === 1 || val === 1.0) return true;
+  if (val === false || val === 0 || val === '')   return false;
+  const s = String(val).trim().toUpperCase();
+  return s === 'TRUE' || s === '1' || s === 'Y' || s === 'YES';
 }
 
 function toIso(val) {

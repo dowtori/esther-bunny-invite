@@ -40,6 +40,13 @@ const API = {
     return res.json();
   },
 
+  // 체크인 취소
+  async checkinCancel(rowId) {
+    const url = this.ENDPOINT + '?action=checkin_cancel&row_id=' + rowId;
+    const res = await fetch(url);
+    return res.json();
+  },
+
   // 카카오 발송 상태 업데이트 (sent: true=발송완료, false=취소)
   async kakaoMark(rowId, sent) {
     const url = this.ENDPOINT
