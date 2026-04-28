@@ -139,7 +139,7 @@ body {
   border-right: 1.2pt solid #E8826A;
 }
 
-canvas#qr-b { display: block; }
+img.qr-img { display: block; width: 104px; height: 104px; }
 
 .qr-caption {
   font-size: 6.5pt;
@@ -199,7 +199,7 @@ canvas#qr-b { display: block; }
 
   <div class="qr-section">
     <div class="qr-frame">
-      <canvas id="qr-b"></canvas>
+      <img class="qr-img" src="data:image/png;base64,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" alt="QR">
     </div>
     <div class="qr-caption">입장 체크인</div>
   </div>
@@ -214,12 +214,5 @@ canvas#qr-b { display: block; }
 
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.4/build/qrcode.min.js"></script>
-<script>
-QRCode.toCanvas(document.getElementById('qr-b'),
-  'https://teumgyul.vercel.app/teumgyul/',
-  { width: 104, margin: 2, color: { dark: '#2A1A14', light: '#FFFAF8' } }
-);
-</script>
 </body>
 </html>
