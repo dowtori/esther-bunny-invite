@@ -134,6 +134,29 @@
       color: #2d6a4f; background: rgba(45,106,79,0.08);
       border-color: rgba(45,106,79,0.22);
     }
+    .inv-tier.tier-print {
+      color: #7B3F2B; background: rgba(123,63,43,0.08);
+      border-color: rgba(123,63,43,0.22);
+    }
+    .inv-card.print-card::before { background: #7B3F2B; }
+    .inv-card.print-card:hover {
+      border-color: rgba(123,63,43,0.35);
+      box-shadow: 0 4px 20px rgba(123,63,43,0.08);
+    }
+    .inv-card.print-card:hover .inv-arrow { color: #7B3F2B; }
+
+    .print-cards {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-top: 28px;
+      padding-top: 24px;
+      border-top: 1px solid var(--border);
+    }
+    .print-section-label {
+      font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--ink40); margin-bottom: 8px;
+    }
     .inv-card.sheets-card::before { background: #34a853; }
     .inv-card.sheets-card:hover {
       border-color: rgba(52,168,83,0.4);
@@ -254,6 +277,36 @@
         </a>
 
       </div>
+
+      <!-- 인쇄물 -->
+      <div class="print-cards">
+        <p class="print-section-label">현장 인쇄물 (A4)</p>
+        <a href="/teumgyul/print/option-a.html" class="inv-card print-card" target="_blank">
+          <div class="inv-card-top">
+            <span class="inv-tier tier-print">인쇄물 A안</span>
+            <span class="inv-arrow">↗</span>
+          </div>
+          <p class="inv-name">에디토리얼 타이포 — 세로형</p>
+          <p class="inv-desc">배경 워터마크 + 하단 우측 QR. 편집물 느낌의 세련된 레이아웃.</p>
+        </a>
+        <a href="/teumgyul/print/option-b.html" class="inv-card print-card" target="_blank">
+          <div class="inv-card-top">
+            <span class="inv-tier tier-print">인쇄물 B안</span>
+            <span class="inv-arrow">↗</span>
+          </div>
+          <p class="inv-name">럭셔리 센터드 — 심플</p>
+          <p class="inv-desc">중앙 정렬 · 코너 오렌지 장식 · QR 중앙 배치. 가장 심플하고 고급스러운 인상.</p>
+        </a>
+        <a href="/teumgyul/print/option-c.html" class="inv-card print-card" target="_blank">
+          <div class="inv-card-top">
+            <span class="inv-tier tier-print">인쇄물 C안</span>
+            <span class="inv-arrow">↗</span>
+          </div>
+          <p class="inv-name">다크 갤러리 — 블랙</p>
+          <p class="inv-desc">다크 배경 (#1A1008) · 크림 텍스트 · QR 흰 박스 내 배치로 스캔 보장.</p>
+        </a>
+      </div>
+
     </div>
   </main>
 

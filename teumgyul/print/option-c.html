@@ -185,7 +185,8 @@ body {
   background: #F5EDE4;
 }
 
-img.qr-img { display: block; width: 88px; height: 88px; }
+img.qr-img { display: block; width: 30mm; height: 30mm; }
+img.keyring-img { width: 22mm; height: 22mm; object-fit: contain; opacity: .7; }
 
 .qr-cap {
   font-size: 6pt;
@@ -235,6 +236,7 @@ img.qr-img { display: block; width: 88px; height: 88px; }
       <div class="esther">Esther Bunny</div>
     </div>
     <div class="qr-block">
+      <img class="keyring-img" src="/images/키링_left.png" alt="">
       <div class="qr-wrap">
         <img class="qr-img" src="data:image/png;base64,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" alt="QR">
       </div>
