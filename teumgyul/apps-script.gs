@@ -34,6 +34,7 @@ const COL = {
   ACTUAL_DAY:            10,
   KAKAO_SENT:            11,
   KAKAO_SENT_AT:         12,
+  INVITE_DAY:            13,
 };
 
 // ──────────────────────────────────────────────────────────────
@@ -196,6 +197,7 @@ function listGuests() {
       companion_is_checked_in: toBool(row[COL.COMPANION_IS_CHECKED]),
       kakao_sent:              toBool(row[COL.KAKAO_SENT]),
       kakao_sent_at:           toIso(row[COL.KAKAO_SENT_AT]),
+      invite_day:              row[COL.INVITE_DAY] || null,
     });
   }
 

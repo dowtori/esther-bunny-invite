@@ -982,11 +982,8 @@
         list = list.filter(g => g.is_checked_in && !g.kakao_sent);
       } else if (activeTab !== '전체') {
         const [m, d] = activeTab.split('/').map(Number);
-        list = list.filter(g => {
-          if (!g.checked_in_at) return false;
-          const dt = new Date(g.checked_in_at);
-          return (dt.getMonth() + 1 === m) && (dt.getDate() === d);
-        });
+        const dayNum = d; // 5/1→1, 5/2→2, 5/3→3
+        list = list.filter(g => Number(g.invite_day) === dayNum);
       }
 
       if (searchQuery) {
