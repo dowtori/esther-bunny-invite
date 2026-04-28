@@ -346,6 +346,39 @@
     .btn-kakao-mark:active { transform: scale(0.97); }
     .btn-kakao-mark:disabled { opacity: 0.5; cursor: not-allowed; }
 
+    /* 복사 버튼 */
+    .copy-btn {
+      display: inline-flex; align-items: center; gap: 4px;
+      background: none;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-pill);
+      padding: 3px 10px;
+      font-size: 11px; font-family: inherit;
+      color: var(--ink40); cursor: pointer;
+      transition: border-color 0.15s, color 0.15s;
+      flex-shrink: 0; white-space: nowrap;
+    }
+    .copy-btn:hover  { border-color: var(--accent); color: var(--accent); }
+    .copy-btn.copied { border-color: var(--success); color: var(--success); }
+
+    /* 연락처 섹션 */
+    .contact-section {
+      margin-top: 16px;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      overflow: hidden;
+    }
+    .contact-row {
+      display: flex; align-items: center;
+      justify-content: space-between; gap: 12px;
+      padding: 12px 16px;
+      border-bottom: 1px solid var(--border);
+    }
+    .contact-row:last-child { border-bottom: none; }
+    .contact-label { font-size: 11px; color: var(--ink40); flex-shrink: 0; }
+    .contact-value { font-size: 13px; color: var(--ink); font-weight: 500; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
     /* 취소 링크 */
     .btn-kakao-undo {
       background: none; border: none;
@@ -490,6 +523,20 @@
 
     <hr class="modal-divider">
 
+    <!-- 연락처 복사 -->
+    <div class="contact-section" id="contact-section">
+      <div class="contact-row">
+        <span class="contact-label">전화번호</span>
+        <span class="contact-value" id="contact-phone">—</span>
+        <button class="copy-btn" id="copy-phone">복사</button>
+      </div>
+      <div class="contact-row">
+        <span class="contact-label">인스타그램</span>
+        <span class="contact-value" id="contact-insta">—</span>
+        <button class="copy-btn" id="copy-insta">복사</button>
+      </div>
+    </div>
+
     <!-- 상세 정보 -->
     <div class="modal-row">
       <span class="modal-row-label">입장 상태</span>
@@ -563,6 +610,25 @@
     }
 
     // ── 유틸 ──────────────────────────────
+    function copyText(text, btn) {
+      if (!text) return;
+      navigator.clipboard.writeText(text).then(() => {
+        btn.textContent = '✓ 복사됨';
+        btn.classList.add('copied');
+        setTimeout(() => {
+          btn.textContent = '복사';
+          btn.classList.remove('copied');
+        }, 2000);
+      });
+    }
+
+    document.getElementById('copy-phone').addEventListener('click', function() {
+      if (modalGuest?.phone) copyText(modalGuest.phone, this);
+    });
+    document.getElementById('copy-insta').addEventListener('click', function() {
+      if (modalGuest?.instagram) copyText(modalGuest.instagram, this);
+    });
+
     function extractHandle(url) {
       if (!url) return '';
       const m = url.match(/instagram\.com\/([^/?#]+)/);
@@ -589,6 +655,16 @@
       avatar.style.display = 'block';
       avatarPh.style.display = 'none';
       avatar.src = `./profiles/${g.id}.jpg`;
+
+      // 연락처 복사 영역
+      document.getElementById('contact-phone').textContent = g.phone || '—';
+      document.getElementById('contact-insta').textContent = extractHandle(g.instagram) || g.instagram || '—';
+      document.getElementById('copy-phone').textContent = '복사';
+      document.getElementById('copy-phone').classList.remove('copied');
+      document.getElementById('copy-insta').textContent = '복사';
+      document.getElementById('copy-insta').classList.remove('copied');
+      document.getElementById('copy-phone').style.display = g.phone ? '' : 'none';
+      document.getElementById('copy-insta').style.display = g.instagram ? '' : 'none';
 
       // 이름 / 인스타
       document.getElementById('modal-name').textContent = g.name;
