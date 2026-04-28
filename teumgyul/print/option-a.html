@@ -155,11 +155,10 @@ body {
 }
 
 .qr-block {
-  position: relative;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  gap: 2mm;
+  align-items: flex-start;
+  gap: 3mm;
 }
 
 .qr-label {
@@ -183,15 +182,9 @@ img.qr-img {
 }
 
 img.keyring-img {
-  position: absolute;
-  left: calc(100% + 6mm);
-  bottom: 0;
-  width: 44mm;
+  display: block;
+  width: 32mm;
   height: auto;
-  opacity: 0.55;
-  transform: rotate(10deg);
-  transform-origin: bottom left;
-  pointer-events: none;
 }
 
 @media print {
@@ -226,9 +219,9 @@ img.keyring-img {
       성수, 서울
     </div>
     <div class="qr-block">
-      <img class="keyring-img" src="/images/키링_left.png" alt="">
       <img class="qr-img" src="data:image/png;base64,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" alt="QR">
       <span class="qr-label">Check-in</span>
+      <img class="keyring-img" src="/images/키링_left.png" alt="">
     </div>
   </div>
 
