@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>틈결 · QR 체크인 시스템</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@300;400;500&family=Pretendard:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #FFF8F5;
+      --accent: #E8826A;
+      --ink: #2A1A14;
+      --ink60: rgba(42,26,20,.6);
+      --ink40: rgba(42,26,20,.4);
+      --ink20: rgba(42,26,20,.2);
+      --ink10: rgba(42,26,20,.1);
+      --cream: #FEF5F0;
+      --border: #EDD8CC;
+      --card: #FFFAF8;
+      --kakao: #F9D934;
+      --kakao-dark: #3A2B00;
+      --font-serif: 'Noto Serif KR', serif;
+      --font-sans: 'Pretendard', 'Apple SD Gothic Neo', sans-serif;
+      --radius: 14px;
+      --radius-sm: 8px;
+      --radius-pill: 24px;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--bg);
+      color: var(--ink);
+      font-family: var(--font-sans);
+      font-size: 15px;
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+      min-height: 100vh;
+    }
+
+    .wrap { max-width: 720px; margin: 0 auto; padding: 0 24px; }
+
+    /* Header */
+    header {
+      border-bottom: 1px solid var(--border);
+      padding: 18px 24px;
+      display: flex; align-items: baseline; gap: 12px;
+    }
+    .h-brand { font-family: var(--font-serif); font-weight: 500; font-size: 16px; color: var(--ink); letter-spacing: 0.02em; }
+    .h-tag   { font-size: 11px; font-weight: 400; color: var(--ink40); letter-spacing: 0.06em; text-transform: uppercase; }
+    .h-parent {
+      margin-left: auto;
+      font-size: 10px; color: var(--ink40); letter-spacing: 0.08em;
+      text-transform: uppercase; font-weight: 400;
+      text-decoration: none;
+      transition: color .2s;
+    }
+    .h-parent:hover { color: var(--accent); }
+
+    /* Hero */
+    .page-hero {
+      padding: 56px 0 40px;
+      border-bottom: 1px solid var(--border);
+    }
+    .page-eyebrow {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--accent); margin-bottom: 16px;
+    }
+    .page-eyebrow-dot { width: 3px; height: 3px; border-radius: 50%; background: var(--accent); display: inline-block; }
+    .page-title {
+      font-family: var(--font-serif);
+      font-size: clamp(22px, 4vw, 30px);
+      font-weight: 400; line-height: 1.4;
+      color: var(--ink); margin-bottom: 10px;
+      letter-spacing: -0.01em;
+    }
+    .page-title em { font-style: italic; color: var(--accent); }
+    .page-desc { font-size: 13px; color: var(--ink60); line-height: 1.85; }
+
+    /* Cards */
+    .cards { padding: 40px 0 80px; display: flex; flex-direction: column; gap: 16px; }
+
+    .inv-card {
+      display: block;
+      text-decoration: none;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 26px 28px;
+      position: relative;
+      overflow: hidden;
+      transition: border-color 0.18s ease, box-shadow 0.18s ease, transform 0.18s ease;
+    }
+    .inv-card::before {
+      content: '';
+      position: absolute; top: 0; left: 0;
+      width: 3px; height: 100%;
+      background: var(--accent);
+      opacity: 0;
+      transition: opacity 0.18s ease;
+    }
+    .inv-card.kakao-card::before { background: var(--kakao); }
+    .inv-card:hover {
+      border-color: rgba(232,130,106,0.4);
+      box-shadow: 0 4px 20px rgba(232,130,106,0.1);
+      transform: translateY(-1px);
+    }
+    .inv-card:hover::before { opacity: 1; }
+
+    .inv-card-top {
+      display: flex; align-items: flex-start; justify-content: space-between; gap: 12px;
+      margin-bottom: 14px;
+    }
+    .inv-tier {
+      font-size: 10px; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--accent); background: rgba(232,130,106,0.08);
+      border: 1px solid rgba(232,130,106,0.22);
+      border-radius: var(--radius-pill); padding: 3px 12px;
+      display: inline-block;
+    }
+    .inv-tier.tier-ipad {
+      color: #4a6fa5; background: rgba(74,111,165,0.08);
+      border-color: rgba(74,111,165,0.22);
+    }
+    .inv-tier.tier-admin {
+      color: var(--kakao-dark); background: rgba(249,217,52,0.15);
+      border-color: rgba(249,217,52,0.5);
+    }
+    .inv-arrow {
+      font-size: 16px; color: var(--ink20); flex-shrink: 0;
+      transition: color 0.18s ease, transform 0.18s ease;
+    }
+    .inv-card:hover .inv-arrow { color: var(--accent); transform: translateX(3px); }
+
+    .inv-name {
+      font-family: var(--font-serif);
+      font-size: 18px; font-weight: 400;
+      color: var(--ink); margin-bottom: 6px;
+      line-height: 1.35;
+    }
+    .inv-desc { font-size: 13px; color: var(--ink60); line-height: 1.8; word-break: keep-all; }
+
+    .inv-meta {
+      margin-top: 16px; padding-top: 14px;
+      border-top: 1px solid var(--border);
+      display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
+    }
+    .inv-meta-pill {
+      font-size: 11px; color: var(--ink40);
+      background: var(--cream); border: 1px solid var(--border);
+      border-radius: var(--radius-pill); padding: 2px 10px;
+    }
+
+    /* Footer */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 24px;
+      text-align: center;
+      font-size: 11px; color: var(--ink40); letter-spacing: 0.04em;
+    }
+  </style>
+</head>
+<body>
+
+  <header role="banner">
+    <span class="h-brand">틈결</span>
+    <span class="h-tag">Check-in System</span>
+    <a href="/" class="h-parent">← Atelier</a>
+  </header>
+
+  <main>
+    <section class="page-hero">
+      <div class="wrap">
+        <p class="page-eyebrow">
+          <span class="page-eyebrow-dot"></span>
+          Internal · Staff Only
+        </p>
+        <h1 class="page-title">QR 체크인 <em>시스템</em></h1>
+        <p class="page-desc">틈결 × 에스더버니 1st Flagship · 현장 입장 관리 도구 (2026. 5. 1 – 5. 3)</p>
+      </div>
+    </section>
+
+    <div class="wrap">
+      <div class="cards">
+
+        <a href="/teumgyul/" class="inv-card">
+          <div class="inv-card-top">
+            <span class="inv-tier tier-ipad">iPad 거치용</span>
+            <span class="inv-arrow">→</span>
+          </div>
+          <p class="inv-name">QR 스캔 페이지</p>
+          <p class="inv-desc">아이패드에 항시 노출. 방문객이 카메라로 스캔하면 입장 확인 페이지로 연결됩니다. 화면 꺼짐 방지(WakeLock) 적용.</p>
+          <div class="inv-meta">
+            <span class="inv-meta-pill">teumgyul/</span>
+            <span class="inv-meta-pill">QRCode.js</span>
+            <span class="inv-meta-pill">WakeLock API</span>
+          </div>
+        </a>
+
+        <a href="/teumgyul/confirm" class="inv-card">
+          <div class="inv-card-top">
+            <span class="inv-tier">방문객 핸드폰</span>
+            <span class="inv-arrow">→</span>
+          </div>
+          <p class="inv-name">입장 확인</p>
+          <p class="inv-desc">QR 스캔 후 방문객 핸드폰에서 열림. 이름 + 연락처 뒷 4자리 입력 → Google Sheets 조회 → 체크인 완료 후 행사 안내 페이지로 이동.</p>
+          <div class="inv-meta">
+            <span class="inv-meta-pill">teumgyul/confirm</span>
+            <span class="inv-meta-pill">Google Apps Script</span>
+            <span class="inv-meta-pill">85명 명단</span>
+          </div>
+        </a>
+
+        <a href="/teumgyul/admin" class="inv-card kakao-card">
+          <div class="inv-card-top">
+            <span class="inv-tier tier-admin">담당자 전용 · PIN 필요</span>
+            <span class="inv-arrow">→</span>
+          </div>
+          <p class="inv-name">어드민</p>
+          <p class="inv-desc">실시간 입장 현황 조회. 날짜별 탭(5/1·5/2·5/3), 이름 검색, 카카오 발송 수동 추적. 미발송 게스트 우선 정렬.</p>
+          <div class="inv-meta">
+            <span class="inv-meta-pill">teumgyul/admin</span>
+            <span class="inv-meta-pill">카카오 발송 추적</span>
+            <span class="inv-meta-pill">PIN 0902</span>
+          </div>
+        </a>
+
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    © 2026 Iconic Movement · 틈결 TeumGyul · Internal Use Only
+  </footer>
+
+</body>
+</html>
