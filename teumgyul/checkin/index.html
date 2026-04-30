@@ -188,6 +188,34 @@
       border-radius: var(--radius-pill); padding: 2px 10px;
     }
 
+    .print-variants {
+      margin-top: 14px;
+      padding-top: 12px;
+      border-top: 1px solid var(--border);
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .print-variant-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 12px;
+      color: var(--ink60);
+      text-decoration: none;
+      background: var(--cream);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-pill);
+      padding: 4px 14px;
+      transition: border-color .18s, color .18s, background .18s;
+    }
+    .print-variant-link:hover {
+      border-color: rgba(123,63,43,.35);
+      color: #7B3F2B;
+      background: rgba(123,63,43,.04);
+    }
+    .pv-arrow { font-size: 10px; opacity: .6; }
+
     /* Footer */
     footer {
       border-top: 1px solid var(--border);
@@ -294,22 +322,18 @@
       <!-- 인쇄물 -->
       <div class="print-cards">
         <p class="print-section-label">현장 인쇄물 (A4)</p>
-        <a href="/teumgyul/print/option-a.html" class="inv-card print-card" target="_blank">
+        <div class="inv-card print-card">
           <div class="inv-card-top">
-            <span class="inv-tier tier-print">인쇄물 A안</span>
-            <span class="inv-arrow">↗</span>
+            <span class="inv-tier tier-print">B안 · 확정</span>
           </div>
-          <p class="inv-name">에디토리얼 2컬럼</p>
-          <p class="inv-desc">좌: 브랜드·타이틀·날짜·핸들, 우: QR 중앙. 워터마크 배경.</p>
-        </a>
-        <a href="/teumgyul/print/option-b.html" class="inv-card print-card" target="_blank">
-          <div class="inv-card-top">
-            <span class="inv-tier tier-print">인쇄물</span>
-            <span class="inv-arrow">↗</span>
+          <p class="inv-name">럭셔리 센터드</p>
+          <p class="inv-desc">중앙 정렬 · 코너 오렌지 장식 · QR 중앙 배치. 인쇄 색상 보정 3종 비교 후 선택.</p>
+          <div class="print-variants">
+            <a href="/teumgyul/print/option-b" class="print-variant-link" target="_blank">V1 · 기본 보정 <span class="pv-arrow">↗</span></a>
+            <a href="/teumgyul/print/option-b-v2" class="print-variant-link" target="_blank">V2 · 색상 강화 <span class="pv-arrow">↗</span></a>
+            <a href="/teumgyul/print/option-b-v3" class="print-variant-link" target="_blank">V3 · 고대비 <span class="pv-arrow">↗</span></a>
           </div>
-          <p class="inv-name">럭셔리 센터드 — 심플</p>
-          <p class="inv-desc">중앙 정렬 · 코너 오렌지 장식 · QR 중앙 배치.</p>
-        </a>
+        </div>
       </div>
 
     </div>
