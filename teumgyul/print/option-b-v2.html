@@ -48,7 +48,7 @@ body {
 .frame {
   position: absolute;
   inset: 10mm;
-  border: 0.4pt solid rgba(42,26,20,.14);
+  border: 0.7pt solid #ADA8A5;
   pointer-events: none;
 }
 .page { position: relative; }
@@ -66,11 +66,11 @@ body {
   font-size: 7.5pt;
   letter-spacing: .28em;
   text-transform: uppercase;
-  color: rgba(42,26,20,.35);
+  color: #5A4840;
   font-weight: 400;
 }
 
-.rule { width: 28mm; height: 0.3pt; background: rgba(42,26,20,.16); }
+.rule { width: 28mm; height: 0.5pt; background: #9A9490; }
 
 /* 중앙 타이틀 */
 .main-title {
@@ -94,7 +94,7 @@ body {
   font-size: 8pt;
   letter-spacing: .32em;
   text-transform: uppercase;
-  color: rgba(42,26,20,.4);
+  color: #4E3A34;
   font-weight: 300;
 }
 
@@ -115,7 +115,7 @@ body {
 
 .qr-frame {
   padding: 5mm;
-  border: 0.6pt solid rgba(42,26,20,.15);
+  border: 1pt solid #9A9490;
   display: inline-flex;
   position: relative;
 }
@@ -149,7 +149,7 @@ img.keyring-img {
 
 .qr-caption {
   font-size: 6.5pt;
-  color: rgba(42,26,20,.3);
+  color: #5A4840;
   letter-spacing: .2em;
   text-transform: uppercase;
 }
@@ -171,14 +171,14 @@ img.keyring-img {
 
 .handle-label {
   font-size: 7pt;
-  color: rgba(42,26,20,.3);
+  color: #5A4840;
   letter-spacing: .2em;
   text-transform: uppercase;
 }
 
 .date-location {
   font-size: 7.5pt;
-  color: rgba(42,26,20,.38);
+  color: #4E3A34;
   letter-spacing: .12em;
   text-align: center;
   line-height: 1.9;
@@ -189,16 +189,6 @@ img.keyring-img {
   .print-btn { display: none; }
   .page { box-shadow: none; }
   @page { size: A4; margin: 0; }
-
-  /* V2: 강화 보정 — 색상 더 진하게, 선 더 굵게 */
-  .collab       { color: #3E2820; }
-  .rule         { background: #8A8280; height: 0.5pt; }
-  .title-en     { color: #352420; }
-  .frame        { border: 0.8pt solid #9A9290; }
-  .qr-frame     { border: 1pt solid #7A7270; }
-  .qr-caption   { color: #4A3830; }
-  .handle-label { color: #4A3830; }
-  .date-location{ color: #3E2820; }
 }
 </style>
 </head>
