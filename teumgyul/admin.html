@@ -88,7 +88,7 @@
     .pin-dots.shake { animation: shake 0.4s ease; }
 
     /* ── 메인 ── */
-    #app { display: none; }
+    #app { display: block; }
 
     header {
       position: sticky; top: 0; z-index: 10;
@@ -453,20 +453,6 @@
 </head>
 <body>
 
-  <!-- PIN 게이트 -->
-  <div id="gate" onclick="document.getElementById('gate-input').focus()">
-    <p class="gate-brand">TEUMGYUL × ESTHER BUNNY · Admin</p>
-    <div class="pin-dots" id="pin-dots">
-      <div class="pin-dot" id="dot-0"></div>
-      <div class="pin-dot" id="dot-1"></div>
-      <div class="pin-dot" id="dot-2"></div>
-      <div class="pin-dot" id="dot-3"></div>
-    </div>
-    <p class="gate-error" id="gate-error"></p>
-    <input class="gate-input" type="tel" id="gate-input"
-           maxlength="4" inputmode="numeric" autocomplete="off">
-  </div>
-
   <!-- 메인 앱 -->
   <div id="app">
     <header>
@@ -599,8 +585,6 @@
 
   <script src="./api.js"></script>
   <script>
-    const ADMIN_PASSWORD = '0000';
-
     function getEventDay() {
       const d = new Date(), m = d.getMonth() + 1, day = d.getDate();
       if (m === 5 && day === 1) return 1;
@@ -874,45 +858,7 @@
       }
     });
 
-    // ── PIN 게이트 ──────────────────────
-    const gateInput = document.getElementById('gate-input');
-    const gateError = document.getElementById('gate-error');
-    const pinDots   = document.getElementById('pin-dots');
-
-    window.addEventListener('load', () => setTimeout(() => gateInput.focus(), 100));
-
-    function updateDots(val) {
-      for (let i = 0; i < 4; i++) {
-        const dot = document.getElementById('dot-' + i);
-        dot.classList.toggle('filled', i < val.length);
-        dot.classList.remove('error');
-      }
-    }
-
-    gateInput.addEventListener('input', () => {
-      const val = gateInput.value.replace(/\D/g, '').slice(0, 4);
-      gateInput.value = val;
-      gateError.textContent = '';
-      updateDots(val);
-
-      if (val.length === 4) {
-        if (val === ADMIN_PASSWORD) {
-          document.getElementById('gate').style.display = 'none';
-          document.getElementById('app').style.display  = 'block';
-          loadData();
-        } else {
-          for (let i = 0; i < 4; i++) document.getElementById('dot-' + i).classList.add('error');
-          pinDots.classList.add('shake');
-          gateError.textContent = '비밀번호가 올바르지 않습니다';
-          setTimeout(() => {
-            pinDots.classList.remove('shake');
-            gateInput.value = '';
-            updateDots('');
-            gateError.textContent = '';
-          }, 800);
-        }
-      }
-    });
+    window.addEventListener('load', () => loadData());
 
     // ── 상태 ──────────────────────────────
     let allGuests   = [];
@@ -1016,10 +962,12 @@
     }
 
     function renderStats() {
-      const filtered  = filterGuests();
-      const checkedIn = filtered.filter(g => g.is_checked_in).length;
-      const total     = filtered.length;
-      const kakaoSent = filtered.filter(g => g.is_checked_in && g.kakao_sent).length;
+      const filtered     = filterGuests();
+      const checkedIn    = filtered.filter(g => g.is_checked_in).length;
+      const total        = filtered.length;
+      const kakaoSent    = filtered.filter(g => g.is_checked_in && g.kakao_sent).length;
+      const companionsIn = filtered.filter(g => g.companion_is_checked_in).length;
+      const totalPeople  = checkedIn + companionsIn;
 
       document.getElementById('stats').innerHTML = `
         <div class="stat-pill">
@@ -1029,6 +977,10 @@
         <div class="stat-pill">
           <div class="stat-num checked">${checkedIn}</div>
           <div class="stat-label">입장 완료</div>
+        </div>
+        <div class="stat-pill">
+          <div class="stat-num checked">${totalPeople}</div>
+          <div class="stat-label">총 방문자</div>
         </div>
         <div class="stat-pill">
           <div class="stat-num">${total - checkedIn}</div>
