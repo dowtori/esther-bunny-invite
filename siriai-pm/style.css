@@ -189,7 +189,11 @@ body {
 /* ── CONTROLS BAR ────────────────────────────────────────── */
 .controls-bar {
   display: flex; align-items: center; gap: 8px;
-  flex-wrap: wrap; margin-bottom: 12px;
+  flex-wrap: wrap;
+  position: sticky; top: 50px; z-index: 90;
+  background: #f5f5f3; padding: 10px 0 12px;
+  margin-bottom: 0;
+  box-shadow: 0 1px 0 var(--ink15), 0 4px 10px rgba(0,0,0,.05);
 }
 .tabs {
   display: flex; gap: 1px; background: var(--ink08);
@@ -246,12 +250,13 @@ body {
 /* ── TABLE ───────────────────────────────────────────────── */
 .table-wrap {
   background: var(--surface); border: 1px solid var(--ink15);
-  border-radius: var(--radius-lg); overflow: hidden;
+  border-radius: var(--radius-lg); overflow: clip;
 }
 .table-scroll { overflow-x: auto; }
+.table-full { overflow-y: auto; max-height: calc(100vh - 218px); }
 table { width: 100%; border-collapse: collapse; }
 
-thead { position: sticky; top: 50px; z-index: 50; }
+thead { position: sticky; top: 0; z-index: 5; }
 th {
   background: var(--ink04); border-bottom: 1px solid var(--ink15);
   padding: 8px 12px; text-align: left;
@@ -357,11 +362,17 @@ tr.selected td { background: rgba(26,111,168,.04); }
 .editable { cursor: pointer; }
 .editable:hover { background: var(--ink04); border-radius: 3px; }
 .inline-input {
-  width: 100%; padding: 3px 6px;
-  border: 1px solid var(--ink30); border-radius: 4px;
+  width: 100%; padding: 7px 10px;
+  border: 1.5px solid var(--blue); border-radius: 5px;
   background: var(--surface); color: var(--ink);
-  font-size: 12px; font-family: inherit; outline: none;
+  font-size: 13px; font-family: inherit; outline: none;
+  box-shadow: 0 0 0 3px rgba(26,111,168,.1);
 }
+.inline-input:focus {
+  border-color: var(--blue);
+  box-shadow: 0 0 0 3px rgba(26,111,168,.18);
+}
+select.inline-input { padding: 6px 10px; }
 
 /* ── MODAL ───────────────────────────────────────────────── */
 .modal-overlay {
@@ -464,18 +475,25 @@ tr.selected td { background: rgba(26,111,168,.04); }
   border-bottom: 1px solid var(--ink08);
 }
 .drawer-row {
-  display: flex; align-items: center; gap: 8px; padding: 6px 0;
+  display: flex; align-items: center; gap: 10px; padding: 9px 0;
   border-bottom: 1px solid var(--ink08);
 }
 .drawer-row:last-child { border-bottom: none; }
 .drawer-row-label {
-  font-size: 11px; color: var(--ink30); width: 90px; flex-shrink: 0;
+  font-size: 11px; color: var(--ink30); width: 100px; flex-shrink: 0;
 }
-.drawer-row-val { font-size: 12px; color: var(--ink); flex: 1; }
+.drawer-row-val { font-size: 13px; color: var(--ink); flex: 1; min-width: 0; }
 .drawer-row-val .editable-val {
-  cursor: pointer; padding: 2px 4px; border-radius: 3px; display: inline-block;
+  cursor: pointer; padding: 3px 7px; border-radius: 4px;
+  display: block; width: 100%; min-height: 24px; line-height: 1.5;
+  transition: background .1s;
 }
-.drawer-row-val .editable-val:hover { background: var(--ink08); }
+.drawer-row-val .editable-val:not([data-editing]):hover {
+  background: var(--ink08);
+  outline: 1px dashed var(--ink30); outline-offset: -1px;
+}
+.drawer-row-val .editable-val[data-editing] { cursor: default; background: transparent; padding: 0; }
+.drawer-row-val .editable-val[data-editing]:hover { background: transparent; outline: none; }
 
 .drawer-footer {
   padding: 12px 20px; border-top: 1px solid var(--ink15); flex-shrink: 0;

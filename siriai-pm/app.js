@@ -275,6 +275,84 @@ const StatusDD = {
   },
 };
 
+// ── INLINE EDIT ────────────────────────────────────────────────
+const InlineEdit = {
+  start(el, campaignId, key, type) {
+    if (el.dataset.editing) return;
+    const c = Store.getCampaignById(campaignId);
+    if (!c) return;
+
+    const rawVal = c[key] ?? '';
+    el.dataset.editing = '1';
+    el.textContent = '';
+
+    let input;
+    if (type.startsWith('select:')) {
+      const opts = type.slice(7).split(',');
+      input = document.createElement('select');
+      input.className = 'inline-input';
+      opts.forEach(o => {
+        const opt = document.createElement('option');
+        opt.value = o; opt.textContent = o;
+        if (String(o) === String(rawVal)) opt.selected = true;
+        input.appendChild(opt);
+      });
+    } else if (type === 'textarea') {
+      input = document.createElement('textarea');
+      input.className = 'inline-input';
+      input.rows = 3; input.style.width = '100%';
+      input.value = rawVal;
+    } else {
+      input = document.createElement('input');
+      input.className = 'inline-input';
+      input.type = type === 'url' ? 'text' : type;
+      input.style.width = '100%';
+      input.value = rawVal;
+    }
+
+    let done = false;
+
+    const commit = async () => {
+      if (done) return;
+      done = true;
+      let val = input.value;
+      if (type === 'number') val = parseInt(val) || 0;
+      if (!val && (type === 'date' || type === 'url')) val = null;
+      el.removeAttribute('data-editing');
+      el.textContent = val || '—';
+      try {
+        await Store.updateCampaign(campaignId, { [key]: val });
+        App.renderCurrentView();
+        const body = document.getElementById('drawerBody');
+        const scrollTop = body ? body.scrollTop : 0;
+        await Drawer.render();
+        if (body) body.scrollTop = scrollTop;
+        toast('저장됨', 'ok');
+      } catch(e) { toast('저장 실패', 'err'); }
+    };
+
+    const revert = () => {
+      if (done) return;
+      done = true;
+      el.removeAttribute('data-editing');
+      const fresh = Store.getCampaignById(campaignId);
+      el.textContent = (fresh?.[key] ?? '') || '—';
+    };
+
+    input.addEventListener('blur', commit);
+    input.addEventListener('keydown', e => {
+      if (e.key === 'Enter' && type !== 'textarea') { e.preventDefault(); input.blur(); }
+      if (e.key === 'Escape') { e.preventDefault(); input.removeEventListener('blur', commit); revert(); }
+    });
+    if (type.startsWith('select:')) {
+      input.addEventListener('change', () => input.blur());
+    }
+
+    el.appendChild(input);
+    requestAnimationFrame(() => input.focus());
+  },
+};
+
 // ── MODAL ──────────────────────────────────────────────────────
 const Modal = {
   _stack: [],
@@ -380,7 +458,7 @@ const Drawer = {
       <div class="drawer-row">
         <span class="drawer-row-label">${label}</span>
         <span class="drawer-row-val">
-          <span class="editable-val" onclick="Drawer.editField('${c.id}','${key}','${type}')">${escHtml(val || '—')}</span>
+          <span class="editable-val" onclick="InlineEdit.start(this,'${c.id}','${key}','${type}')">${escHtml(val !== null && val !== undefined ? String(val) : '—')}</span>
         </span>
       </div>`;
 
@@ -447,7 +525,7 @@ const Drawer = {
       <div class="drawer-row">
         <span class="drawer-row-label">${label}</span>
         <span class="drawer-row-val">
-          <span class="editable-val" onclick="Drawer.editField('${c.id}','${key}','${type}')">${escHtml(val || '—')}</span>
+          <span class="editable-val" onclick="InlineEdit.start(this,'${c.id}','${key}','${type}')">${escHtml(val !== null && val !== undefined ? String(val) : '—')}</span>
         </span>
       </div>`;
 
@@ -470,7 +548,7 @@ const Drawer = {
         <div class="drawer-row">
           <span class="drawer-row-label">입금 상태</span>
           <span class="drawer-row-val">
-            <span class="editable-val" onclick="Drawer.editField('${c.id}','pay_status','select:미입금,입금완료,부분입금,분쟁,해당없음')">${payBadge(c.pay_status)}</span>
+            <span class="editable-val" onclick="InlineEdit.start(this,'${c.id}','pay_status','select:미입금,입금완료,부분입금,분쟁,해당없음')">${payBadge(c.pay_status)}</span>
           </span>
         </div>
         ${field('견적서 발행일', 'date_quote', c.date_quote, 'date')}
@@ -487,7 +565,7 @@ const Drawer = {
         <div class="drawer-row">
           <span class="drawer-row-label">검수 상태</span>
           <span class="drawer-row-val">
-            <span class="editable-val" onclick="Drawer.editField('${c.id}','qa_status','select:검수전,검수중,완료,이슈')">${qaBadge(c.qa_status)}</span>
+            <span class="editable-val" onclick="InlineEdit.start(this,'${c.id}','qa_status','select:검수전,검수중,완료,이슈')">${qaBadge(c.qa_status)}</span>
           </span>
         </div>
         <div class="drawer-row" style="align-items:flex-start">
@@ -732,7 +810,7 @@ function applyFilters(campaigns) {
     if (State.filters.tab === 'active') return ACTIVE_STATUSES.includes(c.status) && !c.is_archived;
     if (State.filters.tab === 'qa')     return c.status === '4. 컨텐츠 업로드' && !c.is_archived;
     if (State.filters.tab === 'finance')return c.revenue > 0 && !c.is_archived;
-    if (State.filters.tab === 'done')   return c.is_archived;
+    if (State.filters.tab === 'done')   return c.is_archived || ['5. 캠페인 종료', '6. 입금 확인'].includes(c.status);
     return !c.is_archived;
   });
   if (State.filters.search) {
@@ -913,7 +991,7 @@ function renderCampaignTable(data, opts = {}) {
 
   return `
     <div class="table-wrap">
-      <div class="table-scroll">
+      <div class="table-scroll${opts.compact ? '' : ' table-full'}">
         <table id="campTable">
           <thead><tr>${head}</tr></thead>
           <tbody>${rows}</tbody>
