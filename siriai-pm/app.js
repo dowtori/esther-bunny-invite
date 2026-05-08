@@ -476,7 +476,7 @@ const Drawer = {
         </div>
         ${field('진행사', 'entity', c.entity)}
         ${field('거래처', 'client_name', c.client_name)}
-        ${field('국가', 'country', c.country)}
+        ${field('국가', 'country', c.country, 'select:국내,해외')}
         ${field('UV', 'uv', c.uv)}
       </div>
 
@@ -617,59 +617,6 @@ const Drawer = {
     document.getElementById('drawerFooter').innerHTML = '';
   },
 
-  async editField(campaignId, key, type) {
-    const c = Store.getCampaignById(campaignId);
-    if (!c) return;
-
-    if (type.startsWith('select:')) {
-      const opts = type.slice(7).split(',');
-      const cur  = c[key] || '';
-      Modal.show(`
-        <div class="field">
-          <label>${escHtml(key)}</label>
-          <select id="editSelect">
-            ${opts.map(o => `<option value="${o}"${o===cur?' selected':''}>${o}</option>`).join('')}
-          </select>
-        </div>
-      `, { title: '값 변경' });
-      document.getElementById('modalFooter').innerHTML = `
-        <button class="btn" onclick="Modal.hide()">취소</button>
-        <button class="btn btn-primary" onclick="Drawer._saveSelect('${campaignId}','${key}')">저장</button>
-      `;
-    } else {
-      const cur = c[key] || '';
-      const inputTag = type === 'textarea'
-        ? `<textarea id="editInput" rows="4">${escHtml(cur)}</textarea>`
-        : `<input id="editInput" type="${type === 'url' ? 'text' : type}" value="${escHtml(cur)}">`;
-      Modal.show(`
-        <div class="field"><label>${escHtml(key)}</label>${inputTag}</div>
-      `, { title: '값 변경' });
-      document.getElementById('modalFooter').innerHTML = `
-        <button class="btn" onclick="Modal.hide()">취소</button>
-        <button class="btn btn-primary" onclick="Drawer._saveInput('${campaignId}','${key}','${type}')">저장</button>
-      `;
-      setTimeout(() => document.getElementById('editInput')?.focus(), 50);
-    }
-  },
-
-  async _saveInput(id, key, type) {
-    let val = document.getElementById('editInput').value;
-    if (type === 'number') val = parseInt(val) || 0;
-    Modal.hide();
-    await Store.updateCampaign(id, { [key]: val });
-    await Drawer.render();
-    App.renderCurrentView();
-    toast('저장됨', 'ok');
-  },
-
-  async _saveSelect(id, key) {
-    const val = document.getElementById('editSelect').value;
-    Modal.hide();
-    await Store.updateCampaign(id, { [key]: val });
-    await Drawer.render();
-    App.renderCurrentView();
-    toast('저장됨', 'ok');
-  },
 
   async saveQANote(id) {
     const note = document.getElementById('qaNoteInput').value;
