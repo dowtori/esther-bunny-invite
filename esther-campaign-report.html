@@ -1,0 +1,778 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>틈결 에스더버니 × SIRIAI — 캠페인 결과보고서</title>
+<meta property="og:title" content="틈결 에스더버니 × SIRIAI — 캠페인 결과보고서">
+<meta property="og:description" content="인플루언서 캠페인 최종 성과 보고서 (2026.05.01–03)">
+<meta property="og:image" content="https://teumgyul.vercel.app/images/siriai-og.png">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://teumgyul.vercel.app/images/siriai-og.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css">
+<style>
+/* RESET */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+/* LIGHT THEME */
+:root {
+  --bg:        #F6F1EB;
+  --bg-card:   #FFFFFF;
+  --bg-lift:   #EDE7DC;
+  --bg-stripe: #F0EBE3;
+  --ink:       #16120E;
+  --ink-mid:   rgba(22,18,14,0.60);
+  --ink-dim:   rgba(22,18,14,0.35);
+  --pink:      #C4637A;
+  --pink-deep: #9E4D60;
+  --pink-faint:rgba(196,99,122,0.09);
+  --border:    rgba(22,18,14,0.10);
+}
+
+html, body { width:100%; height:100%; overflow:hidden; background:#1A1614; }
+
+/* VIEWPORT / DECK */
+.viewport {
+  position:fixed; inset:0;
+  display:flex; align-items:center; justify-content:center;
+  background:#1A1614; cursor:pointer; user-select:none;
+}
+.deck {
+  position:relative; width:1920px; height:1080px;
+  transform-origin:center center; overflow:hidden; flex-shrink:0;
+}
+
+/* HUD */
+.hud-progress {
+  position:fixed; top:0; left:0; right:0; height:3px;
+  background:rgba(255,255,255,0.06); z-index:9999; pointer-events:none;
+}
+.hud-progress-fill { height:100%; background:#C4637A; transition:width 0.4s ease; }
+
+/* NAV STRIP */
+.nav-strip {
+  position:fixed; bottom:0; left:0; right:0; height:52px;
+  display:flex; align-items:center; justify-content:center; gap:4px;
+  background:rgba(18,14,12,0.80); backdrop-filter:blur(10px);
+  z-index:9998; padding:0 32px;
+}
+.nav-item {
+  display:flex; align-items:center; gap:7px;
+  padding:6px 12px; border-radius:6px;
+  cursor:pointer; opacity:0.45;
+  transition:opacity 0.18s, background 0.18s;
+  border:1px solid transparent;
+}
+.nav-item:hover { opacity:0.8; background:rgba(255,255,255,0.06); }
+.nav-item.active {
+  opacity:1; background:rgba(196,99,122,0.15);
+  border-color:rgba(196,99,122,0.35);
+}
+.nav-pip {
+  width:6px; height:6px; border-radius:50%;
+  background:rgba(255,255,255,0.4); flex-shrink:0;
+  transition:all 0.18s;
+}
+.nav-item.active .nav-pip {
+  background:#C4637A; width:7px; height:7px;
+  box-shadow:0 0 8px rgba(196,99,122,0.7);
+}
+.nav-lbl {
+  font-family:'DM Sans',sans-serif; font-size:12px;
+  letter-spacing:1.5px; text-transform:uppercase;
+  color:rgba(255,255,255,0.65); white-space:nowrap;
+}
+.nav-item.active .nav-lbl { color:rgba(255,255,255,0.95); }
+
+/* SLIDE BASE */
+.slide {
+  position:absolute; inset:0; width:1920px; height:1080px;
+  background:var(--bg); opacity:0; pointer-events:none;
+  transition:opacity 0.48s cubic-bezier(0.4,0,0.2,1);
+}
+.slide.active { opacity:1; pointer-events:all; }
+
+/* CHROME */
+.chrome {
+  position:absolute; top:0; left:0; right:0; height:86px;
+  display:flex; align-items:flex-end; justify-content:space-between;
+  padding:0 72px 20px; border-bottom:1.5px solid var(--border);
+  background:var(--bg);
+}
+.chrome-part {
+  font-family:'DM Sans',sans-serif; font-size:16px; font-weight:600;
+  letter-spacing:3px; text-transform:uppercase; color:var(--pink-deep);
+}
+.chrome-page {
+  font-family:'Cormorant Garamond',serif; font-size:18px;
+  font-style:italic; color:var(--ink-dim); letter-spacing:1px;
+}
+
+/* BODY */
+.body {
+  position:absolute; top:102px; bottom:72px; left:72px; right:72px;
+}
+
+/* TYPOGRAPHY */
+.label {
+  font-family:'DM Sans',sans-serif; font-size:20px; font-weight:600;
+  letter-spacing:3px; text-transform:uppercase;
+  color:var(--pink-deep); margin-bottom:14px;
+}
+.rule { height:1px; background:var(--border); margin:22px 0; }
+em.pk { font-style:italic; color:var(--pink); }
+
+/* IMAGE SLOT */
+.img-slot {
+  background:var(--bg-lift); border:1px solid var(--border); border-radius:4px;
+  display:flex; flex-direction:column; align-items:center; justify-content:center;
+  gap:10px; overflow:hidden; position:relative;
+}
+.img-slot::before {
+  content:''; width:28px; height:28px;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='rgba(22,18,14,0.20)' stroke-width='1.5' stroke-linecap='round'%3E%3Crect x='3' y='3' width='18' height='18' rx='2'/%3E%3Ccircle cx='8.5' cy='8.5' r='1.5'/%3E%3Cpath d='m21 15-5-5L5 21'/%3E%3C/svg%3E");
+  background-repeat:no-repeat; background-position:center; background-size:16px;
+  border:1px solid rgba(22,18,14,0.08); border-radius:50%;
+}
+.img-slot::after {
+  content:attr(data-label); font-family:'DM Sans',sans-serif;
+  font-size:10px; letter-spacing:1.5px; color:rgba(22,18,14,0.22);
+  text-align:center; padding:0 16px;
+}
+.img-slot[style*="background-image"]::before,
+.img-slot[style*="background-image"]::after { display:none; }
+.img-slot[style*="background-image"] { background-size:cover; background-position:center; }
+
+/* BULLET LIST */
+.blist { list-style:none; display:flex; flex-direction:column; gap:12px; }
+.blist li {
+  font-family:'Pretendard Variable','Pretendard',sans-serif; font-size:28px; font-weight:400;
+  color:var(--ink-mid); line-height:1.55; padding-left:30px; position:relative;
+  word-break:keep-all;
+}
+.blist li::before { content:'—'; position:absolute; left:0; color:var(--pink); font-size:18px; top:4px; }
+
+/* STAT BAR */
+.stat-bar {
+  position:absolute; bottom:0; left:0; right:0; height:72px;
+  border-top:1.5px solid var(--border); display:flex; align-items:center;
+  background:var(--bg-stripe);
+}
+.stat-item {
+  flex:1; display:flex; align-items:center; gap:16px;
+  padding:0 44px; border-right:1px solid var(--border);
+}
+.stat-item:last-child { border-right:none; }
+.stat-num {
+  font-family:'Cormorant Garamond',serif; font-size:34px; font-weight:300;
+  color:var(--pink); letter-spacing:-0.5px; white-space:nowrap;
+}
+.stat-lbl { font-family:'Pretendard Variable','Pretendard',sans-serif; font-size:22px; font-weight:400; color:var(--ink-dim); }
+
+/* INFLUENCER CARD */
+.ic-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:20px; }
+.ic {
+  background:var(--bg-card); border:1px solid var(--border);
+  border-radius:8px; overflow:hidden; display:flex; flex-direction:column;
+  box-shadow:0 1px 4px rgba(22,18,14,0.06);
+}
+.ic-body { padding:22px 26px 26px; flex:1; display:flex; flex-direction:column; }
+.ic-name { font-family:'Cormorant Garamond',serif; font-size:34px; font-weight:300; color:var(--ink); letter-spacing:-0.3px; margin-bottom:4px; }
+.ic-role { font-family:'DM Sans',sans-serif; font-size:18px; font-weight:500; letter-spacing:2px; text-transform:uppercase; color:var(--ink-dim); margin-bottom:16px; }
+.ic-stat { font-family:'Cormorant Garamond',serif; font-size:52px; font-weight:300; color:var(--pink); letter-spacing:-1px; line-height:1; margin-bottom:3px; }
+.ic-stat-lbl { font-family:'DM Sans',sans-serif; font-size:17px; letter-spacing:1.5px; text-transform:uppercase; color:var(--ink-dim); margin-bottom:18px; }
+.ic-dels { border-top:1px solid var(--border); padding-top:16px; display:flex; flex-direction:column; gap:12px; flex:1; }
+.ic-del { font-family:'Pretendard Variable','Pretendard',sans-serif; font-size:25px; font-weight:400; color:var(--ink-mid); }
+.ic-badge {
+  display:inline-block; font-family:'DM Sans',sans-serif;
+  font-size:14px; font-weight:700; letter-spacing:1.5px; text-transform:uppercase;
+  background:var(--pink-faint); color:var(--pink-deep);
+  padding:4px 10px; border-radius:2px; margin-right:8px;
+}
+.ic-schedule { margin-top:auto; padding-top:16px; font-family:'DM Sans',sans-serif; font-size:20px; letter-spacing:1.5px; text-transform:uppercase; color:var(--ink-dim); }
+
+/* REASON CARDS */
+.reason-card { background:var(--bg-card); border:1px solid var(--border); border-radius:8px; padding:26px 28px; }
+.reason-title { font-family:'DM Sans',sans-serif; font-size:18px; font-weight:700; letter-spacing:2.5px; text-transform:uppercase; color:var(--pink); margin-bottom:12px; }
+.reason-text { font-family:'Pretendard Variable','Pretendard',sans-serif; font-size:28px; font-weight:400; color:var(--ink-mid); line-height:1.60; word-break:keep-all; }
+
+/* KPI ROW */
+.kpi-row { display:flex; border:1px solid var(--border); border-radius:8px; overflow:hidden; }
+.kpi-item { flex:1; padding:32px 40px; background:var(--bg-card); border-right:1px solid var(--border); }
+.kpi-item:last-child { border-right:none; }
+.kpi-num { font-family:'Cormorant Garamond',serif; font-size:76px; font-weight:300; color:var(--pink); letter-spacing:-2px; line-height:1; }
+.kpi-lbl { font-family:'Pretendard Variable','Pretendard',sans-serif; font-size:28px; font-weight:400; color:var(--ink-mid); margin-top:8px; }
+
+/* GALLERY GRID — S3 */
+.gallery-grid {
+  display:grid; grid-template-columns:repeat(4,1fr); grid-template-rows:repeat(2,1fr);
+  gap:12px; height:820px;
+}
+.gallery-cell { position:relative; overflow:hidden; border-radius:4px; }
+.gallery-cell .img-slot { position:absolute; inset:0; border-radius:0; border:none; }
+.gallery-caption {
+  position:absolute; bottom:0; left:0; right:0; padding:12px 16px;
+  background:linear-gradient(transparent, rgba(14,12,10,0.72));
+  font-family:'DM Sans',sans-serif; font-size:12px; font-weight:500;
+  letter-spacing:1.5px; text-transform:uppercase; color:rgba(255,255,255,0.85);
+  pointer-events:none;
+}
+
+/* STORY ROW — S4 */
+.story-row {
+  display:flex; gap:14px; height:620px; align-items:stretch;
+}
+.story-slot {
+  flex:1; position:relative; overflow:hidden; border-radius:6px;
+}
+.story-slot .img-slot { position:absolute; inset:0; border-radius:0; border:none; }
+.story-badge {
+  position:absolute; top:14px; left:14px;
+  font-family:'DM Sans',sans-serif; font-size:11px; font-weight:700;
+  letter-spacing:1.5px; text-transform:uppercase;
+  padding:5px 10px; border-radius:3px; backdrop-filter:blur(8px);
+}
+.story-badge.pink { background:rgba(196,99,122,0.80); color:#fff; }
+.story-badge.stone { background:rgba(22,18,14,0.55); color:rgba(255,255,255,0.85); }
+
+/* NANO MOSAIC — S5 */
+.nano-kpi {
+  display:flex; border:1px solid var(--border); border-radius:8px; overflow:hidden; margin-bottom:18px;
+}
+.nano-kpi-item { flex:1; padding:18px 32px; background:var(--bg-card); border-right:1px solid var(--border); }
+.nano-kpi-item:last-child { border-right:none; }
+.nano-kpi-num { font-family:'Cormorant Garamond',serif; font-size:56px; font-weight:300; color:var(--pink); letter-spacing:-1px; line-height:1; }
+.nano-kpi-lbl { font-family:'Pretendard Variable','Pretendard',sans-serif; font-size:22px; color:var(--ink-mid); margin-top:6px; }
+.nano-grid { display:grid; grid-template-columns:repeat(10,1fr); grid-template-rows:repeat(4,170px); gap:8px; }
+.nano-cell { position:relative; overflow:hidden; border-radius:3px; }
+.nano-cell .img-slot { position:absolute; inset:0; border-radius:0; border:none; }
+</style>
+</head>
+<body>
+
+<!-- HUD progress -->
+<div class="hud-progress"><div class="hud-progress-fill" id="prog"></div></div>
+
+<div class="viewport" id="vp">
+<div class="deck" id="deck">
+
+
+<!-- ═══════════════════════════════════
+     S0 — COVER (dark)
+═══════════════════════════════════ -->
+<div class="slide active" id="s0"
+  style="cursor:default; background:#0E0C0A;
+    --bg:#0E0C0A; --bg-card:#181411; --bg-lift:#1E1B17;
+    --ink:#F4F1EC; --ink-mid:rgba(244,241,236,0.55); --ink-dim:rgba(244,241,236,0.22);
+    --pink:#E0A0AD; --pink-deep:#BC7888;
+    --border:rgba(255,255,255,0.07);">
+
+  <div style="position:absolute; top:-280px; right:-280px; width:860px; height:860px; border-radius:50%;
+       background:radial-gradient(circle, rgba(224,160,173,0.06) 0%, transparent 65%); pointer-events:none;"></div>
+  <div style="position:absolute; top:52px; right:72px;
+       font-family:'DM Sans',sans-serif; font-size:11px; font-weight:600;
+       letter-spacing:4px; text-transform:uppercase; color:rgba(244,241,236,0.22);">SIRIAI</div>
+
+  <div style="position:absolute; top:50%; left:72px; right:72px; transform:translateY(-54%);">
+    <div style="display:flex; align-items:center; gap:16px; margin-bottom:52px;">
+      <div style="width:44px; height:1px; background:#E0A0AD;"></div>
+      <div style="font-family:'DM Sans',sans-serif; font-size:11px; font-weight:500;
+           letter-spacing:4px; text-transform:uppercase; color:#E0A0AD;">Influencer Campaign Final Report</div>
+    </div>
+    <div style="font-family:'Cormorant Garamond',serif; font-size:118px; font-weight:300;
+         line-height:0.95; letter-spacing:-4px; color:#F4F1EC; margin-bottom:10px;">틈결 에스더버니</div>
+    <div style="font-family:'Cormorant Garamond',serif; font-size:80px; font-weight:300;
+         font-style:italic; color:#E0A0AD; letter-spacing:-2px; margin-bottom:52px;">캠페인 결과보고서</div>
+    <div style="font-family:'Pretendard Variable','Pretendard',sans-serif; font-size:22px; font-weight:300;
+         color:rgba(244,241,236,0.55); margin-bottom:32px;">에스더버니 아뜰리에 오프닝 인플루언서 캠페인</div>
+    <div style="font-family:'DM Sans',sans-serif; font-size:12px; font-weight:300;
+         letter-spacing:2px; color:rgba(244,241,236,0.22);">
+      2026.05.01 — 05.03 &nbsp;&nbsp;·&nbsp;&nbsp; 서울 성수동 틈결 &nbsp;&nbsp;·&nbsp;&nbsp; CAMPAIGN COMPLETE</div>
+  </div>
+
+  <div style="position:absolute; bottom:52px; left:72px; right:72px;
+       display:flex; justify-content:space-between; align-items:flex-end;
+       border-top:1px solid rgba(255,255,255,0.07); padding-top:22px;">
+    <div style="font-family:'Cormorant Garamond',serif; font-size:15px; font-style:italic;
+         color:rgba(244,241,236,0.22);">에스더버니 아뜰리에</div>
+    <div style="font-family:'DM Sans',sans-serif; font-size:10px; font-weight:600;
+         letter-spacing:3px; text-transform:uppercase; color:rgba(244,241,236,0.22);">CONFIDENTIAL</div>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════
+     S1 — KPI 총괄
+═══════════════════════════════════ -->
+<div class="slide" id="s1">
+  <div class="chrome">
+    <div class="chrome-part">캠페인 성과 요약</div>
+    <div class="chrome-page">P.01</div>
+  </div>
+  <div class="body">
+    <div class="label">KPI 총괄</div>
+    <div class="kpi-row" style="margin-bottom:24px;">
+      <div class="kpi-item">
+        <div class="kpi-num">—</div>
+        <div class="kpi-lbl">총 콘텐츠 수</div>
+      </div>
+      <div class="kpi-item">
+        <div class="kpi-num">—</div>
+        <div class="kpi-lbl">예상 총 도달</div>
+      </div>
+      <div class="kpi-item">
+        <div class="kpi-num">—</div>
+        <div class="kpi-lbl">총 인게이지먼트</div>
+      </div>
+      <div class="kpi-item">
+        <div class="kpi-num">—</div>
+        <div class="kpi-lbl">CPV (조회당 비용)</div>
+      </div>
+    </div>
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:20px;">
+      <div style="background:var(--bg-card); border:1px solid var(--border); border-radius:8px; padding:28px 32px;">
+        <div class="reason-title">캠페인 개요</div>
+        <ul class="blist" style="gap:10px;">
+          <li style="font-size:25px;">기간: 2026.05.01 — 05.03 (3일)</li>
+          <li style="font-size:25px;">장소: 서울 성수동 틈결 × 에스더버니 아뜰리에</li>
+          <li style="font-size:25px;">인플루언서: 릴리(NMIXX), 김고은, 데패뉴</li>
+          <li style="font-size:25px;">플랫폼: Instagram 피드 · 스토리 · 릴스</li>
+        </ul>
+      </div>
+      <div style="background:var(--bg-card); border:1px solid var(--border); border-radius:8px; padding:28px 32px;">
+        <div class="reason-title">콘텐츠 분류</div>
+        <ul class="blist" style="gap:10px;">
+          <li style="font-size:25px;">피드 포스트: — 건</li>
+          <li style="font-size:25px;">스토리: — 건</li>
+          <li style="font-size:25px;">릴스: — 건</li>
+          <li style="font-size:25px;">공동작업자 발행: — 건</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="stat-bar">
+    <div class="stat-item"><div class="stat-num">609만+</div><div class="stat-lbl">릴리(NMIXX) 팔로워</div></div>
+    <div class="stat-item"><div class="stat-num">145만+</div><div class="stat-lbl">김고은 팔로워</div></div>
+    <div class="stat-item"><div class="stat-num">103만+</div><div class="stat-lbl">데패뉴 팔로워</div></div>
+    <div class="stat-item"><div class="stat-num">857만+</div><div class="stat-lbl">합산 팔로워</div></div>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════
+     S2 — 인플루언서별 성과
+═══════════════════════════════════ -->
+<div class="slide" id="s2">
+  <div class="chrome">
+    <div class="chrome-part">인플루언서별 성과</div>
+    <div class="chrome-page">P.02</div>
+  </div>
+  <div class="body">
+    <div class="label">개인별 콘텐츠 지표</div>
+    <div class="ic-grid" style="height:560px;">
+
+      <!-- 릴리 -->
+      <div class="ic" style="flex-direction:row;">
+        <div style="width:220px; flex-shrink:0; display:flex;">
+          <div class="img-slot" data-label="릴리"
+            style="width:220px; height:100%; border-radius:0; border:none; border-right:1px solid var(--border);
+                   background-image:url('images/lily.webp'); background-position:40% 20%;"></div>
+        </div>
+        <div class="ic-body">
+          <div class="ic-name">릴리 <span style="font-size:20px; color:var(--ink-dim);">— NMIXX</span></div>
+          <div class="ic-role">JYPE · 글로벌 팬베이스</div>
+          <div class="ic-stat">609만+</div>
+          <div class="ic-stat-lbl">인스타그램 팔로워</div>
+          <div class="ic-dels">
+            <div class="ic-del"><span class="ic-badge">콘텐츠</span>피드 1건 + 스토리 — 건</div>
+            <div class="ic-del"><span class="ic-badge">조회</span>— 회</div>
+            <div class="ic-del"><span class="ic-badge">인게이지</span>좋아요 — · 댓글 —</div>
+          </div>
+          <div class="ic-schedule">방문일 · 2026.05.02</div>
+        </div>
+      </div>
+
+      <!-- 김고은 -->
+      <div class="ic" style="flex-direction:row;">
+        <div style="width:220px; flex-shrink:0; display:flex;">
+          <div class="img-slot" data-label="김고은"
+            style="width:220px; height:100%; border-radius:0; border:none; border-right:1px solid var(--border);
+                   background-image:url('images/kimgoeun.webp'); background-position:75% 10%;"></div>
+        </div>
+        <div class="ic-body">
+          <div class="ic-name">김고은 <span style="font-size:20px; color:var(--ink-dim);">— 배우</span></div>
+          <div class="ic-role">드뮤어 패션 아이콘</div>
+          <div class="ic-stat">145만+</div>
+          <div class="ic-stat-lbl">인스타그램 팔로워</div>
+          <div class="ic-dels">
+            <div class="ic-del"><span class="ic-badge">콘텐츠</span>피드 1건 + 스토리 — 건</div>
+            <div class="ic-del"><span class="ic-badge">조회</span>— 회</div>
+            <div class="ic-del"><span class="ic-badge">인게이지</span>좋아요 — · 댓글 —</div>
+          </div>
+          <div class="ic-schedule">방문일 · 2026.05.02</div>
+        </div>
+      </div>
+
+      <!-- 데패뉴 -->
+      <div class="ic" style="flex-direction:row;">
+        <div style="width:220px; flex-shrink:0; display:flex;">
+          <div class="img-slot" data-label="데패뉴"
+            style="width:220px; height:100%; border-radius:0; border:none; border-right:1px solid var(--border);
+                   background-image:url('images/데패뉴 콘텐츠1.png');
+                   background-size:cover; background-position:center top;"></div>
+        </div>
+        <div class="ic-body">
+          <div class="ic-name">데패뉴 <span style="font-size:20px; color:var(--ink-dim);">— Magazine</span></div>
+          <div class="ic-role">패션·라이프스타일 미디어</div>
+          <div class="ic-stat">103만+</div>
+          <div class="ic-stat-lbl">인스타그램 팔로워</div>
+          <div class="ic-dels">
+            <div class="ic-del"><span class="ic-badge">콘텐츠</span>릴스 — 건 + 스토리 — 건</div>
+            <div class="ic-del"><span class="ic-badge">조회</span>— 회</div>
+            <div class="ic-del"><span class="ic-badge">인게이지</span>좋아요 — · 댓글 —</div>
+          </div>
+          <div class="ic-schedule">에디토리얼 디렉팅</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+  <div class="stat-bar">
+    <div class="stat-item"><div class="stat-num">857만+</div><div class="stat-lbl">총 팔로워 합산</div></div>
+    <div class="stat-item"><div class="stat-num">—</div><div class="stat-lbl">총 콘텐츠 수</div></div>
+    <div class="stat-item"><div class="stat-num">—</div><div class="stat-lbl">총 조회수</div></div>
+    <div class="stat-item"><div class="stat-num">—</div><div class="stat-lbl">총 인게이지먼트</div></div>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════
+     S3 — 피드 콘텐츠 갤러리
+═══════════════════════════════════ -->
+<div class="slide" id="s3">
+  <div class="chrome">
+    <div class="chrome-part">피드 콘텐츠 갤러리</div>
+    <div class="chrome-page">P.03</div>
+  </div>
+  <div class="body" style="bottom:32px;">
+    <div class="label">피드 콘텐츠</div>
+    <div class="gallery-grid">
+
+      <div class="gallery-cell">
+        <div class="img-slot" data-label="릴리 피드 01"></div>
+        <div class="gallery-caption">릴리 · 피드</div>
+      </div>
+      <div class="gallery-cell">
+        <div class="img-slot" data-label="릴리 피드 02"></div>
+        <div class="gallery-caption">릴리 · 공동작업자</div>
+      </div>
+      <div class="gallery-cell">
+        <div class="img-slot" data-label="김고은 피드 01"></div>
+        <div class="gallery-caption">김고은 · 피드</div>
+      </div>
+      <div class="gallery-cell">
+        <div class="img-slot" data-label="김고은 피드 02"></div>
+        <div class="gallery-caption">김고은 · 피드</div>
+      </div>
+
+      <div class="gallery-cell">
+        <div class="img-slot" data-label="데패뉴 릴스 01"
+          style="background-image:url('images/데패뉴 콘텐츠1.png'); background-size:cover; background-position:center top;"></div>
+        <div class="gallery-caption">데패뉴 · 릴스</div>
+      </div>
+      <div class="gallery-cell">
+        <div class="img-slot" data-label="데패뉴 릴스 02"></div>
+        <div class="gallery-caption">데패뉴 · 릴스</div>
+      </div>
+      <div class="gallery-cell">
+        <div class="img-slot" data-label="데패뉴 릴스 03"></div>
+        <div class="gallery-caption">데패뉴 · 릴스</div>
+      </div>
+      <div class="gallery-cell">
+        <div class="img-slot" data-label="데패뉴 에디토리얼"></div>
+        <div class="gallery-caption">데패뉴 · 에디토리얼</div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════
+     S4 — 스토리 콘텐츠 갤러리
+═══════════════════════════════════ -->
+<div class="slide" id="s4">
+  <div class="chrome">
+    <div class="chrome-part">스토리 콘텐츠 갤러리</div>
+    <div class="chrome-page">P.04</div>
+  </div>
+  <div class="body" style="bottom:32px; display:flex; flex-direction:column;">
+    <div class="label">스토리 콘텐츠</div>
+    <div class="story-row">
+
+      <div class="story-slot">
+        <div class="img-slot" data-label="릴리 스토리 01"
+          style="background-image:url('images/엔믹스 스토리.png'); background-size:cover; background-position:center top;"></div>
+        <div class="story-badge pink">릴리</div>
+      </div>
+      <div class="story-slot">
+        <div class="img-slot" data-label="릴리 스토리 02"></div>
+        <div class="story-badge pink">릴리</div>
+      </div>
+      <div class="story-slot">
+        <div class="img-slot" data-label="김고은 스토리 01"></div>
+        <div class="story-badge stone">김고은</div>
+      </div>
+      <div class="story-slot">
+        <div class="img-slot" data-label="김고은 스토리 02"></div>
+        <div class="story-badge stone">김고은</div>
+      </div>
+      <div class="story-slot">
+        <div class="img-slot" data-label="데패뉴 스토리"
+          style="background-image:url('images/데패뉴 스토리.png'); background-size:cover; background-position:center top;"></div>
+        <div class="story-badge stone">데패뉴</div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════
+     S5 — 나노 인플루언서 볼륨
+═══════════════════════════════════ -->
+<div class="slide" id="s5">
+  <div class="chrome">
+    <div class="chrome-part">나노 인플루언서 볼륨</div>
+    <div class="chrome-page">P.05</div>
+  </div>
+  <div class="body">
+    <div class="label">나노 크리에이터 콘텐츠 성과</div>
+    <div class="nano-kpi">
+      <div class="nano-kpi-item">
+        <div class="nano-kpi-num">90건</div>
+        <div class="nano-kpi-lbl">릴스</div>
+      </div>
+      <div class="nano-kpi-item">
+        <div class="nano-kpi-num">—</div>
+        <div class="nano-kpi-lbl">피드 포스트</div>
+      </div>
+      <div class="nano-kpi-item">
+        <div class="nano-kpi-num">—</div>
+        <div class="nano-kpi-lbl">스토리</div>
+      </div>
+      <div class="nano-kpi-item" style="background:var(--pink-faint);">
+        <div class="nano-kpi-num" style="font-size:48px;">150+건</div>
+        <div class="nano-kpi-lbl">총 콘텐츠 합산</div>
+      </div>
+    </div>
+    <div class="nano-grid">
+      <div class="nano-cell"><div class="img-slot"></div></div>
+      <div class="nano-cell"><div class="img-slot"></div></div>
+      <div class="nano-cell"><div class="img-slot"></div></div>
+      <div class="nano-cell"><div class="img-slot"></div></div>
+      <div class="nano-cell"><div class="img-slot"></div></div>
+      <div class="nano-cell"><div class="img-slot"></div></div>
+      <div class="nano-cell"><div class="img-slot"></div></div>
+      <div class="nano-cell"><div class="img-slot"></div></div>
+      <div class="nano-cell"><div class="img-slot"></div></div>
+      <div class="nano-cell"><div class="img-slot"></div></div>
+
+      <div class="nano-cell"><div class="img-slot"></div></div>
+      <div class="nano-cell"><div class="img-slot"></div></div>
+      <div class="nano-cell"><div class="img-slot"></div></div>
+      <div class="nano-cell"><div class="img-slot"></div></div>
+      <div class="nano-cell"><div class="img-slot"></div></div>
+      <div class="nano-cell"><div class="img-slot"></div></div>
+      <div class="nano-cell"><div class="img-slot"></div></div>
+      <div class="nano-cell"><div class="img-slot"></div></div>
+      <div class="nano-cell"><div class="img-slot"></div></div>
+      <div class="nano-cell"><div class="img-slot"></div></div>
+
+      <div class="nano-cell"><div class="img-slot"></div></div>
+      <div class="nano-cell"><div class="img-slot"></div></div>
+      <div class="nano-cell"><div class="img-slot"></div></div>
+      <div class="nano-cell"><div class="img-slot"></div></div>
+      <div class="nano-cell"><div class="img-slot"></div></div>
+      <div class="nano-cell"><div class="img-slot"></div></div>
+      <div class="nano-cell"><div class="img-slot"></div></div>
+      <div class="nano-cell"><div class="img-slot"></div></div>
+      <div class="nano-cell"><div class="img-slot"></div></div>
+      <div class="nano-cell"><div class="img-slot"></div></div>
+
+      <div class="nano-cell"><div class="img-slot"></div></div>
+      <div class="nano-cell"><div class="img-slot"></div></div>
+      <div class="nano-cell"><div class="img-slot"></div></div>
+      <div class="nano-cell"><div class="img-slot"></div></div>
+      <div class="nano-cell"><div class="img-slot"></div></div>
+      <div class="nano-cell"><div class="img-slot"></div></div>
+      <div class="nano-cell"><div class="img-slot"></div></div>
+      <div class="nano-cell"><div class="img-slot"></div></div>
+      <div class="nano-cell"><div class="img-slot"></div></div>
+      <div class="nano-cell"><div class="img-slot"></div></div>
+    </div>
+  </div>
+  <div class="stat-bar">
+    <div class="stat-item"><div class="stat-num">피처링 협찬</div><div class="stat-lbl">모집 채널</div></div>
+    <div class="stat-item"><div class="stat-num">—명</div><div class="stat-lbl">참여 크리에이터</div></div>
+    <div class="stat-item"><div class="stat-num">—</div><div class="stat-lbl">총 조회수</div></div>
+    <div class="stat-item"><div class="stat-num">—원</div><div class="stat-lbl">평균 CPV</div></div>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════
+     S6 — 인사이트 & 총평
+═══════════════════════════════════ -->
+<div class="slide" id="s5">
+  <div class="chrome">
+    <div class="chrome-part">인사이트 &amp; 총평</div>
+    <div class="chrome-page">P.05</div>
+  </div>
+  <div class="body">
+    <div class="label">캠페인 성과 분석</div>
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:28px; height:calc(100% - 48px);">
+
+      <!-- 좌: 성과 하이라이트 -->
+      <div style="background:var(--bg-card); border:1px solid var(--border); border-radius:8px; padding:32px 36px; display:flex; flex-direction:column; gap:20px;">
+        <div class="reason-title">성과 하이라이트</div>
+        <ul class="blist">
+          <li>틈결 × 에스더버니 아뜰리에 오픈 3일간, 총 콘텐츠 <em class="pk">—건</em> · 예상 노출 <em class="pk">—만+</em> 달성</li>
+          <li>릴리(NMIXX) 공동작업자 게시물로 글로벌 팬덤 바이럴 채널 확보</li>
+          <li>데패뉴 릴스 — 건, 패션 미디어를 통한 에디토리얼 커버리지 확보</li>
+          <li>성수동 패션 씬 내 틈결 브랜드 포지셔닝 가시적 상승</li>
+        </ul>
+      </div>
+
+      <!-- 우: 다음 캠페인 시사점 -->
+      <div style="display:flex; flex-direction:column; gap:14px;">
+        <div class="reason-card">
+          <div class="reason-title">다음 시즌 인플루언서 구성</div>
+          <div class="reason-text">동일 라인업 유지 + 나노 크리에이터 레이어 추가로 커버리지 확장</div>
+        </div>
+        <div class="reason-card">
+          <div class="reason-title">콘텐츠 포맷 전략</div>
+          <div class="reason-text">릴스 비중 확대 및 공동작업자 활용 극대화</div>
+        </div>
+        <div class="reason-card">
+          <div class="reason-title">캠페인 타이밍 최적화</div>
+          <div class="reason-text">오픈 당일 집중 발행 → 지속 노출 사이클 설계</div>
+        </div>
+        <div class="reason-card">
+          <div class="reason-title">데이터 기반 협상 구조</div>
+          <div class="reason-text">피처링 지표 → 다음 캠페인 고료 협상 근거로 활용</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+</div><!-- /deck -->
+</div><!-- /viewport -->
+
+<nav class="nav-strip">
+  <div class="nav-item active" data-n="0">
+    <div class="nav-pip"></div>
+    <div class="nav-lbl">Cover</div>
+  </div>
+  <div class="nav-item" data-n="1">
+    <div class="nav-pip"></div>
+    <div class="nav-lbl">KPI 총괄</div>
+  </div>
+  <div class="nav-item" data-n="2">
+    <div class="nav-pip"></div>
+    <div class="nav-lbl">인플루언서 성과</div>
+  </div>
+  <div class="nav-item" data-n="3">
+    <div class="nav-pip"></div>
+    <div class="nav-lbl">피드 갤러리</div>
+  </div>
+  <div class="nav-item" data-n="4">
+    <div class="nav-pip"></div>
+    <div class="nav-lbl">스토리 갤러리</div>
+  </div>
+  <div class="nav-item" data-n="5">
+    <div class="nav-pip"></div>
+    <div class="nav-lbl">나노 볼륨</div>
+  </div>
+  <div class="nav-item" data-n="6">
+    <div class="nav-pip"></div>
+    <div class="nav-lbl">인사이트</div>
+  </div>
+</nav>
+
+<script>
+(function() {
+  const slides   = document.querySelectorAll('.slide');
+  const navItems = document.querySelectorAll('.nav-item');
+  const prog     = document.getElementById('prog');
+  const deck     = document.getElementById('deck');
+  const vp       = document.getElementById('vp');
+  const total    = slides.length;
+  let cur = 0;
+
+  function goTo(n) {
+    slides[cur].classList.remove('active');
+    navItems[cur].classList.remove('active');
+    cur = Math.max(0, Math.min(n, total - 1));
+    slides[cur].classList.add('active');
+    navItems[cur].classList.add('active');
+    render();
+  }
+
+  function render() {
+    const pct = total <= 1 ? 100 : (cur / (total - 1)) * 100;
+    prog.style.width = pct + '%';
+  }
+
+  function scale() {
+    const availH = window.innerHeight - 52;
+    const s = Math.min(window.innerWidth / 1920, availH / 1080);
+    deck.style.transform = 'scale(' + s + ')';
+    vp.style.alignItems = 'center';
+    vp.style.paddingBottom = '52px';
+  }
+
+  navItems.forEach(function(item) {
+    item.addEventListener('click', function(e) {
+      e.stopPropagation();
+      goTo(parseInt(item.dataset.n));
+    });
+  });
+
+  document.addEventListener('keydown', function(e) {
+    if      (e.key === 'ArrowRight' || e.key === 'ArrowDown' || e.key === ' ') { e.preventDefault(); goTo(cur + 1); }
+    else if (e.key === 'ArrowLeft'  || e.key === 'ArrowUp')                    { e.preventDefault(); goTo(cur - 1); }
+    else if (e.key === 'Home')  { e.preventDefault(); goTo(0); }
+    else if (e.key === 'End')   { e.preventDefault(); goTo(total - 1); }
+    else if (e.key === 'f' || e.key === 'F') {
+      if (!document.fullscreenElement) document.documentElement.requestFullscreen().catch(function(){});
+      else document.exitFullscreen();
+    }
+  });
+
+  vp.addEventListener('click', function(e) {
+    const x = e.clientX / window.innerWidth;
+    if (x >= 0.5) goTo(cur + 1);
+    else           goTo(cur - 1);
+  });
+
+  var tx = 0;
+  document.addEventListener('touchstart', function(e) { tx = e.touches[0].clientX; }, { passive: true });
+  document.addEventListener('touchend', function(e) {
+    var dx = e.changedTouches[0].clientX - tx;
+    if (Math.abs(dx) > 48) { dx < 0 ? goTo(cur + 1) : goTo(cur - 1); }
+  });
+
+  window.addEventListener('resize', scale);
+  scale();
+  render();
+})();
+</script>
+</body>
+</html>
