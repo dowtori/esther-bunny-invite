@@ -1,5 +1,5 @@
 // ============================================================
-// SIRIAI PM — App (router, views, components)
+// SIRIAI PM — App (3-column master-detail v2)
 // ============================================================
 
 /* globals Store, CONFIG */
@@ -46,15 +46,15 @@ const QA_META = {
 
 // ── UTILS ─────────────────────────────────────────────────────
 const fmt = {
-  money: n => n ? (n / 10000).toFixed(0) + '만' : '—',
+  money:     n => n ? (n / 10000).toFixed(0) + '만' : '—',
   moneyFull: n => n ? n.toLocaleString('ko-KR') + '원' : '—',
-  date: s => s ? s.slice(0, 10) : '—',
-  pct: n => n ? n + '%' : '—',
+  date:      s => s ? s.slice(0, 10) : '—',
+  pct:       n => n ? n + '%' : '—',
 };
 
 function dday(c) {
   if (c._dday === null || c._dday === undefined) return '';
-  if (c._dday < 0) return `D+${Math.abs(c._dday)}`;
+  if (c._dday < 0)  return `D+${Math.abs(c._dday)}`;
   if (c._dday === 0) return 'D-DAY';
   return `D-${c._dday}`;
 }
@@ -107,15 +107,12 @@ function escHtml(s) {
 
 // ── STATE ──────────────────────────────────────────────────────
 const State = {
-  view: 'dashboard',
-  drawerCampaignId: null,
-  campView: 'list',
-  visibleCols: ['status','name','n_up','d_end','links'],
-  density: 'normal',
-  drawerSections: {},
-  filters: { tab: 'all', search: '', entity: '', country: '', client: '', status: '' },
-  sort: { col: null, dir: 1 },
-  financeMonth: null,
+  selectedClient:    null,    // null = 전체보기 | '거래처명'
+  selectedCampaignId: null,
+  campFilter:        'active', // 'active' | 'done' | 'all'
+  search:            '',
+  drawerSections:    {},
+  financeMode:       false,
 };
 
 // ── TOAST ──────────────────────────────────────────────────────
@@ -135,7 +132,6 @@ function toast(msg, type = '') {
 function computeAlerts() {
   const campaigns = Store.getCampaigns().filter(c => !c.is_archived);
   const alerts = { urgent: [], warn: [], unpaid: [], qa: [], issue: [] };
-  const today = new Date(); today.setHours(0,0,0,0);
 
   campaigns.forEach(c => {
     if (ACTIVE_STATUSES.includes(c.status)) {
@@ -159,35 +155,23 @@ function renderNotificationBadge() {
     badge.textContent = total;
     badge.style.display = total > 0 ? '' : 'none';
   }
-  // sidebar badges
-  const dashBadge = document.getElementById('dashBadge');
-  if (dashBadge) {
-    const urgent = alerts.urgent.length + alerts.issue.length;
-    dashBadge.textContent = urgent;
-    dashBadge.style.display = urgent > 0 ? '' : 'none';
-  }
 }
 
 function renderNotifDropdown() {
   const alerts = computeAlerts();
   const groups = [
-    { key: 'urgent', label: '🔴 D-2 이내 마감', items: alerts.urgent, dot: 'urgent',
-      meta: c => dday(c) },
-    { key: 'warn',   label: '🟡 D-7 이내 마감', items: alerts.warn,   dot: 'warn',
-      meta: c => dday(c) },
-    { key: 'unpaid', label: '💸 미입금',          items: alerts.unpaid, dot: 'warn',
-      meta: c => fmt.money(c.revenue) + '원' },
-    { key: 'qa',     label: '⚠ QA 이슈',          items: alerts.qa,    dot: 'urgent',
-      meta: () => 'QA 이슈' },
-    { key: 'issue',  label: '🔧 기타/이슈',        items: alerts.issue, dot: 'info',
-      meta: () => '확인 필요' },
+    { key: 'urgent', label: '🔴 D-2 이내 마감', items: alerts.urgent, dot: 'urgent', meta: c => dday(c) },
+    { key: 'warn',   label: '🟡 D-7 이내 마감', items: alerts.warn,   dot: 'warn',   meta: c => dday(c) },
+    { key: 'unpaid', label: '💸 미입금',         items: alerts.unpaid, dot: 'warn',   meta: c => fmt.money(c.revenue) + '원' },
+    { key: 'qa',     label: '⚠ QA 이슈',         items: alerts.qa,    dot: 'urgent', meta: () => 'QA 이슈' },
+    { key: 'issue',  label: '🔧 기타/이슈',       items: alerts.issue, dot: 'info',   meta: () => '확인 필요' },
   ];
 
   const html = groups.filter(g => g.items.length > 0).map(g => `
     <div class="alert-group">
       <div class="alert-group-title">${g.label} (${g.items.length})</div>
       ${g.items.map(c => `
-        <div class="alert-item" onclick="App.openDrawer('${c.id}');Notif.close()">
+        <div class="alert-item" onclick="App.selectCampaign('${c.id}');Notif.close()">
           <span class="alert-dot ${g.dot}"></span>
           <span class="alert-name">${escHtml(c.name)}</span>
           <span class="alert-meta">${escHtml(g.meta(c))}</span>
@@ -196,49 +180,51 @@ function renderNotifDropdown() {
     </div>
   `).join('') || '<div class="alert-empty">알림 없음 ✓</div>';
 
-  document.getElementById('notifBody').innerHTML = html;
+  const body = document.getElementById('notifBody');
+  if (body) body.innerHTML = html;
 }
 
 const Notif = {
   open() {
     renderNotifDropdown();
-    document.getElementById('notifDropdown').classList.add('open');
+    const dd = document.getElementById('notifDropdown');
+    if (dd) dd.classList.add('open');
     document.addEventListener('click', Notif._outside, true);
   },
   close() {
-    document.getElementById('notifDropdown').classList.remove('open');
+    const dd = document.getElementById('notifDropdown');
+    if (dd) dd.classList.remove('open');
     document.removeEventListener('click', Notif._outside, true);
   },
   toggle() {
-    const open = document.getElementById('notifDropdown').classList.contains('open');
-    open ? Notif.close() : Notif.open();
+    const dd = document.getElementById('notifDropdown');
+    if (!dd) return;
+    dd.classList.contains('open') ? Notif.close() : Notif.open();
   },
   _outside(e) {
     const wrap = document.getElementById('notifWrap');
-    if (!wrap.contains(e.target)) Notif.close();
+    if (wrap && !wrap.contains(e.target)) Notif.close();
   },
 };
 
 // ── STATUS DROPDOWN ────────────────────────────────────────────
 const StatusDD = {
   _campaignId: null,
-  _el: null,
 
   open(campaignId, anchorEl) {
     StatusDD._campaignId = campaignId;
-    StatusDD._el = document.getElementById('statusDropdown');
+    const el = document.getElementById('statusDropdown');
     const c = Store.getCampaignById(campaignId);
-    StatusDD._el.innerHTML = STATUSES.map(s => `
+    el.innerHTML = STATUSES.map(s => `
       <div class="status-option${s === c?.status ? ' font-bold' : ''}"
            onclick="StatusDD.select('${s}')">
         ${statusBadge(s)}
       </div>
     `).join('');
-    // position near anchor
     const rect = anchorEl.getBoundingClientRect();
-    StatusDD._el.style.top  = (rect.bottom + window.scrollY + 4) + 'px';
-    StatusDD._el.style.left = (rect.left  + window.scrollX)      + 'px';
-    StatusDD._el.classList.add('open');
+    el.style.top  = (rect.bottom + window.scrollY + 4) + 'px';
+    el.style.left = (rect.left  + window.scrollX) + 'px';
+    el.classList.add('open');
     document.addEventListener('click', StatusDD._outside, true);
   },
 
@@ -261,13 +247,13 @@ const StatusDD = {
         placeholder: '예: 제품 배송 지연으로 재모집',
         onConfirm: async (reason) => {
           await Store.updateStatus(StatusDD._campaignId, newStatus, reason);
-          App.renderCurrentView();
+          App.renderAll();
           toast('상태가 변경되었습니다', 'ok');
         },
       });
     } else {
       await Store.updateStatus(StatusDD._campaignId, newStatus);
-      App.renderCurrentView();
+      App.renderAll();
       toast('상태가 변경되었습니다', 'ok');
     }
   },
@@ -325,11 +311,12 @@ const InlineEdit = {
       el.textContent = val || '—';
       try {
         await Store.updateCampaign(campaignId, { [key]: val });
-        App.renderCurrentView();
-        const body = document.getElementById('drawerBody');
-        const scrollTop = body ? body.scrollTop : 0;
-        await Drawer.render();
-        if (body) body.scrollTop = scrollTop;
+        // Refresh campaign list row + detail panel (scroll-preserved)
+        const panel = document.getElementById('detailPanel');
+        const scrollTop = panel ? panel.scrollTop : 0;
+        document.getElementById('campaignPanel').innerHTML = renderCampaignPanel();
+        Detail.render(campaignId);
+        if (panel) panel.scrollTop = scrollTop;
         toast('저장됨', 'ok');
       } catch(e) { toast('저장 실패', 'err'); }
     };
@@ -358,8 +345,6 @@ const InlineEdit = {
 
 // ── MODAL ──────────────────────────────────────────────────────
 const Modal = {
-  _stack: [],
-
   show(html, opts = {}) {
     document.getElementById('modalTitle').textContent = opts.title || '';
     document.getElementById('modalBody').innerHTML = html;
@@ -408,28 +393,8 @@ const Modal = {
   },
 };
 
-// ── DRAWER ─────────────────────────────────────────────────────
+// ── DRAWER (repurposed as detail panel renderer) ───────────────
 const Drawer = {
-  open(campaignId) {
-    State.drawerCampaignId = campaignId;
-    const c = Store.getCampaignById(campaignId);
-    State.drawerSections = {
-      upload:  c?.status === '4. 컨텐츠 업로드',
-      qa:      !!(c?.qa_status && c.qa_status !== '검수전'),
-      finance: ['5. 캠페인 종료','6. 입금 확인'].includes(c?.status) ||
-               ['미입금','부분입금'].includes(c?.pay_status),
-      log:     false,
-    };
-    Drawer.render();
-    document.getElementById('drawer').classList.add('open');
-    document.getElementById('drawerOverlay').classList.add('open');
-  },
-
-  close() {
-    document.getElementById('drawer').classList.remove('open');
-    document.getElementById('drawerOverlay').classList.remove('open');
-    State.drawerCampaignId = null;
-  },
 
   toggleSection(key) {
     State.drawerSections[key] = !State.drawerSections[key];
@@ -438,33 +403,6 @@ const Drawer = {
     if (body) body.classList.toggle('collapsed', !State.drawerSections[key]);
     if (icon) icon.textContent = State.drawerSections[key] ? '▼' : '▶';
     if (key === 'log' && State.drawerSections.log) Drawer.loadLog();
-  },
-
-  async render() {
-    const c = Store.getCampaignById(State.drawerCampaignId);
-    if (!c) return;
-
-    document.getElementById('drawerTitle').textContent = c.name;
-
-    // Meta bar (상태 + D-day + 아카이브 + 빠른 링크)
-    const ddText = dday(c);
-    const ddC = ddayCls(c);
-    document.getElementById('drawerTabs').innerHTML = `
-      <div class="drawer-meta-bar">
-        <span class="badge ${STATUS_META[c.status]?.cls||'s1'}" style="cursor:pointer"
-              onclick="StatusDD.open('${c.id}',this)">
-          <span class="badge-dot"></span>${STATUS_META[c.status]?.label||c.status}
-        </span>
-        ${ddText ? `<span class="dday ${ddC}" style="font-size:11px;padding:3px 8px">${ddText}</span>` : ''}
-        <button class="btn-ghost-danger" onclick="Drawer.archiveConfirm('${c.id}')">아카이브</button>
-      </div>
-      ${Drawer.renderQuickActions(c)}
-    `;
-
-    document.getElementById('drawerBody').innerHTML = Drawer.renderBody(c);
-    document.getElementById('drawerFooter').innerHTML = '';
-
-    if (State.drawerSections.log) Drawer.loadLog();
   },
 
   renderQuickActions(c) {
@@ -591,7 +529,7 @@ const Drawer = {
   async loadLog() {
     const logContent = document.getElementById('ds-log-content');
     if (!logContent || logContent.dataset.loaded) return;
-    const c = Store.getCampaignById(State.drawerCampaignId);
+    const c = Store.getCampaignById(State.selectedCampaignId);
     if (!c) return;
     logContent.innerHTML = '<div class="text-muted text-sm" style="padding:8px 0">로딩 중…</div>';
     const logs = await Store.getLogs(c.id, 40);
@@ -626,20 +564,74 @@ const Drawer = {
     const c = Store.getCampaignById(id);
     Modal.confirm({
       title: '아카이브',
-      message: `"${c?.name}" 캠페인을 아카이브 하시겠습니까? 완료 탭에서 복원 가능합니다.`,
+      message: `"${c?.name}" 캠페인을 아카이브 하시겠습니까?`,
       onConfirm: async () => {
         await Store.archiveCampaign(id);
-        Drawer.close();
-        App.renderCurrentView();
+        State.selectedCampaignId = null;
+        App.renderAll();
         toast('아카이브 완료', 'ok');
       },
     });
   },
 };
 
-// ── CAMPAIGN FORM (새 캠페인) ────────────────────────────────
+// ── DETAIL PANEL ───────────────────────────────────────────────
+const Detail = {
+  render(id) {
+    const panel = document.getElementById('detailPanel');
+    if (!panel) return;
+
+    if (!id) {
+      panel.innerHTML = '<div class="detail-empty">캠페인을 선택하세요</div>';
+      return;
+    }
+
+    const c = Store.getCampaignById(id);
+    if (!c) {
+      panel.innerHTML = '<div class="detail-empty">캠페인을 찾을 수 없습니다</div>';
+      return;
+    }
+
+    // Auto-expand sections based on campaign state (only on first open)
+    if (!Object.keys(State.drawerSections).length) {
+      State.drawerSections = {
+        upload:  c.status === '4. 컨텐츠 업로드',
+        qa:      !!(c.qa_status && c.qa_status !== '검수전'),
+        finance: ['5. 캠페인 종료','6. 입금 확인'].includes(c.status) ||
+                 ['미입금','부분입금'].includes(c.pay_status),
+        log:     false,
+      };
+    }
+
+    const ddText = dday(c);
+    const ddC = ddayCls(c);
+    const meta = STATUS_META[c.status] || { cls: 's1', label: c.status };
+
+    panel.innerHTML = `
+      <div class="detail-header">
+        <div class="detail-title">${escHtml(c.name)}</div>
+        <div class="detail-meta-bar">
+          <span class="badge ${meta.cls}" style="cursor:pointer" onclick="StatusDD.open('${c.id}',this)">
+            <span class="badge-dot"></span>${meta.label}
+          </span>
+          ${ddText ? `<span class="dday ${ddC}" style="font-size:11px;padding:3px 8px">${ddText}</span>` : ''}
+          <button class="btn-ghost-danger" style="margin-left:auto" onclick="Drawer.archiveConfirm('${c.id}')">아카이브</button>
+        </div>
+        ${Drawer.renderQuickActions(c)}
+      </div>
+      <div class="detail-body">
+        ${Drawer.renderBody(c)}
+      </div>
+    `;
+
+    if (State.drawerSections.log) Drawer.loadLog();
+  },
+};
+
+// ── CAMPAIGN FORM ──────────────────────────────────────────────
 function showNewCampaignModal() {
   const clients = Store.getClients().map(c => c.name);
+  const defaultClient = State.selectedClient || '';
   Modal.show(`
     <div class="form-grid">
       <div class="field form-full">
@@ -648,7 +640,7 @@ function showNewCampaignModal() {
       </div>
       <div class="field">
         <label>거래처</label>
-        <input id="nf-client" list="clientList" type="text" placeholder="거래처명">
+        <input id="nf-client" list="clientList" type="text" placeholder="거래처명" value="${escHtml(defaultClient)}">
         <datalist id="clientList">${clients.map(c => `<option value="${escHtml(c)}">`).join('')}</datalist>
       </div>
       <div class="field">
@@ -741,389 +733,235 @@ async function submitNewCampaign() {
   Modal.hide();
   try {
     const created = await Store.createCampaign(data);
-    App.renderCurrentView();
+    // Navigate to the new campaign's client and select it
+    State.financeMode = false;
+    State.selectedClient = clientName || null;
+    State.selectedCampaignId = created.id;
+    State.drawerSections = {};
+    State.campFilter = 'active';
+    App.renderAll();
     toast('캠페인이 등록되었습니다', 'ok');
-    setTimeout(() => Drawer.open(created.id), 300);
   } catch (e) {
     toast('등록 실패: ' + e.message, 'err');
   }
 }
 
-// ── FILTERS ───────────────────────────────────────────────────
-function applyFilters(campaigns) {
-  let data = campaigns.filter(c => {
-    if (State.filters.tab === 'active') return ACTIVE_STATUSES.includes(c.status) && !c.is_archived;
-    if (State.filters.tab === 'qa')     return c.status === '4. 컨텐츠 업로드' && !c.is_archived;
-    if (State.filters.tab === 'finance')return c.revenue > 0 && !c.is_archived;
-    if (State.filters.tab === 'done')   return c.is_archived || ['5. 캠페인 종료', '6. 입금 확인'].includes(c.status);
-    return !c.is_archived;
-  });
-  if (State.filters.search) {
-    const q = State.filters.search.toLowerCase();
-    data = data.filter(c =>
-      (c.name || '').toLowerCase().includes(q) ||
-      (c.client_name || '').toLowerCase().includes(q) ||
-      (c.detail || '').toLowerCase().includes(q) ||
-      (c.note || '').toLowerCase().includes(q)
-    );
-  }
-  if (State.filters.entity)  data = data.filter(c => (c.entity || '').includes(State.filters.entity));
-  if (State.filters.country) data = data.filter(c => c.country === State.filters.country);
-  if (State.filters.client)  data = data.filter(c => c.client_name === State.filters.client);
-  if (State.filters.status)  data = data.filter(c => c.status === State.filters.status);
+// ── FILTERING ─────────────────────────────────────────────────
+function filterCampaigns() {
+  let data = Store.getCampaigns().filter(c => !c.is_archived);
 
-  if (State.sort.col) {
-    data.sort((a, b) => {
-      let av = a[State.sort.col], bv = b[State.sort.col];
-      if (typeof av === 'number') return (av - bv) * State.sort.dir;
-      return String(av||'').localeCompare(String(bv||''), 'ko') * State.sort.dir;
-    });
+  if (State.selectedClient) {
+    data = data.filter(c => c.client_name === State.selectedClient);
+  }
+  if (State.search) {
+    const q = State.search.toLowerCase();
+    data = data.filter(c =>
+      (c.name        || '').toLowerCase().includes(q) ||
+      (c.client_name || '').toLowerCase().includes(q) ||
+      (c.detail      || '').toLowerCase().includes(q)
+    );
   }
   return data;
 }
 
-// ── VIEW: DASHBOARD ───────────────────────────────────────────
-function renderDashboard() {
-  const all = Store.getCampaigns().filter(c => !c.is_archived);
-  const active = all.filter(c => ACTIVE_STATUSES.includes(c.status));
-  const totalRev = all.reduce((s,c) => s + (c.revenue||0), 0);
-  const totalProfit = all.reduce((s,c) => s + (c._profit||0), 0);
+function applyTabFilter(data) {
+  if (State.campFilter === 'active') return data.filter(c => ACTIVE_STATUSES.includes(c.status));
+  if (State.campFilter === 'done')   return data.filter(c => !ACTIVE_STATUSES.includes(c.status));
+  return data;
+}
+
+// ── RENDER: CLIENT PANEL ──────────────────────────────────────
+function renderClientPanel() {
+  const campaigns = Store.getCampaigns().filter(c => !c.is_archived);
   const alerts = computeAlerts();
-  const urgentCount = alerts.urgent.length + alerts.issue.length;
-  const unpaidTotal = Store.getCampaigns()
-    .filter(c => ['미입금','부분입금'].includes(c.pay_status) && c.revenue > 0)
-    .reduce((s,c) => s + (c.revenue||0), 0);
+  const totalAlerts = alerts.urgent.length + alerts.warn.length + alerts.unpaid.length +
+                      alerts.qa.length + alerts.issue.length;
 
-  return `
-    <div class="page-header">
-      <div>
-        <div class="page-title">대시보드</div>
-        <div class="page-sub">${new Date().toLocaleDateString('ko-KR',{year:'numeric',month:'long',day:'numeric',weekday:'long'})}</div>
-      </div>
-    </div>
+  // Build client stats
+  const clientMap = {};
+  campaigns.forEach(c => {
+    const name = c.client_name || '(거래처 없음)';
+    if (!clientMap[name]) clientMap[name] = { active: 0, hasIssue: false };
+    if (ACTIVE_STATUSES.includes(c.status)) clientMap[name].active++;
+    if (['미입금','부분입금'].includes(c.pay_status) ||
+        c.status === '기타/이슈' || c.qa_status === '이슈') {
+      clientMap[name].hasIssue = true;
+    }
+  });
 
-    <div class="summary-grid">
-      <div class="stat-card">
-        <div class="stat-card-label">전체 캠페인</div>
-        <div class="stat-card-val">${all.length}</div>
-        <div class="stat-card-sub">진행중 ${active.length}건</div>
-      </div>
-      <div class="stat-card accent-green">
-        <div class="stat-card-label">누적 매출</div>
-        <div class="stat-card-val">${fmt.money(totalRev)}원</div>
-        <div class="stat-card-sub">순이익 ${fmt.money(totalProfit)}원</div>
-      </div>
-      <div class="stat-card accent-red">
-        <div class="stat-card-label">미입금</div>
-        <div class="stat-card-val">${fmt.money(unpaidTotal)}원</div>
-        <div class="stat-card-sub">${alerts.unpaid.length}건</div>
-      </div>
-      <div class="stat-card ${urgentCount > 0 ? 'accent-red' : ''}">
-        <div class="stat-card-label">즉시 확인 필요</div>
-        <div class="stat-card-val">${urgentCount}</div>
-        <div class="stat-card-sub">D-2 마감 ${alerts.urgent.length} · 이슈 ${alerts.issue.length}</div>
-      </div>
-    </div>
+  const clients = Object.entries(clientMap)
+    .sort((a, b) => b[1].active - a[1].active || a[0].localeCompare(b[0], 'ko'));
 
-    ${renderAlertPanel(alerts)}
+  const allActive = campaigns.filter(c => ACTIVE_STATUSES.includes(c.status)).length;
+  const isAllSelected = State.selectedClient === null && !State.financeMode;
 
-    <div style="margin-top:20px">
-      <div class="page-header" style="margin-bottom:12px">
-        <div class="page-title" style="font-size:13px">진행중 캠페인</div>
-      </div>
-      ${renderCampaignTable(active.slice(0,15), { compact: true })}
-    </div>
-  `;
-}
-
-function renderAlertPanel(alerts) {
-  const groups = [
-    { label: 'D-2 이내 마감', items: alerts.urgent, dot: 'urgent', meta: c => dday(c) },
-    { label: '미입금',         items: alerts.unpaid, dot: 'warn',   meta: c => fmt.money(c.revenue) + '원' },
-    { label: 'QA 이슈',        items: alerts.qa,     dot: 'urgent', meta: () => 'QA 이슈' },
-    { label: '기타/이슈',      items: alerts.issue,  dot: 'info',   meta: () => '확인 필요' },
-    { label: 'D-7 이내 마감',  items: alerts.warn,   dot: 'warn',   meta: c => dday(c) },
-  ].filter(g => g.items.length);
-
-  if (!groups.length) return `<div class="alert-panel"><div class="alert-empty" style="padding:24px">알림 없음 ✓</div></div>`;
-
-  return `
-    <div class="alert-panel">
-      <div class="alert-panel-header">운영 알림 (${groups.reduce((s,g)=>s+g.items.length,0)})</div>
-      ${groups.map(g => `
-        <div class="alert-group">
-          <div class="alert-group-title">${g.label} (${g.items.length})</div>
-          ${g.items.map(c => `
-            <div class="alert-item" onclick="App.openDrawer('${c.id}')">
-              <span class="alert-dot ${g.dot}"></span>
-              <span class="alert-name">${escHtml(c.name)}</span>
-              <span class="alert-meta">${escHtml(g.meta(c))}</span>
-            </div>
-          `).join('')}
-        </div>
-      `).join('')}
-    </div>
-  `;
-}
-
-// ── VIEW: CAMPAIGNS TABLE ─────────────────────────────────────
-function renderCampaignTable(data, opts = {}) {
-  if (!data.length) return '<div class="table-wrap"><div class="empty-state">조건에 맞는 캠페인이 없습니다<p>새 캠페인을 등록하거나 필터를 변경해 보세요</p></div></div>';
-
-  const ALL_COLS = [
-    { key: 'status',    label: '상태',     cls: 'sortable' },
-    { key: 'name',      label: '캠페인명',  cls: 'sortable' },
-    { key: 'entity',    label: '담당 채널', cls: 'sortable hide-mobile' },
-    { key: 'n_up',      label: '업로드',   cls: '' },
-    { key: 'd_end',     label: 'D-day',    cls: 'sortable' },
-    { key: 'qa_status', label: 'QA',       cls: 'hide-mobile' },
-    { key: 'revenue',   label: '매출',     cls: 'sortable hide-mobile' },
-    { key: 'pay_status',label: '입금',     cls: 'hide-mobile' },
-    { key: 'links',     label: '링크',     cls: 'hide-mobile' },
-  ];
-  const DEFAULT_COLS = ['status','name','n_up','d_end','links'];
-
-  const cols = opts.compact
-    ? ALL_COLS.filter(c => DEFAULT_COLS.includes(c.key))
-    : ALL_COLS.filter(c => State.visibleCols.includes(c.key));
-
-  const head = cols.map(col => {
-    const sortCls = State.sort.col === col.key
-      ? (State.sort.dir === 1 ? ' sort-asc' : ' sort-desc') : '';
-    return `<th class="${col.cls}${sortCls}" data-col="${col.key}">${col.label}</th>`;
-  }).join('');
-
-  const densityCls = (!opts.compact && State.density === 'compact') ? ' table-compact' : '';
-
-  const rows = data.map(c => {
-    const cells = cols.map(col => {
-      switch (col.key) {
-        case 'status':
-          return `<td>${statusBadge(c.status, true)
-            .replace('data-status-btn', `onclick="StatusDD.open('${c.id}',this);event.stopPropagation()"`)}</td>`;
-        case 'name':
-          return `<td class="name-cell">
-            <div class="name-main">${escHtml(c.name)}</div>
-            ${c.detail ? `<div class="name-detail">${escHtml(c.detail)}</div>` : ''}
-            <div class="name-client">${escHtml(c.client_name || '')}${c.country==='해외'?' · 해외':''}</div>
-          </td>`;
-        case 'entity':
-          return `<td><span class="text-sm ${c.entity==='SIRIAI'?'text-muted':''}">${escHtml(c.entity||'')}</span></td>`;
-        case 'n_up':
-          return `<td>${progressBar(c.count_select, c.count_upload)}</td>`;
-        case 'd_end':
-          return `<td>
-            ${dday(c) ? `<div class="dday ${ddayCls(c)}">${dday(c)}</div>` : ''}
-            <div class="dday-date">${c.date_end || '—'}</div>
-          </td>`;
-        case 'qa_status':
-          return `<td>${qaBadge(c.qa_status)}</td>`;
-        case 'revenue':
-          return `<td><span class="money ${c.revenue>0?'pos':'zero'}">${fmt.money(c.revenue)}${c.revenue?'원':''}</span></td>`;
-        case 'pay_status':
-          return `<td>${payBadge(c.pay_status)}</td>`;
-        case 'links':
-          return `<td><div class="link-row">
-            ${linkBtn(c.link_progress,'시트','prog')}
-            ${linkBtn(c.link_qa,'QA','qa')}
-            ${linkBtn(c.link_guide,'가이드','guide')}
-          </div></td>`;
-        default:
-          return `<td>${escHtml(String(c[col.key]||''))}</td>`;
-      }
-    }).join('');
-    return `<tr class="row-hover" onclick="App.openDrawer('${c.id}')">${cells}</tr>`;
-  }).join('');
-
-  return `
-    <div class="table-wrap">
-      <div class="table-scroll${opts.compact ? '' : ' table-full'}${densityCls}">
-        <table id="campTable">
-          <thead><tr>${head}</tr></thead>
-          <tbody>${rows}</tbody>
-        </table>
-      </div>
-    </div>
-  `;
-}
-
-// ── VIEW: KANBAN BOARD ────────────────────────────────────────
-function renderKanbanView(data) {
-  const KANBAN_COLS = [
-    { label: '브랜드 소통', statuses: ['1. 브랜드 소통'] },
-    { label: '모집중',      statuses: ['2. 모집중'] },
-    { label: '컨펌 단계',   statuses: ['3. 컨펌 단계'] },
-    { label: '업로드 중',   statuses: ['4. 컨텐츠 업로드'] },
-    { label: '정산 중',     statuses: ['5. 캠페인 종료','6. 입금 확인'] },
-    { label: '기타',        statuses: ['7. 상시 진행','기타/이슈'] },
-  ];
-
-  const cols = KANBAN_COLS.map(col => {
-    const items = data.filter(c => col.statuses.includes(c.status));
-    const cards = items.map(c => {
-      const ddText = dday(c);
-      const ddC = ddayCls(c);
-      const hasPay = c.pay_status && !['해당없음','입금완료'].includes(c.pay_status);
-      return `
-        <div class="kanban-card" onclick="App.openDrawer('${c.id}')">
-          <div class="kanban-card-meta">${escHtml(c.client_name||'—')}${c.country==='해외'?' · 해외':''}</div>
-          <div class="kanban-card-name">${escHtml(c.name)}</div>
-          ${c.status==='4. 컨텐츠 업로드'&&c.count_select ? `<div style="margin:5px 0 2px">${progressBar(c.count_select,c.count_upload)}</div>` : ''}
-          <div class="kanban-card-footer">
-            ${ddText ? `<span class="dday ${ddC}" style="font-size:10px;padding:2px 5px">${ddText}</span>` : '<span></span>'}
-            ${hasPay ? `<span style="font-size:10px">${payBadge(c.pay_status)}</span>` : ''}
-          </div>
-        </div>`;
-    }).join('') || `<div class="text-muted text-sm" style="padding:10px 0;text-align:center">—</div>`;
-
+  const clientItems = clients.map(([name, stats]) => {
+    const isSelected = State.selectedClient === name && !State.financeMode;
     return `
-      <div class="kanban-col">
-        <div class="kanban-col-header">
-          <span class="kanban-col-title">${col.label}</span>
-          <span class="kanban-col-count">${items.length}</span>
-        </div>
-        <div class="kanban-cards">${cards}</div>
+      <div class="client-item${isSelected ? ' selected' : ''}" onclick="App.selectClient('${escHtml(name)}')">
+        <span class="client-dot${stats.active > 0 ? ' active' : ''}"></span>
+        <span class="client-name">${escHtml(name)}</span>
+        ${stats.hasIssue ? '<span class="client-warn">⚠</span>' : ''}
+        ${stats.active > 0 ? `<span class="client-count">${stats.active}</span>` : ''}
       </div>`;
-  }).join('');
-
-  return `<div class="kanban-board" style="margin-top:8px">${cols}</div>`;
-}
-
-const ColToggle = {
-  toggle() {
-    const dd = document.getElementById('colToggleDropdown');
-    if (!dd) return;
-    const isOpen = !dd.classList.contains('hidden');
-    if (isOpen) {
-      dd.classList.add('hidden');
-      document.removeEventListener('click', ColToggle._outside, true);
-    } else {
-      dd.classList.remove('hidden');
-      document.addEventListener('click', ColToggle._outside, true);
-    }
-  },
-  _outside(e) {
-    const btn = document.getElementById('colToggleBtn');
-    const dd  = document.getElementById('colToggleDropdown');
-    if (!btn?.contains(e.target) && !dd?.contains(e.target)) {
-      dd?.classList.add('hidden');
-      document.removeEventListener('click', ColToggle._outside, true);
-    }
-  },
-};
-
-function renderCampaignsView() {
-  const data = applyFilters(Store.getCampaigns());
-  const clients = [...new Set(Store.getCampaigns().filter(c=>!c.is_archived).map(c=>c.client_name).filter(Boolean))].sort();
-
-  const OPTIONAL_COLS = [
-    { key: 'entity',    label: '담당 채널' },
-    { key: 'qa_status', label: 'QA 상태' },
-    { key: 'revenue',   label: '매출' },
-    { key: 'pay_status',label: '입금 상태' },
-  ];
+  }).join('') || '<div class="client-empty">거래처 없음</div>';
 
   return `
-    <div class="page-header">
-      <div class="page-title">캠페인</div>
-      <div style="margin-left:auto">
-        <button class="btn btn-primary" onclick="showNewCampaignModal()">+ 새 캠페인</button>
+    <div class="client-panel-header">
+      <div class="client-logo">
+        <div class="client-logo-text">SIRIAI</div>
+        <div class="client-logo-sub">PM</div>
+      </div>
+      <div class="notif-wrap" id="notifWrap" style="position:relative">
+        <button class="notif-btn" onclick="Notif.toggle()" title="알림">
+          <svg width="14" height="14" fill="currentColor" viewBox="0 0 16 16">
+            <path d="M8 16a2 2 0 0 0 2-2H6a2 2 0 0 0 2 2zM8 1.918l-.797.161A4.002 4.002 0 0 0 4 6c0 .628-.134 2.197-.459 3.742-.16.767-.376 1.566-.663 2.258h10.244c-.287-.692-.502-1.49-.663-2.258C12.134 8.197 12 6.628 12 6a4.002 4.002 0 0 0-3.203-3.92L8 1.917zM14.22 12c.223.447.481.801.78 1H1c.299-.199.557-.553.78-1C2.68 10.2 3 6.88 3 6c0-2.42 1.72-4.44 4.005-4.901a1 1 0 1 1 1.99 0A5.002 5.002 0 0 1 13 6c0 .88.32 4.2 1.22 6z"/>
+          </svg>
+          <span class="notif-count" id="notifCount" style="${totalAlerts > 0 ? '' : 'display:none'}">${totalAlerts}</span>
+        </button>
+        <div class="notif-dropdown" id="notifDropdown">
+          <div class="notif-header">알림</div>
+          <div id="notifBody"></div>
+        </div>
       </div>
     </div>
 
-    <div class="controls-bar">
-      <div class="tabs" id="campTabs">
-        ${[
-          ['all','전체'],['active','진행중'],['qa','업로드 중'],['finance','정산'],['done','완료'],
-        ].map(([k,l]) =>
-          `<button class="tab${State.filters.tab===k?' active':''}" onclick="App.setTab('${k}')">${l}</button>`
-        ).join('')}
+    <div class="client-section">
+      <div class="client-item${isAllSelected ? ' selected' : ''}" onclick="App.selectClient(null)">
+        <span class="client-dot active"></span>
+        <span class="client-name">전체보기</span>
+        <span class="client-count">${allActive}</span>
       </div>
-      <div class="search-wrap">
-        <svg class="ico" width="13" height="13" viewBox="0 0 16 16" fill="currentColor">
+    </div>
+
+    <div class="client-divider"></div>
+
+    <div class="client-section client-list">
+      <div class="client-section-label">거래처</div>
+      ${clientItems}
+    </div>
+
+    <div style="flex:1;min-height:12px"></div>
+
+    <div class="client-divider"></div>
+    <div class="client-section">
+      <div class="client-item${State.financeMode ? ' selected' : ''}" onclick="App.showFinance()">
+        <span style="font-size:13px;flex-shrink:0">📊</span>
+        <span class="client-name">정산</span>
+      </div>
+    </div>
+  `;
+}
+
+// ── RENDER: CAMPAIGN PANEL ────────────────────────────────────
+function renderCampaignPanel() {
+  if (State.financeMode) {
+    return `
+      <div class="camp-finance-wrap">
+        ${renderFinanceView()}
+      </div>`;
+  }
+
+  const base = filterCampaigns();
+  const displayed = applyTabFilter(base);
+
+  const baseActive = base.filter(c => ACTIVE_STATUSES.includes(c.status)).length;
+  const baseDone   = base.filter(c => !ACTIVE_STATUSES.includes(c.status)).length;
+  const baseAll    = base.length;
+
+  const title = State.selectedClient || '전체보기';
+
+  let listHtml;
+  if (State.selectedClient === null) {
+    // Group by client
+    const groups = {};
+    displayed.forEach(c => {
+      const key = c.client_name || '(거래처 없음)';
+      if (!groups[key]) groups[key] = [];
+      groups[key].push(c);
+    });
+    const groupEntries = Object.entries(groups)
+      .sort((a, b) => {
+        const aA = a[1].filter(c => ACTIVE_STATUSES.includes(c.status)).length;
+        const bA = b[1].filter(c => ACTIVE_STATUSES.includes(c.status)).length;
+        return bA - aA || a[0].localeCompare(b[0], 'ko');
+      });
+
+    listHtml = groupEntries.map(([clientName, items]) => `
+      <div class="camp-group">
+        <div class="camp-group-header" onclick="App.selectClient('${escHtml(clientName)}')">
+          <span class="camp-group-name">${escHtml(clientName)}</span>
+          <span class="camp-group-count">${items.length}</span>
+        </div>
+        ${items.map(c => renderCampaignRow(c)).join('')}
+      </div>
+    `).join('') || '<div class="camp-empty">캠페인이 없습니다</div>';
+  } else {
+    listHtml = displayed.map(c => renderCampaignRow(c)).join('') ||
+               '<div class="camp-empty">캠페인이 없습니다</div>';
+  }
+
+  return `
+    <div class="camp-panel-header">
+      <div class="camp-panel-title">${escHtml(title)}</div>
+      <button class="btn btn-primary btn-sm" onclick="showNewCampaignModal()">+ 캠페인</button>
+    </div>
+    <div class="camp-panel-controls">
+      <div class="camp-tabs">
+        <button class="camp-tab${State.campFilter==='active'?' active':''}" onclick="App.setCampFilter('active')">
+          진행중 <span class="camp-tab-count">${baseActive}</span>
+        </button>
+        <button class="camp-tab${State.campFilter==='done'?' active':''}" onclick="App.setCampFilter('done')">
+          완료 <span class="camp-tab-count">${baseDone}</span>
+        </button>
+        <button class="camp-tab${State.campFilter==='all'?' active':''}" onclick="App.setCampFilter('all')">
+          전체 <span class="camp-tab-count">${baseAll}</span>
+        </button>
+      </div>
+      <div class="camp-search">
+        <svg width="12" height="12" viewBox="0 0 16 16" fill="currentColor">
           <path d="M6.5 1a5.5 5.5 0 1 0 3.594 9.714l3.596 3.596.707-.707-3.596-3.596A5.5 5.5 0 0 0 6.5 1zm0 1a4.5 4.5 0 1 1 0 9 4.5 4.5 0 0 1 0-9z"/>
         </svg>
-        <input class="search" id="searchInput" type="text" placeholder="캠페인명, 거래처 검색…"
-               value="${escHtml(State.filters.search)}"
+        <input type="text" class="camp-search-input" placeholder="검색…"
+               value="${escHtml(State.search)}"
                oninput="App.setSearch(this.value)">
       </div>
-      <select class="filter-select" onchange="App.setFilter('entity',this.value)">
-        <option value="">담당 채널</option>
-        <option value="SIRIAI" ${State.filters.entity==='SIRIAI'?'selected':''}>SIRIAI</option>
-        <option value="타대행" ${State.filters.entity==='타대행'?'selected':''}>타대행</option>
-      </select>
-      <select class="filter-select" onchange="App.setFilter('country',this.value)">
-        <option value="">국내/해외</option>
-        <option value="국내" ${State.filters.country==='국내'?'selected':''}>국내</option>
-        <option value="해외" ${State.filters.country==='해외'?'selected':''}>해외</option>
-      </select>
-      <select class="filter-select" onchange="App.setFilter('client',this.value)">
-        <option value="">거래처 전체</option>
-        ${clients.map(c => `<option value="${escHtml(c)}"${State.filters.client===c?' selected':''}>${escHtml(c)}</option>`).join('')}
-      </select>
-      <div class="controls-right">
-        <span class="count-label">${data.length}건</span>
-        <div class="view-toggle">
-          <button class="btn btn-sm${State.campView==='list'?' btn-active':''}" onclick="App.setCampView('list')" title="목록 보기">☰</button>
-          <button class="btn btn-sm${State.campView==='board'?' btn-active':''}" onclick="App.setCampView('board')" title="보드 보기">⊞</button>
-        </div>
-        <button class="btn btn-sm${State.density==='compact'?' btn-active':''}" onclick="App.toggleDensity()" title="행 밀도">컴팩트</button>
-        <div style="position:relative">
-          <button id="colToggleBtn" class="btn btn-sm" onclick="ColToggle.toggle()" title="컬럼 설정">⚙</button>
-          <div id="colToggleDropdown" class="col-toggle-dropdown hidden">
-            <div class="col-toggle-title">컬럼 표시</div>
-            ${OPTIONAL_COLS.map(col => `
-              <label class="col-toggle-item">
-                <input type="checkbox" ${State.visibleCols.includes(col.key)?'checked':''} onchange="App.toggleCol('${col.key}')">
-                ${col.label}
-              </label>`).join('')}
-          </div>
-        </div>
-      </div>
     </div>
-
-    ${State.campView === 'board' ? renderKanbanView(data) : renderCampaignTable(data)}
+    <div class="camp-list">${listHtml}</div>
   `;
 }
 
-// ── VIEW: QA ──────────────────────────────────────────────────
-function renderQAView() {
-  const campaigns = Store.getCampaigns().filter(c => !c.is_archived);
-  const qaMap = { '검수전':0, '검수중':0, '완료':0, '이슈':0 };
-  campaigns.forEach(c => { if (qaMap[c.qa_status] !== undefined) qaMap[c.qa_status]++; });
-  const active4 = campaigns.filter(c => c.status === '4. 컨텐츠 업로드');
+function renderCampaignRow(c) {
+  const ddText = dday(c);
+  const ddC = ddayCls(c);
+  const isDone = !ACTIVE_STATUSES.includes(c.status);
+  const isSelected = State.selectedCampaignId === c.id;
+  const hasPay = ['미입금','부분입금'].includes(c.pay_status);
+  const meta = STATUS_META[c.status] || { cls: 'sX', label: c.status };
+
+  const uploadInfo = c.count_select
+    ? `${c.count_upload || 0}/${c.count_select}`
+    : '';
+
+  const dateStr = c.date_end
+    ? c.date_end.slice(5).replace('-', '/') + ' 마감'
+    : '';
+
+  const subParts = [meta.label, dateStr, hasPay ? '미입금' : ''].filter(Boolean);
 
   return `
-    <div class="page-header">
-      <div class="page-title">QA 검수</div>
-    </div>
-    <div class="summary-grid">
-      <div class="stat-card"><div class="stat-card-label">검수 전</div><div class="stat-card-val">${qaMap['검수전']}</div></div>
-      <div class="stat-card accent-blue"><div class="stat-card-label">검수 중</div><div class="stat-card-val">${qaMap['검수중']}</div></div>
-      <div class="stat-card accent-green"><div class="stat-card-label">완료</div><div class="stat-card-val">${qaMap['완료']}</div></div>
-      <div class="stat-card accent-red"><div class="stat-card-label">이슈</div><div class="stat-card-val">${qaMap['이슈']}</div></div>
-    </div>
-
-    <div style="margin-bottom:8px">
-      <div class="page-title" style="font-size:12px;color:var(--ink50);margin-bottom:8px">업로드 단계 캠페인 (${active4.length}건)</div>
-      <div class="table-wrap">
-        <table><thead><tr>
-          <th>캠페인명</th><th>업로드 현황</th><th>QA 상태</th><th>QA 시트</th><th>비고</th>
-        </tr></thead><tbody>
-          ${active4.map(c => `
-            <tr class="row-hover" onclick="App.openDrawer('${c.id}')">
-              <td class="name-cell"><div class="name-main">${escHtml(c.name)}</div><div class="name-client">${escHtml(c.client_name||'')}</div></td>
-              <td>${progressBar(c.count_select, c.count_upload)}</td>
-              <td>${qaBadge(c.qa_status)}</td>
-              <td>${c.link_qa ? linkBtn(c.link_qa,'시트 열기','qa') : '<span class="text-muted text-sm">없음</span>'}</td>
-              <td><span class="text-sm text-muted truncate" style="max-width:160px;display:block">${escHtml(c.qa_note||'—')}</span></td>
-            </tr>
-          `).join('')}
-          ${!active4.length ? '<tr><td colspan="5" class="empty-state">해당 캠페인 없음</td></tr>' : ''}
-        </tbody></table>
+    <div class="camp-row${isSelected ? ' selected' : ''}${isDone ? ' done' : ''}"
+         onclick="App.selectCampaign('${c.id}')">
+      <span class="camp-row-dot ${meta.cls}"></span>
+      <div class="camp-row-main">
+        <div class="camp-row-name">${escHtml(c.name)}</div>
+        <div class="camp-row-sub">${escHtml(subParts.join(' · '))}</div>
       </div>
-    </div>
-  `;
+      <div class="camp-row-right">
+        ${ddText ? `<span class="dday ${ddC}">${ddText}</span>` : ''}
+        ${uploadInfo ? `<span class="camp-row-upload">${uploadInfo}</span>` : ''}
+      </div>
+    </div>`;
 }
 
 // ── VIEW: FINANCE ─────────────────────────────────────────────
@@ -1134,17 +972,15 @@ function renderFinanceView() {
   const unpaid = campaigns.filter(c => ['미입금','부분입금'].includes(c.pay_status));
   const unpaidTotal = unpaid.reduce((s,c) => s+(c.revenue||0), 0);
 
-  // group by month (date_end or date_start)
   const byMonth = {};
   campaigns.forEach(c => {
-    const d = c.date_end || c.date_start || '';
+    const d   = c.date_end || c.date_start || '';
     const mon = d ? d.slice(0,7) : '미정';
     if (!byMonth[mon]) byMonth[mon] = [];
     byMonth[mon].push(c);
   });
   const months = Object.keys(byMonth).sort().reverse();
 
-  // client breakdown
   const byClient = {};
   campaigns.forEach(c => {
     const k = c.client_name || '미분류';
@@ -1182,7 +1018,7 @@ function renderFinanceView() {
             <th>캠페인명</th><th>거래처</th><th>매출</th><th>원고료</th><th>순이익</th><th>마진</th><th>입금</th>
           </tr></thead><tbody>
             ${rows.map(c => `
-              <tr class="row-hover" onclick="App.openDrawer('${c.id}')">
+              <tr class="row-hover" onclick="App.selectCampaign('${c.id}')">
                 <td><div class="name-main text-sm">${escHtml(c.name)}</div></td>
                 <td class="text-sm text-muted">${escHtml(c.client_name||'')}</td>
                 <td class="nowrap"><span class="money pos">${fmt.money(c.revenue)}원</span></td>
@@ -1194,16 +1030,13 @@ function renderFinanceView() {
             `).join('')}
           </tbody></table>
         </div>
-      </div>
-    `;
+      </div>`;
   }).join('');
-
-  const csvBtn = `<button class="btn btn-sm" onclick="exportCSV()">CSV 내보내기</button>`;
 
   return `
     <div class="page-header">
-      <div class="page-title">정산</div>
-      <div style="margin-left:auto">${csvBtn}</div>
+      <div class="page-title">📊 정산</div>
+      <div style="margin-left:auto"><button class="btn btn-sm" onclick="exportCSV()">CSV 내보내기</button></div>
     </div>
     <div class="summary-grid">
       <div class="stat-card accent-green"><div class="stat-card-label">총 매출</div><div class="stat-card-val">${fmt.money(totalRev)}원</div></div>
@@ -1218,7 +1051,7 @@ function renderFinanceView() {
         <div class="table-wrap">
           <table><thead><tr><th>캠페인명</th><th>거래처</th><th>매출</th><th>세금계산서</th><th>상태</th></tr></thead>
           <tbody>${unpaid.map(c => `
-            <tr class="row-hover" onclick="App.openDrawer('${c.id}')">
+            <tr class="row-hover" onclick="App.selectCampaign('${c.id}')">
               <td>${escHtml(c.name)}</td>
               <td class="text-muted text-sm">${escHtml(c.client_name||'')}</td>
               <td><span class="money pos">${fmt.money(c.revenue)}원</span></td>
@@ -1233,8 +1066,7 @@ function renderFinanceView() {
       <div class="page-title" style="font-size:12px;color:var(--ink50);margin-bottom:8px">거래처별 집계</div>
       <div class="table-wrap">
         <table><thead><tr><th>거래처</th><th>건수</th><th>매출</th><th>순이익</th><th>마진율</th></tr></thead>
-        <tbody>${clientRows}</tbody>
-        </table>
+        <tbody>${clientRows}</tbody></table>
       </div>
     </div>
 
@@ -1244,7 +1076,7 @@ function renderFinanceView() {
 
 // ── CSV EXPORT ────────────────────────────────────────────────
 function exportCSV() {
-  const data = applyFilters(Store.getCampaigns().filter(c => c.revenue > 0));
+  const data = Store.getCampaigns().filter(c => c.revenue > 0);
   const headers = ['UV','상태','캠페인명','거래처','진행사','매출','원고료','순이익','마진율','입금상태','견적서발행일','세금계산서발행일','마감일'];
   const rows = data.map(c => [
     c.uv||'', c.status, c.name, c.client_name||'', c.entity||'',
@@ -1254,7 +1086,8 @@ function exportCSV() {
   ]);
   const csv = [headers, ...rows].map(r => r.map(v => `"${String(v).replace(/"/g,'""')}"`).join(',')).join('\n');
   const blob = new Blob(['\uFEFF'+csv], { type: 'text/csv;charset=utf-8' });
-  const a = document.createElement('a'); a.href = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
   a.download = `siriai-pm-${new Date().toISOString().slice(0,10)}.csv`;
   a.click();
   toast('CSV 다운로드 완료', 'ok');
@@ -1263,103 +1096,79 @@ function exportCSV() {
 // ── APP ────────────────────────────────────────────────────────
 const App = {
   async init() {
-    // topbar date
-    document.getElementById('topDate').textContent =
-      new Date().toLocaleDateString('ko-KR',{year:'numeric',month:'long',day:'numeric'});
-
-    // loading
-    document.getElementById('mainContent').innerHTML =
-      '<div class="empty-state">데이터 로딩 중…</div>';
+    document.getElementById('clientPanel').innerHTML =
+      '<div style="padding:20px;font-size:12px;color:var(--ink30)">로딩 중…</div>';
 
     try {
       await Store.init();
     } catch (e) {
-      document.getElementById('mainContent').innerHTML = `
-        <div class="empty-state">
-          연결 실패<p>${e.message}</p>
-          <p style="margin-top:8px;font-size:11px">config.js의 SUPABASE_URL과 SUPABASE_KEY를 확인하세요</p>
+      document.getElementById('campaignPanel').innerHTML = `
+        <div class="camp-empty" style="padding:60px 20px">
+          연결 실패<br><span style="font-size:11px">${escHtml(e.message)}</span>
         </div>`;
       return;
     }
 
-    App.renderCurrentView();
-    App.renderNotifications();
-
-    // table sort
-    document.addEventListener('click', e => {
-      const th = e.target.closest('th[data-col]');
-      if (!th) return;
-      const col = th.dataset.col;
-      if (!th.classList.contains('sortable')) return;
-      if (State.sort.col === col) State.sort.dir = -State.sort.dir;
-      else { State.sort.col = col; State.sort.dir = 1; }
-      App.renderCurrentView();
-    });
+    App.renderAll();
   },
 
-  renderCurrentView() {
-    let html = '';
-    switch (State.view) {
-      case 'dashboard': html = renderDashboard();      break;
-      case 'campaigns': html = renderCampaignsView();  break;
-      case 'qa':        html = renderQAView();          break;
-      case 'finance':   html = renderFinanceView();     break;
-      default:          html = renderDashboard();
+  renderAll() {
+    // Clear selected campaign if it's been archived/deleted
+    if (State.selectedCampaignId) {
+      const c = Store.getCampaignById(State.selectedCampaignId);
+      if (!c || c.is_archived) State.selectedCampaignId = null;
     }
-    document.getElementById('mainContent').innerHTML = html;
-    App.renderNotifications();
 
-    // update nav active state
-    document.querySelectorAll('.nav-item').forEach(el => {
-      el.classList.toggle('active', el.dataset.view === State.view);
-    });
+    document.getElementById('clientPanel').innerHTML = renderClientPanel();
+    document.getElementById('campaignPanel').innerHTML = renderCampaignPanel();
+
+    if (State.selectedCampaignId) {
+      Detail.render(State.selectedCampaignId);
+    } else {
+      document.getElementById('detailPanel').innerHTML =
+        '<div class="detail-empty">캠페인을 선택하세요</div>';
+    }
   },
 
-  renderNotifications() {
-    renderNotificationBadge();
+  // Called by store.js subscribeRealtime
+  renderCurrentView() { App.renderAll(); },
+  renderNotifications() { renderNotificationBadge(); },
+
+  selectClient(name) {
+    State.selectedClient = name;
+    State.financeMode    = false;
+    State.campFilter     = 'active';
+    State.search         = '';
+    App.renderAll();
   },
 
-  navigate(view) {
-    State.view = view;
-    // reset filters when switching main views
-    if (view !== 'campaigns') State.filters.tab = 'all';
-    App.renderCurrentView();
+  selectCampaign(id) {
+    State.selectedCampaignId = id;
+    State.drawerSections = {};
+    if (State.financeMode) {
+      State.financeMode = false;
+    }
+    document.getElementById('campaignPanel').innerHTML = renderCampaignPanel();
+    Detail.render(id);
   },
 
-  openDrawer(id) {
-    Drawer.open(id);
-  },
+  // Legacy alias (called from finance rows, notifications, etc.)
+  openDrawer(id) { App.selectCampaign(id); },
 
-  setTab(tab) {
-    State.filters.tab = tab;
-    App.renderCurrentView();
+  setCampFilter(f) {
+    State.campFilter = f;
+    document.getElementById('campaignPanel').innerHTML = renderCampaignPanel();
   },
 
   setSearch(val) {
-    State.filters.search = val;
-    App.renderCurrentView();
+    State.search = val;
+    document.getElementById('campaignPanel').innerHTML = renderCampaignPanel();
   },
 
-  setFilter(key, val) {
-    State.filters[key] = val;
-    App.renderCurrentView();
-  },
-
-  setCampView(v) {
-    State.campView = v;
-    App.renderCurrentView();
-  },
-
-  toggleCol(key) {
-    const idx = State.visibleCols.indexOf(key);
-    if (idx >= 0) State.visibleCols.splice(idx, 1);
-    else State.visibleCols.push(key);
-    App.renderCurrentView();
-  },
-
-  toggleDensity() {
-    State.density = State.density === 'compact' ? 'normal' : 'compact';
-    App.renderCurrentView();
+  showFinance() {
+    State.financeMode    = true;
+    State.selectedClient = null;
+    App.renderAll();
   },
 };
 
