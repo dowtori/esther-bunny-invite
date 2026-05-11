@@ -227,7 +227,7 @@ body {
 }
 .filter-select:focus { border-color: var(--ink30); }
 
-.controls-right { margin-left: auto; display: flex; gap: 8px; align-items: center; }
+.controls-right { margin-left: auto; display: flex; gap: 6px; align-items: center; flex-wrap: wrap; }
 .count-label { font-size: 11px; color: var(--ink30); }
 
 /* ── BTN ─────────────────────────────────────────────────── */
@@ -500,6 +500,60 @@ select.inline-input { padding: 6px 10px; }
   display: flex; gap: 8px;
 }
 
+/* ── DRAWER META BAR (replaces tabs) ─────────────────────── */
+.drawer-meta-bar {
+  display: flex; align-items: center; gap: 8px; padding: 10px 20px 10px;
+  border-bottom: 1px solid var(--ink08); flex-shrink: 0; flex-wrap: wrap;
+}
+.drawer-quick-actions {
+  display: flex; gap: 6px; flex-wrap: wrap;
+  padding: 8px 20px; border-bottom: 1px solid var(--ink08); flex-shrink: 0;
+}
+.btn-ghost-danger {
+  background: transparent; border: 1px solid rgba(192,57,43,.25); color: var(--red);
+  font-size: 11px; padding: 3px 9px; border-radius: var(--radius);
+  cursor: pointer; transition: all .1s; font-family: inherit;
+}
+.btn-ghost-danger:hover { background: var(--red-bg); }
+
+/* ── DRAWER SECTION TOGGLE ───────────────────────────────── */
+.drawer-section-toggle { cursor: pointer; user-select: none; transition: color .1s; }
+.drawer-section-toggle:hover { color: var(--ink70); }
+.ds-arrow { font-size: 8px; margin-right: 5px; display: inline-block; }
+.drawer-section-body.collapsed { display: none; }
+.hint-icon { font-size: 9px; color: var(--ink30); cursor: help; }
+.drawer-row-label[title] { cursor: help; }
+.unpaid-warn { background: var(--red-bg); border-radius: 4px; }
+
+/* ── TABLE COMPACT MODE ──────────────────────────────────── */
+.table-compact td { padding: 5px 10px !important; font-size: 12px; }
+.table-compact .name-detail { display: none; }
+.table-compact .progress-bar { display: none; }
+
+/* ── VIEW TOGGLE ─────────────────────────────────────────── */
+.view-toggle { display: flex; gap: 2px; }
+.view-toggle .btn { padding: 4px 8px; font-size: 13px; line-height: 1; }
+.btn-active { background: var(--ink08) !important; color: var(--ink) !important; border-color: var(--ink30) !important; }
+
+/* ── COLUMN TOGGLE DROPDOWN ──────────────────────────────── */
+.col-toggle-dropdown {
+  position: absolute; top: calc(100% + 4px); right: 0; z-index: 600;
+  background: var(--surface); border: 1px solid var(--ink15);
+  border-radius: var(--radius-lg); box-shadow: var(--shadow-md);
+  padding: 6px; min-width: 148px;
+}
+.col-toggle-dropdown.hidden { display: none; }
+.col-toggle-title {
+  font-size: 9px; font-weight: 600; color: var(--ink30); letter-spacing: .08em;
+  text-transform: uppercase; padding: 3px 6px 6px;
+}
+.col-toggle-item {
+  display: flex; align-items: center; gap: 7px; padding: 5px 7px;
+  font-size: 12px; cursor: pointer; border-radius: 4px; color: var(--ink);
+}
+.col-toggle-item:hover { background: var(--ink04); }
+.col-toggle-item input { cursor: pointer; accent-color: var(--blue); }
+
 /* ── STATUS DROPDOWN ─────────────────────────────────────── */
 .status-dropdown-wrap { position: relative; display: inline-flex; }
 .status-dropdown {
@@ -565,7 +619,7 @@ select.inline-input { padding: 6px 10px; }
 }
 .kanban-card:hover { border-color: var(--ink30); box-shadow: var(--shadow-sm); }
 .kanban-card.drag-over { border-color: var(--blue); background: var(--blue-bg); }
-.kanban-card-name { font-size: 11px; font-weight: 500; line-height: 1.4; word-break: keep-all; margin-bottom: 5px; }
+.kanban-card-name { font-size: 12px; font-weight: 500; line-height: 1.4; word-break: keep-all; margin: 3px 0 5px; }
 .kanban-card-meta { font-size: 10px; color: var(--ink30); }
 .kanban-card-footer { display: flex; align-items: center; justify-content: space-between; margin-top: 6px; }
 
