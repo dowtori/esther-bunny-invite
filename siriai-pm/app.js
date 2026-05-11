@@ -1,5 +1,5 @@
 // ============================================================
-// SIRIAI PM — App (3-column master-detail v2)
+// SIRIAI PM — App v3 (3-Phase lifecycle model)
 // ============================================================
 
 /* globals Store, CONFIG */
@@ -16,103 +16,161 @@ const STATUSES = [
   '기타/이슈',
 ];
 
+// DB값 → UI 레이블 + 색 클래스
 const STATUS_META = {
   '1. 브랜드 소통':   { cls: 's1', label: '브랜드 소통' },
   '2. 모집중':        { cls: 's2', label: '모집중' },
   '3. 컨펌 단계':     { cls: 's3', label: '컨펌 단계' },
-  '4. 컨텐츠 업로드': { cls: 's4', label: '업로드' },
-  '5. 캠페인 종료':   { cls: 's5', label: '캠페인 종료' },
-  '6. 입금 확인':     { cls: 's6', label: '입금 확인' },
-  '7. 상시 진행':     { cls: 's7', label: '상시 진행' },
+  '4. 컨텐츠 업로드': { cls: 's4', label: '업로드중' },
+  '5. 캠페인 종료':   { cls: 's5', label: '납품완료' },
+  '6. 입금 확인':     { cls: 's6', label: '입금확인중' },
+  '7. 상시 진행':     { cls: 's7', label: '상시진행' },
   '기타/이슈':        { cls: 'sX', label: '이슈' },
 };
 
-const ACTIVE_STATUSES = ['1. 브랜드 소통','2. 모집중','3. 컨펌 단계','4. 컨텐츠 업로드','7. 상시 진행'];
+const PAY_STATUSES = ['미입금', '입금완료', '부분입금', '분쟁', '해당없음'];
 
 const PAY_META = {
-  '입금완료': { cls: 'pay-done',    label: '입금완료' },
+  '입금완료': { cls: 'pay-done',    label: '입금완료 ✓' },
   '미입금':   { cls: 'pay-unpaid',  label: '미입금' },
   '부분입금': { cls: 'pay-partial', label: '부분입금' },
   '분쟁':     { cls: 'pay-dispute', label: '분쟁' },
-  '해당없음': { cls: 'pay-na',      label: '해당없음' },
+  '해당없음': { cls: 'pay-na',      label: '—' },
 };
 
 const QA_META = {
-  '검수전': { cls: 'qa-검수전', label: '검수전' },
-  '검수중': { cls: 'qa-검수중', label: '검수중' },
-  '완료':   { cls: 'qa-완료',   label: '완료' },
-  '이슈':   { cls: 'qa-이슈',   label: '이슈' },
+  '검수전': { cls: 'qa-badge qa-검수전', label: '검수전' },
+  '검수중': { cls: 'qa-badge qa-검수중', label: '검수중' },
+  '완료':   { cls: 'qa-badge qa-완료',   label: '완료' },
+  '이슈':   { cls: 'qa-badge qa-이슈',   label: '이슈' },
 };
+
+const PHASE_GROUP_META = {
+  delivery:   { label: '납품 준비 중',    cls: 'delivery' },
+  upload:     { label: '업로드 진행 중',  cls: 'upload' },
+  settlement: { label: '정산 진행 중',    cls: 'settlement' },
+  done:       { label: '전체 완료',       cls: 'done' },
+  issue:      { label: '이슈 / 기타',     cls: 'issue' },
+  ongoing:    { label: '상시 진행',       cls: 'ongoing' },
+};
+
+// ── 3-PHASE MODEL ────────────────────────────────────────────
+function phaseADone(c) {
+  return ['4. 컨텐츠 업로드', '5. 캠페인 종료', '6. 입금 확인'].includes(c.status);
+}
+
+function phaseBDone(c) {
+  // status 5/6: 수동 납품완료 처리 (force-complete)
+  if (['5. 캠페인 종료', '6. 입금 확인'].includes(c.status)) return true;
+  // status 4: 업로드 수량이 채워진 경우
+  if (c.status === '4. 컨텐츠 업로드' && c.count_select > 0) {
+    return (c.count_upload || 0) >= c.count_select;
+  }
+  return false;
+}
+
+function phaseCDone(c) {
+  return c.pay_status === '입금완료';
+}
+
+function isFullyDone(c) {
+  return phaseADone(c) && phaseBDone(c) && phaseCDone(c);
+}
+
+function getPhaseGroup(c) {
+  if (c.status === '7. 상시 진행') return 'ongoing';
+  if (c.status === '기타/이슈' || c.qa_status === '이슈') return 'issue';
+  if (isFullyDone(c)) return 'done';
+  if (phaseBDone(c))  return 'settlement';  // B완료, C미완료
+  if (phaseADone(c))  return 'upload';      // A완료, B미완료
+  return 'delivery';                         // A미완료
+}
+
+function isUrgent(c) {
+  if (isFullyDone(c) || c.is_archived) return false;
+  const nearDeadline = c._dday !== null && c._dday !== undefined && c._dday >= 0 && c._dday <= 2;
+  const hasIssue     = c.status === '기타/이슈' || c.qa_status === '이슈';
+  const unpaidDone   = phaseBDone(c) && !phaseCDone(c);
+  return nearDeadline || hasIssue || unpaidDone;
+}
 
 // ── UTILS ─────────────────────────────────────────────────────
 const fmt = {
   money:     n => n ? (n / 10000).toFixed(0) + '만' : '—',
   moneyFull: n => n ? n.toLocaleString('ko-KR') + '원' : '—',
   date:      s => s ? s.slice(0, 10) : '—',
-  pct:       n => n ? n + '%' : '—',
+  dateShort: s => s ? s.slice(5).replace('-', '/') : '—',
 };
 
 function dday(c) {
   if (c._dday === null || c._dday === undefined) return '';
-  if (c._dday < 0)  return `D+${Math.abs(c._dday)}`;
+  if (c._dday < 0)   return `D+${Math.abs(c._dday)}`;
   if (c._dday === 0) return 'D-DAY';
   return `D-${c._dday}`;
 }
 
 function ddayCls(c) {
-  const done = ['5. 캠페인 종료','6. 입금 확인'].includes(c.status);
-  if (done || c._dday === null) return 'past';
-  if (c._dday < 0) return 'past';
+  if (c._dday === null || c._dday === undefined || c._dday < 0) return 'past';
   if (c._dday <= 2) return 'urgent';
   if (c._dday <= 7) return 'near';
   return 'ok';
 }
 
+function escHtml(s) {
+  if (!s) return '';
+  return String(s)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;');
+}
+
 function statusBadge(status, clickable = false) {
-  const m = STATUS_META[status] || { cls: 's1', label: status };
+  const m = STATUS_META[status] || { cls: 'sX', label: status };
   return `<span class="badge ${m.cls}"${clickable ? ' data-status-btn' : ''}><span class="badge-dot"></span>${m.label}</span>`;
 }
 
-function payBadge(pay) {
-  if (!pay) return '—';
+function payBadge(pay, clickable = false) {
+  if (!pay || pay === '해당없음') return clickable
+    ? `<span class="pay-badge pay-na" style="cursor:pointer">—</span>`
+    : `<span class="pay-na">—</span>`;
   const m = PAY_META[pay] || { cls: 'pay-na', label: pay };
-  return `<span class="${m.cls}">${m.label}</span>`;
+  return `<span class="pay-badge ${m.cls}"${clickable ? '' : ''}>${m.label}</span>`;
 }
 
 function qaBadge(qa) {
-  if (!qa) return `<span class="qa-검수전">검수전</span>`;
-  const m = QA_META[qa] || { cls: 'qa-검수전', label: qa };
+  const m = QA_META[qa] || { cls: 'qa-badge qa-검수전', label: qa || '검수전' };
   return `<span class="${m.cls}">${m.label}</span>`;
 }
 
 function progressBar(sel, up) {
   if (!sel) return '<span class="text-muted text-sm">—</span>';
-  const pct = Math.round((up / sel) * 100);
+  const pct = Math.round(((up || 0) / sel) * 100);
   const cls = pct >= 100 ? 'full' : pct > 0 ? 'partial' : 'zero';
   return `<div class="progress-cell">
-    <div class="progress-nums"><strong>${up}</strong>/${sel} <span class="text-xs">(${pct}%)</span></div>
+    <div class="progress-nums"><strong>${up || 0}</strong>/${sel} <span class="text-xs">(${pct}%)</span></div>
     <div class="progress-bar"><div class="progress-fill ${cls}" style="width:${Math.min(pct,100)}%"></div></div>
   </div>`;
 }
 
 function linkBtn(href, label, cls = '') {
   if (!href) return '';
-  return `<a href="${href}" target="_blank" rel="noopener" class="link-btn ${cls}">${label} ↗</a>`;
-}
-
-function escHtml(s) {
-  if (!s) return '';
-  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  return `<a href="${escHtml(href)}" target="_blank" rel="noopener" class="link-btn ${cls}">${label} ↗</a>`;
 }
 
 // ── STATE ──────────────────────────────────────────────────────
 const State = {
-  selectedClient:    null,    // null = 전체보기 | '거래처명'
+  view:               'campaigns',  // 'home' | 'campaigns' | 'finance'
+  selectedClient:     null,         // null = 전체 | '거래처명'
   selectedCampaignId: null,
-  campFilter:        'active', // 'active' | 'done' | 'all'
-  search:            '',
+  filters: {
+    phase:     null,   // null | 'delivery' | 'upload' | 'settlement' | 'done' | 'issue' | 'ongoing'
+    payStatus: null,   // null | '미입금' | '부분입금' | '입금완료'
+    client:    null,   // null | '거래처명'
+    search:    '',
+  },
+  collapsedGroups:   {},   // { groupKey: true/false }
   drawerSections:    {},
-  financeMode:       false,
 };
 
 // ── TOAST ──────────────────────────────────────────────────────
@@ -128,78 +186,57 @@ function toast(msg, type = '') {
   }, 2800);
 }
 
-// ── NOTIFICATIONS ──────────────────────────────────────────────
+// ── ALERTS ────────────────────────────────────────────────────
 function computeAlerts() {
   const campaigns = Store.getCampaigns().filter(c => !c.is_archived);
   const alerts = { urgent: [], warn: [], unpaid: [], qa: [], issue: [] };
-
   campaigns.forEach(c => {
-    if (ACTIVE_STATUSES.includes(c.status)) {
-      if (c._dday !== null && c._dday >= 0 && c._dday <= 2) alerts.urgent.push(c);
-      else if (c._dday !== null && c._dday > 2 && c._dday <= 7) alerts.warn.push(c);
+    if (!isFullyDone(c)) {
+      if (c._dday !== null && c._dday !== undefined && c._dday >= 0 && c._dday <= 2) alerts.urgent.push(c);
+      else if (c._dday !== null && c._dday !== undefined && c._dday > 2 && c._dday <= 7) alerts.warn.push(c);
     }
-    if (['미입금','부분입금'].includes(c.pay_status) && c.revenue > 0) alerts.unpaid.push(c);
+    if (['미입금', '부분입금'].includes(c.pay_status) && c.revenue > 0) alerts.unpaid.push(c);
     if (c.qa_status === '이슈') alerts.qa.push(c);
     if (c.status === '기타/이슈') alerts.issue.push(c);
   });
-
   return alerts;
 }
 
-function renderNotificationBadge() {
-  const alerts = computeAlerts();
-  const total = alerts.urgent.length + alerts.warn.length + alerts.unpaid.length +
-                alerts.qa.length + alerts.issue.length;
-  const badge = document.getElementById('notifCount');
-  if (badge) {
-    badge.textContent = total;
-    badge.style.display = total > 0 ? '' : 'none';
-  }
-}
-
-function renderNotifDropdown() {
-  const alerts = computeAlerts();
-  const groups = [
-    { key: 'urgent', label: '🔴 D-2 이내 마감', items: alerts.urgent, dot: 'urgent', meta: c => dday(c) },
-    { key: 'warn',   label: '🟡 D-7 이내 마감', items: alerts.warn,   dot: 'warn',   meta: c => dday(c) },
-    { key: 'unpaid', label: '💸 미입금',         items: alerts.unpaid, dot: 'warn',   meta: c => fmt.money(c.revenue) + '원' },
-    { key: 'qa',     label: '⚠ QA 이슈',         items: alerts.qa,    dot: 'urgent', meta: () => 'QA 이슈' },
-    { key: 'issue',  label: '🔧 기타/이슈',       items: alerts.issue, dot: 'info',   meta: () => '확인 필요' },
-  ];
-
-  const html = groups.filter(g => g.items.length > 0).map(g => `
-    <div class="alert-group">
-      <div class="alert-group-title">${g.label} (${g.items.length})</div>
-      ${g.items.map(c => `
-        <div class="alert-item" onclick="App.selectCampaign('${c.id}');Notif.close()">
-          <span class="alert-dot ${g.dot}"></span>
-          <span class="alert-name">${escHtml(c.name)}</span>
-          <span class="alert-meta">${escHtml(g.meta(c))}</span>
-        </div>
-      `).join('')}
-    </div>
-  `).join('') || '<div class="alert-empty">알림 없음 ✓</div>';
-
-  const body = document.getElementById('notifBody');
-  if (body) body.innerHTML = html;
-}
-
 const Notif = {
+  _renderDropdown() {
+    const alerts = computeAlerts();
+    const groups = [
+      { key: 'urgent', label: '🔴 D-2 이내 마감', items: alerts.urgent, dot: 'urgent', meta: c => dday(c) },
+      { key: 'warn',   label: '🟡 D-7 이내 마감', items: alerts.warn,   dot: 'warn',   meta: c => dday(c) },
+      { key: 'unpaid', label: '💸 미입금',         items: alerts.unpaid, dot: 'warn',   meta: c => fmt.money(c.revenue) + '원' },
+      { key: 'qa',     label: '⚠ QA 이슈',        items: alerts.qa,    dot: 'urgent', meta: () => 'QA 이슈' },
+      { key: 'issue',  label: '🔧 기타/이슈',       items: alerts.issue, dot: 'info',   meta: () => '확인 필요' },
+    ];
+    const html = groups.filter(g => g.items.length > 0).map(g => `
+      <div>
+        <div class="alert-group-title">${g.label} (${g.items.length})</div>
+        ${g.items.map(c => `
+          <div class="alert-item" onclick="App.selectCampaign('${c.id}');Notif.close()">
+            <span class="alert-dot ${g.dot}"></span>
+            <span class="alert-name">${escHtml(c.name)}</span>
+            <span class="alert-meta">${escHtml(g.meta(c))}</span>
+          </div>`).join('')}
+      </div>`).join('') || '<div class="alert-empty">알림 없음 ✓</div>';
+    const body = document.getElementById('notifBody');
+    if (body) body.innerHTML = html;
+  },
   open() {
-    renderNotifDropdown();
-    const dd = document.getElementById('notifDropdown');
-    if (dd) dd.classList.add('open');
+    this._renderDropdown();
+    document.getElementById('notifDropdown')?.classList.add('open');
     document.addEventListener('click', Notif._outside, true);
   },
   close() {
-    const dd = document.getElementById('notifDropdown');
-    if (dd) dd.classList.remove('open');
+    document.getElementById('notifDropdown')?.classList.remove('open');
     document.removeEventListener('click', Notif._outside, true);
   },
   toggle() {
     const dd = document.getElementById('notifDropdown');
-    if (!dd) return;
-    dd.classList.contains('open') ? Notif.close() : Notif.open();
+    if (dd?.classList.contains('open')) this.close(); else this.open();
   },
   _outside(e) {
     const wrap = document.getElementById('notifWrap');
@@ -209,21 +246,34 @@ const Notif = {
 
 // ── STATUS DROPDOWN ────────────────────────────────────────────
 const StatusDD = {
-  _campaignId: null,
+  _id: null,
 
   open(campaignId, anchorEl) {
-    StatusDD._campaignId = campaignId;
-    const el = document.getElementById('statusDropdown');
+    StatusDD._id = campaignId;
     const c = Store.getCampaignById(campaignId);
-    el.innerHTML = STATUSES.map(s => `
-      <div class="status-option${s === c?.status ? ' font-bold' : ''}"
-           onclick="StatusDD.select('${s}')">
-        ${statusBadge(s)}
-      </div>
+    const el = document.getElementById('statusDropdown');
+
+    const groups = [
+      { label: 'PHASE A — 납품 준비', items: ['1. 브랜드 소통', '2. 모집중', '3. 컨펌 단계'] },
+      { label: 'PHASE B — 콘텐츠', items: ['4. 컨텐츠 업로드', '5. 캠페인 종료'] },
+      { label: 'PHASE C — 정산', items: ['6. 입금 확인'] },
+      { label: '특수', items: ['7. 상시 진행', '기타/이슈'] },
+    ];
+
+    el.innerHTML = groups.map(g => `
+      <div class="status-dropdown-label">${g.label}</div>
+      ${g.items.map(s => {
+        const m = STATUS_META[s];
+        return `<div class="status-option${s === c?.status ? ' current' : ''}" onclick="StatusDD.select('${s}')">
+          <span class="badge ${m.cls}" style="pointer-events:none"><span class="badge-dot"></span>${m.label}</span>
+        </div>`;
+      }).join('')}
+      <div class="status-dropdown-divider"></div>
     `).join('');
+
     const rect = anchorEl.getBoundingClientRect();
-    el.style.top  = (rect.bottom + window.scrollY + 4) + 'px';
-    el.style.left = (rect.left  + window.scrollX) + 'px';
+    el.style.top  = (rect.bottom + 4) + 'px';
+    el.style.left = rect.left + 'px';
     el.classList.add('open');
     document.addEventListener('click', StatusDD._outside, true);
   },
@@ -234,33 +284,74 @@ const StatusDD = {
   },
 
   async select(newStatus) {
-    const c = Store.getCampaignById(StatusDD._campaignId);
+    const c = Store.getCampaignById(StatusDD._id);
     StatusDD.close();
     if (!c || c.status === newStatus) return;
 
     const FORWARD = STATUSES.indexOf(newStatus) > STATUSES.indexOf(c.status);
     const SPECIAL_BACK = !FORWARD && newStatus !== '기타/이슈' && newStatus !== '7. 상시 진행';
+
     if (SPECIAL_BACK) {
       Modal.prompt({
         title: '상태 역방향 전환',
         label: `${c.status} → ${newStatus} 사유를 입력하세요`,
         placeholder: '예: 제품 배송 지연으로 재모집',
         onConfirm: async (reason) => {
-          await Store.updateStatus(StatusDD._campaignId, newStatus, reason);
+          await Store.updateStatus(StatusDD._id, newStatus, reason);
           App.renderAll();
-          toast('상태가 변경되었습니다', 'ok');
+          toast('상태 변경됨', 'ok');
         },
       });
     } else {
-      await Store.updateStatus(StatusDD._campaignId, newStatus);
+      await Store.updateStatus(StatusDD._id, newStatus);
       App.renderAll();
-      toast('상태가 변경되었습니다', 'ok');
+      toast('상태 변경됨', 'ok');
     }
   },
 
   _outside(e) {
-    const dd = document.getElementById('statusDropdown');
-    if (!dd.contains(e.target)) StatusDD.close();
+    if (!document.getElementById('statusDropdown').contains(e.target)) StatusDD.close();
+  },
+};
+
+// ── PAY DROPDOWN ───────────────────────────────────────────────
+const PayDD = {
+  _id: null,
+
+  open(campaignId, anchorEl) {
+    PayDD._id = campaignId;
+    const c = Store.getCampaignById(campaignId);
+    const el = document.getElementById('payDropdown');
+
+    el.innerHTML = PAY_STATUSES.map(s => {
+      const m = PAY_META[s];
+      return `<div class="pay-option${s === c?.pay_status ? ' current' : ''}" onclick="PayDD.select('${s}')">
+        <span class="pay-badge ${m.cls}" style="pointer-events:none">${m.label}</span>
+      </div>`;
+    }).join('');
+
+    const rect = anchorEl.getBoundingClientRect();
+    el.style.top  = (rect.bottom + 4) + 'px';
+    el.style.left = rect.left + 'px';
+    el.classList.add('open');
+    document.addEventListener('click', PayDD._outside, true);
+  },
+
+  close() {
+    document.getElementById('payDropdown').classList.remove('open');
+    document.removeEventListener('click', PayDD._outside, true);
+  },
+
+  async select(newPay) {
+    const id = PayDD._id;
+    PayDD.close();
+    await Store.updateCampaign(id, { pay_status: newPay });
+    App.renderAll();
+    toast('입금 상태 변경됨', 'ok');
+  },
+
+  _outside(e) {
+    if (!document.getElementById('payDropdown').contains(e.target)) PayDD.close();
   },
 };
 
@@ -300,10 +391,8 @@ const InlineEdit = {
     }
 
     let done = false;
-
     const commit = async () => {
-      if (done) return;
-      done = true;
+      if (done) return; done = true;
       let val = input.value;
       if (type === 'number') val = parseInt(val) || 0;
       if (!val && (type === 'date' || type === 'url')) val = null;
@@ -311,19 +400,16 @@ const InlineEdit = {
       el.textContent = val || '—';
       try {
         await Store.updateCampaign(campaignId, { [key]: val });
-        // Refresh campaign list row + detail panel (scroll-preserved)
         const panel = document.getElementById('detailPanel');
-        const scrollTop = panel ? panel.scrollTop : 0;
-        document.getElementById('campaignPanel').innerHTML = renderCampaignPanel();
+        const scrollTop = panel?.scrollTop || 0;
+        App._rerenderRow(campaignId);
         Detail.render(campaignId);
         if (panel) panel.scrollTop = scrollTop;
         toast('저장됨', 'ok');
-      } catch(e) { toast('저장 실패', 'err'); }
+      } catch (e) { toast('저장 실패', 'err'); }
     };
-
     const revert = () => {
-      if (done) return;
-      done = true;
+      if (done) return; done = true;
       el.removeAttribute('data-editing');
       const fresh = Store.getCampaignById(campaignId);
       el.textContent = (fresh?.[key] ?? '') || '—';
@@ -334,10 +420,7 @@ const InlineEdit = {
       if (e.key === 'Enter' && type !== 'textarea') { e.preventDefault(); input.blur(); }
       if (e.key === 'Escape') { e.preventDefault(); input.removeEventListener('blur', commit); revert(); }
     });
-    if (type.startsWith('select:')) {
-      input.addEventListener('change', () => input.blur());
-    }
-
+    if (type.startsWith('select:')) input.addEventListener('change', () => input.blur());
     el.appendChild(input);
     requestAnimationFrame(() => input.focus());
   },
@@ -348,14 +431,13 @@ const Modal = {
   show(html, opts = {}) {
     document.getElementById('modalTitle').textContent = opts.title || '';
     document.getElementById('modalBody').innerHTML = html;
+    document.getElementById('modalFooter').innerHTML = '';
     document.getElementById('modalOverlay').classList.remove('hidden');
   },
-
   hide() {
     document.getElementById('modalOverlay').classList.add('hidden');
     document.getElementById('modalBody').innerHTML = '';
   },
-
   prompt({ title, label, placeholder, onConfirm }) {
     Modal.show(`
       <div class="field">
@@ -370,14 +452,12 @@ const Modal = {
     Modal._onConfirm = onConfirm;
     setTimeout(() => document.getElementById('promptInput')?.focus(), 50);
   },
-
   async _confirmPrompt() {
     const val = document.getElementById('promptInput').value.trim();
     if (!val) { toast('사유를 입력해주세요', 'warn'); return; }
     Modal.hide();
     await Modal._onConfirm(val);
   },
-
   confirm({ title, message, danger, onConfirm }) {
     Modal.show(`<p style="font-size:13px;color:var(--ink70);line-height:1.6">${escHtml(message)}</p>`, { title });
     document.getElementById('modalFooter').innerHTML = `
@@ -386,16 +466,14 @@ const Modal = {
     `;
     Modal._onConfirm = onConfirm;
   },
-
   async _confirmAction() {
     Modal.hide();
     await Modal._onConfirm();
   },
 };
 
-// ── DRAWER (repurposed as detail panel renderer) ───────────────
+// ── DRAWER (detail panel content renderer) ─────────────────────
 const Drawer = {
-
   toggleSection(key) {
     State.drawerSections[key] = !State.drawerSections[key];
     const body = document.getElementById(`ds-body-${key}`);
@@ -412,8 +490,7 @@ const Drawer = {
       c.link_guide    && linkBtn(c.link_guide,     '가이드',   'guide'),
       c.link_recruit  && linkBtn(c.link_recruit,   '모집',     ''),
     ].filter(Boolean);
-    if (!links.length) return '';
-    return `<div class="drawer-quick-actions">${links.join('')}</div>`;
+    return links.length ? `<div class="drawer-quick-actions">${links.join('')}</div>` : '';
   },
 
   renderBody(c) {
@@ -428,20 +505,20 @@ const Drawer = {
     const dsec = (key, title, content) => {
       const open = !!State.drawerSections[key];
       return `
-        <div class="drawer-section">
-          <div class="drawer-section-title drawer-section-toggle" onclick="Drawer.toggleSection('${key}')">
+        <div class="detail-section">
+          <div class="detail-section-title detail-section-toggle" onclick="Drawer.toggleSection('${key}')">
             <span id="ds-icon-${key}" class="ds-arrow">${open ? '▼' : '▶'}</span> ${title}
           </div>
-          <div id="ds-body-${key}" class="drawer-section-body${open ? '' : ' collapsed'}">${content}</div>
+          <div id="ds-body-${key}" class="detail-section-body${open ? '' : ' collapsed'}">${content}</div>
         </div>`;
     };
 
     const coreContent = `
       ${field('거래처', 'client_name', c.client_name)}
-      ${field('담당 채널', 'entity', c.entity, 'text', 'SIRIAI 직접 운영 vs 타 대행사 구분')}
+      ${field('담당 채널', 'entity', c.entity, 'text', 'SIRIAI 직접 운영 vs 타 대행사')}
       <div class="drawer-row">
         <span class="drawer-row-label">기간</span>
-        <span class="drawer-row-val" style="font-size:12px;color:var(--ink70)">${fmt.date(c.date_start)} → ${fmt.date(c.date_end)}</span>
+        <span class="drawer-row-val" style="font-size:12px;color:var(--ink60)">${fmt.date(c.date_start)} → ${fmt.date(c.date_end)}</span>
       </div>
       ${field('납품 예정일', 'date_delivery', c.date_delivery, 'date')}
       ${field('국가', 'country', c.country, 'select:국내,해외')}
@@ -450,9 +527,9 @@ const Drawer = {
     `;
 
     const uploadContent = `
-      ${field('제공 수', 'count_provide', c.count_provide, 'number', '브랜드 체험/선물 제공 가능 인원')}
-      ${field('섭외 완료', 'count_select', c.count_select, 'number', '실제 섭외·컨펌된 인플루언서 수')}
-      ${field('업로드 완료', 'count_upload', c.count_upload, 'number', '콘텐츠 업로드까지 완료 인원')}
+      ${field('제공 수', 'count_provide', c.count_provide, 'number', '브랜드 제공 가능 인원')}
+      ${field('섭외 완료', 'count_select', c.count_select, 'number', '컨펌된 인플루언서 수')}
+      ${field('업로드 완료', 'count_upload', c.count_upload, 'number', '콘텐츠 업로드 완료 인원')}
       ${c.count_select ? `<div style="padding:6px 0">${progressBar(c.count_select, c.count_upload)}</div>` : ''}
     `;
 
@@ -466,33 +543,25 @@ const Drawer = {
       <div class="drawer-row" style="align-items:flex-start">
         <span class="drawer-row-label" style="padding-top:4px">검수 메모</span>
         <span class="drawer-row-val">
-          <textarea id="qaNoteInput" rows="3" style="width:100%;padding:7px 10px;border:1px solid var(--ink15);border-radius:6px;font-family:inherit;font-size:12px;resize:vertical;outline:none"
+          <textarea id="qaNoteInput" rows="3" style="width:100%;padding:7px;border:1px solid var(--ink15);border-radius:6px;font-family:inherit;font-size:12px;resize:vertical;outline:none"
             placeholder="검수 내용, 이슈 사항…">${escHtml(c.qa_note || '')}</textarea>
-          <button class="btn btn-sm btn-primary" style="margin-top:6px" onclick="Drawer.saveQANote('${c.id}')">메모 저장</button>
+          <button class="btn btn-sm btn-primary" style="margin-top:5px" onclick="Drawer.saveQANote('${c.id}')">저장</button>
         </span>
       </div>
-      ${c.link_qa || c.link_progress ? `
-      <div class="drawer-row">
-        <span class="drawer-row-label">링크</span>
-        <span class="drawer-row-val"><div class="link-row">
-          ${c.link_qa ? linkBtn(c.link_qa,'검수 시트','qa') : ''}
-          ${c.link_progress ? linkBtn(c.link_progress,'진행 시트','prog') : ''}
-        </div></span>
-      </div>` : ''}
     `;
 
     const financeContent = `
-      ${field('매출', 'revenue', c.revenue ? c.revenue.toLocaleString() + '원' : null, 'number')}
-      ${field('원고료', 'fee', c.fee ? c.fee.toLocaleString() + '원' : null, 'number')}
+      ${field('매출', 'revenue', c.revenue ? c.revenue.toLocaleString() : null, 'number')}
+      ${field('원고료', 'fee', c.fee ? c.fee.toLocaleString() : null, 'number')}
       <div class="drawer-row">
         <span class="drawer-row-label">순이익</span>
-        <span class="drawer-row-val ${c._profit > 0 ? 'money pos' : ''}">${fmt.moneyFull(c._profit)}${c._margin ? ` <span class="text-muted" style="font-size:11px">(${c._margin}%)</span>` : ''}</span>
+        <span class="drawer-row-val ${c._profit > 0 ? 'money pos' : ''}">${fmt.moneyFull(c._profit)}${c._margin ? ` <span class="text-muted text-xs">(${c._margin}%)</span>` : ''}</span>
       </div>
       <div class="drawer-row">
         <span class="drawer-row-label">입금 상태</span>
         <span class="drawer-row-val">
-          <span class="editable-val${['미입금','부분입금'].includes(c.pay_status)?' unpaid-warn':''}"
-                onclick="InlineEdit.start(this,'${c.id}','pay_status','select:미입금,입금완료,부분입금,분쟁,해당없음')">${payBadge(c.pay_status)}</span>
+          <span class="${['미입금','부분입금'].includes(c.pay_status)?'unpaid-warn':''}"
+                style="cursor:pointer" onclick="PayDD.open('${c.id}',this)">${payBadge(c.pay_status)}</span>
         </span>
       </div>
       ${field('견적서 발행일', 'date_quote', c.date_quote, 'date')}
@@ -507,19 +576,19 @@ const Drawer = {
     `;
 
     return `
-      <div class="drawer-section">
-        <div class="drawer-section-title">핵심 정보</div>
+      <div class="detail-section">
+        <div class="detail-section-title">핵심 정보</div>
         ${coreContent}
       </div>
       ${dsec('upload', '업로드 현황', uploadContent)}
       ${dsec('qa', 'QA 검수', qaContent)}
       ${dsec('finance', '재무', financeContent)}
-      <div class="drawer-section">
-        <div class="drawer-section-title">링크 모음</div>
+      <div class="detail-section">
+        <div class="detail-section-title">링크 모음</div>
         ${linksContent}
       </div>
-      <div class="drawer-section">
-        <div class="drawer-section-title">비고</div>
+      <div class="detail-section">
+        <div class="detail-section-title">비고</div>
         ${field('비고', 'note', c.note, 'textarea')}
       </div>
       ${dsec('log', '변경 이력', '<div id="ds-log-content"><span class="text-muted text-sm" style="padding:4px 0;display:block">클릭해서 펼치면 로드됩니다</span></div>')}
@@ -538,20 +607,11 @@ const Drawer = {
       logContent.innerHTML = '<div class="empty-state" style="padding:16px 0;font-size:12px">변경 이력 없음</div>';
       return;
     }
-    logContent.innerHTML = `
-      <div class="log-list">
-        ${logs.map(l => `
-          <div class="log-item">
-            <span class="log-time">${new Date(l.changed_at).toLocaleString('ko-KR',{month:'numeric',day:'numeric',hour:'2-digit',minute:'2-digit'})}</span>
-            <span class="log-msg">
-              <strong>${escHtml(l.field)}</strong>
-              ${l.old_value ? `<span class="text-muted"> ${escHtml(l.old_value)} →</span>` : ''}
-              ${escHtml(l.new_value || '')}
-            </span>
-          </div>
-        `).join('')}
-      </div>
-    `;
+    logContent.innerHTML = `<div class="log-list">${logs.map(l => `
+      <div class="log-item">
+        <span class="log-time">${new Date(l.changed_at).toLocaleString('ko-KR',{month:'numeric',day:'numeric',hour:'2-digit',minute:'2-digit'})}</span>
+        <span class="log-msg"><strong>${escHtml(l.field)}</strong>${l.old_value ? `<span class="text-muted"> ${escHtml(l.old_value)} →</span>` : ''} ${escHtml(l.new_value || '')}</span>
+      </div>`).join('')}</div>`;
   },
 
   async saveQANote(id) {
@@ -582,61 +642,623 @@ const Detail = {
     if (!panel) return;
 
     if (!id) {
-      panel.innerHTML = '<div class="detail-empty">캠페인을 선택하세요</div>';
+      panel.classList.remove('open');
       return;
     }
 
     const c = Store.getCampaignById(id);
-    if (!c) {
-      panel.innerHTML = '<div class="detail-empty">캠페인을 찾을 수 없습니다</div>';
-      return;
-    }
+    if (!c) { panel.classList.remove('open'); return; }
 
-    // Auto-expand sections based on campaign state (only on first open)
+    // Auto-expand sections on first open
     if (!Object.keys(State.drawerSections).length) {
       State.drawerSections = {
         upload:  c.status === '4. 컨텐츠 업로드',
         qa:      !!(c.qa_status && c.qa_status !== '검수전'),
-        finance: ['5. 캠페인 종료','6. 입금 확인'].includes(c.status) ||
-                 ['미입금','부분입금'].includes(c.pay_status),
+        finance: phaseADone(c) || ['미입금','부분입금'].includes(c.pay_status),
         log:     false,
       };
     }
 
+    // Phase tracker content
+    const pA = phaseADone(c);
+    const pB = phaseBDone(c);
+    const pC = phaseCDone(c);
+
+    const aStatus = STATUS_META[c.status]?.label || c.status;
+    const bStatus = pB
+      ? '납품완료 ✓'
+      : (c.status === '4. 컨텐츠 업로드' && c.count_select > 0)
+        ? `${c.count_upload || 0}/${c.count_select}`
+        : '—';
+    const cStatus = c.pay_status ? (PAY_META[c.pay_status]?.label || c.pay_status) : '—';
+
+    const phaseTracker = `
+      <div class="phase-tracker">
+        <div class="phase-block">
+          <div class="phase-block-label">A 납품 준비</div>
+          <div class="phase-block-status ${pA ? 'done' : 'active'}">${pA ? '완료 ✓' : aStatus}</div>
+        </div>
+        <div class="phase-arrow">→</div>
+        <div class="phase-block">
+          <div class="phase-block-label">B 콘텐츠</div>
+          <div class="phase-block-status ${pB ? 'done' : pA ? 'active' : 'pending'}">${bStatus}</div>
+        </div>
+        <div class="phase-arrow">→</div>
+        <div class="phase-block">
+          <div class="phase-block-label">C 정산</div>
+          <div class="phase-block-status ${pC ? 'done' : pB ? 'active' : 'pending'}">${cStatus}</div>
+        </div>
+      </div>`;
+
     const ddText = dday(c);
     const ddC = ddayCls(c);
-    const meta = STATUS_META[c.status] || { cls: 's1', label: c.status };
+    const meta = STATUS_META[c.status] || { cls: 'sX', label: c.status };
 
     panel.innerHTML = `
-      <div class="detail-header">
-        <div class="detail-title">${escHtml(c.name)}</div>
-        <div class="detail-meta-bar">
-          <span class="badge ${meta.cls}" style="cursor:pointer" onclick="StatusDD.open('${c.id}',this)">
-            <span class="badge-dot"></span>${meta.label}
-          </span>
-          ${ddText ? `<span class="dday ${ddC}" style="font-size:11px;padding:3px 8px">${ddText}</span>` : ''}
-          <button class="btn-ghost-danger" style="margin-left:auto" onclick="Drawer.archiveConfirm('${c.id}')">아카이브</button>
+      <div class="detail-inner">
+        <div class="detail-close-bar">
+          <button class="detail-close-btn" onclick="App.closeDetail()">✕</button>
+          <div style="display:flex;align-items:center;gap:8px">
+            ${ddText ? `<span class="dday ${ddC}">${ddText}</span>` : ''}
+            <button class="btn-ghost-danger" onclick="Drawer.archiveConfirm('${c.id}')">아카이브</button>
+          </div>
         </div>
-        ${Drawer.renderQuickActions(c)}
-      </div>
-      <div class="detail-body">
-        ${Drawer.renderBody(c)}
+        <div class="detail-title-area">
+          <div class="detail-campaign-name">${escHtml(c.name)}</div>
+          <div style="display:flex;align-items:center;gap:8px;margin-top:8px;flex-wrap:wrap">
+            <span class="badge ${meta.cls}" style="cursor:pointer" onclick="StatusDD.open('${c.id}',this)">
+              <span class="badge-dot"></span>${meta.label}
+            </span>
+            ${c.client_name ? `<span style="font-size:11px;color:var(--ink50)">${escHtml(c.client_name)}</span>` : ''}
+          </div>
+        </div>
+        ${phaseTracker}
+        <div class="detail-links">${Drawer.renderQuickActions(c)}</div>
+        <div class="detail-divider"></div>
+        <div class="detail-body">${Drawer.renderBody(c)}</div>
       </div>
     `;
 
+    panel.classList.add('open');
     if (State.drawerSections.log) Drawer.loadLog();
   },
 };
 
-// ── CAMPAIGN FORM ──────────────────────────────────────────────
+// ── FILTERING ─────────────────────────────────────────────────
+function applyFilters(campaigns) {
+  let data = campaigns.filter(c => !c.is_archived);
+  const f = State.filters;
+
+  if (State.selectedClient) data = data.filter(c => c.client_name === State.selectedClient);
+  if (f.phase) data = data.filter(c => getPhaseGroup(c) === f.phase);
+  if (f.payStatus) data = data.filter(c => c.pay_status === f.payStatus);
+  if (f.client) data = data.filter(c => c.client_name === f.client);
+  if (f.search) {
+    const q = f.search.toLowerCase();
+    data = data.filter(c =>
+      (c.name || '').toLowerCase().includes(q) ||
+      (c.client_name || '').toLowerCase().includes(q) ||
+      (c.detail || '').toLowerCase().includes(q)
+    );
+  }
+  return data;
+}
+
+function hasActiveFilters() {
+  const f = State.filters;
+  return !!(f.phase || f.payStatus || f.client || f.search);
+}
+
+// ── RENDER: B-UPLOAD COLUMN ────────────────────────────────────
+function renderBUpload(c) {
+  if (['5. 캠페인 종료', '6. 입금 확인'].includes(c.status)) {
+    return `<span class="b-upload-text done">납품완료 ✓</span>`;
+  }
+  if (c.status === '4. 컨텐츠 업로드') {
+    if (c.count_select > 0) {
+      const up = c.count_upload || 0;
+      const sel = c.count_select;
+      const pct = Math.round((up / sel) * 100);
+      const cls = pct >= 100 ? 'full' : 'partial';
+      return `
+        <div>
+          <div class="b-upload-count">${up}/${sel}</div>
+          <div class="b-upload-bar"><div class="b-upload-fill ${cls}" style="width:${Math.min(pct,100)}%"></div></div>
+        </div>`;
+    }
+    return `<span class="b-upload-text uploading">업로드중</span>`;
+  }
+  return `<span class="b-upload-text none">—</span>`;
+}
+
+// ── RENDER: CAMPAIGN ROW ──────────────────────────────────────
+function renderCampaignRow(c) {
+  const ddText = dday(c);
+  const ddC = ddayCls(c);
+  const isSelected = State.selectedCampaignId === c.id;
+  const urgent = isUrgent(c);
+  const done = isFullyDone(c);
+  const meta = STATUS_META[c.status] || { cls: 'sX', label: c.status };
+
+  const subParts = [];
+  if (c.date_delivery) subParts.push('납품 ' + fmt.dateShort(c.date_delivery));
+  else if (c.date_end)  subParts.push(fmt.dateShort(c.date_end) + ' 마감');
+
+  return `
+    <div class="camp-row${isSelected ? ' selected' : ''}${urgent ? ' urgent' : ''}${done ? ' is-done' : ''}"
+         onclick="App.selectCampaign('${c.id}')">
+      <div class="camp-col-check">
+        <div class="camp-checkbox"></div>
+      </div>
+      <div class="camp-col-aphase">
+        <span class="badge ${meta.cls}" style="font-size:9px;padding:2px 6px;cursor:pointer"
+              onclick="event.stopPropagation();StatusDD.open('${c.id}',this)">
+          <span class="badge-dot"></span>${meta.label}
+        </span>
+      </div>
+      <div class="camp-col-name">
+        <div class="camp-row-name">${escHtml(c.name)}</div>
+        ${subParts.length ? `<div class="camp-row-sub">${escHtml(subParts.join(' · '))}</div>` : ''}
+      </div>
+      <div class="camp-col-client">${escHtml(c.client_name || '')}</div>
+      <div class="camp-col-bupload">${renderBUpload(c)}</div>
+      <div class="camp-col-cpay" onclick="event.stopPropagation();PayDD.open('${c.id}',this)">
+        ${payBadge(c.pay_status, true)}
+      </div>
+      <div class="camp-col-dday">
+        ${ddText ? `<span class="dday ${ddC}">${ddText}</span>` : ''}
+      </div>
+    </div>`;
+}
+
+// ── RENDER: PHASE GROUP ───────────────────────────────────────
+function renderPhaseGroup(groupKey, campaigns) {
+  if (!campaigns.length) return '';
+  const meta = PHASE_GROUP_META[groupKey] || { label: groupKey, cls: groupKey };
+  const collapsed = !!State.collapsedGroups[groupKey];
+  // done group defaults to collapsed
+  const isDefaultCollapsed = groupKey === 'done';
+  const isCollapsed = State.collapsedGroups[groupKey] === undefined ? isDefaultCollapsed : collapsed;
+
+  return `
+    <div class="phase-group-header ${meta.cls}${isCollapsed ? ' collapsed' : ''}"
+         onclick="App.toggleGroup('${groupKey}')">
+      <div class="phase-group-accent"></div>
+      <span class="phase-group-name">${meta.label}</span>
+      <span class="phase-group-count">${campaigns.length}</span>
+      <span class="phase-group-toggle">▾</span>
+    </div>
+    <div class="phase-group-body${isCollapsed ? ' collapsed' : ''}">
+      ${campaigns.map(c => renderCampaignRow(c)).join('')}
+    </div>`;
+}
+
+// ── RENDER: FILTER BAR ────────────────────────────────────────
+function renderFilterBar(total) {
+  const f = State.filters;
+  const chips = [];
+  if (f.phase) chips.push({ key: 'phase', label: PHASE_GROUP_META[f.phase]?.label || f.phase });
+  if (f.payStatus) chips.push({ key: 'payStatus', label: f.payStatus });
+  if (f.client) chips.push({ key: 'client', label: f.client });
+
+  const phaseActive = !!f.phase;
+  const payActive   = !!f.payStatus;
+
+  return `
+    <div class="main-header-top">
+      <span class="main-header-title">${State.selectedClient || '전체 캠페인'}</span>
+      <span class="main-header-count">${total}건</span>
+      <button class="btn btn-sm btn-primary" onclick="showNewCampaignModal()">+ 캠페인</button>
+    </div>
+    <div class="filter-bar">
+      <button class="filter-btn${phaseActive ? ' active' : ''}"
+              onclick="FilterDD.openPhase(this)">
+        Phase${f.phase ? ': ' + (PHASE_GROUP_META[f.phase]?.label || '') : ''} <span class="filter-btn-arrow">▾</span>
+      </button>
+      <button class="filter-btn${payActive ? ' active' : ''}"
+              onclick="FilterDD.openPay(this)">
+        정산${f.payStatus ? ': ' + f.payStatus : ''} <span class="filter-btn-arrow">▾</span>
+      </button>
+      ${chips.map(ch => `
+        <div class="filter-chip">
+          ${escHtml(ch.label)}
+          <button class="filter-chip-x" onclick="App.clearFilter('${ch.key}')">×</button>
+        </div>`).join('')}
+      ${hasActiveFilters() ? `<button class="filter-clear-btn" onclick="App.clearAllFilters()">초기화</button>` : ''}
+      <div class="filter-search">
+        <svg class="filter-search-icon" width="12" height="12" viewBox="0 0 16 16" fill="currentColor">
+          <path d="M6.5 1a5.5 5.5 0 1 0 3.594 9.714l3.596 3.596.707-.707-3.596-3.596A5.5 5.5 0 0 0 6.5 1zm0 1a4.5 4.5 0 1 1 0 9 4.5 4.5 0 0 1 0-9z"/>
+        </svg>
+        <input type="text" class="filter-search-input" placeholder="검색…"
+               value="${escHtml(f.search)}"
+               oninput="App.setSearch(this.value)">
+      </div>
+    </div>`;
+}
+
+// ── FILTER DROPDOWNS ──────────────────────────────────────────
+const FilterDD = {
+  _current: null,
+
+  _open(el, content, key) {
+    this.close();
+    this._current = key;
+
+    let dd = document.getElementById('_filterPopover');
+    if (!dd) {
+      dd = document.createElement('div');
+      dd.id = '_filterPopover';
+      dd.className = 'filter-popover';
+      document.body.appendChild(dd);
+    }
+    dd.innerHTML = content;
+    const rect = el.getBoundingClientRect();
+    dd.style.top  = (rect.bottom + 4) + 'px';
+    dd.style.left = rect.left + 'px';
+    dd.classList.add('open');
+    setTimeout(() => document.addEventListener('click', FilterDD._outside, true), 0);
+  },
+
+  close() {
+    const dd = document.getElementById('_filterPopover');
+    if (dd) dd.classList.remove('open');
+    document.removeEventListener('click', FilterDD._outside, true);
+    this._current = null;
+  },
+
+  _outside(e) {
+    const dd = document.getElementById('_filterPopover');
+    if (dd && !dd.contains(e.target)) FilterDD.close();
+  },
+
+  openPhase(btn) {
+    const current = State.filters.phase;
+    const options = [
+      { val: null,         label: '전체' },
+      { val: 'delivery',   label: '납품 준비 중' },
+      { val: 'upload',     label: '업로드 진행 중' },
+      { val: 'settlement', label: '정산 진행 중' },
+      { val: 'done',       label: '전체 완료' },
+      { val: 'issue',      label: '이슈 / 기타' },
+      { val: 'ongoing',    label: '상시 진행' },
+    ];
+    const content = `
+      <div class="filter-popover-label">Phase</div>
+      ${options.map(o => `
+        <div class="filter-option${o.val === current ? ' selected' : ''}"
+             onclick="App.setFilter('phase',${o.val ? `'${o.val}'` : 'null'});FilterDD.close()">
+          <span class="filter-option-dot"></span>
+          ${o.label}
+        </div>`).join('')}`;
+    this._open(btn, content, 'phase');
+  },
+
+  openPay(btn) {
+    const current = State.filters.payStatus;
+    const options = [
+      { val: null,       label: '전체' },
+      { val: '미입금',   label: '미입금' },
+      { val: '부분입금', label: '부분입금' },
+      { val: '입금완료', label: '입금완료' },
+    ];
+    const content = `
+      <div class="filter-popover-label">정산 상태</div>
+      ${options.map(o => `
+        <div class="filter-option${o.val === current ? ' selected' : ''}"
+             onclick="App.setFilter('payStatus',${o.val ? `'${o.val}'` : 'null'});FilterDD.close()">
+          <span class="filter-option-dot"></span>
+          ${o.label}
+        </div>`).join('')}`;
+    this._open(btn, content, 'pay');
+  },
+};
+
+// ── RENDER: HOME VIEW ─────────────────────────────────────────
+function renderHomeView() {
+  const all = Store.getCampaigns().filter(c => !c.is_archived);
+  const byGroup = { delivery: [], upload: [], settlement: [], done: [], issue: [], ongoing: [] };
+  all.forEach(c => { const g = getPhaseGroup(c); if (byGroup[g]) byGroup[g].push(c); });
+
+  const urgentAll = all.filter(c => isUrgent(c));
+  const uploadActive = byGroup.upload;
+  const settlementPending = [...byGroup.settlement].filter(c => !phaseCDone(c));
+
+  const dateStr = new Date().toLocaleDateString('ko-KR', { year:'numeric', month:'long', day:'numeric', weekday:'long' });
+
+  const phaseCards = [
+    { key: 'delivery',   label: '납품 준비 중',  val: byGroup.delivery.length,   cls: 'delivery' },
+    { key: 'upload',     label: '업로드 진행',    val: byGroup.upload.length,     cls: 'upload' },
+    { key: 'settlement', label: '정산 대기',       val: byGroup.settlement.length, cls: 'settlement' },
+    { key: 'done',       label: '전체 완료',       val: byGroup.done.length,       cls: 'done' },
+  ];
+
+  // Build urgent rows
+  const urgentRowsHtml = urgentAll.length ? `
+    <div class="home-row-wrap">
+      ${urgentAll.slice(0,8).map(c => {
+        const ddText = dday(c);
+        const ddC = ddayCls(c);
+        const g = getPhaseGroup(c);
+        const meta = PHASE_GROUP_META[g];
+        return `<div class="home-row" onclick="App.selectCampaign('${c.id}')">
+          <span class="home-row-name">${escHtml(c.name)}</span>
+          <span class="home-row-meta" style="color:var(--${g==='issue'?'red':g==='settlement'?'purple':'amber'})">${meta?.label || ''}</span>
+          ${ddText ? `<span class="home-row-dday dday ${ddC}">${ddText}</span>` : ''}
+        </div>`;
+      }).join('')}
+    </div>` : `<div class="home-row-wrap"><div style="padding:14px;font-size:12px;color:var(--green);text-align:center">이슈 없음 ✓</div></div>`;
+
+  // Upload progress rows
+  const uploadRowsHtml = uploadActive.length ? `
+    <div class="home-row-wrap">
+      ${uploadActive.slice(0,6).map(c => {
+        const up = c.count_upload || 0;
+        const sel = c.count_select || 0;
+        const pct = sel ? Math.round((up/sel)*100) : 0;
+        const barCls = pct >= 100 ? 'full' : pct >= 50 ? 'partial' : 'low';
+        const ddText = dday(c);
+        const ddC = ddayCls(c);
+        return `<div class="home-row" onclick="App.selectCampaign('${c.id}')">
+          <span class="home-row-name">${escHtml(c.name)}</span>
+          ${sel ? `<div class="home-progress-bar"><div class="home-progress-fill ${barCls}" style="width:${Math.min(pct,100)}%"></div></div>
+          <span class="home-row-meta">${up}/${sel} (${pct}%)</span>` : `<span class="home-row-meta" style="color:var(--amber)">업로드중</span>`}
+          ${ddText ? `<span class="home-row-dday dday ${ddC}">${ddText}</span>` : ''}
+        </div>`;
+      }).join('')}
+    </div>` : '';
+
+  // Settlement rows
+  const settlementRowsHtml = settlementPending.length ? `
+    <div class="home-row-wrap">
+      ${settlementPending.slice(0,6).map(c => {
+        return `<div class="home-row" onclick="App.selectCampaign('${c.id}')">
+          <span class="home-row-name">${escHtml(c.name)}</span>
+          <span class="home-row-meta" style="color:var(--ink50)">${escHtml(c.client_name || '')}</span>
+          <span class="home-row-meta" style="color:var(--${c.pay_status==='미입금'?'red':'amber'})">${c.pay_status || '—'}</span>
+          ${c.revenue ? `<span class="home-row-meta money pos" style="font-size:11px">${fmt.money(c.revenue)}원</span>` : ''}
+        </div>`;
+      }).join('')}
+    </div>` : '';
+
+  return `
+    <div class="home-view">
+      <div class="home-date">${dateStr}</div>
+
+      <div class="phase-cards">
+        ${phaseCards.map(p => `
+          <div class="phase-card ${p.cls}" onclick="App.setFilterAndView('${p.key}')">
+            <div class="phase-card-label">${p.label}</div>
+            <div class="phase-card-val">${p.val}</div>
+            <div class="phase-card-sub">건</div>
+          </div>`).join('')}
+      </div>
+
+      <div class="home-section">
+        <div class="home-section-header">
+          <span class="home-section-title urgent">즉시 확인 필요</span>
+          ${urgentAll.length ? `<span class="home-section-count">${urgentAll.length}</span>` : ''}
+        </div>
+        ${urgentRowsHtml}
+      </div>
+
+      ${uploadActive.length ? `
+      <div class="home-section">
+        <div class="home-section-header">
+          <span class="home-section-title">업로드 진행 중</span>
+          <span class="home-section-count">${uploadActive.length}</span>
+          <button class="home-section-link" onclick="App.setFilterAndView('upload')">전체 보기 →</button>
+        </div>
+        ${uploadRowsHtml}
+      </div>` : ''}
+
+      ${settlementPending.length ? `
+      <div class="home-section">
+        <div class="home-section-header">
+          <span class="home-section-title">정산 대기</span>
+          <span class="home-section-count">${settlementPending.length}</span>
+          <button class="home-section-link" onclick="App.setFilterAndView('settlement')">전체 보기 →</button>
+        </div>
+        ${settlementRowsHtml}
+      </div>` : ''}
+    </div>`;
+}
+
+// ── RENDER: CAMPAIGN LIST ─────────────────────────────────────
+function renderCampaignList() {
+  const all = Store.getCampaigns();
+  const filtered = applyFilters(all);
+
+  const groupOrder = ['delivery', 'upload', 'settlement', 'issue', 'ongoing', 'done'];
+  const byGroup = {};
+  groupOrder.forEach(k => byGroup[k] = []);
+  filtered.forEach(c => { const g = getPhaseGroup(c); if (byGroup[g]) byGroup[g].push(c); });
+
+  // Sort each group by dday (ascending, null/past last)
+  groupOrder.forEach(k => {
+    byGroup[k].sort((a, b) => {
+      const da = a._dday !== null && a._dday !== undefined ? a._dday : 9999;
+      const db = b._dday !== null && b._dday !== undefined ? b._dday : 9999;
+      return da - db;
+    });
+  });
+
+  const listHtml = groupOrder
+    .map(k => renderPhaseGroup(k, byGroup[k]))
+    .filter(Boolean)
+    .join('');
+
+  return `<div class="camp-list-wrap">${listHtml || '<div class="empty-state">캠페인이 없습니다</div>'}</div>`;
+}
+
+// ── RENDER: SIDEBAR ───────────────────────────────────────────
+function renderSidebar() {
+  const campaigns = Store.getCampaigns().filter(c => !c.is_archived);
+  const alerts = computeAlerts();
+  const totalAlerts = alerts.urgent.length + alerts.warn.length +
+                      alerts.unpaid.length + alerts.qa.length + alerts.issue.length;
+
+  // Client stats
+  const clientMap = {};
+  campaigns.forEach(c => {
+    const name = c.client_name || '(거래처 없음)';
+    if (!clientMap[name]) clientMap[name] = { active: 0, hasIssue: false };
+    const g = getPhaseGroup(c);
+    if (g !== 'done') clientMap[name].active++;
+    if (g === 'issue' || (c.pay_status === '미입금' && c.revenue > 0)) clientMap[name].hasIssue = true;
+  });
+  const clients = Object.entries(clientMap)
+    .sort((a, b) => b[1].active - a[1].active || a[0].localeCompare(b[0], 'ko'));
+
+  const navItems = [
+    { key: 'home',      label: '홈',     icon: '🏠' },
+    { key: 'campaigns', label: '캠페인',  icon: '☰' },
+    { key: 'finance',   label: '정산',    icon: '📊' },
+  ];
+
+  return `
+    <div class="sidebar-logo">
+      <div class="sidebar-logo-text">SIRIAI</div>
+      <div class="sidebar-logo-sub">PM</div>
+    </div>
+
+    <nav class="sidebar-nav">
+      ${navItems.map(n => `
+        <div class="nav-item${State.view === n.key ? ' active' : ''}" onclick="App.setView('${n.key}')">
+          <span>${n.icon}</span>
+          <span class="nav-item-label">${n.label}</span>
+        </div>`).join('')}
+    </nav>
+
+    <div class="sidebar-section-label">거래처</div>
+    <div class="sidebar-clients">
+      <div class="client-item${!State.selectedClient && State.view === 'campaigns' ? ' selected' : ''}"
+           onclick="App.selectClient(null)">
+        <span class="client-dot active"></span>
+        <span class="client-name">전체</span>
+        <span class="client-count">${campaigns.filter(c => getPhaseGroup(c) !== 'done').length}</span>
+      </div>
+      ${clients.map(([name, stats]) => `
+        <div class="client-item${State.selectedClient === name ? ' selected' : ''}"
+             onclick="App.selectClient('${escHtml(name)}')">
+          <span class="client-dot${stats.active > 0 ? ' active' : ''}"></span>
+          <span class="client-name">${escHtml(name)}</span>
+          ${stats.hasIssue ? '<span class="client-warn">⚠</span>' : ''}
+          ${stats.active > 0 ? `<span class="client-count">${stats.active}</span>` : ''}
+        </div>`).join('')}
+      <button class="client-add-btn" onclick="showAddClientModal()">＋ 거래처 추가</button>
+    </div>
+
+    <div style="flex:1;min-height:8px"></div>
+
+    <div style="padding:8px 8px;flex-shrink:0">
+      <div class="notif-wrap" id="notifWrap">
+        <button class="notif-btn" onclick="Notif.toggle()" title="알림" style="width:100%;border-radius:6px;justify-content:center;gap:6px;padding:6px">
+          <svg width="13" height="13" fill="currentColor" viewBox="0 0 16 16">
+            <path d="M8 16a2 2 0 0 0 2-2H6a2 2 0 0 0 2 2zM8 1.918l-.797.161A4.002 4.002 0 0 0 4 6c0 .628-.134 2.197-.459 3.742-.16.767-.376 1.566-.663 2.258h10.244c-.287-.692-.502-1.49-.663-2.258C12.134 8.197 12 6.628 12 6a4.002 4.002 0 0 0-3.203-3.92L8 1.917zM14.22 12c.223.447.481.801.78 1H1c.299-.199.557-.553.78-1C2.68 10.2 3 6.88 3 6c0-2.42 1.72-4.44 4.005-4.901a1 1 0 1 1 1.99 0A5.002 5.002 0 0 1 13 6c0 .88.32 4.2 1.22 6z"/>
+          </svg>
+          <span class="nav-item-label" style="font-size:11px">알림</span>
+          <span class="notif-count" id="notifCount" style="${totalAlerts > 0 ? 'position:static;background:var(--red);color:#fff;border-radius:10px;padding:0 5px;font-size:9px;font-weight:700' : 'display:none'}">${totalAlerts}</span>
+        </button>
+        <div class="notif-dropdown" id="notifDropdown">
+          <div class="notif-header">알림</div>
+          <div id="notifBody"></div>
+        </div>
+      </div>
+    </div>`;
+}
+
+// ── RENDER: FINANCE VIEW ──────────────────────────────────────
+function renderFinanceView() {
+  const campaigns = Store.getCampaigns().filter(c => !c.is_archived && c.revenue > 0);
+  const totalRev    = campaigns.reduce((s,c) => s+(c.revenue||0), 0);
+  const totalProfit = campaigns.reduce((s,c) => s+(c._profit||0), 0);
+  const unpaid = campaigns.filter(c => ['미입금','부분입금'].includes(c.pay_status));
+  const unpaidTotal = unpaid.reduce((s,c) => s+(c.revenue||0), 0);
+
+  const byMonth = {};
+  campaigns.forEach(c => {
+    const d   = c.date_end || c.date_start || '';
+    const mon = d ? d.slice(0,7) : '미정';
+    if (!byMonth[mon]) byMonth[mon] = [];
+    byMonth[mon].push(c);
+  });
+  const months = Object.keys(byMonth).sort().reverse();
+
+  const monthBlocks = months.map(mon => {
+    const rows = byMonth[mon];
+    const mRev    = rows.reduce((s,c) => s+(c.revenue||0), 0);
+    const mProfit = rows.reduce((s,c) => s+(c._profit||0), 0);
+    return `
+      <div class="finance-month">
+        <div class="finance-month-header">
+          <span class="finance-month-title">${mon}</span>
+          <span class="finance-month-stat">매출 <strong>${fmt.money(mRev)}원</strong></span>
+          <span class="finance-month-stat">순이익 <strong>${fmt.money(mProfit)}원</strong></span>
+          <span class="finance-month-stat">${rows.length}건</span>
+        </div>
+        <div class="table-wrap">
+          <table><thead><tr>
+            <th>캠페인명</th><th>거래처</th><th>매출</th><th>원고료</th><th>순이익</th><th>마진</th><th>입금</th>
+          </tr></thead><tbody>
+            ${rows.map(c => `
+              <tr class="row-hover" onclick="App.selectCampaign('${c.id}')">
+                <td style="font-size:12px;font-weight:500">${escHtml(c.name)}</td>
+                <td class="text-muted" style="font-size:11px">${escHtml(c.client_name||'')}</td>
+                <td class="nowrap"><span class="money pos">${fmt.money(c.revenue)}원</span></td>
+                <td class="nowrap text-muted">${fmt.money(c.fee)}원</td>
+                <td class="nowrap"><span class="money ${c._profit>0?'pos':'zero'}">${fmt.money(c._profit)}원</span></td>
+                <td style="font-size:11px">${c._margin}%</td>
+                <td>${payBadge(c.pay_status)}</td>
+              </tr>`).join('')}
+          </tbody></table>
+        </div>
+      </div>`;
+  }).join('');
+
+  return `
+    <div class="finance-wrap">
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px">
+        <span style="font-size:14px;font-weight:600">📊 정산</span>
+        <button class="btn btn-sm" style="margin-left:auto" onclick="exportCSV()">CSV 내보내기</button>
+      </div>
+      <div class="summary-grid">
+        <div class="stat-card accent-green"><div class="stat-card-label">총 매출</div><div class="stat-card-val">${fmt.money(totalRev)}원</div></div>
+        <div class="stat-card accent-green"><div class="stat-card-label">총 순이익</div><div class="stat-card-val">${fmt.money(totalProfit)}원</div><div class="stat-card-sub">마진 ${totalRev?Math.round(totalProfit/totalRev*100):0}%</div></div>
+        <div class="stat-card accent-red"><div class="stat-card-label">미입금 합계</div><div class="stat-card-val">${fmt.money(unpaidTotal)}원</div><div class="stat-card-sub">${unpaid.length}건</div></div>
+        <div class="stat-card"><div class="stat-card-label">집계 캠페인</div><div class="stat-card-val">${campaigns.length}</div></div>
+      </div>
+      ${monthBlocks}
+    </div>`;
+}
+
+// ── CSV EXPORT ────────────────────────────────────────────────
+function exportCSV() {
+  const data = Store.getCampaigns().filter(c => c.revenue > 0);
+  const headers = ['UV','상태','캠페인명','거래처','진행사','매출','원고료','순이익','마진율','입금상태','견적서발행일','세금계산서발행일','마감일'];
+  const rows = data.map(c => [
+    c.uv||'', c.status, c.name, c.client_name||'', c.entity||'',
+    c.revenue||0, c.fee||0, c._profit||0,
+    c.revenue ? Math.round(c._profit/c.revenue*100)+'%' : '',
+    c.pay_status||'', c.date_quote||'', c.date_tax||'', c.date_end||'',
+  ]);
+  const csv = [headers, ...rows].map(r => r.map(v => `"${String(v).replace(/"/g,'""')}"`).join(',')).join('\n');
+  const blob = new Blob(['\uFEFF'+csv], { type: 'text/csv;charset=utf-8' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = `siriai-pm-${new Date().toISOString().slice(0,10)}.csv`;
+  a.click();
+  toast('CSV 다운로드 완료', 'ok');
+}
+
+// ── NEW CAMPAIGN MODAL ────────────────────────────────────────
 function showNewCampaignModal() {
   const clients = Store.getClients().map(c => c.name);
   const defaultClient = State.selectedClient || '';
   Modal.show(`
     <div class="form-grid">
       <div class="field form-full">
-        <label>캠페인명 <span style="color:var(--red)">*</span></label>
-        <input id="nf-name" type="text" placeholder="[캠페인] 브랜드명 26년 월 주차">
+        <label>캠페인명 *</label>
+        <input id="nf-name" type="text" placeholder="[캠페인] 브랜드명 26년 월">
       </div>
       <div class="field">
         <label>거래처</label>
@@ -644,20 +1266,9 @@ function showNewCampaignModal() {
         <datalist id="clientList">${clients.map(c => `<option value="${escHtml(c)}">`).join('')}</datalist>
       </div>
       <div class="field">
-        <label>담당 채널</label>
-        <input id="nf-entity" type="text" value="SIRIAI" placeholder="SIRIAI / 타 대행사명">
-      </div>
-      <div class="field">
-        <label>국가</label>
-        <select id="nf-country">
-          <option value="국내" selected>국내</option>
-          <option value="해외">해외</option>
-        </select>
-      </div>
-      <div class="field">
         <label>상태</label>
         <select id="nf-status">
-          ${STATUSES.map(s => `<option value="${s}">${s}</option>`).join('')}
+          ${STATUSES.map(s => `<option value="${s}">${STATUS_META[s]?.label || s}</option>`).join('')}
         </select>
       </div>
       <div class="field">
@@ -673,12 +1284,15 @@ function showNewCampaignModal() {
         <input id="nf-delivery" type="date">
       </div>
       <div class="field">
-        <label>제공 수</label>
-        <input id="nf-provide" type="number" min="0" value="0">
+        <label>담당 채널</label>
+        <input id="nf-entity" type="text" value="SIRIAI">
       </div>
-      <div class="field form-full">
-        <label>제품 상세</label>
-        <textarea id="nf-detail" rows="2" placeholder="제품명, 규격, 특이사항 등"></textarea>
+      <div class="field">
+        <label>국가</label>
+        <select id="nf-country">
+          <option value="국내" selected>국내</option>
+          <option value="해외">해외</option>
+        </select>
       </div>
       <div class="field form-full">
         <label>진행시트 URL</label>
@@ -687,14 +1301,6 @@ function showNewCampaignModal() {
       <div class="field form-full">
         <label>QA 시트 URL</label>
         <input id="nf-qa" type="text" placeholder="https://docs.google.com/…">
-      </div>
-      <div class="field form-full">
-        <label>가이드 URL</label>
-        <input id="nf-guide" type="text" placeholder="https://notion.so/…">
-      </div>
-      <div class="field form-full">
-        <label>비고</label>
-        <textarea id="nf-note" rows="2"></textarea>
       </div>
     </div>
   `, { title: '새 캠페인 등록' });
@@ -722,23 +1328,17 @@ async function submitNewCampaign() {
     date_start:  document.getElementById('nf-start').value   || null,
     date_end:    document.getElementById('nf-end').value     || null,
     date_delivery: document.getElementById('nf-delivery').value || null,
-    count_provide: parseInt(document.getElementById('nf-provide').value) || 0,
-    detail:      document.getElementById('nf-detail').value.trim()   || null,
     link_progress: document.getElementById('nf-progress').value.trim() || null,
-    link_qa:     document.getElementById('nf-qa').value.trim()       || null,
-    link_guide:  document.getElementById('nf-guide').value.trim()    || null,
-    note:        document.getElementById('nf-note').value.trim()     || null,
+    link_qa:     document.getElementById('nf-qa').value.trim() || null,
   };
 
   Modal.hide();
   try {
     const created = await Store.createCampaign(data);
-    // Navigate to the new campaign's client and select it
-    State.financeMode = false;
+    State.view = 'campaigns';
     State.selectedClient = clientName || null;
     State.selectedCampaignId = created.id;
     State.drawerSections = {};
-    State.campFilter = 'active';
     App.renderAll();
     toast('캠페인이 등록되었습니다', 'ok');
   } catch (e) {
@@ -746,427 +1346,206 @@ async function submitNewCampaign() {
   }
 }
 
-// ── FILTERING ─────────────────────────────────────────────────
-function filterCampaigns() {
-  let data = Store.getCampaigns().filter(c => !c.is_archived);
-
-  if (State.selectedClient) {
-    data = data.filter(c => c.client_name === State.selectedClient);
-  }
-  if (State.search) {
-    const q = State.search.toLowerCase();
-    data = data.filter(c =>
-      (c.name        || '').toLowerCase().includes(q) ||
-      (c.client_name || '').toLowerCase().includes(q) ||
-      (c.detail      || '').toLowerCase().includes(q)
-    );
-  }
-  return data;
-}
-
-function applyTabFilter(data) {
-  if (State.campFilter === 'active') return data.filter(c => ACTIVE_STATUSES.includes(c.status));
-  if (State.campFilter === 'done')   return data.filter(c => !ACTIVE_STATUSES.includes(c.status));
-  return data;
-}
-
-// ── RENDER: CLIENT PANEL ──────────────────────────────────────
-function renderClientPanel() {
-  const campaigns = Store.getCampaigns().filter(c => !c.is_archived);
-  const alerts = computeAlerts();
-  const totalAlerts = alerts.urgent.length + alerts.warn.length + alerts.unpaid.length +
-                      alerts.qa.length + alerts.issue.length;
-
-  // Build client stats
-  const clientMap = {};
-  campaigns.forEach(c => {
-    const name = c.client_name || '(거래처 없음)';
-    if (!clientMap[name]) clientMap[name] = { active: 0, hasIssue: false };
-    if (ACTIVE_STATUSES.includes(c.status)) clientMap[name].active++;
-    if (['미입금','부분입금'].includes(c.pay_status) ||
-        c.status === '기타/이슈' || c.qa_status === '이슈') {
-      clientMap[name].hasIssue = true;
-    }
-  });
-
-  const clients = Object.entries(clientMap)
-    .sort((a, b) => b[1].active - a[1].active || a[0].localeCompare(b[0], 'ko'));
-
-  const allActive = campaigns.filter(c => ACTIVE_STATUSES.includes(c.status)).length;
-  const isAllSelected = State.selectedClient === null && !State.financeMode;
-
-  const clientItems = clients.map(([name, stats]) => {
-    const isSelected = State.selectedClient === name && !State.financeMode;
-    return `
-      <div class="client-item${isSelected ? ' selected' : ''}" onclick="App.selectClient('${escHtml(name)}')">
-        <span class="client-dot${stats.active > 0 ? ' active' : ''}"></span>
-        <span class="client-name">${escHtml(name)}</span>
-        ${stats.hasIssue ? '<span class="client-warn">⚠</span>' : ''}
-        ${stats.active > 0 ? `<span class="client-count">${stats.active}</span>` : ''}
-      </div>`;
-  }).join('') || '<div class="client-empty">거래처 없음</div>';
-
-  return `
-    <div class="client-panel-header">
-      <div class="client-logo">
-        <div class="client-logo-text">SIRIAI</div>
-        <div class="client-logo-sub">PM</div>
-      </div>
-      <div class="notif-wrap" id="notifWrap" style="position:relative">
-        <button class="notif-btn" onclick="Notif.toggle()" title="알림">
-          <svg width="14" height="14" fill="currentColor" viewBox="0 0 16 16">
-            <path d="M8 16a2 2 0 0 0 2-2H6a2 2 0 0 0 2 2zM8 1.918l-.797.161A4.002 4.002 0 0 0 4 6c0 .628-.134 2.197-.459 3.742-.16.767-.376 1.566-.663 2.258h10.244c-.287-.692-.502-1.49-.663-2.258C12.134 8.197 12 6.628 12 6a4.002 4.002 0 0 0-3.203-3.92L8 1.917zM14.22 12c.223.447.481.801.78 1H1c.299-.199.557-.553.78-1C2.68 10.2 3 6.88 3 6c0-2.42 1.72-4.44 4.005-4.901a1 1 0 1 1 1.99 0A5.002 5.002 0 0 1 13 6c0 .88.32 4.2 1.22 6z"/>
-          </svg>
-          <span class="notif-count" id="notifCount" style="${totalAlerts > 0 ? '' : 'display:none'}">${totalAlerts}</span>
-        </button>
-        <div class="notif-dropdown" id="notifDropdown">
-          <div class="notif-header">알림</div>
-          <div id="notifBody"></div>
-        </div>
-      </div>
+function showAddClientModal() {
+  Modal.show(`
+    <div class="field">
+      <label>거래처명</label>
+      <input id="nc-name" type="text" placeholder="예: 무신사">
     </div>
-
-    <div class="client-section">
-      <div class="client-item${isAllSelected ? ' selected' : ''}" onclick="App.selectClient(null)">
-        <span class="client-dot active"></span>
-        <span class="client-name">전체보기</span>
-        <span class="client-count">${allActive}</span>
-      </div>
-    </div>
-
-    <div class="client-divider"></div>
-
-    <div class="client-section client-list">
-      <div class="client-section-label">거래처</div>
-      ${clientItems}
-    </div>
-
-    <div style="flex:1;min-height:12px"></div>
-
-    <div class="client-divider"></div>
-    <div class="client-section">
-      <div class="client-item${State.financeMode ? ' selected' : ''}" onclick="App.showFinance()">
-        <span style="font-size:13px;flex-shrink:0">📊</span>
-        <span class="client-name">정산</span>
-      </div>
-    </div>
+  `, { title: '거래처 추가' });
+  document.getElementById('modalFooter').innerHTML = `
+    <button class="btn" onclick="Modal.hide()">취소</button>
+    <button class="btn btn-primary" onclick="submitAddClient()">추가</button>
   `;
+  setTimeout(() => document.getElementById('nc-name')?.focus(), 50);
 }
 
-// ── RENDER: CAMPAIGN PANEL ────────────────────────────────────
-function renderCampaignPanel() {
-  if (State.financeMode) {
-    return `
-      <div class="camp-finance-wrap">
-        ${renderFinanceView()}
-      </div>`;
+async function submitAddClient() {
+  const name = document.getElementById('nc-name').value.trim();
+  if (!name) { toast('거래처명을 입력하세요', 'warn'); return; }
+  Modal.hide();
+  try {
+    await Store.ensureClient(name);
+    App.renderAll();
+    toast('거래처가 추가되었습니다', 'ok');
+  } catch (e) {
+    toast('추가 실패: ' + e.message, 'err');
   }
-
-  const base = filterCampaigns();
-  const displayed = applyTabFilter(base);
-
-  const baseActive = base.filter(c => ACTIVE_STATUSES.includes(c.status)).length;
-  const baseDone   = base.filter(c => !ACTIVE_STATUSES.includes(c.status)).length;
-  const baseAll    = base.length;
-
-  const title = State.selectedClient || '전체보기';
-
-  let listHtml;
-  if (State.selectedClient === null) {
-    // Group by client
-    const groups = {};
-    displayed.forEach(c => {
-      const key = c.client_name || '(거래처 없음)';
-      if (!groups[key]) groups[key] = [];
-      groups[key].push(c);
-    });
-    const groupEntries = Object.entries(groups)
-      .sort((a, b) => {
-        const aA = a[1].filter(c => ACTIVE_STATUSES.includes(c.status)).length;
-        const bA = b[1].filter(c => ACTIVE_STATUSES.includes(c.status)).length;
-        return bA - aA || a[0].localeCompare(b[0], 'ko');
-      });
-
-    listHtml = groupEntries.map(([clientName, items]) => `
-      <div class="camp-group">
-        <div class="camp-group-header" onclick="App.selectClient('${escHtml(clientName)}')">
-          <span class="camp-group-name">${escHtml(clientName)}</span>
-          <span class="camp-group-count">${items.length}</span>
-        </div>
-        ${items.map(c => renderCampaignRow(c)).join('')}
-      </div>
-    `).join('') || '<div class="camp-empty">캠페인이 없습니다</div>';
-  } else {
-    listHtml = displayed.map(c => renderCampaignRow(c)).join('') ||
-               '<div class="camp-empty">캠페인이 없습니다</div>';
-  }
-
-  return `
-    <div class="camp-panel-header">
-      <div class="camp-panel-title">${escHtml(title)}</div>
-      <button class="btn btn-primary btn-sm" onclick="showNewCampaignModal()">+ 캠페인</button>
-    </div>
-    <div class="camp-panel-controls">
-      <div class="camp-tabs">
-        <button class="camp-tab${State.campFilter==='active'?' active':''}" onclick="App.setCampFilter('active')">
-          진행중 <span class="camp-tab-count">${baseActive}</span>
-        </button>
-        <button class="camp-tab${State.campFilter==='done'?' active':''}" onclick="App.setCampFilter('done')">
-          완료 <span class="camp-tab-count">${baseDone}</span>
-        </button>
-        <button class="camp-tab${State.campFilter==='all'?' active':''}" onclick="App.setCampFilter('all')">
-          전체 <span class="camp-tab-count">${baseAll}</span>
-        </button>
-      </div>
-      <div class="camp-search">
-        <svg width="12" height="12" viewBox="0 0 16 16" fill="currentColor">
-          <path d="M6.5 1a5.5 5.5 0 1 0 3.594 9.714l3.596 3.596.707-.707-3.596-3.596A5.5 5.5 0 0 0 6.5 1zm0 1a4.5 4.5 0 1 1 0 9 4.5 4.5 0 0 1 0-9z"/>
-        </svg>
-        <input type="text" class="camp-search-input" placeholder="검색…"
-               value="${escHtml(State.search)}"
-               oninput="App.setSearch(this.value)">
-      </div>
-    </div>
-    <div class="camp-list">${listHtml}</div>
-  `;
-}
-
-function renderCampaignRow(c) {
-  const ddText = dday(c);
-  const ddC = ddayCls(c);
-  const isDone = !ACTIVE_STATUSES.includes(c.status);
-  const isSelected = State.selectedCampaignId === c.id;
-  const hasPay = ['미입금','부분입금'].includes(c.pay_status);
-  const meta = STATUS_META[c.status] || { cls: 'sX', label: c.status };
-
-  const uploadInfo = c.count_select
-    ? `${c.count_upload || 0}/${c.count_select}`
-    : '';
-
-  const dateStr = c.date_end
-    ? c.date_end.slice(5).replace('-', '/') + ' 마감'
-    : '';
-
-  const subParts = [meta.label, dateStr, hasPay ? '미입금' : ''].filter(Boolean);
-
-  return `
-    <div class="camp-row${isSelected ? ' selected' : ''}${isDone ? ' done' : ''}"
-         onclick="App.selectCampaign('${c.id}')">
-      <span class="camp-row-dot ${meta.cls}"></span>
-      <div class="camp-row-main">
-        <div class="camp-row-name">${escHtml(c.name)}</div>
-        <div class="camp-row-sub">${escHtml(subParts.join(' · '))}</div>
-      </div>
-      <div class="camp-row-right">
-        ${ddText ? `<span class="dday ${ddC}">${ddText}</span>` : ''}
-        ${uploadInfo ? `<span class="camp-row-upload">${uploadInfo}</span>` : ''}
-      </div>
-    </div>`;
-}
-
-// ── VIEW: FINANCE ─────────────────────────────────────────────
-function renderFinanceView() {
-  const campaigns = Store.getCampaigns().filter(c => !c.is_archived && c.revenue > 0);
-  const totalRev    = campaigns.reduce((s,c) => s+(c.revenue||0), 0);
-  const totalProfit = campaigns.reduce((s,c) => s+(c._profit||0), 0);
-  const unpaid = campaigns.filter(c => ['미입금','부분입금'].includes(c.pay_status));
-  const unpaidTotal = unpaid.reduce((s,c) => s+(c.revenue||0), 0);
-
-  const byMonth = {};
-  campaigns.forEach(c => {
-    const d   = c.date_end || c.date_start || '';
-    const mon = d ? d.slice(0,7) : '미정';
-    if (!byMonth[mon]) byMonth[mon] = [];
-    byMonth[mon].push(c);
-  });
-  const months = Object.keys(byMonth).sort().reverse();
-
-  const byClient = {};
-  campaigns.forEach(c => {
-    const k = c.client_name || '미분류';
-    if (!byClient[k]) byClient[k] = { rev:0, profit:0, count:0 };
-    byClient[k].rev    += c.revenue||0;
-    byClient[k].profit += c._profit||0;
-    byClient[k].count  += 1;
-  });
-  const clientRows = Object.entries(byClient)
-    .sort((a,b) => b[1].rev - a[1].rev)
-    .map(([name, v]) => `
-      <tr>
-        <td>${escHtml(name)}</td>
-        <td class="nowrap">${v.count}건</td>
-        <td class="nowrap"><span class="money pos">${fmt.money(v.rev)}원</span></td>
-        <td class="nowrap"><span class="money ${v.profit>0?'pos':'zero'}">${fmt.money(v.profit)}원</span></td>
-        <td class="nowrap">${v.rev ? Math.round(v.profit/v.rev*100)+'%' : '—'}</td>
-      </tr>`
-    ).join('');
-
-  const monthBlocks = months.map(mon => {
-    const rows = byMonth[mon];
-    const mRev    = rows.reduce((s,c) => s+(c.revenue||0), 0);
-    const mProfit = rows.reduce((s,c) => s+(c._profit||0), 0);
-    return `
-      <div class="finance-month">
-        <div class="finance-month-header">
-          <span class="finance-month-title">${mon}</span>
-          <span class="finance-month-stat">매출 <strong>${fmt.money(mRev)}원</strong></span>
-          <span class="finance-month-stat">순이익 <strong>${fmt.money(mProfit)}원</strong></span>
-          <span class="finance-month-stat">${rows.length}건</span>
-        </div>
-        <div class="table-wrap">
-          <table><thead><tr>
-            <th>캠페인명</th><th>거래처</th><th>매출</th><th>원고료</th><th>순이익</th><th>마진</th><th>입금</th>
-          </tr></thead><tbody>
-            ${rows.map(c => `
-              <tr class="row-hover" onclick="App.selectCampaign('${c.id}')">
-                <td><div class="name-main text-sm">${escHtml(c.name)}</div></td>
-                <td class="text-sm text-muted">${escHtml(c.client_name||'')}</td>
-                <td class="nowrap"><span class="money pos">${fmt.money(c.revenue)}원</span></td>
-                <td class="nowrap text-muted">${fmt.money(c.fee)}원</td>
-                <td class="nowrap"><span class="money ${c._profit>0?'pos':'zero'}">${fmt.money(c._profit)}원</span></td>
-                <td class="text-sm">${c._margin}%</td>
-                <td>${payBadge(c.pay_status)}</td>
-              </tr>
-            `).join('')}
-          </tbody></table>
-        </div>
-      </div>`;
-  }).join('');
-
-  return `
-    <div class="page-header">
-      <div class="page-title">📊 정산</div>
-      <div style="margin-left:auto"><button class="btn btn-sm" onclick="exportCSV()">CSV 내보내기</button></div>
-    </div>
-    <div class="summary-grid">
-      <div class="stat-card accent-green"><div class="stat-card-label">총 매출</div><div class="stat-card-val">${fmt.money(totalRev)}원</div></div>
-      <div class="stat-card accent-green"><div class="stat-card-label">총 순이익</div><div class="stat-card-val">${fmt.money(totalProfit)}원</div><div class="stat-card-sub">마진 ${totalRev?Math.round(totalProfit/totalRev*100):0}%</div></div>
-      <div class="stat-card accent-red"><div class="stat-card-label">미입금 합계</div><div class="stat-card-val">${fmt.money(unpaidTotal)}원</div><div class="stat-card-sub">${unpaid.length}건</div></div>
-      <div class="stat-card"><div class="stat-card-label">집계 캠페인</div><div class="stat-card-val">${campaigns.length}</div></div>
-    </div>
-
-    ${unpaid.length ? `
-      <div style="margin-bottom:20px">
-        <div class="page-title" style="font-size:12px;color:var(--red);margin-bottom:8px">미입금 (${unpaid.length}건)</div>
-        <div class="table-wrap">
-          <table><thead><tr><th>캠페인명</th><th>거래처</th><th>매출</th><th>세금계산서</th><th>상태</th></tr></thead>
-          <tbody>${unpaid.map(c => `
-            <tr class="row-hover" onclick="App.selectCampaign('${c.id}')">
-              <td>${escHtml(c.name)}</td>
-              <td class="text-muted text-sm">${escHtml(c.client_name||'')}</td>
-              <td><span class="money pos">${fmt.money(c.revenue)}원</span></td>
-              <td class="text-sm">${c.date_tax || '미발행'}</td>
-              <td>${payBadge(c.pay_status)}</td>
-            </tr>`).join('')}
-          </tbody></table>
-        </div>
-      </div>` : ''}
-
-    <div style="margin-bottom:20px">
-      <div class="page-title" style="font-size:12px;color:var(--ink50);margin-bottom:8px">거래처별 집계</div>
-      <div class="table-wrap">
-        <table><thead><tr><th>거래처</th><th>건수</th><th>매출</th><th>순이익</th><th>마진율</th></tr></thead>
-        <tbody>${clientRows}</tbody></table>
-      </div>
-    </div>
-
-    ${monthBlocks}
-  `;
-}
-
-// ── CSV EXPORT ────────────────────────────────────────────────
-function exportCSV() {
-  const data = Store.getCampaigns().filter(c => c.revenue > 0);
-  const headers = ['UV','상태','캠페인명','거래처','진행사','매출','원고료','순이익','마진율','입금상태','견적서발행일','세금계산서발행일','마감일'];
-  const rows = data.map(c => [
-    c.uv||'', c.status, c.name, c.client_name||'', c.entity||'',
-    c.revenue||0, c.fee||0, c._profit||0,
-    c.revenue ? Math.round(c._profit/c.revenue*100)+'%' : '',
-    c.pay_status||'', c.date_quote||'', c.date_tax||'', c.date_end||'',
-  ]);
-  const csv = [headers, ...rows].map(r => r.map(v => `"${String(v).replace(/"/g,'""')}"`).join(',')).join('\n');
-  const blob = new Blob(['\uFEFF'+csv], { type: 'text/csv;charset=utf-8' });
-  const a = document.createElement('a');
-  a.href = URL.createObjectURL(blob);
-  a.download = `siriai-pm-${new Date().toISOString().slice(0,10)}.csv`;
-  a.click();
-  toast('CSV 다운로드 완료', 'ok');
 }
 
 // ── APP ────────────────────────────────────────────────────────
 const App = {
   async init() {
-    document.getElementById('clientPanel').innerHTML =
-      '<div style="padding:20px;font-size:12px;color:var(--ink30)">로딩 중…</div>';
+    document.getElementById('sidebar').innerHTML =
+      '<div style="padding:20px;font-size:12px;color:var(--ink40)">로딩 중…</div>';
 
     try {
       await Store.init();
     } catch (e) {
-      document.getElementById('campaignPanel').innerHTML = `
-        <div class="camp-empty" style="padding:60px 20px">
-          연결 실패<br><span style="font-size:11px">${escHtml(e.message)}</span>
+      document.getElementById('mainScroll').innerHTML = `
+        <div class="empty-state">
+          연결 실패<br><span style="font-size:11px;color:var(--ink50)">${escHtml(e.message)}</span>
         </div>`;
       return;
     }
-
     App.renderAll();
   },
 
   renderAll() {
-    // Clear selected campaign if it's been archived/deleted
+    // Validate selected campaign
     if (State.selectedCampaignId) {
       const c = Store.getCampaignById(State.selectedCampaignId);
       if (!c || c.is_archived) State.selectedCampaignId = null;
     }
 
-    document.getElementById('clientPanel').innerHTML = renderClientPanel();
-    document.getElementById('campaignPanel').innerHTML = renderCampaignPanel();
+    document.getElementById('sidebar').innerHTML = renderSidebar();
+
+    const mainHeader = document.getElementById('mainHeader');
+    const mainScroll = document.getElementById('mainScroll');
+
+    if (State.view === 'home') {
+      mainHeader.innerHTML = `
+        <div class="main-header-top">
+          <span class="main-header-title">홈</span>
+        </div>`;
+      mainScroll.innerHTML = renderHomeView();
+    } else if (State.view === 'finance') {
+      mainHeader.innerHTML = `
+        <div class="main-header-top">
+          <span class="main-header-title">정산</span>
+          <button class="btn btn-sm" onclick="exportCSV()">CSV</button>
+        </div>`;
+      mainScroll.innerHTML = renderFinanceView();
+    } else {
+      // Campaigns view
+      const all = Store.getCampaigns();
+      const filtered = applyFilters(all);
+      mainHeader.innerHTML = renderFilterBar(filtered.length);
+      mainScroll.innerHTML = renderCampaignList();
+    }
 
     if (State.selectedCampaignId) {
       Detail.render(State.selectedCampaignId);
     } else {
-      document.getElementById('detailPanel').innerHTML =
-        '<div class="detail-empty">캠페인을 선택하세요</div>';
+      document.getElementById('detailPanel').classList.remove('open');
+      document.getElementById('detailPanel').innerHTML = '';
     }
+  },
+
+  // partial re-render for a single campaign row (after inline edit)
+  _rerenderRow(id) {
+    const existing = document.querySelector(`[onclick*="selectCampaign('${id}')"].camp-row`);
+    if (!existing) return;
+    const c = Store.getCampaignById(id);
+    if (!c) return;
+    const temp = document.createElement('div');
+    temp.innerHTML = renderCampaignRow(c);
+    existing.replaceWith(temp.firstElementChild);
   },
 
   // Called by store.js subscribeRealtime
   renderCurrentView() { App.renderAll(); },
-  renderNotifications() { renderNotificationBadge(); },
+  renderNotifications() { /* sidebar handles it */ App.renderAll(); },
+
+  setView(v) {
+    State.view = v;
+    if (v !== 'campaigns') State.selectedClient = null;
+    App.renderAll();
+  },
 
   selectClient(name) {
     State.selectedClient = name;
-    State.financeMode    = false;
-    State.campFilter     = 'active';
-    State.search         = '';
+    State.view = 'campaigns';
+    State.filters.client = null;
     App.renderAll();
   },
 
   selectCampaign(id) {
+    if (State.selectedCampaignId === id) {
+      // Toggle: close if same
+      State.selectedCampaignId = null;
+      document.getElementById('detailPanel').classList.remove('open');
+      document.getElementById('detailPanel').innerHTML = '';
+      // Update row selection
+      document.querySelectorAll('.camp-row.selected').forEach(el => el.classList.remove('selected'));
+      return;
+    }
     State.selectedCampaignId = id;
     State.drawerSections = {};
-    if (State.financeMode) {
-      State.financeMode = false;
+
+    // Switch to campaigns view if in home
+    if (State.view === 'finance') {
+      State.view = 'campaigns';
+      App.renderAll();
+      return;
     }
-    document.getElementById('campaignPanel').innerHTML = renderCampaignPanel();
+
+    // Update row selection without full re-render
+    document.querySelectorAll('.camp-row.selected').forEach(el => el.classList.remove('selected'));
+    const newRow = document.querySelector(`.camp-row[onclick*="selectCampaign('${id}')"]`);
+    if (newRow) newRow.classList.add('selected');
+
     Detail.render(id);
   },
 
-  // Legacy alias (called from finance rows, notifications, etc.)
+  closeDetail() {
+    State.selectedCampaignId = null;
+    document.getElementById('detailPanel').classList.remove('open');
+    document.getElementById('detailPanel').innerHTML = '';
+    document.querySelectorAll('.camp-row.selected').forEach(el => el.classList.remove('selected'));
+  },
+
+  // Legacy alias
   openDrawer(id) { App.selectCampaign(id); },
 
-  setCampFilter(f) {
-    State.campFilter = f;
-    document.getElementById('campaignPanel').innerHTML = renderCampaignPanel();
+  toggleGroup(key) {
+    const defaultCollapsed = key === 'done';
+    const current = State.collapsedGroups[key] === undefined ? defaultCollapsed : State.collapsedGroups[key];
+    State.collapsedGroups[key] = !current;
+
+    const header = document.querySelector(`.phase-group-header.${PHASE_GROUP_META[key]?.cls}`);
+    const body   = header?.nextElementSibling;
+    if (header) header.classList.toggle('collapsed', State.collapsedGroups[key]);
+    if (body)   body.classList.toggle('collapsed',   State.collapsedGroups[key]);
+  },
+
+  setFilter(key, val) {
+    State.filters[key] = val;
+    const all = Store.getCampaigns();
+    const filtered = applyFilters(all);
+    document.getElementById('mainHeader').innerHTML = renderFilterBar(filtered.length);
+    document.getElementById('mainScroll').innerHTML = renderCampaignList();
+  },
+
+  clearFilter(key) {
+    State.filters[key] = null;
+    App.setFilter(key, null);
+  },
+
+  clearAllFilters() {
+    State.filters = { phase: null, payStatus: null, client: null, search: '' };
+    const all = Store.getCampaigns();
+    const filtered = applyFilters(all);
+    document.getElementById('mainHeader').innerHTML = renderFilterBar(filtered.length);
+    document.getElementById('mainScroll').innerHTML = renderCampaignList();
   },
 
   setSearch(val) {
-    State.search = val;
-    document.getElementById('campaignPanel').innerHTML = renderCampaignPanel();
+    State.filters.search = val;
+    const all = Store.getCampaigns();
+    const filtered = applyFilters(all);
+    document.getElementById('mainHeader').innerHTML = renderFilterBar(filtered.length);
+    document.getElementById('mainScroll').innerHTML = renderCampaignList();
+  },
+
+  setFilterAndView(phase) {
+    State.view = 'campaigns';
+    State.filters.phase = phase;
+    App.renderAll();
   },
 
   showFinance() {
-    State.financeMode    = true;
+    State.view = 'finance';
     State.selectedClient = null;
     App.renderAll();
   },

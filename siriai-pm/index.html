@@ -13,21 +13,25 @@
 
 <div class="app-shell">
 
-  <!-- ── LEFT: 거래처 패널 (220px) ─────────────────────── -->
-  <aside class="client-panel" id="clientPanel"></aside>
+  <!-- ── LEFT: 사이드바 (200px) ─────────────────────────── -->
+  <aside class="sidebar" id="sidebar"></aside>
 
-  <!-- ── CENTER: 캠페인 목록 패널 (flex) ──────────────── -->
-  <div class="campaign-panel" id="campaignPanel"></div>
-
-  <!-- ── RIGHT: 캠페인 상세 패널 (380px) ──────────────── -->
-  <div class="detail-panel" id="detailPanel">
-    <div class="detail-empty">캠페인을 선택하세요</div>
+  <!-- ── CENTER: 메인 영역 (flex:1) ──────────────────────── -->
+  <div class="main-area">
+    <div class="main-header" id="mainHeader"></div>
+    <div class="main-scroll" id="mainScroll"></div>
   </div>
+
+  <!-- ── RIGHT: 상세 패널 (0 → 480px push) ─────────────── -->
+  <div class="detail-panel" id="detailPanel"></div>
 
 </div>
 
 <!-- ── STATUS DROPDOWN (global, fixed) ─── -->
 <div id="statusDropdown" class="status-dropdown" style="position:fixed"></div>
+
+<!-- ── PAY DROPDOWN (global, fixed) ─── -->
+<div id="payDropdown" class="pay-dropdown" style="position:fixed"></div>
 
 <!-- ── MODAL ──────────────────────────────────────── -->
 <div class="modal-overlay hidden" id="modalOverlay" onclick="if(event.target===this)Modal.hide()">
