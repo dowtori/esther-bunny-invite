@@ -245,24 +245,25 @@ a.sn-link.active{color:var(--pink-deep);background:var(--pink-faint)}
   border-radius:var(--r);overflow:hidden;
 }
 .inf-card + .inf-card{margin-top:0}
-.inf-card-top{display:grid;grid-template-columns:300px 1fr 400px;min-height:380px}
+.inf-card-top{display:grid;grid-template-columns:300px 1fr;min-height:280px}
 .inf-photo{position:relative;overflow:hidden}
 .inf-body{padding:38px 48px;display:flex;flex-direction:column}
 
-/* embed column (3rd column inside card) */
-.inf-embed-col{
-  border-left:1px solid var(--border);
-  padding:20px 10px 12px;
-  display:flex;flex-direction:column;overflow:hidden;
+/* embed strip — bottom row, unconstrained height */
+.inf-embed-strip{
+  border-top:1px solid var(--border);
+  padding:20px 32px 24px;
+  display:flex;align-items:flex-start;gap:20px;
 }
-.inf-embed-col-lbl{
+.inf-embed-strip-lbl{
   font-family:'DM Sans',sans-serif;font-size:10px;font-weight:600;
   letter-spacing:2.5px;text-transform:uppercase;color:var(--ink-dim);
-  margin-bottom:12px;flex-shrink:0;
+  flex-shrink:0;padding-top:10px;min-width:72px;
 }
-.inf-embed-col .instagram-media{
-  min-width:unset !important;max-width:none !important;
-  width:100% !important;margin:0 !important;
+.inf-embed-strip .instagram-media{
+  min-width:unset !important;
+  width:400px !important;
+  margin:0 !important;
 }
 .inf-tag{
   font-family:'DM Sans',sans-serif;font-size:11px;font-weight:600;
@@ -586,7 +587,8 @@ footer{
   .kpi-row2{grid-template-columns:1fr}
   .inf-card-top{grid-template-columns:1fr;min-height:auto}
   .inf-photo{height:260px}
-  .inf-embed-col{border-left:none;border-top:1px solid var(--border);padding:16px 20px 20px}
+  .inf-embed-strip{padding:16px 20px 20px}
+  .inf-embed-strip .instagram-media{width:100% !important}
   .mag-feat-embeds{grid-template-columns:1fr}
   .mag-row3{grid-template-columns:1fr}
   .nano-bk{grid-template-columns:repeat(2,1fr)}
@@ -753,10 +755,10 @@ footer{
         </div>
         <div class="inf-foot">방문일 · 2026.05.02</div>
       </div>
-      <div class="inf-embed-col">
-        <div class="inf-embed-col-lbl">발행 콘텐츠</div>
-        <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/p/DX_BSA3Gfjv/" data-instgrm-version="14"></blockquote>
-      </div>
+    </div>
+    <div class="inf-embed-strip">
+      <div class="inf-embed-strip-lbl">발행 콘텐츠</div>
+      <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/p/DX_BSA3Gfjv/" data-instgrm-version="14"></blockquote>
     </div>
   </div>
 
@@ -794,10 +796,10 @@ footer{
         </div>
         <div class="inf-foot">방문일 · 2026.05.02</div>
       </div>
-      <div class="inf-embed-col">
-        <div class="inf-embed-col-lbl">발행 콘텐츠</div>
-        <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/p/DX3rInXk7k5/" data-instgrm-version="14"></blockquote>
-      </div>
+    </div>
+    <div class="inf-embed-strip">
+      <div class="inf-embed-strip-lbl">발행 콘텐츠</div>
+      <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/p/DX3rInXk7k5/" data-instgrm-version="14"></blockquote>
     </div>
   </div>
 
@@ -834,10 +836,10 @@ footer{
         </div>
         <div class="inf-foot">방문일 · 2026.05.—</div>
       </div>
-      <div class="inf-embed-col">
-        <div class="inf-embed-col-lbl">발행 콘텐츠</div>
-        <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/p/DX4BgqlkexS/" data-instgrm-version="14"></blockquote>
-      </div>
+    </div>
+    <div class="inf-embed-strip">
+      <div class="inf-embed-strip-lbl">발행 콘텐츠</div>
+      <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/p/DX4BgqlkexS/" data-instgrm-version="14"></blockquote>
     </div>
   </div>
 
