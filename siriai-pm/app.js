@@ -836,7 +836,6 @@ function renderPhaseGroup(groupKey, campaigns) {
   return `
     <div class="phase-group-header ${meta.cls}${isCollapsed ? ' collapsed' : ''}"
          onclick="App.toggleGroup('${groupKey}')">
-      <div class="phase-group-accent"></div>
       <span class="phase-group-name">${meta.label}</span>
       <span class="phase-group-count">${campaigns.length}</span>
       <span class="phase-group-toggle">▾</span>
