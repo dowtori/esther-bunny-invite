@@ -234,13 +234,25 @@ a.sn-link.active{color:var(--pink-deep);background:var(--pink-faint)}
 
 /* influencer card */
 .inf-card{
-  display:grid;grid-template-columns:300px 1fr;
+  display:flex;flex-direction:column;
   background:var(--bg-card);border:1px solid var(--border);
-  border-radius:var(--r);overflow:hidden;min-height:380px;
+  border-radius:var(--r);overflow:hidden;
 }
 .inf-card + .inf-card{margin-top:2px}
+.inf-card-top{display:grid;grid-template-columns:300px 1fr;min-height:380px}
 .inf-photo{position:relative;overflow:hidden}
 .inf-body{padding:38px 48px;display:flex;flex-direction:column}
+
+/* embed section inside card */
+.inf-embed-row{
+  border-top:1px solid var(--border);
+  padding:20px 32px 24px;background:var(--bg);
+}
+.inf-embed-row-lbl{
+  font-family:'DM Sans',sans-serif;font-size:10px;font-weight:600;
+  letter-spacing:2.5px;text-transform:uppercase;color:var(--ink-dim);
+  margin-bottom:14px;
+}
 .inf-tag{
   font-family:'DM Sans',sans-serif;font-size:11px;font-weight:600;
   letter-spacing:3px;text-transform:uppercase;color:var(--pink-deep);margin-bottom:8px;
@@ -474,8 +486,9 @@ footer{
   .kpi-item:nth-child(3),.kpi-item:nth-child(4){border-top:1px solid var(--border)}
   .kpi-item:nth-child(4){border-right:none}
   .kpi-row2{grid-template-columns:1fr}
-  .inf-card{grid-template-columns:1fr;min-height:auto}
+  .inf-card-top{grid-template-columns:1fr;min-height:auto}
   .inf-photo{height:260px}
+  .inf-embed-row{padding:16px 20px 20px}
   .mag-grid{grid-template-columns:1fr 1fr}
   .nano-bk{grid-template-columns:repeat(2,1fr)}
   .mosaic{grid-template-columns:repeat(6,1fr);grid-template-rows:repeat(7,100px)}
@@ -611,80 +624,89 @@ footer{
 
   <!-- Lily -->
   <div class="inf-card fu d1">
-    <div class="inf-photo">
-      <div class="bg-cover" style="background-image:url('images/1.5b릴리.webp'); background-position:50% 15%"></div>
+    <div class="inf-card-top">
+      <div class="inf-photo">
+        <div class="bg-cover" style="background-image:url('images/1.5b릴리.webp'); background-position:50% 15%"></div>
+      </div>
+      <div class="inf-body">
+        <div class="inf-tag">MEGA — JYPE 공식 파트너</div>
+        <div class="inf-name">릴리 <span style="font-size:22px;color:var(--ink-dim)">— NMIXX</span></div>
+        <div class="inf-role">엔믹스 공식 계정 공동작업자 · 에스더버니 콜라보 의상 착용</div>
+        <div class="inf-stats">
+          <div>
+            <div class="inf-stat-num">609만+</div>
+            <div class="inf-stat-lbl">팔로워</div>
+          </div>
+          <div>
+            <div class="inf-stat-num">76,616</div>
+            <div class="inf-stat-lbl">좋아요</div>
+          </div>
+          <div>
+            <div class="inf-stat-num">76,826</div>
+            <div class="inf-stat-lbl">인게이지먼트</div>
+          </div>
+        </div>
+        <div class="inf-hr"></div>
+        <div class="inf-dels">
+          <div class="inf-del"><span class="badge">피드</span>엔믹스 공식 계정 피드 1건 (공동작업자)</div>
+          <div class="inf-del"><span class="badge">스토리</span>릴리 개인 + 엔믹스 공식 계정 스토리 업로드</div>
+          <div class="inf-del"><span class="badge">착용</span>에스더버니 콜라보 의상·78under 슈즈 착용 발행</div>
+        </div>
+        <div class="inf-foot">방문일 · 2026.05.02</div>
+      </div>
     </div>
-    <div class="inf-body">
-      <div class="inf-tag">MEGA — JYPE 공식 파트너</div>
-      <div class="inf-name">릴리 <span style="font-size:22px;color:var(--ink-dim)">— NMIXX</span></div>
-      <div class="inf-role">엔믹스 공식 계정 공동작업자 · 에스더버니 콜라보 의상 착용</div>
-      <div class="inf-stats">
-        <div>
-          <div class="inf-stat-num">609만+</div>
-          <div class="inf-stat-lbl">팔로워</div>
-        </div>
-        <div>
-          <div class="inf-stat-num">76,616</div>
-          <div class="inf-stat-lbl">좋아요</div>
-        </div>
-        <div>
-          <div class="inf-stat-num">76,826</div>
-          <div class="inf-stat-lbl">인게이지먼트</div>
+    <div class="inf-embed-row">
+      <div class="inf-embed-row-lbl">발행 콘텐츠</div>
+      <div class="inf-embeds">
+        <div class="ig-wrap">
+          <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/p/DX_BSA3Gfjv/" data-instgrm-version="14"></blockquote>
         </div>
       </div>
-      <div class="inf-hr"></div>
-      <div class="inf-dels">
-        <div class="inf-del"><span class="badge">피드</span>엔믹스 공식 계정 피드 1건 (공동작업자)</div>
-        <div class="inf-del"><span class="badge">스토리</span>릴리 개인 + 엔믹스 공식 계정 스토리 업로드</div>
-        <div class="inf-del"><span class="badge">착용</span>에스더버니 콜라보 의상·78under 슈즈 착용 발행</div>
-      </div>
-      <div class="inf-foot">방문일 · 2026.05.02</div>
-    </div>
-  </div>
-  <div class="inf-embeds fu d2">
-    <div class="ig-wrap">
-      <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/p/DX_BSA3Gfjv/" data-instgrm-version="14"></blockquote>
     </div>
   </div>
 
-  <!-- spacer -->
   <div style="height:2px"></div>
 
   <!-- Kim Go-eun -->
   <div class="inf-card fu">
-    <div class="inf-photo">
-      <div class="bg-cover" style="background-image:url('images/1.5b김고은.webp'); background-position:50% 10%"></div>
+    <div class="inf-card-top">
+      <div class="inf-photo">
+        <div class="bg-cover" style="background-image:url('images/1.5b김고은.webp'); background-position:50% 10%"></div>
+      </div>
+      <div class="inf-body">
+        <div class="inf-tag">MEGA — 배우·패션 아이콘</div>
+        <div class="inf-name">김고은</div>
+        <div class="inf-role">솔로지옥 출연 이후 패션·라이프스타일 씬 최고 화제성 · 드뮤어 패션 대표 주자</div>
+        <div class="inf-stats">
+          <div>
+            <div class="inf-stat-num">146만+</div>
+            <div class="inf-stat-lbl">팔로워</div>
+          </div>
+          <div>
+            <div class="inf-stat-num">94,466</div>
+            <div class="inf-stat-lbl">좋아요</div>
+          </div>
+          <div>
+            <div class="inf-stat-num">6.46%</div>
+            <div class="inf-stat-lbl">ER%</div>
+          </div>
+        </div>
+        <div class="inf-hr"></div>
+        <div class="inf-dels">
+          <div class="inf-del"><span class="badge">피드</span>이미지 3장 피드 1건 · 공간 무드 중심 구성</div>
+          <div class="inf-del"><span class="badge">스토리</span>스토리 업로드 포함</div>
+          <div class="inf-del"><span class="badge">조건</span>해시태그 3개(#광고 포함) · 계정 태그 1개</div>
+        </div>
+        <div class="inf-foot">방문일 · 2026.05.02</div>
+      </div>
     </div>
-    <div class="inf-body">
-      <div class="inf-tag">MEGA — 배우·패션 아이콘</div>
-      <div class="inf-name">김고은</div>
-      <div class="inf-role">솔로지옥 출연 이후 패션·라이프스타일 씬 최고 화제성 · 드뮤어 패션 대표 주자</div>
-      <div class="inf-stats">
-        <div>
-          <div class="inf-stat-num">146만+</div>
-          <div class="inf-stat-lbl">팔로워</div>
-        </div>
-        <div>
-          <div class="inf-stat-num">94,466</div>
-          <div class="inf-stat-lbl">좋아요</div>
-        </div>
-        <div>
-          <div class="inf-stat-num">6.46%</div>
-          <div class="inf-stat-lbl">ER%</div>
+    <div class="inf-embed-row">
+      <div class="inf-embed-row-lbl">발행 콘텐츠</div>
+      <div class="inf-embeds">
+        <div class="ig-wrap">
+          <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/p/DX3rInXk7k5/" data-instgrm-version="14"></blockquote>
         </div>
       </div>
-      <div class="inf-hr"></div>
-      <div class="inf-dels">
-        <div class="inf-del"><span class="badge">피드</span>이미지 3장 피드 1건 · 공간 무드 중심 구성</div>
-        <div class="inf-del"><span class="badge">스토리</span>스토리 업로드 포함</div>
-        <div class="inf-del"><span class="badge">조건</span>해시태그 3개(#광고 포함) · 계정 태그 1개</div>
-      </div>
-      <div class="inf-foot">방문일 · 2026.05.02</div>
-    </div>
-  </div>
-  <div class="inf-embeds fu d1">
-    <div class="ig-wrap">
-      <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/p/DX3rInXk7k5/" data-instgrm-version="14"></blockquote>
     </div>
   </div>
 
@@ -692,38 +714,43 @@ footer{
 
   <!-- Kang Kyung-min -->
   <div class="inf-card fu">
-    <div class="inf-photo">
-      <div class="bg-cover" style="background-image:url('images/report/강경민.webp'); background-position:50% 10%"></div>
+    <div class="inf-card-top">
+      <div class="inf-photo">
+        <div class="bg-cover" style="background-image:url('images/report/강경민.webp'); background-position:50% 10%"></div>
+      </div>
+      <div class="inf-body">
+        <div class="inf-tag">MEGA — 브랜드 초청 인플루언서</div>
+        <div class="inf-name">강경민</div>
+        <div class="inf-role">브랜드 초청 메가 인플루언서</div>
+        <div class="inf-stats">
+          <div>
+            <div class="inf-stat-num">103만+</div>
+            <div class="inf-stat-lbl">팔로워</div>
+          </div>
+          <div>
+            <div class="inf-stat-num">2,776</div>
+            <div class="inf-stat-lbl">좋아요</div>
+          </div>
+          <div>
+            <div class="inf-stat-num">3,434</div>
+            <div class="inf-stat-lbl">인게이지먼트</div>
+          </div>
+        </div>
+        <div class="inf-hr"></div>
+        <div class="inf-dels">
+          <div class="inf-del"><span class="badge">콘텐츠</span>발행 1건</div>
+          <div class="inf-del"><span class="badge">스토리</span>스토리 업로드 포함</div>
+        </div>
+        <div class="inf-foot">방문일 · 2026.05.—</div>
+      </div>
     </div>
-    <div class="inf-body">
-      <div class="inf-tag">MEGA — 브랜드 초청 인플루언서</div>
-      <div class="inf-name">강경민</div>
-      <div class="inf-role">브랜드 초청 메가 인플루언서</div>
-      <div class="inf-stats">
-        <div>
-          <div class="inf-stat-num">103만+</div>
-          <div class="inf-stat-lbl">팔로워</div>
-        </div>
-        <div>
-          <div class="inf-stat-num">2,776</div>
-          <div class="inf-stat-lbl">좋아요</div>
-        </div>
-        <div>
-          <div class="inf-stat-num">3,434</div>
-          <div class="inf-stat-lbl">인게이지먼트</div>
+    <div class="inf-embed-row">
+      <div class="inf-embed-row-lbl">발행 콘텐츠</div>
+      <div class="inf-embeds">
+        <div class="ig-wrap">
+          <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/p/DX4BgqlkexS/" data-instgrm-version="14"></blockquote>
         </div>
       </div>
-      <div class="inf-hr"></div>
-      <div class="inf-dels">
-        <div class="inf-del"><span class="badge">콘텐츠</span>발행 1건</div>
-        <div class="inf-del"><span class="badge">스토리</span>스토리 업로드 포함</div>
-      </div>
-      <div class="inf-foot">방문일 · 2026.05.—</div>
-    </div>
-  </div>
-  <div class="inf-embeds fu d1">
-    <div class="ig-wrap">
-      <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/p/DX4BgqlkexS/" data-instgrm-version="14"></blockquote>
     </div>
   </div>
 
