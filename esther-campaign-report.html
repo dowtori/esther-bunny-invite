@@ -239,19 +239,24 @@ a.sn-link.active{color:var(--pink-deep);background:var(--pink-faint)}
   border-radius:var(--r);overflow:hidden;
 }
 .inf-card + .inf-card{margin-top:2px}
-.inf-card-top{display:grid;grid-template-columns:300px 1fr;min-height:380px}
+.inf-card-top{display:grid;grid-template-columns:300px 1fr 360px;min-height:380px}
 .inf-photo{position:relative;overflow:hidden}
 .inf-body{padding:38px 48px;display:flex;flex-direction:column}
 
-/* embed section inside card */
-.inf-embed-row{
-  border-top:1px solid var(--border);
-  padding:20px 32px 24px;background:var(--bg);
+/* embed column (3rd column inside card) */
+.inf-embed-col{
+  border-left:1px solid var(--border);
+  padding:24px 20px 20px;
+  display:flex;flex-direction:column;overflow:hidden;
 }
-.inf-embed-row-lbl{
+.inf-embed-col-lbl{
   font-family:'DM Sans',sans-serif;font-size:10px;font-weight:600;
   letter-spacing:2.5px;text-transform:uppercase;color:var(--ink-dim);
-  margin-bottom:14px;
+  margin-bottom:12px;flex-shrink:0;
+}
+.inf-embed-col .instagram-media{
+  min-width:unset !important;max-width:none !important;
+  width:100% !important;margin:0 !important;
 }
 .inf-tag{
   font-family:'DM Sans',sans-serif;font-size:11px;font-weight:600;
@@ -310,15 +315,46 @@ a.sn-link.active{color:var(--pink-deep);background:var(--pink-faint)}
   font-family:'DM Sans',sans-serif;font-size:11px;font-weight:600;
   letter-spacing:2.5px;text-transform:uppercase;color:var(--ink-dim);margin-bottom:14px;
 }
-.mag-grid{display:grid;grid-template-columns:2.2fr 1fr 1fr 1fr;gap:10px}
-.mag-card{
+.mag-grid{display:flex;flex-direction:column;gap:12px}
+
+/* DNF featured card */
+.mag-featured{
+  background:var(--bg-card);border:1px solid var(--border);
+  border-radius:var(--r);overflow:hidden;
+}
+.mag-feat-top{
+  display:flex;align-items:center;gap:24px;flex-wrap:wrap;
+  padding:20px 28px;border-bottom:1px solid var(--border);
+}
+.mag-feat-embeds{
+  display:grid;grid-template-columns:repeat(3,1fr);
+}
+.mag-feat-col{
+  padding:16px;border-right:1px solid var(--border);overflow:hidden;
+}
+.mag-feat-col:last-child{border-right:none}
+.mag-feat-col .instagram-media{
+  min-width:unset !important;max-width:none !important;
+  width:100% !important;margin:0 !important;
+}
+
+/* 3 smaller cards */
+.mag-row3{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.mag-card-v2{
   background:var(--bg-card);border:1px solid var(--border);
   border-radius:var(--r);overflow:hidden;display:flex;flex-direction:column;
 }
-.mag-img{height:240px;position:relative;overflow:hidden;background:var(--bg-lift)}
-.mag-img .bg-cover{transition:transform .4s ease}
-.mag-card:hover .bg-cover{transform:scale(1.04)}
-.mag-body{padding:18px 20px 22px;flex:1;display:flex;flex-direction:column}
+.mag-card-v2-header{
+  padding:20px 22px;border-bottom:1px solid var(--border);
+}
+.mag-card-v2-embed{
+  flex:1;padding:14px;
+}
+.mag-card-v2-embed .instagram-media{
+  min-width:unset !important;max-width:none !important;
+  width:100% !important;margin:0 !important;
+}
+
 .mag-name{
   font-family:'Cormorant Garamond',serif;font-size:26px;font-weight:300;
   letter-spacing:-.5px;margin-bottom:4px;
@@ -328,9 +364,9 @@ a.sn-link.active{color:var(--pink-deep);background:var(--pink-faint)}
   letter-spacing:2px;text-transform:uppercase;color:var(--ink-dim);
 }
 .mag-count{
-  font-family:'Cormorant Garamond',serif;font-size:40px;font-weight:300;
-  color:var(--pink);letter-spacing:-1px;line-height:1;margin-top:auto;
-  padding-top:12px;
+  font-family:'Cormorant Garamond',serif;font-size:36px;font-weight:300;
+  color:var(--pink);letter-spacing:-1px;line-height:1;
+  padding-top:10px;
 }
 .mag-count-lbl{
   font-family:'DM Sans',sans-serif;font-size:10px;letter-spacing:1.5px;
@@ -488,8 +524,9 @@ footer{
   .kpi-row2{grid-template-columns:1fr}
   .inf-card-top{grid-template-columns:1fr;min-height:auto}
   .inf-photo{height:260px}
-  .inf-embed-row{padding:16px 20px 20px}
-  .mag-grid{grid-template-columns:1fr 1fr}
+  .inf-embed-col{border-left:none;border-top:1px solid var(--border);padding:16px 20px 20px}
+  .mag-feat-embeds{grid-template-columns:1fr}
+  .mag-row3{grid-template-columns:1fr}
   .nano-bk{grid-template-columns:repeat(2,1fr)}
   .mosaic{grid-template-columns:repeat(6,1fr);grid-template-rows:repeat(7,100px)}
   .viral-block{padding:40px 32px}
@@ -654,13 +691,9 @@ footer{
         </div>
         <div class="inf-foot">방문일 · 2026.05.02</div>
       </div>
-    </div>
-    <div class="inf-embed-row">
-      <div class="inf-embed-row-lbl">발행 콘텐츠</div>
-      <div class="inf-embeds">
-        <div class="ig-wrap">
-          <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/p/DX_BSA3Gfjv/" data-instgrm-version="14"></blockquote>
-        </div>
+      <div class="inf-embed-col">
+        <div class="inf-embed-col-lbl">발행 콘텐츠</div>
+        <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/p/DX_BSA3Gfjv/" data-instgrm-version="14"></blockquote>
       </div>
     </div>
   </div>
@@ -699,13 +732,9 @@ footer{
         </div>
         <div class="inf-foot">방문일 · 2026.05.02</div>
       </div>
-    </div>
-    <div class="inf-embed-row">
-      <div class="inf-embed-row-lbl">발행 콘텐츠</div>
-      <div class="inf-embeds">
-        <div class="ig-wrap">
-          <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/p/DX3rInXk7k5/" data-instgrm-version="14"></blockquote>
-        </div>
+      <div class="inf-embed-col">
+        <div class="inf-embed-col-lbl">발행 콘텐츠</div>
+        <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/p/DX3rInXk7k5/" data-instgrm-version="14"></blockquote>
       </div>
     </div>
   </div>
@@ -743,13 +772,9 @@ footer{
         </div>
         <div class="inf-foot">방문일 · 2026.05.—</div>
       </div>
-    </div>
-    <div class="inf-embed-row">
-      <div class="inf-embed-row-lbl">발행 콘텐츠</div>
-      <div class="inf-embeds">
-        <div class="ig-wrap">
-          <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/p/DX4BgqlkexS/" data-instgrm-version="14"></blockquote>
-        </div>
+      <div class="inf-embed-col">
+        <div class="inf-embed-col-lbl">발행 콘텐츠</div>
+        <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/p/DX4BgqlkexS/" data-instgrm-version="14"></blockquote>
       </div>
     </div>
   </div>
@@ -760,80 +785,70 @@ footer{
     <div class="mag-grid">
 
       <!-- DNF featured -->
-      <div class="mag-card">
-        <div class="mag-img">
-          <div class="bg-cover" style="background-image:url('images/report/데패뉴_인터뷰종합.jpg'); background-position:center top"></div>
-        </div>
-        <div class="mag-body">
-          <div class="mag-name">데일리패션뉴스 <span style="font-size:16px;color:var(--ink-dim)">DNF</span></div>
-          <div class="mag-type">패션 미디어 · 에디토리얼</div>
-          <div style="display:flex;gap:16px;margin-top:12px">
-            <div>
-              <div class="mag-count">3건</div>
-              <div class="mag-count-lbl">릴스</div>
-            </div>
-            <div>
-              <div class="mag-count">85만+</div>
-              <div class="mag-count-lbl">릴스 조회</div>
-            </div>
-            <div>
-              <div class="mag-count">5,638</div>
-              <div class="mag-count-lbl">인게이지먼트</div>
-            </div>
+      <div class="mag-featured">
+        <div class="mag-feat-top">
+          <div>
+            <div class="mag-name">데일리패션뉴스 <span style="font-size:16px;color:var(--ink-dim)">DNF</span></div>
+            <div class="mag-type">패션 미디어 · 에디토리얼</div>
+          </div>
+          <div style="margin-left:auto;display:flex;gap:24px;align-items:flex-end">
+            <div><div class="mag-count">3건</div><div class="mag-count-lbl">릴스</div></div>
+            <div><div class="mag-count">85만+</div><div class="mag-count-lbl">릴스 조회</div></div>
+            <div><div class="mag-count">5,638</div><div class="mag-count-lbl">인게이지먼트</div></div>
           </div>
         </div>
-        <!-- DNF thumb strip -->
-        <div style="display:flex;gap:2px;height:100px;border-top:1px solid var(--border)">
-          <div style="flex:1;position:relative;overflow:hidden">
-            <div class="bg-cover" style="background-image:url('images/report/데패뉴_김고은릴스.jpg'); background-position:center top"></div>
+        <div class="mag-feat-embeds">
+          <div class="mag-feat-col">
+            <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/reel/DX3pqMuzLPt/" data-instgrm-version="14"></blockquote>
           </div>
-          <div style="flex:1;position:relative;overflow:hidden">
-            <div class="bg-cover" style="background-image:url('images/report/데패뉴_릴리릴스.jpg'); background-position:center top"></div>
+          <div class="mag-feat-col">
+            <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/reel/DX3ou4mT0Sj/" data-instgrm-version="14"></blockquote>
           </div>
-          <div style="flex:1;position:relative;overflow:hidden">
-            <div class="bg-cover" style="background-image:url('images/report/데패뉴_인터뷰종합.jpg'); background-position:center top"></div>
+          <div class="mag-feat-col">
+            <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/reel/DX3nitOz8hc/" data-instgrm-version="14"></blockquote>
           </div>
         </div>
       </div>
 
-      <!-- MMM -->
-      <div class="mag-card">
-        <div class="mag-img">
-          <div class="bg-cover" style="background-image:url('images/report/MMM매거진_릴스.jpg')"></div>
+      <!-- MMM / CIDO / HIPHYE -->
+      <div class="mag-row3">
+        <div class="mag-card-v2">
+          <div class="mag-card-v2-header">
+            <div class="mag-name">MMM</div>
+            <div class="mag-type">패션 매거진</div>
+            <div style="display:flex;gap:20px;margin-top:8px">
+              <div><div class="mag-count">76,136</div><div class="mag-count-lbl">릴스 조회</div></div>
+              <div><div class="mag-count">6,923</div><div class="mag-count-lbl">인게이지먼트</div></div>
+            </div>
+          </div>
+          <div class="mag-card-v2-embed">
+            <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/reel/DX3s4CVyFsO/" data-instgrm-version="14"></blockquote>
+          </div>
         </div>
-        <div class="mag-body">
-          <div class="mag-name">MMM</div>
-          <div class="mag-type">패션 매거진</div>
-          <div class="mag-count">76,136</div>
-          <div class="mag-count-lbl">릴스 조회</div>
-          <div style="margin-top:6px;font-family:'DM Sans',sans-serif;font-size:11px;letter-spacing:1px;color:var(--ink-dim)">ER 6,923</div>
-        </div>
-      </div>
 
-      <!-- CIDO -->
-      <div class="mag-card">
-        <div class="mag-img">
-          <div class="bg-cover" style="background-image:url('images/report/CIDO_릴스.jpg')"></div>
+        <div class="mag-card-v2">
+          <div class="mag-card-v2-header">
+            <div class="mag-name">CIDO</div>
+            <div class="mag-type">패션 매거진</div>
+            <div style="margin-top:8px"><div class="mag-count">4,981</div><div class="mag-count-lbl">릴스 조회</div></div>
+          </div>
+          <div class="mag-card-v2-embed">
+            <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/reel/DX3-l1HxyGM/" data-instgrm-version="14"></blockquote>
+          </div>
         </div>
-        <div class="mag-body">
-          <div class="mag-name">CIDO</div>
-          <div class="mag-type">패션 매거진</div>
-          <div class="mag-count">4,981</div>
-          <div class="mag-count-lbl">릴스 조회</div>
-        </div>
-      </div>
 
-      <!-- HIPHYE -->
-      <div class="mag-card">
-        <div class="mag-img">
-          <div class="bg-cover" style="background-image:url('images/report/hiphye_릴스.jpg')"></div>
-        </div>
-        <div class="mag-body">
-          <div class="mag-name">HIPHYE</div>
-          <div class="mag-type">미디어</div>
-          <div class="mag-count">21,322</div>
-          <div class="mag-count-lbl">릴스 조회</div>
-          <div style="margin-top:6px;font-family:'DM Sans',sans-serif;font-size:11px;letter-spacing:1px;color:var(--ink-dim)">ER 295</div>
+        <div class="mag-card-v2">
+          <div class="mag-card-v2-header">
+            <div class="mag-name">HIPHYE</div>
+            <div class="mag-type">미디어</div>
+            <div style="display:flex;gap:20px;margin-top:8px">
+              <div><div class="mag-count">21,322</div><div class="mag-count-lbl">릴스 조회</div></div>
+              <div><div class="mag-count">295</div><div class="mag-count-lbl">인게이지먼트</div></div>
+            </div>
+          </div>
+          <div class="mag-card-v2-embed">
+            <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/reel/DX1UjftvXCo/" data-instgrm-version="14"></blockquote>
+          </div>
         </div>
       </div>
 
@@ -889,9 +904,8 @@ footer{
     </div>
   </div>
 
-  <!-- mosaic: 10 × 4 = 40 cells (representative sample) -->
+  <!-- mosaic: 10 × 4 = 40 cells -->
   <div class="mosaic fu d3">
-    <!-- row 1 -->
     <div class="m-cell has-img"><div class="bg-cover" style="background-image:url('images/report/thumbnail.jpg')"></div></div>
     <div class="m-cell has-img"><div class="bg-cover" style="background-image:url('images/report/thumbnail (1).jpg')"></div></div>
     <div class="m-cell has-img"><div class="bg-cover" style="background-image:url('images/report/thumbnail (2).jpg')"></div></div>
@@ -900,41 +914,38 @@ footer{
     <div class="m-cell has-img"><div class="bg-cover" style="background-image:url('images/report/thumbnail (5).jpg')"></div></div>
     <div class="m-cell has-img"><div class="bg-cover" style="background-image:url('images/report/thumbnail (6).jpg')"></div></div>
     <div class="m-cell has-img"><div class="bg-cover" style="background-image:url('images/report/thumbnail (7).jpg')"></div></div>
-    <div class="m-cell"><div class="ph"><span>콘텐츠</span></div></div>
-    <div class="m-cell"><div class="ph"><span>콘텐츠</span></div></div>
-    <!-- row 2 -->
     <div class="m-cell has-img"><div class="bg-cover" style="background-image:url('images/report/thumbnail (8).jpg')"></div></div>
-    <div class="m-cell"><div class="ph"><span>콘텐츠</span></div></div>
     <div class="m-cell has-img"><div class="bg-cover" style="background-image:url('images/report/thumbnail (9).jpg')"></div></div>
-    <div class="m-cell"><div class="ph"><span>콘텐츠</span></div></div>
     <div class="m-cell has-img"><div class="bg-cover" style="background-image:url('images/report/thumbnail (10).jpg')"></div></div>
-    <div class="m-cell"><div class="ph"><span>콘텐츠</span></div></div>
     <div class="m-cell has-img"><div class="bg-cover" style="background-image:url('images/report/thumbnail (11).jpg')"></div></div>
-    <div class="m-cell"><div class="ph"><span>콘텐츠</span></div></div>
     <div class="m-cell has-img"><div class="bg-cover" style="background-image:url('images/report/thumbnail (12).jpg')"></div></div>
-    <div class="m-cell"><div class="ph"><span>콘텐츠</span></div></div>
-    <!-- row 3 -->
-    <div class="m-cell"><div class="ph"><span>콘텐츠</span></div></div>
     <div class="m-cell has-img"><div class="bg-cover" style="background-image:url('images/report/thumbnail (13).jpg')"></div></div>
-    <div class="m-cell"><div class="ph"><span>콘텐츠</span></div></div>
     <div class="m-cell has-img"><div class="bg-cover" style="background-image:url('images/report/thumbnail (14).jpg')"></div></div>
-    <div class="m-cell"><div class="ph"><span>콘텐츠</span></div></div>
     <div class="m-cell has-img"><div class="bg-cover" style="background-image:url('images/report/thumbnail (15).jpg')"></div></div>
-    <div class="m-cell"><div class="ph"><span>콘텐츠</span></div></div>
     <div class="m-cell has-img"><div class="bg-cover" style="background-image:url('images/report/thumbnail (16).jpg')"></div></div>
-    <div class="m-cell"><div class="ph"><span>콘텐츠</span></div></div>
     <div class="m-cell has-img"><div class="bg-cover" style="background-image:url('images/report/thumbnail (17).jpg')"></div></div>
-    <!-- row 4 -->
     <div class="m-cell has-img"><div class="bg-cover" style="background-image:url('images/report/thumbnail (18).jpg')"></div></div>
-    <div class="m-cell"><div class="ph"><span>콘텐츠</span></div></div>
     <div class="m-cell has-img"><div class="bg-cover" style="background-image:url('images/report/thumbnail (19).jpg')"></div></div>
-    <div class="m-cell"><div class="ph"><span>콘텐츠</span></div></div>
     <div class="m-cell has-img"><div class="bg-cover" style="background-image:url('images/report/thumbnail (20).jpg')"></div></div>
-    <div class="m-cell"><div class="ph"><span>콘텐츠</span></div></div>
     <div class="m-cell has-img"><div class="bg-cover" style="background-image:url('images/report/thumbnail (21).jpg')"></div></div>
-    <div class="m-cell"><div class="ph"><span>콘텐츠</span></div></div>
     <div class="m-cell has-img"><div class="bg-cover" style="background-image:url('images/report/thumbnail (22).jpg')"></div></div>
-    <div class="m-cell"><div class="ph"><span>콘텐츠</span></div></div>
+    <div class="m-cell has-img"><div class="bg-cover" style="background-image:url('images/report/thumbnail (23).jpg')"></div></div>
+    <div class="m-cell has-img"><div class="bg-cover" style="background-image:url('images/report/thumbnail (24).jpg')"></div></div>
+    <div class="m-cell has-img"><div class="bg-cover" style="background-image:url('images/report/thumbnail (25).jpg')"></div></div>
+    <div class="m-cell has-img"><div class="bg-cover" style="background-image:url('images/report/thumbnail (26).jpg')"></div></div>
+    <div class="m-cell has-img"><div class="bg-cover" style="background-image:url('images/report/thumbnail (27).jpg')"></div></div>
+    <div class="m-cell has-img"><div class="bg-cover" style="background-image:url('images/report/thumbnail (28).jpg')"></div></div>
+    <div class="m-cell has-img"><div class="bg-cover" style="background-image:url('images/report/thumbnail (29).jpg')"></div></div>
+    <div class="m-cell has-img"><div class="bg-cover" style="background-image:url('images/report/thumbnail (30).jpg')"></div></div>
+    <div class="m-cell has-img"><div class="bg-cover" style="background-image:url('images/report/thumbnail (31).jpg')"></div></div>
+    <div class="m-cell has-img"><div class="bg-cover" style="background-image:url('images/report/thumbnail (32).jpg')"></div></div>
+    <div class="m-cell has-img"><div class="bg-cover" style="background-image:url('images/report/thumbnail (33).jpg')"></div></div>
+    <div class="m-cell has-img"><div class="bg-cover" style="background-image:url('images/report/thumbnail (34).jpg')"></div></div>
+    <div class="m-cell has-img"><div class="bg-cover" style="background-image:url('images/report/thumbnail (35).jpg')"></div></div>
+    <div class="m-cell has-img"><div class="bg-cover" style="background-image:url('images/report/thumbnail (36).jpg')"></div></div>
+    <div class="m-cell has-img"><div class="bg-cover" style="background-image:url('images/report/thumbnail (37).jpg')"></div></div>
+    <div class="m-cell has-img"><div class="bg-cover" style="background-image:url('images/report/thumbnail (38).jpg')"></div></div>
+    <div class="m-cell"><div class="ph"><span>+</span></div></div>
   </div>
 
   <!-- ── 스토리 + 바이럴 확산 지표 ── -->
