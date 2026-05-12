@@ -246,30 +246,27 @@ a.sn-link.active{color:var(--pink-deep);background:var(--pink-faint)}
   /* overflow:hidden 제거 — 임베드가 자연 높이로 렌더링 */
 }
 .inf-card + .inf-card{margin-top:0}
-/* 540px embed column — Instagram 기본 iframe 폭(~468px)보다 충분히 넓게 */
-.inf-card-top{display:grid;grid-template-columns:280px 1fr 540px}
-.inf-photo{
-  position:relative;overflow:hidden;
-  border-radius:var(--r) 0 0 var(--r);
-}
-.inf-body{padding:36px 40px;display:flex;flex-direction:column}
+/* 2열: 사진(300px) + 오른쪽 패널(1fr) */
+.inf-card-top{display:grid;grid-template-columns:300px 1fr}
+.inf-photo{position:relative;overflow:hidden}
+/* 오른쪽 패널: 정보 위 + embed 아래 */
+.inf-right{display:flex;flex-direction:column}
+.inf-body{padding:36px 40px;display:flex;flex-direction:column;flex:0 0 auto}
 
-/* embed column — column 자체에만 overflow:hidden, 카드 전체엔 없음 */
+/* embed — 오른쪽 패널 전체 폭, 높이 자유 */
 .inf-embed-col{
-  border-left:1px solid var(--border);
-  padding:20px 12px 12px;
-  display:flex;flex-direction:column;
-  overflow:hidden;
-  border-radius:0 var(--r) var(--r) 0;
+  border-top:1px solid var(--border);
+  padding:20px 28px 24px;
+  display:flex;align-items:flex-start;gap:20px;
 }
 .inf-embed-col-lbl{
   font-family:'DM Sans',sans-serif;font-size:10px;font-weight:600;
   letter-spacing:2.5px;text-transform:uppercase;color:var(--ink-dim);
-  margin-bottom:12px;flex-shrink:0;
+  flex-shrink:0;padding-top:8px;min-width:60px;
 }
 .inf-embed-col .instagram-media{
   min-width:unset !important;
-  width:100% !important;
+  width:500px !important;
   margin:0 !important;
 }
 .inf-tag{
@@ -737,35 +734,37 @@ footer{
       <div class="inf-photo">
         <div class="bg-cover" style="background-image:url('images/1.5b릴리.webp'); background-position:50% 15%"></div>
       </div>
-      <div class="inf-body">
-        <div class="inf-tag">MEGA — JYPE 공식 파트너</div>
-        <div class="inf-name">릴리 <span style="font-size:22px;color:var(--ink-dim)">— NMIXX</span></div>
-        <div class="inf-role">엔믹스 공식 계정 공동작업자 · 에스더버니 콜라보 의상 착용</div>
-        <div class="inf-stats">
-          <div>
-            <div class="inf-stat-num">6,090,000+</div>
-            <div class="inf-stat-lbl">팔로워</div>
+      <div class="inf-right">
+        <div class="inf-body">
+          <div class="inf-tag">MEGA — JYPE 공식 파트너</div>
+          <div class="inf-name">릴리 <span style="font-size:22px;color:var(--ink-dim)">— NMIXX</span></div>
+          <div class="inf-role">엔믹스 공식 계정 공동작업자 · 에스더버니 콜라보 의상 착용</div>
+          <div class="inf-stats">
+            <div>
+              <div class="inf-stat-num">6,090,000+</div>
+              <div class="inf-stat-lbl">팔로워</div>
+            </div>
+            <div>
+              <div class="inf-stat-num num-perf">76,616</div>
+              <div class="inf-stat-lbl">좋아요</div>
+            </div>
+            <div>
+              <div class="inf-stat-num num-perf">76,826</div>
+              <div class="inf-stat-lbl">인게이지먼트</div>
+            </div>
           </div>
-          <div>
-            <div class="inf-stat-num num-perf">76,616</div>
-            <div class="inf-stat-lbl">좋아요</div>
+          <div class="inf-hr"></div>
+          <div class="inf-dels">
+            <div class="inf-del"><span class="badge">피드</span>엔믹스 공식 계정 피드 1건 (공동작업자)</div>
+            <div class="inf-del"><span class="badge">스토리</span>릴리 개인 + 엔믹스 공식 계정 스토리 업로드</div>
+            <div class="inf-del"><span class="badge">착용</span>에스더버니 콜라보 의상·78under 슈즈 착용 발행</div>
           </div>
-          <div>
-            <div class="inf-stat-num num-perf">76,826</div>
-            <div class="inf-stat-lbl">인게이지먼트</div>
-          </div>
+          <div class="inf-foot">방문일 · 2026.05.02</div>
         </div>
-        <div class="inf-hr"></div>
-        <div class="inf-dels">
-          <div class="inf-del"><span class="badge">피드</span>엔믹스 공식 계정 피드 1건 (공동작업자)</div>
-          <div class="inf-del"><span class="badge">스토리</span>릴리 개인 + 엔믹스 공식 계정 스토리 업로드</div>
-          <div class="inf-del"><span class="badge">착용</span>에스더버니 콜라보 의상·78under 슈즈 착용 발행</div>
+        <div class="inf-embed-col">
+          <div class="inf-embed-col-lbl">발행 콘텐츠</div>
+          <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/p/DX_BSA3Gfjv/" data-instgrm-version="14"></blockquote>
         </div>
-        <div class="inf-foot">방문일 · 2026.05.02</div>
-      </div>
-      <div class="inf-embed-col">
-        <div class="inf-embed-col-lbl">발행 콘텐츠</div>
-        <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/p/DX_BSA3Gfjv/" data-instgrm-version="14"></blockquote>
       </div>
     </div>
   </div>
@@ -778,35 +777,37 @@ footer{
       <div class="inf-photo">
         <div class="bg-cover" style="background-image:url('images/1.5b김고은.webp'); background-position:50% 10%"></div>
       </div>
-      <div class="inf-body">
-        <div class="inf-tag">MEGA — 배우·패션 아이콘</div>
-        <div class="inf-name">김고은</div>
-        <div class="inf-role">솔로지옥 출연 이후 패션·라이프스타일 씬 최고 화제성 · 드뮤어 패션 대표 주자</div>
-        <div class="inf-stats">
-          <div>
-            <div class="inf-stat-num">1,460,000+</div>
-            <div class="inf-stat-lbl">팔로워</div>
+      <div class="inf-right">
+        <div class="inf-body">
+          <div class="inf-tag">MEGA — 배우·패션 아이콘</div>
+          <div class="inf-name">김고은</div>
+          <div class="inf-role">솔로지옥 출연 이후 패션·라이프스타일 씬 최고 화제성 · 드뮤어 패션 대표 주자</div>
+          <div class="inf-stats">
+            <div>
+              <div class="inf-stat-num">1,460,000+</div>
+              <div class="inf-stat-lbl">팔로워</div>
+            </div>
+            <div>
+              <div class="inf-stat-num num-perf">94,466</div>
+              <div class="inf-stat-lbl">좋아요</div>
+            </div>
+            <div>
+              <div class="inf-stat-num num-perf">6.46%</div>
+              <div class="inf-stat-lbl">ER%</div>
+            </div>
           </div>
-          <div>
-            <div class="inf-stat-num num-perf">94,466</div>
-            <div class="inf-stat-lbl">좋아요</div>
+          <div class="inf-hr"></div>
+          <div class="inf-dels">
+            <div class="inf-del"><span class="badge">피드</span>이미지 3장 피드 1건 · 공간 무드 중심 구성</div>
+            <div class="inf-del"><span class="badge">스토리</span>스토리 업로드 포함</div>
+            <div class="inf-del"><span class="badge">조건</span>해시태그 3개(#광고 포함) · 계정 태그 1개</div>
           </div>
-          <div>
-            <div class="inf-stat-num num-perf">6.46%</div>
-            <div class="inf-stat-lbl">ER%</div>
-          </div>
+          <div class="inf-foot">방문일 · 2026.05.02</div>
         </div>
-        <div class="inf-hr"></div>
-        <div class="inf-dels">
-          <div class="inf-del"><span class="badge">피드</span>이미지 3장 피드 1건 · 공간 무드 중심 구성</div>
-          <div class="inf-del"><span class="badge">스토리</span>스토리 업로드 포함</div>
-          <div class="inf-del"><span class="badge">조건</span>해시태그 3개(#광고 포함) · 계정 태그 1개</div>
+        <div class="inf-embed-col">
+          <div class="inf-embed-col-lbl">발행 콘텐츠</div>
+          <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/p/DX3rInXk7k5/" data-instgrm-version="14"></blockquote>
         </div>
-        <div class="inf-foot">방문일 · 2026.05.02</div>
-      </div>
-      <div class="inf-embed-col">
-        <div class="inf-embed-col-lbl">발행 콘텐츠</div>
-        <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/p/DX3rInXk7k5/" data-instgrm-version="14"></blockquote>
       </div>
     </div>
   </div>
@@ -819,34 +820,36 @@ footer{
       <div class="inf-photo">
         <div class="bg-cover" style="background-image:url('images/report/강경민.webp'); background-position:50% 10%"></div>
       </div>
-      <div class="inf-body">
-        <div class="inf-tag">MEGA — 브랜드 초청 인플루언서</div>
-        <div class="inf-name">강경민</div>
-        <div class="inf-role">브랜드 초청 메가 인플루언서</div>
-        <div class="inf-stats">
-          <div>
-            <div class="inf-stat-num">1,030,000+</div>
-            <div class="inf-stat-lbl">팔로워</div>
+      <div class="inf-right">
+        <div class="inf-body">
+          <div class="inf-tag">MEGA — 브랜드 초청 인플루언서</div>
+          <div class="inf-name">강경민</div>
+          <div class="inf-role">브랜드 초청 메가 인플루언서</div>
+          <div class="inf-stats">
+            <div>
+              <div class="inf-stat-num">1,030,000+</div>
+              <div class="inf-stat-lbl">팔로워</div>
+            </div>
+            <div>
+              <div class="inf-stat-num num-perf">2,776</div>
+              <div class="inf-stat-lbl">좋아요</div>
+            </div>
+            <div>
+              <div class="inf-stat-num num-perf">3,434</div>
+              <div class="inf-stat-lbl">인게이지먼트</div>
+            </div>
           </div>
-          <div>
-            <div class="inf-stat-num num-perf">2,776</div>
-            <div class="inf-stat-lbl">좋아요</div>
+          <div class="inf-hr"></div>
+          <div class="inf-dels">
+            <div class="inf-del"><span class="badge">콘텐츠</span>발행 1건</div>
+            <div class="inf-del"><span class="badge">스토리</span>스토리 업로드 포함</div>
           </div>
-          <div>
-            <div class="inf-stat-num num-perf">3,434</div>
-            <div class="inf-stat-lbl">인게이지먼트</div>
-          </div>
+          <div class="inf-foot">방문일 · 2026.05.—</div>
         </div>
-        <div class="inf-hr"></div>
-        <div class="inf-dels">
-          <div class="inf-del"><span class="badge">콘텐츠</span>발행 1건</div>
-          <div class="inf-del"><span class="badge">스토리</span>스토리 업로드 포함</div>
+        <div class="inf-embed-col">
+          <div class="inf-embed-col-lbl">발행 콘텐츠</div>
+          <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/p/DX4BgqlkexS/" data-instgrm-version="14"></blockquote>
         </div>
-        <div class="inf-foot">방문일 · 2026.05.—</div>
-      </div>
-      <div class="inf-embed-col">
-        <div class="inf-embed-col-lbl">발행 콘텐츠</div>
-        <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/p/DX4BgqlkexS/" data-instgrm-version="14"></blockquote>
       </div>
     </div>
   </div>
