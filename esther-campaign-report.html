@@ -280,19 +280,16 @@ a.sn-link.active{color:var(--pink-deep);background:var(--pink-faint)}
   text-transform:uppercase;color:var(--ink-dim);
 }
 
-/* thumb strip below each influencer */
-.inf-thumbs{display:flex;gap:2px;margin-top:2px}
-.inf-thumb{flex:1;height:200px;position:relative;overflow:hidden;background:var(--bg-lift)}
-.inf-thumb:first-child{border-bottom-left-radius:var(--r)}
-.inf-thumb:last-child{border-bottom-right-radius:var(--r)}
-.inf-thumb .bg-cover{transition:transform .4s ease}
-.inf-thumb:hover .bg-cover{transform:scale(1.04)}
-.thumb-lbl{
-  position:absolute;bottom:0;left:0;right:0;padding:8px 12px;
-  background:linear-gradient(transparent,rgba(14,12,10,.68));
-  font-family:'DM Sans',sans-serif;font-size:10px;font-weight:500;
-  letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,.82);
-  pointer-events:none;
+/* IG embeds below influencer cards */
+.inf-embeds{
+  display:flex;gap:12px;margin-top:2px;
+  overflow-x:auto;-webkit-overflow-scrolling:touch;
+  padding-bottom:4px;
+}
+.ig-wrap{flex-shrink:0;width:min(400px,100%)}
+.ig-wrap .instagram-media{
+  min-width:unset !important;max-width:none !important;
+  width:100% !important;margin:0 !important;border-radius:var(--r) !important;
 }
 
 /* magazine row */
@@ -644,22 +641,9 @@ footer{
       <div class="inf-foot">방문일 · 2026.05.02</div>
     </div>
   </div>
-  <div class="inf-thumbs fu d2">
-    <div class="inf-thumb">
-      <div class="bg-cover" style="background-image:url('images/엔믹스 콘텐츠1 릴리.png'); background-position:center 10%"></div>
-      <div class="thumb-lbl">릴리 · 공식 피드</div>
-    </div>
-    <div class="inf-thumb">
-      <div class="bg-cover" style="background-image:url('images/엔믹스 콘텐츠1 공동작업자.png'); background-position:center top"></div>
-      <div class="thumb-lbl">공동작업자 · 틈결 태그</div>
-    </div>
-    <div class="inf-thumb">
-      <div class="bg-cover" style="background-image:url('images/엔믹스 스토리.png'); background-position:center top"></div>
-      <div class="thumb-lbl">스토리 업로드</div>
-    </div>
-    <div class="inf-thumb">
-      <div class="bg-cover" style="background-image:url('images/report/NMIXX(릴리)_피드.jpg'); background-position:center top"></div>
-      <div class="thumb-lbl">릴리 · 피드</div>
+  <div class="inf-embeds fu d2">
+    <div class="ig-wrap">
+      <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/p/DX_BSA3Gfjv/" data-instgrm-version="14"></blockquote>
     </div>
   </div>
 
@@ -698,22 +682,9 @@ footer{
       <div class="inf-foot">방문일 · 2026.05.02</div>
     </div>
   </div>
-  <div class="inf-thumbs fu d1">
-    <div class="inf-thumb">
-      <div class="bg-cover" style="background-image:url('images/report/김고은_피드.jpg'); background-position:center 10%"></div>
-      <div class="thumb-lbl">김고은 · 피드 1</div>
-    </div>
-    <div class="inf-thumb">
-      <div class="bg-cover" style="background-image:url('images/pt3p김고은.png'); background-position:center 10%"></div>
-      <div class="thumb-lbl">김고은 · 피드 2</div>
-    </div>
-    <div class="inf-thumb">
-      <div class="bg-cover" style="background-image:url('images/pt4p김고은.jpg'); background-position:center 10%"></div>
-      <div class="thumb-lbl">김고은 · 피드 3</div>
-    </div>
-    <div class="inf-thumb">
-      <div class="ph"><span>스토리 스크린샷</span></div>
-      <div class="thumb-lbl">스토리</div>
+  <div class="inf-embeds fu d1">
+    <div class="ig-wrap">
+      <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/p/DX3rInXk7k5/" data-instgrm-version="14"></blockquote>
     </div>
   </div>
 
@@ -722,7 +693,7 @@ footer{
   <!-- Kang Kyung-min -->
   <div class="inf-card fu">
     <div class="inf-photo">
-      <div class="bg-cover" style="background-image:url('images/kmk.webp'); background-position:50% 10%"></div>
+      <div class="bg-cover" style="background-image:url('images/report/강경민.webp'); background-position:50% 10%"></div>
     </div>
     <div class="inf-body">
       <div class="inf-tag">MEGA — 브랜드 초청 인플루언서</div>
@@ -750,14 +721,9 @@ footer{
       <div class="inf-foot">방문일 · 2026.05.—</div>
     </div>
   </div>
-  <div class="inf-thumbs fu d1">
-    <div class="inf-thumb" style="flex:2">
-      <div class="bg-cover" style="background-image:url('images/report/강경민_피드.jpg'); background-position:center 10%"></div>
-      <div class="thumb-lbl">강경민 · 콘텐츠</div>
-    </div>
-    <div class="inf-thumb" style="flex:1">
-      <div class="ph"><span>스토리</span></div>
-      <div class="thumb-lbl">스토리</div>
+  <div class="inf-embeds fu d1">
+    <div class="ig-wrap">
+      <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/p/DX4BgqlkexS/" data-instgrm-version="14"></blockquote>
     </div>
   </div>
 
@@ -1057,6 +1023,7 @@ footer{
 </footer>
 
 
+<script async src="//www.instagram.com/embed.js"></script>
 <script>
 (function(){
   'use strict';
