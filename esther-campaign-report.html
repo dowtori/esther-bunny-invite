@@ -191,8 +191,8 @@ a.sn-link.active{color:var(--pink-deep);background:var(--pink-faint)}
 }
 .kpi-item:last-child{border-right:none}
 .kpi-num{
-  font-family:'Cormorant Garamond',serif;font-size:68px;font-weight:300;
-  color:var(--pink);letter-spacing:-2px;line-height:1;margin-bottom:8px;
+  font-family:'Cormorant Garamond',serif;font-size:92px;font-weight:300;
+  color:var(--pink);letter-spacing:-3px;line-height:1;margin-bottom:8px;
 }
 .kpi-lbl{
   font-family:'DM Sans',sans-serif;font-size:11px;font-weight:500;
@@ -230,7 +230,7 @@ a.sn-link.active{color:var(--pink-deep);background:var(--pink-faint)}
    MEGA + MAGAZINE
 ════════════════════════════ */
 #mega{background:var(--bg);padding-top:0;padding-bottom:96px}
-.inf-stack{display:flex;flex-direction:column;gap:2px}
+.inf-stack{display:flex;flex-direction:column;gap:32px}
 
 /* influencer card */
 .inf-card{
@@ -238,7 +238,7 @@ a.sn-link.active{color:var(--pink-deep);background:var(--pink-faint)}
   background:var(--bg-card);border:1px solid var(--border);
   border-radius:var(--r);overflow:hidden;
 }
-.inf-card + .inf-card{margin-top:2px}
+.inf-card + .inf-card{margin-top:0}
 .inf-card-top{display:grid;grid-template-columns:300px 1fr 360px;min-height:380px}
 .inf-photo{position:relative;overflow:hidden}
 .inf-body{padding:38px 48px;display:flex;flex-direction:column}
@@ -272,8 +272,8 @@ a.sn-link.active{color:var(--pink-deep);background:var(--pink-faint)}
 }
 .inf-stats{display:flex;gap:40px;margin-bottom:22px}
 .inf-stat-num{
-  font-family:'Cormorant Garamond',serif;font-size:46px;font-weight:300;
-  color:var(--pink);letter-spacing:-1.5px;line-height:1;
+  font-family:'Cormorant Garamond',serif;font-size:64px;font-weight:300;
+  color:var(--pink);letter-spacing:-2px;line-height:1;
 }
 .inf-stat-lbl{
   font-family:'DM Sans',sans-serif;font-size:10px;letter-spacing:2px;
@@ -364,8 +364,8 @@ a.sn-link.active{color:var(--pink-deep);background:var(--pink-faint)}
   letter-spacing:2px;text-transform:uppercase;color:var(--ink-dim);
 }
 .mag-count{
-  font-family:'Cormorant Garamond',serif;font-size:36px;font-weight:300;
-  color:var(--pink);letter-spacing:-1px;line-height:1;
+  font-family:'Cormorant Garamond',serif;font-size:52px;font-weight:300;
+  color:var(--pink);letter-spacing:-1.5px;line-height:1;
   padding-top:10px;
 }
 .mag-count-lbl{
@@ -387,8 +387,8 @@ a.sn-link.active{color:var(--pink-deep);background:var(--pink-faint)}
   border-radius:var(--r);padding:22px 26px;
 }
 .nano-bk-num{
-  font-family:'Cormorant Garamond',serif;font-size:52px;font-weight:300;
-  color:var(--pink);letter-spacing:-2px;line-height:1;margin-bottom:4px;
+  font-family:'Cormorant Garamond',serif;font-size:68px;font-weight:300;
+  color:var(--pink);letter-spacing:-2.5px;line-height:1;margin-bottom:4px;
 }
 .nano-bk-lbl{
   font-family:'DM Sans',sans-serif;font-size:10px;font-weight:500;
@@ -454,7 +454,11 @@ a.sn-link.active{color:var(--pink-deep);background:var(--pink-faint)}
 }
 .vm-num{
   font-family:'Cormorant Garamond',serif;font-size:42px;font-weight:300;
-  color:#E0A0AD;letter-spacing:-1px;line-height:1;margin-bottom:8px;
+  color:#E0A0AD;letter-spacing:-1px;line-height:1;margin-bottom:4px;
+}
+.vm-est{
+  font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:300;
+  color:rgba(224,160,173,.65);letter-spacing:-.3px;line-height:1;margin-bottom:10px;
 }
 .vm-lbl{
   font-family:'Pretendard Variable',sans-serif;font-size:14px;color:rgba(244,241,236,.60);
@@ -463,6 +467,20 @@ a.sn-link.active{color:var(--pink-deep);background:var(--pink-faint)}
 .vm-sub{
   font-family:'DM Sans',sans-serif;font-size:10px;letter-spacing:.5px;
   color:rgba(244,241,236,.26);line-height:1.5;
+}
+.viral-cumulative{
+  display:flex;align-items:baseline;gap:12px;
+  margin-bottom:20px;padding:20px 24px;
+  background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.09);
+  border-radius:var(--r);
+}
+.viral-cum-num{
+  font-family:'Cormorant Garamond',serif;font-size:52px;font-weight:300;
+  color:#E0A0AD;letter-spacing:-2px;line-height:1;
+}
+.viral-cum-desc{
+  font-family:'Pretendard Variable',sans-serif;font-size:15px;
+  color:rgba(244,241,236,.48);line-height:1.5;
 }
 .viral-note{
   font-family:'DM Sans',sans-serif;font-size:11px;letter-spacing:.3px;
@@ -541,7 +559,7 @@ footer{
   .sn-links{overflow-x:auto;-webkit-overflow-scrolling:touch}
 }
 @media(max-width:600px){
-  .kpi-num{font-size:48px}
+  .kpi-num{font-size:60px}
   .sec-title{font-size:38px}
   .inf-name{font-size:40px}
   .mag-grid{grid-template-columns:1fr}
@@ -965,24 +983,34 @@ footer{
     </div>
 
     <div class="viral-metrics-label">추론 확산 지표 — 인스타그램 업계 평균 기준 추산</div>
+
+    <div class="viral-cumulative">
+      <div class="viral-cum-num">약 1,100만+</div>
+      <div class="viral-cum-desc">스토리 230건 기준 누적 노출 추정<br><span style="font-size:13px;color:rgba(244,241,236,.28)">메가 4개 계정 × 약 60–103만/건 + 나노·동행인 추산 합산</span></div>
+    </div>
+
     <div class="viral-metrics-grid">
       <div class="viral-metric">
         <div class="vm-num">7–12%</div>
+        <div class="vm-est">≈ 60만–103만 노출/건</div>
         <div class="vm-lbl">메가 계정 스토리<br>평균 도달률</div>
-        <div class="vm-sub">팔로워 대비 · 24시간 기준<br>합산 857만 적용 시 약 60–103만/건</div>
+        <div class="vm-sub">합산 858만 팔로워 적용 · 24시간 기준<br>릴리·김고은·강경민·DNF 계정 기준</div>
       </div>
       <div class="viral-metric">
         <div class="vm-num">15–25%</div>
+        <div class="vm-est">≈ 1,120–1,860 노출/건</div>
         <div class="vm-lbl">나노·동행인 스토리<br>평균 도달률</div>
-        <div class="vm-sub">소규모 계정 업계 평균<br>참여도 높은 팔로워 집중 도달</div>
+        <div class="vm-sub">평균 7,465 팔로워 기준 추산<br>참여도 높은 팔로워 집중 도달</div>
       </div>
       <div class="viral-metric">
         <div class="vm-num">1–2%</div>
+        <div class="vm-est">≈ 6,000–22,000 프로필 방문</div>
         <div class="vm-lbl">스토리 → 프로필<br>방문 전환율</div>
         <div class="vm-sub">Meta Business 공개 데이터 기준<br>브랜드 계정 태그 시 상승</div>
       </div>
       <div class="viral-metric">
         <div class="vm-num">3–5%</div>
+        <div class="vm-est">≈ 18,000–55,000 링크탭·DM</div>
         <div class="vm-lbl">스토리 → 링크 탭·<br>DM 전달율</div>
         <div class="vm-sub">스와이프업·링크스티커 포함<br>바이럴 2차 확산 트리거</div>
       </div>
@@ -990,7 +1018,7 @@ footer{
 
     <div class="viral-note">
       * 추론 지표는 Meta Business 공개 데이터 및 소셜미디어 업계 평균 벤치마크 기준으로 산출된 추정치입니다.
-      실제 인사이트 데이터 수집 시 수치가 업데이트됩니다. 메가 계정 기준 스토리 1건당 최소 60만 노출 추산.
+      실제 인사이트 데이터 수집 시 수치가 업데이트됩니다.
     </div>
   </div>
 
