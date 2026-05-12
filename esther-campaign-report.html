@@ -245,14 +245,14 @@ a.sn-link.active{color:var(--pink-deep);background:var(--pink-faint)}
   border-radius:var(--r);overflow:hidden;
 }
 .inf-card + .inf-card{margin-top:0}
-.inf-card-top{display:grid;grid-template-columns:300px 1fr 360px;min-height:380px}
+.inf-card-top{display:grid;grid-template-columns:300px 1fr 400px;min-height:380px}
 .inf-photo{position:relative;overflow:hidden}
 .inf-body{padding:38px 48px;display:flex;flex-direction:column}
 
 /* embed column (3rd column inside card) */
 .inf-embed-col{
   border-left:1px solid var(--border);
-  padding:24px 20px 20px;
+  padding:20px 10px 12px;
   display:flex;flex-direction:column;overflow:hidden;
 }
 .inf-embed-col-lbl{
@@ -492,6 +492,16 @@ a.sn-link.active{color:var(--pink-deep);background:var(--pink-faint)}
   font-family:'DM Sans',sans-serif;font-size:11px;letter-spacing:.3px;
   color:rgba(244,241,236,.18);line-height:1.65;
 }
+.story-archive-link{
+  display:inline-block;margin-top:20px;
+  font-family:'DM Sans',sans-serif;font-size:11px;font-weight:500;
+  letter-spacing:1.5px;text-transform:uppercase;
+  color:rgba(244,241,236,.30);
+  text-decoration:none;border-bottom:1px solid rgba(244,241,236,.15);
+  padding-bottom:2px;
+  transition:color .2s,border-color .2s;
+}
+.story-archive-link:hover{color:rgba(244,241,236,.65);border-color:rgba(244,241,236,.40)}
 
 
 /* ════════════════════════════
@@ -555,6 +565,7 @@ footer{
   letter-spacing:1.5px;text-transform:uppercase;
   display:inline-block;margin-bottom:10px;
 }
+.nano-bk-num .split{font-size:.52em;letter-spacing:-.5px;opacity:.72}
 .nano-type-tag.t-fashion{color:var(--fashion)}
 .nano-type-tag.t-visit{color:var(--visit)}
 
@@ -677,8 +688,8 @@ footer{
     <div class="kpi-card">
       <div class="kpi-card-title">나노 콘텐츠 유형 분류</div>
       <ul class="kpi-list">
-        <li><span style="color:var(--fashion)">패션 구매전환형 릴스</span> <span class="n" style="color:var(--fashion)">10건</span></li>
         <li><span style="color:var(--visit)">방문형 릴스</span>            <span class="n" style="color:var(--visit)">87건</span></li>
+        <li><span style="color:var(--fashion)">패션 구매전환형 릴스</span> <span class="n" style="color:var(--fashion)">10건</span></li>
         <li><span>피드 포스트</span>              <span class="n">10건</span></li>
         <li><span>기타 업로드 콘텐츠</span>        <span class="n">9건</span></li>
       </ul>
@@ -921,15 +932,15 @@ footer{
   <div class="hr"></div>
 
   <div class="nano-bk fu d2">
+    <div class="nano-bk-item t-visit">
+      <div class="nano-type-tag t-visit">방문 · Visit</div>
+      <div class="nano-bk-num t-visit">60<span class="split">+27</span>건</div>
+      <div class="nano-bk-lbl">방문형 릴스</div>
+    </div>
     <div class="nano-bk-item t-fashion">
       <div class="nano-type-tag t-fashion">계약 · Fashion</div>
       <div class="nano-bk-num t-fashion">10건</div>
       <div class="nano-bk-lbl">패션 구매전환형 릴스</div>
-    </div>
-    <div class="nano-bk-item t-visit">
-      <div class="nano-type-tag t-visit">방문 · Visit</div>
-      <div class="nano-bk-num t-visit">87건</div>
-      <div class="nano-bk-lbl">방문형 릴스</div>
     </div>
     <div class="nano-bk-item">
       <div class="nano-bk-num">10건</div>
@@ -1057,6 +1068,7 @@ footer{
       * 추론 지표는 Meta Business 공개 데이터 및 소셜미디어 업계 평균 벤치마크 기준으로 산출된 추정치입니다.
       실제 인사이트 데이터 수집 시 수치가 업데이트됩니다.
     </div>
+    <a href="https://drive.google.com/drive/folders/1qw0oiGIlasLmVWU_a_NqU_lYfcsBxI5q" target="_blank" rel="noopener" class="story-archive-link">스토리 발행 전체 보기 →</a>
   </div>
 
 </div>
