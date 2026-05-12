@@ -246,19 +246,20 @@ a.sn-link.active{color:var(--pink-deep);background:var(--pink-faint)}
   /* overflow:hidden 제거 — 임베드가 자연 높이로 렌더링 */
 }
 .inf-card + .inf-card{margin-top:0}
-.inf-card-top{display:grid;grid-template-columns:300px 1fr 400px}
-/* 각 코너 셀에 직접 border-radius 적용 */
+/* 540px embed column — Instagram 기본 iframe 폭(~468px)보다 충분히 넓게 */
+.inf-card-top{display:grid;grid-template-columns:280px 1fr 540px}
 .inf-photo{
   position:relative;overflow:hidden;
   border-radius:var(--r) 0 0 var(--r);
 }
-.inf-body{padding:38px 48px;display:flex;flex-direction:column}
+.inf-body{padding:36px 40px;display:flex;flex-direction:column}
 
-/* embed column — overflow 제거로 높이 자유롭게 */
+/* embed column — column 자체에만 overflow:hidden, 카드 전체엔 없음 */
 .inf-embed-col{
   border-left:1px solid var(--border);
-  padding:20px 14px 20px;
+  padding:20px 12px 12px;
   display:flex;flex-direction:column;
+  overflow:hidden;
   border-radius:0 var(--r) var(--r) 0;
 }
 .inf-embed-col-lbl{
@@ -593,7 +594,7 @@ footer{
   .kpi-row2{grid-template-columns:1fr}
   .inf-card-top{grid-template-columns:1fr;min-height:auto}
   .inf-photo{height:260px}
-  .inf-card-top{grid-template-columns:1fr}
+  .inf-card-top{grid-template-columns:1fr !important}
   .inf-photo{height:260px;border-radius:var(--r) var(--r) 0 0}
   .inf-embed-col{border-left:none;border-top:1px solid var(--border);border-radius:0 0 var(--r) var(--r)}
   .mag-feat-embeds{grid-template-columns:1fr}
