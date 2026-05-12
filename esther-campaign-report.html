@@ -29,6 +29,12 @@
   --pink:#C4637A;
   --pink-deep:#9E4D60;
   --pink-faint:rgba(196,99,122,.10);
+  --perf:#4E7A70;
+  --perf-faint:rgba(78,122,112,.10);
+  --fashion:#B5623A;
+  --fashion-faint:rgba(181,98,58,.08);
+  --visit:#5C7A8A;
+  --visit-faint:rgba(92,122,138,.08);
   --border:rgba(22,18,14,.10);
   --r:8px;
 }
@@ -530,6 +536,33 @@ footer{
 }
 
 
+/* ── PERFORMANCE COLOR ── */
+.num-perf{color:var(--perf)}
+
+/* ── NANO CONTENT TYPE BADGES ── */
+.nano-bk-item.t-fashion{
+  border-top:3px solid var(--fashion);
+  background:var(--fashion-faint);
+}
+.nano-bk-item.t-visit{
+  border-top:3px solid var(--visit);
+  background:var(--visit-faint);
+}
+.nano-bk-num.t-fashion{color:var(--fashion)}
+.nano-bk-num.t-visit{color:var(--visit)}
+.nano-type-tag{
+  font-family:'DM Sans',sans-serif;font-size:9px;font-weight:700;
+  letter-spacing:1.5px;text-transform:uppercase;
+  display:inline-block;margin-bottom:10px;
+}
+.nano-type-tag.t-fashion{color:var(--fashion)}
+.nano-type-tag.t-visit{color:var(--visit)}
+
+/* ── MOSAIC MORE CELL ── */
+.m-cell.more-cell{display:flex;align-items:center;justify-content:center;background:rgba(22,18,14,.06)}
+.more-num{font-family:'Cormorant Garamond',serif;font-size:34px;font-weight:300;color:var(--ink-mid);line-height:1;text-align:center}
+.more-lbl{font-family:'DM Sans',sans-serif;font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:var(--ink-dim);margin-top:4px;text-align:center}
+
 /* ════════════════════════════
    RESPONSIVE
 ════════════════════════════ */
@@ -619,12 +652,12 @@ footer{
 
   <div class="kpi-grid fu d2">
     <div class="kpi-item">
-      <div class="kpi-num">182만+</div>
+      <div class="kpi-num num-perf">1,820,000+</div>
       <div class="kpi-lbl">총 릴스 조회</div>
       <div class="kpi-note">메가·나노·매거진 합산</div>
     </div>
     <div class="kpi-item">
-      <div class="kpi-num">19.4만</div>
+      <div class="kpi-num num-perf">194,000+</div>
       <div class="kpi-lbl">총 인게이지먼트</div>
       <div class="kpi-note">IG 발행 콘텐츠 합산</div>
     </div>
@@ -644,9 +677,9 @@ footer{
     <div class="kpi-card">
       <div class="kpi-card-title">나노 콘텐츠 유형 분류</div>
       <ul class="kpi-list">
-        <li><span>릴스</span>                     <span class="n">87건</span></li>
+        <li><span style="color:var(--fashion)">패션 구매전환형 릴스</span> <span class="n" style="color:var(--fashion)">10건</span></li>
+        <li><span style="color:var(--visit)">방문형 릴스</span>            <span class="n" style="color:var(--visit)">87건</span></li>
         <li><span>피드 포스트</span>              <span class="n">10건</span></li>
-        <li><span>패션·화보</span>               <span class="n">10건</span></li>
         <li><span>기타 업로드 콘텐츠</span>        <span class="n">9건</span></li>
       </ul>
     </div>
@@ -657,7 +690,7 @@ footer{
         <li><span>장소</span>                   <span class="n" style="font-size:18px;">서울 성수동 틈결</span></li>
         <li><span>메가 인플루언서</span>         <span class="n" style="font-size:18px;">3인</span></li>
         <li><span>매거진·미디어</span>           <span class="n" style="font-size:18px;">4개사</span></li>
-        <li><span>합산 팔로워</span>             <span class="n">857만+</span></li>
+        <li><span>합산 팔로워</span>             <span class="n">8,570,000+</span></li>
         <li><span>플랫폼</span>                 <span class="n" style="font-size:16px;">IG · TikTok · YT · Naver</span></li>
       </ul>
     </div>
@@ -689,15 +722,15 @@ footer{
         <div class="inf-role">엔믹스 공식 계정 공동작업자 · 에스더버니 콜라보 의상 착용</div>
         <div class="inf-stats">
           <div>
-            <div class="inf-stat-num">609만+</div>
+            <div class="inf-stat-num">6,090,000+</div>
             <div class="inf-stat-lbl">팔로워</div>
           </div>
           <div>
-            <div class="inf-stat-num">76,616</div>
+            <div class="inf-stat-num num-perf">76,616</div>
             <div class="inf-stat-lbl">좋아요</div>
           </div>
           <div>
-            <div class="inf-stat-num">76,826</div>
+            <div class="inf-stat-num num-perf">76,826</div>
             <div class="inf-stat-lbl">인게이지먼트</div>
           </div>
         </div>
@@ -716,7 +749,7 @@ footer{
     </div>
   </div>
 
-  <div style="height:2px"></div>
+  <div style="height:32px"></div>
 
   <!-- Kim Go-eun -->
   <div class="inf-card fu">
@@ -730,15 +763,15 @@ footer{
         <div class="inf-role">솔로지옥 출연 이후 패션·라이프스타일 씬 최고 화제성 · 드뮤어 패션 대표 주자</div>
         <div class="inf-stats">
           <div>
-            <div class="inf-stat-num">146만+</div>
+            <div class="inf-stat-num">1,460,000+</div>
             <div class="inf-stat-lbl">팔로워</div>
           </div>
           <div>
-            <div class="inf-stat-num">94,466</div>
+            <div class="inf-stat-num num-perf">94,466</div>
             <div class="inf-stat-lbl">좋아요</div>
           </div>
           <div>
-            <div class="inf-stat-num">6.46%</div>
+            <div class="inf-stat-num num-perf">6.46%</div>
             <div class="inf-stat-lbl">ER%</div>
           </div>
         </div>
@@ -757,7 +790,7 @@ footer{
     </div>
   </div>
 
-  <div style="height:2px"></div>
+  <div style="height:32px"></div>
 
   <!-- Kang Kyung-min -->
   <div class="inf-card fu">
@@ -771,15 +804,15 @@ footer{
         <div class="inf-role">브랜드 초청 메가 인플루언서</div>
         <div class="inf-stats">
           <div>
-            <div class="inf-stat-num">103만+</div>
+            <div class="inf-stat-num">1,030,000+</div>
             <div class="inf-stat-lbl">팔로워</div>
           </div>
           <div>
-            <div class="inf-stat-num">2,776</div>
+            <div class="inf-stat-num num-perf">2,776</div>
             <div class="inf-stat-lbl">좋아요</div>
           </div>
           <div>
-            <div class="inf-stat-num">3,434</div>
+            <div class="inf-stat-num num-perf">3,434</div>
             <div class="inf-stat-lbl">인게이지먼트</div>
           </div>
         </div>
@@ -811,8 +844,8 @@ footer{
           </div>
           <div style="margin-left:auto;display:flex;gap:24px;align-items:flex-end">
             <div><div class="mag-count">3건</div><div class="mag-count-lbl">릴스</div></div>
-            <div><div class="mag-count">85만+</div><div class="mag-count-lbl">릴스 조회</div></div>
-            <div><div class="mag-count">5,638</div><div class="mag-count-lbl">인게이지먼트</div></div>
+            <div><div class="mag-count num-perf">850,000+</div><div class="mag-count-lbl">릴스 조회</div></div>
+            <div><div class="mag-count num-perf">5,638</div><div class="mag-count-lbl">인게이지먼트</div></div>
           </div>
         </div>
         <div class="mag-feat-embeds">
@@ -835,8 +868,8 @@ footer{
             <div class="mag-name">MMM</div>
             <div class="mag-type">패션 매거진</div>
             <div style="display:flex;gap:20px;margin-top:8px">
-              <div><div class="mag-count">76,136</div><div class="mag-count-lbl">릴스 조회</div></div>
-              <div><div class="mag-count">6,923</div><div class="mag-count-lbl">인게이지먼트</div></div>
+              <div><div class="mag-count num-perf">76,136</div><div class="mag-count-lbl">릴스 조회</div></div>
+              <div><div class="mag-count num-perf">6,923</div><div class="mag-count-lbl">인게이지먼트</div></div>
             </div>
           </div>
           <div class="mag-card-v2-embed">
@@ -848,7 +881,7 @@ footer{
           <div class="mag-card-v2-header">
             <div class="mag-name">CIDO</div>
             <div class="mag-type">패션 매거진</div>
-            <div style="margin-top:8px"><div class="mag-count">4,981</div><div class="mag-count-lbl">릴스 조회</div></div>
+            <div style="margin-top:8px"><div class="mag-count num-perf">4,981</div><div class="mag-count-lbl">릴스 조회</div></div>
           </div>
           <div class="mag-card-v2-embed">
             <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/reel/DX3-l1HxyGM/" data-instgrm-version="14"></blockquote>
@@ -860,8 +893,8 @@ footer{
             <div class="mag-name">HIPHYE</div>
             <div class="mag-type">미디어</div>
             <div style="display:flex;gap:20px;margin-top:8px">
-              <div><div class="mag-count">21,322</div><div class="mag-count-lbl">릴스 조회</div></div>
-              <div><div class="mag-count">295</div><div class="mag-count-lbl">인게이지먼트</div></div>
+              <div><div class="mag-count num-perf">21,322</div><div class="mag-count-lbl">릴스 조회</div></div>
+              <div><div class="mag-count num-perf">295</div><div class="mag-count-lbl">인게이지먼트</div></div>
             </div>
           </div>
           <div class="mag-card-v2-embed">
@@ -888,28 +921,30 @@ footer{
   <div class="hr"></div>
 
   <div class="nano-bk fu d2">
-    <div class="nano-bk-item">
-      <div class="nano-bk-num">87건</div>
-      <div class="nano-bk-lbl">릴스</div>
+    <div class="nano-bk-item t-fashion">
+      <div class="nano-type-tag t-fashion">계약 · Fashion</div>
+      <div class="nano-bk-num t-fashion">10건</div>
+      <div class="nano-bk-lbl">패션 구매전환형 릴스</div>
+    </div>
+    <div class="nano-bk-item t-visit">
+      <div class="nano-type-tag t-visit">방문 · Visit</div>
+      <div class="nano-bk-num t-visit">87건</div>
+      <div class="nano-bk-lbl">방문형 릴스</div>
     </div>
     <div class="nano-bk-item">
       <div class="nano-bk-num">10건</div>
       <div class="nano-bk-lbl">피드 포스트</div>
     </div>
     <div class="nano-bk-item">
-      <div class="nano-bk-num">10건</div>
-      <div class="nano-bk-lbl">패션·화보</div>
-    </div>
-    <div class="nano-bk-item">
       <div class="nano-bk-num">9건</div>
       <div class="nano-bk-lbl">틱톡·쇼츠·클립·동행인</div>
     </div>
     <div class="nano-bk-item">
-      <div class="nano-bk-num">87.2만</div>
+      <div class="nano-bk-num num-perf">872,000+</div>
       <div class="nano-bk-lbl">나노 릴스 조회</div>
     </div>
     <div class="nano-bk-item">
-      <div class="nano-bk-num">6,591</div>
+      <div class="nano-bk-num num-perf">6,591</div>
       <div class="nano-bk-lbl">인게이지먼트</div>
     </div>
     <div class="nano-bk-item">
@@ -917,7 +952,7 @@ footer{
       <div class="nano-bk-lbl">참여 채널</div>
     </div>
     <div class="nano-bk-item">
-      <div class="nano-bk-num">86.6만</div>
+      <div class="nano-bk-num">866,000+</div>
       <div class="nano-bk-lbl">합산 팔로워</div>
     </div>
   </div>
@@ -963,7 +998,9 @@ footer{
     <div class="m-cell has-img"><div class="bg-cover" style="background-image:url('images/report/thumbnail (36).jpg')"></div></div>
     <div class="m-cell has-img"><div class="bg-cover" style="background-image:url('images/report/thumbnail (37).jpg')"></div></div>
     <div class="m-cell has-img"><div class="bg-cover" style="background-image:url('images/report/thumbnail (38).jpg')"></div></div>
-    <div class="m-cell"><div class="ph"><span>+</span></div></div>
+    <div class="m-cell more-cell">
+      <div><div class="more-num">+77</div><div class="more-lbl">건 더보기</div></div>
+    </div>
   </div>
 
   <!-- ── 스토리 + 바이럴 확산 지표 ── -->
@@ -985,14 +1022,14 @@ footer{
     <div class="viral-metrics-label">추론 확산 지표 — 인스타그램 업계 평균 기준 추산</div>
 
     <div class="viral-cumulative">
-      <div class="viral-cum-num">약 1,100만+</div>
+      <div class="viral-cum-num">약 11,000,000+</div>
       <div class="viral-cum-desc">스토리 230건 기준 누적 노출 추정<br><span style="font-size:13px;color:rgba(244,241,236,.28)">메가 4개 계정 × 약 60–103만/건 + 나노·동행인 추산 합산</span></div>
     </div>
 
     <div class="viral-metrics-grid">
       <div class="viral-metric">
         <div class="vm-num">7–12%</div>
-        <div class="vm-est">≈ 60만–103만 노출/건</div>
+        <div class="vm-est">≈ 600,000–1,030,000 노출/건</div>
         <div class="vm-lbl">메가 계정 스토리<br>평균 도달률</div>
         <div class="vm-sub">합산 858만 팔로워 적용 · 24시간 기준<br>릴리·김고은·강경민·DNF 계정 기준</div>
       </div>
